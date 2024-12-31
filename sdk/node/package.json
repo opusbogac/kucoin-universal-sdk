@@ -1,0 +1,43 @@
+{
+  "name": "kucoin-universal-node-sdk",
+  "version": "0.0.1",
+  "description": "Official KuCoin Universal SDK.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint 'src/**/*.{ts,js}' --fix",
+    "format": "prettier --write 'src/**/*.{ts,js,json}'",
+    "test": "jest",
+    "clean": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kucoin/kucoin-universal-sdk"
+  },
+  "keywords": [
+    "KuCoin",
+    "SDK",
+    "Node.js",
+    "TypeScript",
+    "crypto"
+  ],
+  "author": "KuCoin",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.19.0",
+    "@typescript-eslint/parser": "^8.19.0",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=14"
+  }
+}
