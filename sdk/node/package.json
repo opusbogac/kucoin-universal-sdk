@@ -38,6 +38,10 @@
   },
   "peerDependencies": {},
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
+  },
+  "dependencies": {
+    "class-transformer": "^0.5.1",
+    "reflect-metadata": "^0.2.2"
   }
 }

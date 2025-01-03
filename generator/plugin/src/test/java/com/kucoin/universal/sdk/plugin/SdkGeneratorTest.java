@@ -7,8 +7,8 @@ import org.openapitools.codegen.config.CodegenConfigurator;
 
 public class SdkGeneratorTest {
 
-    private static final String SDK_NAME = "python-sdk";
-    private static final String SPEC_NAME = "../../spec/rest/api/openapi-account-fee.json";
+    private static final String SDK_NAME = "node-sdk";
+    private static final String SPEC_NAME = "../../spec/rest/api/openapi-spot-order.json";
     private static final String SPEC_ENTRY_NAME = "../../spec/rest/entry/openapi-account.json";
     private static final String WS_SPEC_NAME = "../../spec/ws/openapi-futures-private.json";
 
@@ -20,37 +20,37 @@ public class SdkGeneratorTest {
                     .setInputSpec(SPEC_NAME)
                     .setValidateSpec(false)
                     .addAdditionalProperty("GEN_MODE", "API")
-                    .setOutputDir("out");
+                    .setOutputDir("/Users/isaactang/Project/kucoin-universal-sdk/sdk/node/src/generate");
 
             final ClientOptInput clientOptInput = configurator.toClientOptInput();
             DefaultGenerator generator = new DefaultGenerator();
             generator.opts(clientOptInput).generate();
         }
-        {
-            final CodegenConfigurator configurator = new CodegenConfigurator()
-                    .setGeneratorName(SDK_NAME)
-                    .setInputSpec(SPEC_ENTRY_NAME)
-                    .setValidateSpec(false)
-                    .addAdditionalProperty("GEN_MODE", "ENTRY")
-                    .setOutputDir("out");
-
-            final ClientOptInput clientOptInput = configurator.toClientOptInput();
-            DefaultGenerator generator = new DefaultGenerator();
-            generator.opts(clientOptInput).generate();
-        }
-
-        {
-            final CodegenConfigurator configurator = new CodegenConfigurator()
-                    .setGeneratorName(SDK_NAME)
-                    .setInputSpec(SPEC_NAME)
-                    .setValidateSpec(false)
-                    .addAdditionalProperty("GEN_MODE", "TEST")
-                    .setOutputDir("out");
-
-            final ClientOptInput clientOptInput = configurator.toClientOptInput();
-            DefaultGenerator generator = new DefaultGenerator();
-            generator.opts(clientOptInput).generate();
-        }
+//        {
+//            final CodegenConfigurator configurator = new CodegenConfigurator()
+//                    .setGeneratorName(SDK_NAME)
+//                    .setInputSpec(SPEC_ENTRY_NAME)
+//                    .setValidateSpec(false)
+//                    .addAdditionalProperty("GEN_MODE", "ENTRY")
+//                    .setOutputDir("out");
+//
+//            final ClientOptInput clientOptInput = configurator.toClientOptInput();
+//            DefaultGenerator generator = new DefaultGenerator();
+//            generator.opts(clientOptInput).generate();
+//        }
+//
+//        {
+//            final CodegenConfigurator configurator = new CodegenConfigurator()
+//                    .setGeneratorName(SDK_NAME)
+//                    .setInputSpec(SPEC_NAME)
+//                    .setValidateSpec(false)
+//                    .addAdditionalProperty("GEN_MODE", "TEST")
+//                    .setOutputDir("out");
+//
+//            final ClientOptInput clientOptInput = configurator.toClientOptInput();
+//            DefaultGenerator generator = new DefaultGenerator();
+//            generator.opts(clientOptInput).generate();
+//        }
     }
 
     @Test

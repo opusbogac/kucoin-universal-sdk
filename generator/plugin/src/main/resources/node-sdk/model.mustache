@@ -1,0 +1,145 @@
+{{>partial_header}}
+{{#models}}
+{{#model}}
+{{#vendorExtensions.x-imports}}
+{{{.}}}
+{{/vendorExtensions.x-imports}}
+{{#vendorExtensions.x-response-model}}
+import { RestResponse } from '@model/common';
+import {Response} from '@internal/interfaces/response';
+export class {{classname}} implements Response<{{classname}}> {
+{{/vendorExtensions.x-response-model}}
+{{^vendorExtensions.x-response-model}}
+import { Serializable } from '@internal/interfaces/serializable';
+export class {{classname}} implements Serializable<{{classname}}>{
+{{/vendorExtensions.x-response-model}}
+{{#vars}}
+    /**
+    * {{#description}}{{{.}}}{{/description}}
+    */
+{{#vendorExtensions.x-use-base-name}}
+    @Expose({ name: "{{baseName}}" })
+{{/vendorExtensions.x-use-base-name}}
+{{#vendorExtensions.x-tag-path}}
+    @Exclude()
+    @Reflect.metadata("path", "{{baseName}}")
+{{/vendorExtensions.x-tag-path}}
+{{#vendorExtensions.x-typed}}
+    {{{.}}}
+{{/vendorExtensions.x-typed}}
+    {{name}}?: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{#defaultValue}} = {{#isEnum}}{{classname}}.{{/isEnum}}{{{.}}}{{/defaultValue}};
+{{/vars}}
+{{#vendorExtensions.x-response-model}}
+    /**
+    * common response
+    */
+    @Exclude()
+    CommonResponse?: RestResponse;
+
+    setCommonResponse(response: RestResponse): void {
+        this.CommonResponse = response;
+    }
+{{/vendorExtensions.x-response-model}}
+{{#vendorExtensions.x-request-model}}
+
+    /**
+    * Creates a new instance of the `{{classname}}` class.
+    * The builder pattern allows step-by-step construction of a `{{classname}}` object.
+    */
+    static builder(): {{classname}}Builder {
+        return new {{classname}}Builder();
+    }
+
+    /**
+    * Creates a new instance of the `{{classname}}` class with the given data.
+    */
+    static create(data : {
+    {{#vars}}
+        /**
+        * {{#description}}{{{.}}}{{/description}}
+        */
+        {{name}}?: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}};
+    {{/vars}}
+    }): {{classname}} {
+        let obj = new {{classname}}()
+    {{#vars}}
+        obj.{{name}} = data.{{name}}
+    {{/vars}}
+        return obj
+    }
+{{/vendorExtensions.x-request-model}}
+
+{{#vendorExtensions.x-request-raw-array}}
+    fromJson(input: string): {{classname}} {
+        const jsonObject = JSON.parse(input)
+        return plainToInstance( {{classname}}, {items : jsonObject});
+    }
+
+    toJson(): string {
+        return JSON.stringify(instanceToPlain(this.items));
+    }
+{{/vendorExtensions.x-request-raw-array}}
+{{^vendorExtensions.x-request-raw-array}}
+{{#vendorExtensions.x-original-response}}
+    fromJson(input: string): {{classname}} {
+        const jsonObject = JSON.parse(input)
+        return plainToInstance( {{classname}}, {data : jsonObject});
+    }
+
+    toJson(): string {
+        return JSON.stringify(instanceToPlain(this.data));
+    }
+{{/vendorExtensions.x-original-response}}
+{{^vendorExtensions.x-original-response}}
+    fromJson(input: string): {{classname}} {
+        const jsonObject = JSON.parse(input)
+        return plainToInstance( {{classname}}, jsonObject);
+    }
+
+    toJson(): string {
+        return JSON.stringify(instanceToPlain(this));
+    }
+{{/vendorExtensions.x-original-response}}
+{{/vendorExtensions.x-request-raw-array}}
+}
+
+{{#hasEnums}}
+export namespace {{classname}} {
+{{#vars}}
+{{#isEnum}}
+    export enum {{enumName}} {
+        {{#vendorExtensions.x-enums}}
+        /**
+        * {{description}}
+        */
+        {{name}} = <any> {{{value}}}{{^-last}},{{/-last}}
+        {{/vendorExtensions.x-enums}}
+    }
+{{/isEnum}}
+{{/vars}}
+}
+{{/hasEnums}}
+
+
+{{#vendorExtensions.x-request-model}}
+export class {{classname}}Builder {
+    obj :{{classname}} = new {{classname}}()
+{{#vars}}
+    /**
+    * {{#description}}{{{.}}}{{/description}}
+    */
+    set{{nameInPascalCase}}(value :{{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}) :{{classname}}Builder {
+        this.obj.{{name}} = value
+        return this
+    }
+
+{{/vars}}
+    build():{{classname}} {
+        return this.obj
+    }
+}
+
+{{/vendorExtensions.x-request-model}}
+
+{{/model}}
+{{/models}}
