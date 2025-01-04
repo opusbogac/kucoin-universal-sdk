@@ -21,7 +21,6 @@ export class {{classname}} implements Serializable<{{classname}}>{
     @Expose({ name: "{{baseName}}" })
 {{/vendorExtensions.x-use-base-name}}
 {{#vendorExtensions.x-tag-path}}
-    @Exclude()
     @Reflect.metadata("path", "{{baseName}}")
 {{/vendorExtensions.x-tag-path}}
 {{#vendorExtensions.x-typed}}
@@ -39,6 +38,26 @@ export class {{classname}} implements Serializable<{{classname}}>{
     setCommonResponse(response: RestResponse): void {
         this.CommonResponse = response;
     }
+
+{{#vendorExtensions.x-original-response}}
+    fromJson(input: string): {{classname}} {
+        const jsonObject = JSON.parse(input)
+        return plainToInstance( {{classname}}, {data : jsonObject});
+    }
+
+    toJson(): string {
+        return JSON.stringify(instanceToPlain(this.data));
+    }
+
+    fromObject(jsonObject: Object): {{classname}} {
+        return plainToInstance( {{classname}}, {data : jsonObject});
+    }
+{{/vendorExtensions.x-original-response}}
+{{^vendorExtensions.x-original-response}}
+    fromObject(jsonObject: Object): {{classname}} {
+        return plainToInstance( {{classname}}, jsonObject);
+    }
+{{/vendorExtensions.x-original-response}}
 {{/vendorExtensions.x-response-model}}
 {{#vendorExtensions.x-request-model}}
 
@@ -67,7 +86,6 @@ export class {{classname}} implements Serializable<{{classname}}>{
     {{/vars}}
         return obj
     }
-{{/vendorExtensions.x-request-model}}
 
 {{#vendorExtensions.x-request-raw-array}}
     fromJson(input: string): {{classname}} {
@@ -79,18 +97,10 @@ export class {{classname}} implements Serializable<{{classname}}>{
         return JSON.stringify(instanceToPlain(this.items));
     }
 {{/vendorExtensions.x-request-raw-array}}
-{{^vendorExtensions.x-request-raw-array}}
-{{#vendorExtensions.x-original-response}}
-    fromJson(input: string): {{classname}} {
-        const jsonObject = JSON.parse(input)
-        return plainToInstance( {{classname}}, {data : jsonObject});
-    }
+{{/vendorExtensions.x-request-model}}
 
-    toJson(): string {
-        return JSON.stringify(instanceToPlain(this.data));
-    }
-{{/vendorExtensions.x-original-response}}
 {{^vendorExtensions.x-original-response}}
+{{^vendorExtensions.x-request-raw-array}}
     fromJson(input: string): {{classname}} {
         const jsonObject = JSON.parse(input)
         return plainToInstance( {{classname}}, jsonObject);
@@ -99,8 +109,9 @@ export class {{classname}} implements Serializable<{{classname}}>{
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-{{/vendorExtensions.x-original-response}}
 {{/vendorExtensions.x-request-raw-array}}
+{{/vendorExtensions.x-original-response}}
+
 }
 
 {{#hasEnums}}

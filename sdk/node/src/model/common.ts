@@ -1,3 +1,5 @@
+import { plainToInstance } from 'class-transformer';
+
 /**
  * RestRateLimit represents the rate limiting information for a REST API.
  */
@@ -19,7 +21,7 @@ export interface RestRateLimit {
 /**
  * RestResponse represents a generic response from the REST API.
  */
-export interface RestResponse<T = any> {
+export class RestResponse {
     /**
      * Optional rate limit information
      */
@@ -27,15 +29,19 @@ export interface RestResponse<T = any> {
     /**
      * Response code
      */
-    code: string;
+    code?: string;
     /**
      * Response data (typed)
      */
-    data: T;
+    data?: any;
     /**
      * Optional response message
      */
     message?: string;
+
+    static fromJson(json: string): RestResponse {
+        return plainToInstance(RestResponse, JSON.parse(json));
+    }
 }
 
 /**

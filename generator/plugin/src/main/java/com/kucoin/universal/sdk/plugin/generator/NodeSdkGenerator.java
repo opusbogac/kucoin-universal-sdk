@@ -21,6 +21,7 @@ import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationMap;
 import org.openapitools.codegen.model.OperationsMap;
+import org.openapitools.codegen.utils.CamelizeOption;
 
 import java.io.File;
 import java.util.*;
@@ -148,7 +149,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
     @Override
     public String formatMethodName(String name) {
-        return camelize(name);
+        return camelize(name, LOWERCASE_FIRST_LETTER);
     }
 
     @Override
@@ -292,7 +293,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
         switch (modeSwitch.getMode()) {
             case TEST:
             case WS_TEST: {
-                apiName = apiName + "_test";
+                apiName = apiName + ".test";
                 break;
             }
         }
@@ -324,12 +325,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
         return result;
     }
 
-    private String generateImport(String className, String fileName) {
-        return String.format("import {%s} from './%s'", className, fileName);
-    }
-
-    private Set<String> generateApiImport(Meta meta, boolean req) {
-        Set<String> imports = new HashSet<>();
+    private void generateApiImport(Meta meta, boolean req, Map<String, ImportModel> imports) {
         switch (modeSwitch.getMode()) {
             case API:
             case TEST: {
@@ -337,9 +333,10 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                 if (req) {
                     suffix = "req";
                 }
-                imports.add(generateImport(
-                        formatService(meta.getMethod() + camelize(suffix)),
-                        toModelFilename(meta.getMethod()) + "_" + suffix));
+                String fileName = "./" + toModelFilename(meta.getMethod()) + "_" + suffix;
+                String service = formatService(meta.getMethod() + camelize(suffix));
+
+                imports.computeIfAbsent(fileName, ImportModel::new).component.add(service);
                 break;
             }
             case WS: {
@@ -369,22 +366,20 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                 break;
             }
             case ENTRY: {
-//                operationService.getServiceMeta().forEach((k, v) -> {
-//                    if (v.getService().equalsIgnoreCase(meta.getService())) {
-//                        imports.add(
-//                                generateImportSimple(String.format("kucoin_universal_sdk.generate.%s.%s.%s", formatPackage(v.getService()),
-//                                                formatPackage(v.getSubService()), toApiFilename(formatMethodName(k))),
-//                                        formatService(k + "API"),
-//                                        formatService(k + "APIImpl")));
-//                    }
-//                });
+                operationService.getServiceMeta().forEach((k, v) -> {
+                    if (v.getService().equalsIgnoreCase(meta.getService())) {
+                        List<String> services = Arrays.asList(formatService(k + "API"), formatService(k + "APIImpl"));
+                        String fileName = String.format("@generate/%s/%s/%s", formatPackage(v.getService()),
+                                formatPackage(v.getSubService()), toApiFilename(formatMethodName(k)));
+                        imports.computeIfAbsent(fileName, ImportModel::new).component.addAll(services);
+                    }
+                });
                 break;
             }
             default: {
                 throw new RuntimeException("unsupported mode");
             }
         }
-        return imports;
     }
 
     @Override
@@ -393,7 +388,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
         OperationMap operationMap = objs.getOperations();
 
-        Set<String> modelImport = new TreeSet<>();
+        Map<String, ImportModel> imports = new HashMap<>();
 
         for (CodegenOperation op : operationMap.getOperation()) {
             Meta meta = SpecificationUtil.getMeta(op.vendorExtensions);
@@ -406,6 +401,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                             if (v.getService().equalsIgnoreCase(meta.getService())) {
                                 Map<String, String> kv = new HashMap<>();
                                 kv.put("method", formatMethodName(k));
+                                kv.put("methodUppercase", camelize(formatMethodName(k)));
                                 kv.put("target_service", formatService(k + "API"));
                                 entryValue.add(kv);
                             }
@@ -415,7 +411,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                         apiEntryInfo.put("api_entry_value", entryValue);
                         objs.put("api_entry", apiEntryInfo);
                         entryValue.forEach(m -> {
-                            modelImport.addAll(generateApiImport(meta, false));
+                            generateApiImport(meta, false, imports);
                         });
                         break;
                     }
@@ -423,14 +419,14 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                     case API:
                     case TEST: {
                         if (op.hasParams) {
-                            modelImport.addAll(generateApiImport(meta, true));
+                            generateApiImport(meta, true, imports);
                         }
-                        modelImport.addAll(generateApiImport(meta, false));
+                        generateApiImport(meta, false, imports);
                         break;
                     }
                     case WS:
                     case WS_TEST: {
-                        modelImport.addAll(generateApiImport(meta, false));
+                        generateApiImport(meta, false, imports);
                         break;
                     }
                     case TEST_TEMPLATE: {
@@ -443,7 +439,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
             }
         }
 
-        objs.put("imports", modelImport);
+        objs.put("imports", imports.values().stream().map(ImportModel::toImport).collect(Collectors.toList()));
 
         return objs;
     }
@@ -497,7 +493,6 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                         }
 
                         if (var.getVendorExtensions().containsKey("x-tag-path")) {
-                            imports.computeIfAbsent("class-transformer", ImportModel::new).component.add("Exclude");
                             imports.computeIfAbsent("reflect-metadata", ImportModel::new);
                         }
                     }

@@ -12,7 +12,8 @@
     "baseUrl": "./",
     "paths": {
       "@model/*": ["src/model/*"],
-      "@internal/*": ["src/internal/*"]
+      "@internal/*": ["src/internal/*"],
+      "@generate/*": ["src/generate/*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
