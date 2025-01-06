@@ -30,7 +30,7 @@ export class {{classname}}Impl implements {{classname}} {
 {{#operations}}
     {{#operation}}
     {{vendorExtensions.x-meta.method}}({{#hasParams}}req :{{vendorExtensions.x-meta.methodServiceFmt}}Req{{/hasParams}}): Promise<{{vendorExtensions.x-meta.methodServiceFmt}}Resp> {
-        return this.transport.call("{{vendorExtensions.x-meta.domain}}", {{vendorExtensions.x-meta.broker}}, "{{httpMethod}}", "{{path}}", {{#hasParams}}req{{/hasParams}}{{^hasParams}}null{{/hasParams}}, {{#vendorExtensions.x-request-force-json}}true{{/vendorExtensions.x-request-force-json}}{{^vendorExtensions.x-request-force-json}}false{{/vendorExtensions.x-request-force-json}})
+        return this.transport.call("{{vendorExtensions.x-meta.domain}}", {{vendorExtensions.x-meta.broker}}, "{{httpMethod}}", "{{path}}", {{#hasParams}}req{{/hasParams}}{{^hasParams}}null{{/hasParams}}, new {{vendorExtensions.x-meta.methodServiceFmt}}Resp(), {{#vendorExtensions.x-request-force-json}}true{{/vendorExtensions.x-request-force-json}}{{^vendorExtensions.x-request-force-json}}false{{/vendorExtensions.x-request-force-json}})
     }
 
     {{/operation}}

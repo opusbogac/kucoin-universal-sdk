@@ -11,7 +11,7 @@ public class SdkGeneratorTest {
     private static final String SPEC_NAME = "../../spec/rest/api/openapi-spot-order.json";
     private static final String SPEC_ENTRY_NAME = "../../spec/rest/entry/openapi-spot.json";
     private static final String WS_SPEC_NAME = "../../spec/ws/openapi-futures-private.json";
-    private static final String OUTPUT_DIR = "/Users/isaactang/Project/kucoin-universal-sdk/sdk/node/src/generate";
+    private static final String OUTPUT_DIR = "../../sdk/node/src/generate";
 
     @Test
     public void launchCodeGenerator() {

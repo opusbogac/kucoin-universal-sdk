@@ -21,7 +21,6 @@ import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationMap;
 import org.openapitools.codegen.model.OperationsMap;
-import org.openapitools.codegen.utils.CamelizeOption;
 
 import java.io.File;
 import java.util.*;
@@ -340,16 +339,12 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                 break;
             }
             case WS: {
-//                String suffix = "event";
-//                imports.add(generateImport(meta.getService().toLowerCase(),
-//                        toModelFilename(meta.getMethod()) + "_" + suffix,
-//                        formatService(meta.getMethod() + camelize(suffix + "Callback")),
-//                        formatService(meta.getMethod() + camelize(suffix + "CallbackWrapper"))));
-//
-//                if ((((Map<String, Object>) meta.getOtherProperties().getParas().getType()).containsKey("array"))) {
-//                    imports.add(generateImportSimple("typing", "List"));
-//                }
+                String suffix = "event";
+                String fileName = "./" + toModelFilename(meta.getMethod()) + "_" + suffix;
+                String service1 = formatService(meta.getMethod() + camelize(suffix + "Callback"));
+                String service2 = formatService(meta.getMethod() + camelize(suffix + "CallbackWrapper"));
 
+                imports.computeIfAbsent(fileName, ImportModel::new).component.addAll(Arrays.asList(service1, service2));
                 break;
 
             }

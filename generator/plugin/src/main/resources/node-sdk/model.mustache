@@ -7,7 +7,7 @@
 {{#vendorExtensions.x-response-model}}
 import { RestResponse } from '@model/common';
 import {Response} from '@internal/interfaces/response';
-export class {{classname}} implements Response<{{classname}}> {
+export class {{classname}} implements Response<{{classname}}, RestResponse> {
 {{/vendorExtensions.x-response-model}}
 {{^vendorExtensions.x-response-model}}
 import { Serializable } from '@internal/interfaces/serializable';
@@ -33,10 +33,10 @@ export class {{classname}} implements Serializable<{{classname}}>{
     * common response
     */
     @Exclude()
-    CommonResponse?: RestResponse;
+    commonResponse?: RestResponse;
 
     setCommonResponse(response: RestResponse): void {
-        this.CommonResponse = response;
+        this.commonResponse = response;
     }
 
 {{#vendorExtensions.x-original-response}}
@@ -51,11 +51,6 @@ export class {{classname}} implements Serializable<{{classname}}>{
 
     fromObject(jsonObject: Object): {{classname}} {
         return plainToInstance( {{classname}}, {data : jsonObject});
-    }
-{{/vendorExtensions.x-original-response}}
-{{^vendorExtensions.x-original-response}}
-    fromObject(jsonObject: Object): {{classname}} {
-        return plainToInstance( {{classname}}, jsonObject);
     }
 {{/vendorExtensions.x-original-response}}
 {{/vendorExtensions.x-response-model}}
@@ -96,9 +91,12 @@ export class {{classname}} implements Serializable<{{classname}}>{
     toJson(): string {
         return JSON.stringify(instanceToPlain(this.items));
     }
+
+    fromObject(jsonObject: Object): {{classname}} {
+        return plainToInstance( {{classname}}, {items: jsonObject});
+    }
 {{/vendorExtensions.x-request-raw-array}}
 {{/vendorExtensions.x-request-model}}
-
 {{^vendorExtensions.x-original-response}}
 {{^vendorExtensions.x-request-raw-array}}
     fromJson(input: string): {{classname}} {
@@ -108,6 +106,10 @@ export class {{classname}} implements Serializable<{{classname}}>{
 
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
+    }
+
+    fromObject(jsonObject: Object): {{classname}} {
+        return plainToInstance( {{classname}}, jsonObject);
     }
 {{/vendorExtensions.x-request-raw-array}}
 {{/vendorExtensions.x-original-response}}

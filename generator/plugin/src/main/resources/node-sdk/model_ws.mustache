@@ -1,0 +1,104 @@
+{{>partial_header}}
+{{#models}}
+{{#model}}
+{{#vendorExtensions.x-imports}}
+{{{.}}}
+{{/vendorExtensions.x-imports}}
+import { WsMessage } from '@model/common';
+import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
+{{#vendorExtensions.x-response-model}}
+import { Response } from '@internal/interfaces/response';
+export class {{classname}} implements  Response<{{classname}}, WsMessage>{
+{{/vendorExtensions.x-response-model}}
+{{^vendorExtensions.x-response-model}}
+import { Serializable } from '@internal/interfaces/serializable';
+export class {{classname}} implements Serializable<CrossLeverageDataValue>{
+{{/vendorExtensions.x-response-model}}
+
+{{#vars}}
+    /**
+    * {{#description}}{{{.}}}{{/description}}
+    */
+    {{#vendorExtensions.x-use-base-name}}
+    @Expose({ name: "{{baseName}}" })
+    {{/vendorExtensions.x-use-base-name}}
+    {{name}}?: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{#defaultValue}} = {{#isEnum}}{{classname}}.{{/isEnum}}{{{.}}}{{/defaultValue}};
+{{/vars}}
+{{#vendorExtensions.x-response-model}}
+    /**
+    * common response
+    */
+    @Exclude()
+    private commonResponse?: WsMessage;
+
+    setCommonResponse(response: WsMessage): void {
+        this.commonResponse = response;
+    }
+{{/vendorExtensions.x-response-model}}
+{{#vendorExtensions.x-original-response}}
+
+    fromJson(input: string): {{classname}} {
+        const jsonObject = JSON.parse(input)
+        return plainToInstance( {{classname}}, {data : jsonObject});
+    }
+
+    toJson(): string {
+        return JSON.stringify(instanceToPlain(this.data));
+    }
+
+    fromObject(jsonObject: Object): {{classname}} {
+        return plainToInstance( {{classname}}, {data : jsonObject});
+    }
+{{/vendorExtensions.x-original-response}}
+{{^vendorExtensions.x-original-response}}
+
+    fromJson(input: string): {{classname}} {
+        const jsonObject = JSON.parse(input)
+        return plainToInstance( {{classname}}, jsonObject);
+    }
+
+    toJson(): string {
+        return JSON.stringify(instanceToPlain(this));
+    }
+    fromObject(jsonObject: Object): {{classname}} {
+        return plainToInstance( {{classname}}, jsonObject);
+    }
+{{/vendorExtensions.x-original-response}}
+}
+
+{{#hasEnums}}
+export namespace {{classname}} {
+{{#vars}}
+{{#isEnum}}
+    export enum {{enumName}} {
+        {{#vendorExtensions.x-enums}}
+        /**
+        * {{description}}
+        */
+        {{name}} = <any> {{{value}}}{{^-last}},{{/-last}}
+        {{/vendorExtensions.x-enums}}
+    }
+{{/isEnum}}
+{{/vars}}
+}
+{{/hasEnums}}
+
+{{#vendorExtensions.x-response-model}}
+export type {{classname}}Callback = (topic: string, subject: string, data: {{classname}}) => void;
+
+export class  {{classname}}CallbackWrapper implements WebSocketMessageCallback {
+    callback:  {{classname}}Callback;
+
+    constructor(callback:  {{classname}}Callback) {
+        this.callback = callback;
+    }
+
+    onMessage(msg: WsMessage): void {
+        let event = (new {{classname}}()).fromObject(msg.rawData)
+        event.setCommonResponse(msg)
+        this.callback(msg.topic, msg.subject, event)
+    }
+}
+{{/vendorExtensions.x-response-model}}
+{{/model}}
+{{/models}}

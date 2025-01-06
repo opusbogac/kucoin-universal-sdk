@@ -11,4 +11,9 @@ export abstract class Serializable<T> {
      * Converts the current object into a JSON string.
      */
     abstract toJson(): string;
+
+    /**
+     * Populates the object's properties.
+     */
+    abstract fromObject(jsonObject: Object): T;
 }
