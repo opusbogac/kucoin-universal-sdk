@@ -14,17 +14,23 @@ export interface {{classname}} {
         * {{notes}}
         * push frequency: {{vendorExtensions.x-push_frequency}}
         */
-        {{vendorExtensions.x-meta.method}}{{operationName}}({{#vendorExtensions.x-meta.otherProperties}}{{#parameters}}{{#type}}{{#type.simple}}{{paras}} :string,{{/type.simple}}{{#type.array}}{{paras}} :Array<string>,{{/type.array}}{{#type.object}}{{#paras}}{{.}} string,{{/paras}}{{/type.object}}{{/type}}{{/parameters}}{{/vendorExtensions.x-meta.otherProperties}}callback :{{vendorExtensions.x-meta.methodServiceFmt}}EventCallback) :string
+        {{vendorExtensions.x-meta.method}}{{operationName}}({{#vendorExtensions.x-meta.otherProperties}}{{#parameters}}{{#type}}{{#type.simple}}{{paras}} :string,{{/type.simple}}{{#type.array}}{{paras}} :Array<string>,{{/type.array}}{{#type.object}}{{#paras}}{{.}} string,{{/paras}}{{/type.object}}{{/type}}{{/parameters}}{{/vendorExtensions.x-meta.otherProperties}}callback :{{vendorExtensions.x-meta.methodServiceFmt}}EventCallback) :Promise<string>
     {{/operation}}
 
-    // Unsubscribe from topics
-    unSubscribe(id :string) :void
+    /**
+    * Unsubscribe from topics
+    */
+    unSubscribe(id :string) :Promise<void>
 
-    // Start websocket
-    start() :void
+    /**
+    * Start websocket
+    */
+    start() :Promise<void>
 
-    // Stop websocket
-    stop() :void
+    /**
+    * Stop websocket
+    */
+    stop() :Promise<void>
 {{/operations}}
 }
 
@@ -38,7 +44,7 @@ export class {{classname}}Impl implements {{classname}} {
 {{#operations}}
     {{#operation}}
 
-    {{vendorExtensions.x-meta.method}}{{operationName}}({{#vendorExtensions.x-meta.otherProperties}}{{#parameters}}{{#type}}{{#type.simple}}{{paras}} :string,{{/type.simple}}{{#type.array}}{{paras}} :Array<string>,{{/type.array}}{{#type.object}}{{#paras}}{{.}} string,{{/paras}}{{/type.object}}{{/type}}{{/parameters}}{{/vendorExtensions.x-meta.otherProperties}}callback :{{vendorExtensions.x-meta.methodServiceFmt}}EventCallback) :string {
+    {{vendorExtensions.x-meta.method}}{{operationName}}({{#vendorExtensions.x-meta.otherProperties}}{{#parameters}}{{#type}}{{#type.simple}}{{paras}} :string,{{/type.simple}}{{#type.array}}{{paras}} :Array<string>,{{/type.array}}{{#type.object}}{{#paras}}{{.}} string,{{/paras}}{{/type.object}}{{/type}}{{/parameters}}{{/vendorExtensions.x-meta.otherProperties}}callback :{{vendorExtensions.x-meta.methodServiceFmt}}EventCallback) :Promise<string> {
     let topicPrefix = "{{vendorExtensions.x-meta.otherProperties.topic}}"
     {{#vendorExtensions.x-meta.otherProperties}}{{#parameters}}{{#type}}
         {{#type.none}}let args :string[] = []{{/type.none}}
@@ -51,15 +57,15 @@ export class {{classname}}Impl implements {{classname}} {
     {{/operation}}
 {{/operations}}
 
-    unSubscribe(id :string) {
+    unSubscribe(id :string) : Promise<void>{
         return this.wsService.unsubscribe(id)
     }
 
-    start() {
+    start() : Promise<void>{
         return this.wsService.start()
     }
 
-    stop() {
+    stop() : Promise<void>{
     return this.wsService.stop()
     }
 

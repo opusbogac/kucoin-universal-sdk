@@ -42,13 +42,13 @@ export interface WebSocketService {
      * Starts the WebSocket service and handles incoming WebSocket messages.
      * @returns A promise that resolves when the service is started.
      */
-    start(): void;
+    start(): Promise<void>;
 
     /**
      * Stops the WebSocket service.
      * @returns A promise that resolves when the service is stopped.
      */
-    stop(): void;
+    stop(): Promise<void>;
 
     /**
      * Subscribes to a topic with a provided message callback.
@@ -57,14 +57,14 @@ export interface WebSocketService {
      * @param callback The callback to handle incoming messages for the topic.
      * @returns A promise that resolves to the subscription ID or rejects with an error.
      */
-    subscribe(topic: string, args: string[], callback: WebSocketMessageCallback): string;
+    subscribe(topic: string, args: string[], callback: WebSocketMessageCallback): Promise<string>;
 
     /**
      * Unsubscribes from a topic.
      * @param id The subscription ID.
      * @returns A promise that resolves when the subscription is cancelled.
      */
-    unsubscribe(id: string): void;
+    unsubscribe(id: string): Promise<void>;
 }
 
 // WebsocketTransport defines methods required for managing a WebSocket connection.
