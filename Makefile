@@ -93,6 +93,7 @@ generate: setup-logs
 	$(call generate-postman)
 	$(call generate-code,golang,/pkg/generate)
 	$(call generate-code,python,/kucoin_universal_sdk/generate)
+	$(call generate-code,node,/src/generate)
 
 .PHONY: gen-postman
 gen-postman: preprocessor

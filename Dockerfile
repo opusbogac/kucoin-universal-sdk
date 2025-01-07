@@ -22,7 +22,7 @@ RUN --mount=type=cache,target=/root/.m2,sharing=locked mvn -U clean package -Dsk
 # build tools 
 FROM openapitools/openapi-generator-cli:v7.7.0
 
-RUN apt-get update && apt-get install python3 python3-pip python3.8-venv -y
+RUN apt-get update && apt-get install python3 python3-pip python3.8-venv nodejs npm -y
 RUN pip install yapf
 ENV GOLANG_VERSION=1.22.2
 RUN curl -OL https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz && \
@@ -30,6 +30,8 @@ RUN curl -OL https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz && \
     rm go${GOLANG_VERSION}.linux-amd64.tar.gz
 WORKDIR /APP
 COPY --from=generator-builder /build/target/sdk-openapi-generator-1.0.0.jar /opt/openapi-generator/modules/openapi-generator-cli/target/openapi-generator-cli.jar
+RUN npm install -g prettier
+
 ENV CGO_ENABLED=0
 ENV PATH="/usr/local/go/bin:$PATH"
 ENV GOPATH="/go"
@@ -37,6 +39,7 @@ ENV PATH="$GOPATH/bin:$PATH"
 
 ENV GO_POST_PROCESS_FILE="/usr/local/go/bin/gofmt -w"
 ENV PYTHON_POST_PROCESS_FILE="/usr/local/bin/yapf -i"
+ENV TS_POST_PROCESS_FILE="/usr/local/bin/prettier --write"
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
