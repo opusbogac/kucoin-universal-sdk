@@ -4,7 +4,7 @@ import { WebSocketClientOption } from './websocket_option';
 /**
  * ClientOption holds the configuration details for a client including authentication keys, API endpoints, and transport options.
  */
-interface ClientOption {
+export interface ClientOption {
     /**
      * Key is the authentication key for the client
      */

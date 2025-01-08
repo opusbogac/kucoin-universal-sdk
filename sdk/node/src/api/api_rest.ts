@@ -1,41 +1,50 @@
+import { AccountService } from '@generate/service/account_api';
+import { AffiliateService } from '@generate/service/affiliate_api';
+import { BrokerService } from '@generate/service/broker_api';
+import { EarnService } from '@generate/service/earn_api';
+import { FuturesService } from '@generate/service/futures_api';
+import { MarginService } from '@generate/service/margin_api';
+import { SpotService } from '@generate/service/spot_api';
+import { VIPLendingService } from '@generate/service/viplending_api';
+
 export interface KucoinRestService {
     /**
      * AccountService provides functions to access and manipulate account related data.
      */
-    GetAccountService(): AccountService;
+    getAccountService(): AccountService;
 
     /**
      * AffiliateService provides functions to access affiliate-related data.
      */
-    GetAffiliateService(): AffiliateService;
+    getAffiliateService(): AffiliateService;
 
     /**
      * BrokerService provides functions to access and manage broker-related data.
      */
-    GetBrokerService(): BrokerService;
+    getBrokerService(): BrokerService;
 
     /**
      * EarnService provides functions to access and manage earn-related data.
      */
-    GetEarnService(): EarnService;
+    getEarnService(): EarnService;
 
     /**
      * FuturesService provides functions to perform actions in the futures market.
      */
-    GetFuturesService(): FuturesService;
+    getFuturesService(): FuturesService;
 
     /**
      * MarginService provides functions to access and manage margin-related data.
      */
-    GetMarginService(): MarginService;
+    getMarginService(): MarginService;
 
     /**
      * SpotService provides functions to perform actions in the spot market.
      */
-    GetSpotService(): SpotService;
+    getSpotService(): SpotService;
 
     /**
      * VipLendingService provides functions to access and manage VIP lending-related data.
      */
-    GetVipLendingService(): ViplendingService;
+    getVipLendingService(): VIPLendingService;
 }

@@ -13,7 +13,8 @@
     "paths": {
       "@model/*": ["src/model/*"],
       "@internal/*": ["src/internal/*"],
-      "@generate/*": ["src/generate/*"]
+      "@generate/*": ["src/generate/*"],
+      "@api/*": ["src/api/*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true

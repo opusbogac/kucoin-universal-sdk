@@ -1,7 +1,10 @@
 IMAGE_NAME=sdk-tools
 IMAGE_TAG=1.0
-VERSION := $(shell cat VERSION)
 DATE := $(shell date +%Y-%m-%d)
+
+FILE_VERSION := $(shell cat VERSION)
+USER_VERSION ?= 
+VERSION := $(if $(USER_VERSION),$(USER_VERSION),$(FILE_VERSION))
 
 RED=\033[0;31m
 GREEN=\033[0;32m

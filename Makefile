@@ -65,7 +65,7 @@ define generate-code
 	@echo "$(GREEN)lang: $(lang), clean...$(NC)"
 	docker run --rm -v "${PWD}:/local" $(IMAGE_NAME):$(IMAGE_TAG) rm -rf $(outdir)
 
-	@make -f generate.mk generate lang=$(1) subdir=$(2)
+	@make -f generate.mk generate lang=$(1) subdir=$(2) USER_VERSION=$(3)
 	
 	@echo "$(GREEN)lang: $(lang), clean...$(NC)"
 	docker run --rm -v "${PWD}:/local" $(IMAGE_NAME):$(IMAGE_TAG) rm -rf $(outdir)/.openapi-generator
@@ -93,7 +93,7 @@ generate: setup-logs
 	$(call generate-postman)
 	$(call generate-code,golang,/pkg/generate)
 	$(call generate-code,python,/kucoin_universal_sdk/generate)
-	$(call generate-code,node,/src/generate)
+	$(call generate-code,node,/src/generate,v0.1.0-alpha)
 
 .PHONY: gen-postman
 gen-postman: preprocessor

@@ -12,7 +12,7 @@ export class {{classname}} implements  Response<{{classname}}, WsMessage>{
 {{/vendorExtensions.x-response-model}}
 {{^vendorExtensions.x-response-model}}
 import { Serializable } from '@internal/interfaces/serializable';
-export class {{classname}} implements Serializable<CrossLeverageDataValue>{
+export class {{classname}} implements Serializable<{{classname}}>{
 {{/vendorExtensions.x-response-model}}
 
 {{#vars}}

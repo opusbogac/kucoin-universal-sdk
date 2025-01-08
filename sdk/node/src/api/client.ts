@@ -46,6 +46,9 @@ Data and Message Handling:
 
 import { KucoinRestService } from './api_rest';
 import { KucoinWSService } from './api_ws';
+import { DefaultKucoinRestAPIImpl } from '@internal/rest/default_rest_impl';
+import { ClientOption } from '@model/client_option';
+import { KucoinDefaultWsImpl } from '@internal/ws/default_ws_impl';
 
 /**
  * Client interface defines the methods to get REST and WebSocket services.
@@ -66,12 +69,12 @@ export interface Client {
  * DefaultClient provides the default implementation of the Client interface.
  */
 export class DefaultClient implements Client {
-    private restImpl: KuCoinDefaultRestImpl;
-    private wsImpl: KuCoinDefaultWsImpl;
+    private restImpl: KucoinRestService;
+    private wsImpl: KucoinWSService;
 
     constructor(op: ClientOption) {
-        this.restImpl = new KuCoinDefaultRestImpl(op);
-        this.wsImpl = new KuCoinDefaultWsImpl(op);
+        this.restImpl = new DefaultKucoinRestAPIImpl(op);
+        this.wsImpl = new KucoinDefaultWsImpl(op);
     }
 
     /**

@@ -30,6 +30,10 @@ RUN curl -OL https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz && \
     rm go${GOLANG_VERSION}.linux-amd64.tar.gz
 WORKDIR /APP
 COPY --from=generator-builder /build/target/sdk-openapi-generator-1.0.0.jar /opt/openapi-generator/modules/openapi-generator-cli/target/openapi-generator-cli.jar
+
+# node & npm
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
 RUN npm install -g prettier
 
 ENV CGO_ENABLED=0
@@ -39,7 +43,7 @@ ENV PATH="$GOPATH/bin:$PATH"
 
 ENV GO_POST_PROCESS_FILE="/usr/local/go/bin/gofmt -w"
 ENV PYTHON_POST_PROCESS_FILE="/usr/local/bin/yapf -i"
-ENV TS_POST_PROCESS_FILE="/usr/local/bin/prettier --write"
+ENV TS_POST_PROCESS_FILE="/usr/bin/prettier --write"
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
