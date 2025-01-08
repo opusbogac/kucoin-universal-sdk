@@ -8,52 +8,52 @@ import { RiskLimitAPIImpl, RiskLimitAPI } from '@generate/margin/risklimit/api_r
 import { CreditAPI, CreditAPIImpl } from '@generate/margin/credit/api_credit';
 import { MarketAPIImpl, MarketAPI } from '@generate/margin/market/api_market';
 
-export abstract class MarginService {
-    abstract getOrderApi(): OrderAPI;
+export interface MarginService {
+    getOrderApi(): OrderAPI;
 
-    abstract getDebitApi(): DebitAPI;
+    getDebitApi(): DebitAPI;
 
-    abstract getCreditApi(): CreditAPI;
+    getCreditApi(): CreditAPI;
 
-    abstract getMarketApi(): MarketAPI;
+    getMarketApi(): MarketAPI;
 
-    abstract getRiskLimitApi(): RiskLimitAPI;
+    getRiskLimitApi(): RiskLimitAPI;
 }
 
 export class MarginServiceImpl implements MarginService {
     private readonly transport: Transport;
-    private readonly order: OrderAPI;
-    private readonly debit: DebitAPI;
-    private readonly credit: CreditAPI;
-    private readonly market: MarketAPI;
-    private readonly riskLimit: RiskLimitAPI;
+    private readonly Order: OrderAPI;
+    private readonly Debit: DebitAPI;
+    private readonly Credit: CreditAPI;
+    private readonly Market: MarketAPI;
+    private readonly RiskLimit: RiskLimitAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.order = new OrderAPIImpl(transport);
-        this.debit = new DebitAPIImpl(transport);
-        this.credit = new CreditAPIImpl(transport);
-        this.market = new MarketAPIImpl(transport);
-        this.riskLimit = new RiskLimitAPIImpl(transport);
+        this.Order = new OrderAPIImpl(transport);
+        this.Debit = new DebitAPIImpl(transport);
+        this.Credit = new CreditAPIImpl(transport);
+        this.Market = new MarketAPIImpl(transport);
+        this.RiskLimit = new RiskLimitAPIImpl(transport);
     }
 
     getOrderApi(): OrderAPI {
-        return this.order;
+        return this.Order;
     }
 
     getDebitApi(): DebitAPI {
-        return this.debit;
+        return this.Debit;
     }
 
     getCreditApi(): CreditAPI {
-        return this.credit;
+        return this.Credit;
     }
 
     getMarketApi(): MarketAPI {
-        return this.market;
+        return this.Market;
     }
 
     getRiskLimitApi(): RiskLimitAPI {
-        return this.riskLimit;
+        return this.RiskLimit;
     }
 }

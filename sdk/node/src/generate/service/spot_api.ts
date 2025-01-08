@@ -5,28 +5,28 @@ import { Transport } from '@internal/interfaces/transport';
 import { MarketAPIImpl, MarketAPI } from '@generate/spot/market/api_market';
 import { OrderAPIImpl, OrderAPI } from '@generate/spot/order/api_order';
 
-export abstract class SpotService {
-    abstract getOrderApi(): OrderAPI;
+export interface SpotService {
+    getOrderApi(): OrderAPI;
 
-    abstract getMarketApi(): MarketAPI;
+    getMarketApi(): MarketAPI;
 }
 
 export class SpotServiceImpl implements SpotService {
     private readonly transport: Transport;
-    private readonly order: OrderAPI;
-    private readonly market: MarketAPI;
+    private readonly Order: OrderAPI;
+    private readonly Market: MarketAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.order = new OrderAPIImpl(transport);
-        this.market = new MarketAPIImpl(transport);
+        this.Order = new OrderAPIImpl(transport);
+        this.Market = new MarketAPIImpl(transport);
     }
 
     getOrderApi(): OrderAPI {
-        return this.order;
+        return this.Order;
     }
 
     getMarketApi(): MarketAPI {
-        return this.market;
+        return this.Market;
     }
 }

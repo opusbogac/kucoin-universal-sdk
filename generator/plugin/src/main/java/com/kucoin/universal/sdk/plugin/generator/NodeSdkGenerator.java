@@ -148,7 +148,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
     @Override
     public String formatMethodName(String name) {
-        return camelize(name, LOWERCASE_FIRST_LETTER);
+        return sanitizeName(name);
     }
 
     @Override
@@ -284,18 +284,25 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
     @Override
     public String toApiFilename(String name) {
-        String apiName;
-        String api = name.replaceAll("-", "_");
-        api = "api_" + underscore(api);
-        apiName = api;
-
+        String apiName = name.replaceAll("-", "_");
         switch (modeSwitch.getMode()) {
+            case WS: {
+                apiName = "ws_" + underscore(apiName);
+                break;
+            }
+            case API:
+            case ENTRY:
+            case TEST_TEMPLATE: {
+                apiName = "api_" + underscore(apiName);
+                break;
+            }
             case TEST:
             case WS_TEST: {
-                apiName = apiName + ".test";
+                apiName = "api_" + underscore(apiName) + ".test";
                 break;
             }
         }
+
         return apiName;
     }
 

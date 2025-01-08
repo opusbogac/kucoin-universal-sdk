@@ -2,31 +2,31 @@
 
 import { Transport } from '@internal/interfaces/transport';
 
-import { APIBrokerAPIImpl, APIBrokerAPI } from '@generate/broker/apibroker/api_a_pi_broker';
-import { NDBrokerAPI, NDBrokerAPIImpl } from '@generate/broker/ndbroker/api_n_d_broker';
+import { NDBrokerAPI, NDBrokerAPIImpl } from '@generate/broker/ndbroker/api_nd_broker';
+import { APIBrokerAPIImpl, APIBrokerAPI } from '@generate/broker/apibroker/api_api_broker';
 
-export abstract class BrokerService {
-    abstract getAPIBrokerApi(): APIBrokerAPI;
+export interface BrokerService {
+    getAPIBrokerApi(): APIBrokerAPI;
 
-    abstract getNDBrokerApi(): NDBrokerAPI;
+    getNDBrokerApi(): NDBrokerAPI;
 }
 
 export class BrokerServiceImpl implements BrokerService {
     private readonly transport: Transport;
-    private readonly aPIBroker: APIBrokerAPI;
-    private readonly nDBroker: NDBrokerAPI;
+    private readonly APIBroker: APIBrokerAPI;
+    private readonly NDBroker: NDBrokerAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.aPIBroker = new APIBrokerAPIImpl(transport);
-        this.nDBroker = new NDBrokerAPIImpl(transport);
+        this.APIBroker = new APIBrokerAPIImpl(transport);
+        this.NDBroker = new NDBrokerAPIImpl(transport);
     }
 
     getAPIBrokerApi(): APIBrokerAPI {
-        return this.aPIBroker;
+        return this.APIBroker;
     }
 
     getNDBrokerApi(): NDBrokerAPI {
-        return this.nDBroker;
+        return this.NDBroker;
     }
 }

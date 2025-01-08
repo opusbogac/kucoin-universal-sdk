@@ -50,7 +50,7 @@ export interface PositionsAPI {
     ): Promise<GetIsolatedMarginRiskLimitResp>;
 
     /**
-     * getPositionsHistory Get Positions History
+     * GetPositionsHistory Get Positions History
      * Description: This interface can query position history information records.
      * Documentation: https://www.kucoin.com/docs-new/api-3470254
      * +---------------------+---------+
@@ -63,10 +63,10 @@ export interface PositionsAPI {
      * | API-RATE-LIMIT      | 2       |
      * +---------------------+---------+
      */
-    getPositionsHistory(req: GetPositionsHistoryReq): Promise<GetPositionsHistoryResp>;
+    GetPositionsHistory(req: GetPositionsHistoryReq): Promise<GetPositionsHistoryResp>;
 
     /**
-     * getMaxWithdrawMargin Get Max Withdraw Margin
+     * GetMaxWithdrawMargin Get Max Withdraw Margin
      * Description: This interface can query the maximum amount of margin that the current position supports withdrawal.
      * Documentation: https://www.kucoin.com/docs-new/api-3470258
      * +---------------------+---------+
@@ -79,10 +79,10 @@ export interface PositionsAPI {
      * | API-RATE-LIMIT      | 10      |
      * +---------------------+---------+
      */
-    getMaxWithdrawMargin(req: GetMaxWithdrawMarginReq): Promise<GetMaxWithdrawMarginResp>;
+    GetMaxWithdrawMargin(req: GetMaxWithdrawMarginReq): Promise<GetMaxWithdrawMarginResp>;
 
     /**
-     * removeIsolatedMargin Remove Isolated Margin
+     * RemoveIsolatedMargin Remove Isolated Margin
      * Description: Remove Isolated Margin Manually.
      * Documentation: https://www.kucoin.com/docs-new/api-3470256
      * +---------------------+---------+
@@ -95,10 +95,10 @@ export interface PositionsAPI {
      * | API-RATE-LIMIT      | 10      |
      * +---------------------+---------+
      */
-    removeIsolatedMargin(req: RemoveIsolatedMarginReq): Promise<RemoveIsolatedMarginResp>;
+    RemoveIsolatedMargin(req: RemoveIsolatedMarginReq): Promise<RemoveIsolatedMarginResp>;
 
     /**
-     * getPositionDetails Get Position Details
+     * GetPositionDetails Get Position Details
      * Description: Get the position details of a specified position.
      * Documentation: https://www.kucoin.com/docs-new/api-3470252
      * +---------------------+---------+
@@ -111,7 +111,7 @@ export interface PositionsAPI {
      * | API-RATE-LIMIT      | 2       |
      * +---------------------+---------+
      */
-    getPositionDetails(req: GetPositionDetailsReq): Promise<GetPositionDetailsResp>;
+    GetPositionDetails(req: GetPositionDetailsReq): Promise<GetPositionDetailsResp>;
 
     /**
      * @deprecated
@@ -131,7 +131,7 @@ export interface PositionsAPI {
     modifyAutoDepositStatus(req: ModifyAutoDepositStatusReq): Promise<ModifyAutoDepositStatusResp>;
 
     /**
-     * addIsolatedMargin Add Isolated Margin
+     * AddIsolatedMargin Add Isolated Margin
      * Description: Add Isolated Margin Manually.
      * Documentation: https://www.kucoin.com/docs-new/api-3470257
      * +---------------------+---------+
@@ -144,7 +144,7 @@ export interface PositionsAPI {
      * | API-RATE-LIMIT      | 4       |
      * +---------------------+---------+
      */
-    addIsolatedMargin(req: AddIsolatedMarginReq): Promise<AddIsolatedMarginResp>;
+    AddIsolatedMargin(req: AddIsolatedMarginReq): Promise<AddIsolatedMarginResp>;
 
     /**
      * modifyIsolatedMarginRiskLimt Modify Isolated Margin Risk Limit
@@ -165,7 +165,7 @@ export interface PositionsAPI {
     ): Promise<ModifyIsolatedMarginRiskLimtResp>;
 
     /**
-     * getPositionList Get Position List
+     * GetPositionList Get Position List
      * Description: Get the position details of a specified position.
      * Documentation: https://www.kucoin.com/docs-new/api-3470253
      * +---------------------+---------+
@@ -178,10 +178,10 @@ export interface PositionsAPI {
      * | API-RATE-LIMIT      | 2       |
      * +---------------------+---------+
      */
-    getPositionList(req: GetPositionListReq): Promise<GetPositionListResp>;
+    GetPositionList(req: GetPositionListReq): Promise<GetPositionListResp>;
 
     /**
-     * modifyMarginLeverage Modify Cross Margin Leverage
+     * ModifyMarginLeverage Modify Cross Margin Leverage
      * Description: This interface can modify the current symbol’s cross-margin leverage multiple.
      * Documentation: https://www.kucoin.com/docs-new/api-3470261
      * +---------------------+---------+
@@ -194,7 +194,7 @@ export interface PositionsAPI {
      * | API-RATE-LIMIT      | 2       |
      * +---------------------+---------+
      */
-    modifyMarginLeverage(req: ModifyMarginLeverageReq): Promise<ModifyMarginLeverageResp>;
+    ModifyMarginLeverage(req: ModifyMarginLeverageReq): Promise<ModifyMarginLeverageResp>;
 
     /**
      * getCrossMarginLeverage Get Cross Margin Leverage
@@ -213,7 +213,7 @@ export interface PositionsAPI {
     getCrossMarginLeverage(req: GetCrossMarginLeverageReq): Promise<GetCrossMarginLeverageResp>;
 
     /**
-     * getMaxOpenSize Get Max Open Size
+     * GetMaxOpenSize Get Max Open Size
      * Description: Get Maximum Open Position Size.
      * Documentation: https://www.kucoin.com/docs-new/api-3470251
      * +---------------------+---------+
@@ -226,7 +226,7 @@ export interface PositionsAPI {
      * | API-RATE-LIMIT      | 2       |
      * +---------------------+---------+
      */
-    getMaxOpenSize(req: GetMaxOpenSizeReq): Promise<GetMaxOpenSizeResp>;
+    GetMaxOpenSize(req: GetMaxOpenSizeReq): Promise<GetMaxOpenSizeResp>;
 
     /**
      * switchMarginMode Switch Margin Mode
@@ -278,7 +278,7 @@ export class PositionsAPIImpl implements PositionsAPI {
         );
     }
 
-    getPositionsHistory(req: GetPositionsHistoryReq): Promise<GetPositionsHistoryResp> {
+    GetPositionsHistory(req: GetPositionsHistoryReq): Promise<GetPositionsHistoryResp> {
         return this.transport.call(
             'futures',
             false,
@@ -290,7 +290,7 @@ export class PositionsAPIImpl implements PositionsAPI {
         );
     }
 
-    getMaxWithdrawMargin(req: GetMaxWithdrawMarginReq): Promise<GetMaxWithdrawMarginResp> {
+    GetMaxWithdrawMargin(req: GetMaxWithdrawMarginReq): Promise<GetMaxWithdrawMarginResp> {
         return this.transport.call(
             'futures',
             false,
@@ -302,7 +302,7 @@ export class PositionsAPIImpl implements PositionsAPI {
         );
     }
 
-    removeIsolatedMargin(req: RemoveIsolatedMarginReq): Promise<RemoveIsolatedMarginResp> {
+    RemoveIsolatedMargin(req: RemoveIsolatedMarginReq): Promise<RemoveIsolatedMarginResp> {
         return this.transport.call(
             'futures',
             false,
@@ -314,7 +314,7 @@ export class PositionsAPIImpl implements PositionsAPI {
         );
     }
 
-    getPositionDetails(req: GetPositionDetailsReq): Promise<GetPositionDetailsResp> {
+    GetPositionDetails(req: GetPositionDetailsReq): Promise<GetPositionDetailsResp> {
         return this.transport.call(
             'futures',
             false,
@@ -338,7 +338,7 @@ export class PositionsAPIImpl implements PositionsAPI {
         );
     }
 
-    addIsolatedMargin(req: AddIsolatedMarginReq): Promise<AddIsolatedMarginResp> {
+    AddIsolatedMargin(req: AddIsolatedMarginReq): Promise<AddIsolatedMarginResp> {
         return this.transport.call(
             'futures',
             false,
@@ -364,7 +364,7 @@ export class PositionsAPIImpl implements PositionsAPI {
         );
     }
 
-    getPositionList(req: GetPositionListReq): Promise<GetPositionListResp> {
+    GetPositionList(req: GetPositionListReq): Promise<GetPositionListResp> {
         return this.transport.call(
             'futures',
             false,
@@ -376,7 +376,7 @@ export class PositionsAPIImpl implements PositionsAPI {
         );
     }
 
-    modifyMarginLeverage(req: ModifyMarginLeverageReq): Promise<ModifyMarginLeverageResp> {
+    ModifyMarginLeverage(req: ModifyMarginLeverageReq): Promise<ModifyMarginLeverageResp> {
         return this.transport.call(
             'futures',
             false,
@@ -400,7 +400,7 @@ export class PositionsAPIImpl implements PositionsAPI {
         );
     }
 
-    getMaxOpenSize(req: GetMaxOpenSizeReq): Promise<GetMaxOpenSizeResp> {
+    GetMaxOpenSize(req: GetMaxOpenSizeReq): Promise<GetMaxOpenSizeResp> {
         return this.transport.call(
             'futures',
             false,

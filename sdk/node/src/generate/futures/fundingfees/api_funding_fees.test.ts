@@ -7,9 +7,9 @@ import { GetCurrentFundingRateReq } from './model_get_current_funding_rate_req';
 import { RestResponse } from '@model/common';
 
 describe('Auto Test', () => {
-    test('getPublicFundingHistory request test', () => {
+    test('GetPublicFundingHistory request test', () => {
         /**
-         * getPublicFundingHistory
+         * GetPublicFundingHistory
          * Get Public Funding History
          * /api/v1/contract/funding-rates
          */
@@ -22,9 +22,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('getPublicFundingHistory response test', () => {
+    test('GetPublicFundingHistory response test', () => {
         /**
-         * getPublicFundingHistory
+         * GetPublicFundingHistory
          * Get Public Funding History
          * /api/v1/contract/funding-rates
          */
@@ -70,9 +70,9 @@ describe('Auto Test', () => {
         );
         console.log(resp);
     });
-    test('getCurrentFundingRate request test', () => {
+    test('GetCurrentFundingRate request test', () => {
         /**
-         * getCurrentFundingRate
+         * GetCurrentFundingRate
          * Get Current Funding Rate
          * /api/v1/funding-rate/{symbol}/current
          */
@@ -85,9 +85,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('getCurrentFundingRate response test', () => {
+    test('GetCurrentFundingRate response test', () => {
         /**
-         * getCurrentFundingRate
+         * GetCurrentFundingRate
          * Get Current Funding Rate
          * /api/v1/funding-rate/{symbol}/current
          */

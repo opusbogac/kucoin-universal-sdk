@@ -4,20 +4,20 @@ import { Transport } from '@internal/interfaces/transport';
 
 import { AffiliateAPIImpl, AffiliateAPI } from '@generate/affiliate/affiliate/api_affiliate';
 
-export abstract class AffiliateService {
-    abstract getAffiliateApi(): AffiliateAPI;
+export interface AffiliateService {
+    getAffiliateApi(): AffiliateAPI;
 }
 
 export class AffiliateServiceImpl implements AffiliateService {
     private readonly transport: Transport;
-    private readonly affiliate: AffiliateAPI;
+    private readonly Affiliate: AffiliateAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.affiliate = new AffiliateAPIImpl(transport);
+        this.Affiliate = new AffiliateAPIImpl(transport);
     }
 
     getAffiliateApi(): AffiliateAPI {
-        return this.affiliate;
+        return this.Affiliate;
     }
 }

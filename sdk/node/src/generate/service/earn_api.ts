@@ -4,20 +4,20 @@ import { Transport } from '@internal/interfaces/transport';
 
 import { EarnAPIImpl, EarnAPI } from '@generate/earn/earn/api_earn';
 
-export abstract class EarnService {
-    abstract getEarnApi(): EarnAPI;
+export interface EarnService {
+    getEarnApi(): EarnAPI;
 }
 
 export class EarnServiceImpl implements EarnService {
     private readonly transport: Transport;
-    private readonly earn: EarnAPI;
+    private readonly Earn: EarnAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.earn = new EarnAPIImpl(transport);
+        this.Earn = new EarnAPIImpl(transport);
     }
 
     getEarnApi(): EarnAPI {
-        return this.earn;
+        return this.Earn;
     }
 }

@@ -6,10 +6,10 @@ import { Transport } from '@internal/interfaces/transport';
 {{{.}}}
 {{/imports}}
 
-export abstract class {{api_entry_name}} {
+export interface {{api_entry_name}} {
 {{#api_entry_value}}
 
-    abstract get{{methodUppercase}}Api(): {{target_service}};
+    get{{methodUppercase}}Api(): {{target_service}};
 {{/api_entry_value}}
 }
 

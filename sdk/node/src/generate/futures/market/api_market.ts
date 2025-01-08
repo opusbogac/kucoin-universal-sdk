@@ -79,7 +79,7 @@ export interface MarketAPI {
     getPublicToken(): Promise<GetPublicTokenResp>;
 
     /**
-     * getAllSymbols Get All Symbols
+     * GetAllSymbols Get All Symbols
      * Description: Get detailed information of all contracts that can be traded. This API will return a list of tradable contracts, including some key parameters of the contract such as the symbol name, tick size, mark price,etc.
      * Documentation: https://www.kucoin.com/docs-new/api-3470220
      * +---------------------+---------+
@@ -92,7 +92,7 @@ export interface MarketAPI {
      * | API-RATE-LIMIT      | 3       |
      * +---------------------+---------+
      */
-    getAllSymbols(): Promise<GetAllSymbolsResp>;
+    GetAllSymbols(): Promise<GetAllSymbolsResp>;
 
     /**
      * getSymbol Get Symbol
@@ -342,7 +342,7 @@ export class MarketAPIImpl implements MarketAPI {
         );
     }
 
-    getAllSymbols(): Promise<GetAllSymbolsResp> {
+    GetAllSymbols(): Promise<GetAllSymbolsResp> {
         return this.transport.call(
             'futures',
             false,

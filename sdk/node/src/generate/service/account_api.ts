@@ -9,60 +9,60 @@ import { SubAccountAPIImpl, SubAccountAPI } from '@generate/account/subaccount/a
 import { WithdrawalAPIImpl, WithdrawalAPI } from '@generate/account/withdrawal/api_withdrawal';
 import { DepositAPIImpl, DepositAPI } from '@generate/account/deposit/api_deposit';
 
-export abstract class AccountService {
-    abstract getAccountApi(): AccountAPI;
+export interface AccountService {
+    getAccountApi(): AccountAPI;
 
-    abstract getDepositApi(): DepositAPI;
+    getDepositApi(): DepositAPI;
 
-    abstract getWithdrawalApi(): WithdrawalAPI;
+    getWithdrawalApi(): WithdrawalAPI;
 
-    abstract getFeeApi(): FeeAPI;
+    getFeeApi(): FeeAPI;
 
-    abstract getSubAccountApi(): SubAccountAPI;
+    getSubAccountApi(): SubAccountAPI;
 
-    abstract getTransferApi(): TransferAPI;
+    getTransferApi(): TransferAPI;
 }
 
 export class AccountServiceImpl implements AccountService {
     private readonly transport: Transport;
-    private readonly account: AccountAPI;
-    private readonly deposit: DepositAPI;
-    private readonly withdrawal: WithdrawalAPI;
-    private readonly fee: FeeAPI;
-    private readonly subAccount: SubAccountAPI;
-    private readonly transfer: TransferAPI;
+    private readonly Account: AccountAPI;
+    private readonly Deposit: DepositAPI;
+    private readonly Withdrawal: WithdrawalAPI;
+    private readonly Fee: FeeAPI;
+    private readonly SubAccount: SubAccountAPI;
+    private readonly Transfer: TransferAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.account = new AccountAPIImpl(transport);
-        this.deposit = new DepositAPIImpl(transport);
-        this.withdrawal = new WithdrawalAPIImpl(transport);
-        this.fee = new FeeAPIImpl(transport);
-        this.subAccount = new SubAccountAPIImpl(transport);
-        this.transfer = new TransferAPIImpl(transport);
+        this.Account = new AccountAPIImpl(transport);
+        this.Deposit = new DepositAPIImpl(transport);
+        this.Withdrawal = new WithdrawalAPIImpl(transport);
+        this.Fee = new FeeAPIImpl(transport);
+        this.SubAccount = new SubAccountAPIImpl(transport);
+        this.Transfer = new TransferAPIImpl(transport);
     }
 
     getAccountApi(): AccountAPI {
-        return this.account;
+        return this.Account;
     }
 
     getDepositApi(): DepositAPI {
-        return this.deposit;
+        return this.Deposit;
     }
 
     getWithdrawalApi(): WithdrawalAPI {
-        return this.withdrawal;
+        return this.Withdrawal;
     }
 
     getFeeApi(): FeeAPI {
-        return this.fee;
+        return this.Fee;
     }
 
     getSubAccountApi(): SubAccountAPI {
-        return this.subAccount;
+        return this.SubAccount;
     }
 
     getTransferApi(): TransferAPI {
-        return this.transfer;
+        return this.Transfer;
     }
 }

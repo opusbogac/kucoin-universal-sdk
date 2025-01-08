@@ -2,22 +2,22 @@
 
 import { Transport } from '@internal/interfaces/transport';
 
-import { VIPLendingAPI, VIPLendingAPIImpl } from '@generate/viplending/viplending/api_v_ip_lending';
+import { VIPLendingAPI, VIPLendingAPIImpl } from '@generate/viplending/viplending/api_vip_lending';
 
-export abstract class VIPLendingService {
-    abstract getVIPLendingApi(): VIPLendingAPI;
+export interface VIPLendingService {
+    getVIPLendingApi(): VIPLendingAPI;
 }
 
 export class VIPLendingServiceImpl implements VIPLendingService {
     private readonly transport: Transport;
-    private readonly vIPLending: VIPLendingAPI;
+    private readonly VIPLending: VIPLendingAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.vIPLending = new VIPLendingAPIImpl(transport);
+        this.VIPLending = new VIPLendingAPIImpl(transport);
     }
 
     getVIPLendingApi(): VIPLendingAPI {
-        return this.vIPLending;
+        return this.VIPLending;
     }
 }

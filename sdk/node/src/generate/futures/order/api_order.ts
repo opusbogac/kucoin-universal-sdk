@@ -56,7 +56,7 @@ export interface OrderAPI {
     getTradeHistory(req: GetTradeHistoryReq): Promise<GetTradeHistoryResp>;
 
     /**
-     * getOpenOrderValue Get Open Order Value
+     * GetOpenOrderValue Get Open Order Value
      * Description: You can query this endpoint to get the the total number and value of the all your active orders.
      * Documentation: https://www.kucoin.com/docs-new/api-3470250
      * +---------------------+---------+
@@ -69,7 +69,7 @@ export interface OrderAPI {
      * | API-RATE-LIMIT      | 10      |
      * +---------------------+---------+
      */
-    getOpenOrderValue(req: GetOpenOrderValueReq): Promise<GetOpenOrderValueResp>;
+    GetOpenOrderValue(req: GetOpenOrderValueReq): Promise<GetOpenOrderValueResp>;
 
     /**
      * getOrderByClientOid Get Order By ClientOid
@@ -121,7 +121,7 @@ export interface OrderAPI {
     cancelAllOrdersV1(req: CancelAllOrdersV1Req): Promise<CancelAllOrdersV1Resp>;
 
     /**
-     * getOrderList Get Order List
+     * GetOrderList Get Order List
      * Description: List your current orders.
      * Documentation: https://www.kucoin.com/docs-new/api-3470244
      * +---------------------+---------+
@@ -134,7 +134,7 @@ export interface OrderAPI {
      * | API-RATE-LIMIT      | 2       |
      * +---------------------+---------+
      */
-    getOrderList(req: GetOrderListReq): Promise<GetOrderListResp>;
+    GetOrderList(req: GetOrderListReq): Promise<GetOrderListResp>;
 
     /**
      * batchCancelOrders Batch Cancel Orders
@@ -233,7 +233,7 @@ export interface OrderAPI {
     addOrderTest(req: AddOrderTestReq): Promise<AddOrderTestResp>;
 
     /**
-     * getRecentClosedOrders Get Recent Closed Orders
+     * GetRecentClosedOrders Get Recent Closed Orders
      * Description: Get a list of recent 1000 closed orders in the last 24 hours.  If you need to get your recent traded order history with low latency, you may query this endpoint.
      * Documentation: https://www.kucoin.com/docs-new/api-3470246
      * +---------------------+---------+
@@ -246,7 +246,7 @@ export interface OrderAPI {
      * | API-RATE-LIMIT      | 5       |
      * +---------------------+---------+
      */
-    getRecentClosedOrders(req: GetRecentClosedOrdersReq): Promise<GetRecentClosedOrdersResp>;
+    GetRecentClosedOrders(req: GetRecentClosedOrdersReq): Promise<GetRecentClosedOrdersResp>;
 
     /**
      * getRecentTradeHistory Get Recent Trade History
@@ -297,7 +297,7 @@ export interface OrderAPI {
     cancelAllStopOrders(req: CancelAllStopOrdersReq): Promise<CancelAllStopOrdersResp>;
 
     /**
-     * getStopOrderList Get Stop Order List
+     * GetStopOrderList Get Stop Order List
      * Description: Get the un-triggered stop orders list. Stop orders that have been triggered can be queried through the general order interface
      * Documentation: https://www.kucoin.com/docs-new/api-3470247
      * +---------------------+---------+
@@ -310,7 +310,7 @@ export interface OrderAPI {
      * | API-RATE-LIMIT      | 6       |
      * +---------------------+---------+
      */
-    getStopOrderList(req: GetStopOrderListReq): Promise<GetStopOrderListResp>;
+    GetStopOrderList(req: GetStopOrderListReq): Promise<GetStopOrderListResp>;
 
     /**
      * cancelAllOrdersV3 Cancel All Orders
@@ -344,7 +344,7 @@ export class OrderAPIImpl implements OrderAPI {
         );
     }
 
-    getOpenOrderValue(req: GetOpenOrderValueReq): Promise<GetOpenOrderValueResp> {
+    GetOpenOrderValue(req: GetOpenOrderValueReq): Promise<GetOpenOrderValueResp> {
         return this.transport.call(
             'futures',
             false,
@@ -392,7 +392,7 @@ export class OrderAPIImpl implements OrderAPI {
         );
     }
 
-    getOrderList(req: GetOrderListReq): Promise<GetOrderListResp> {
+    GetOrderList(req: GetOrderListReq): Promise<GetOrderListResp> {
         return this.transport.call(
             'futures',
             false,
@@ -476,7 +476,7 @@ export class OrderAPIImpl implements OrderAPI {
         );
     }
 
-    getRecentClosedOrders(req: GetRecentClosedOrdersReq): Promise<GetRecentClosedOrdersResp> {
+    GetRecentClosedOrders(req: GetRecentClosedOrdersReq): Promise<GetRecentClosedOrdersResp> {
         return this.transport.call(
             'futures',
             false,
@@ -524,7 +524,7 @@ export class OrderAPIImpl implements OrderAPI {
         );
     }
 
-    getStopOrderList(req: GetStopOrderListReq): Promise<GetStopOrderListResp> {
+    GetStopOrderList(req: GetStopOrderListReq): Promise<GetStopOrderListResp> {
         return this.transport.call(
             'futures',
             false,

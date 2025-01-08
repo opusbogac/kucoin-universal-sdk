@@ -7,44 +7,44 @@ import { PositionsAPI, PositionsAPIImpl } from '@generate/futures/positions/api_
 import { OrderAPIImpl, OrderAPI } from '@generate/futures/order/api_order';
 import { FundingFeesAPIImpl, FundingFeesAPI } from '@generate/futures/fundingfees/api_funding_fees';
 
-export abstract class FuturesService {
-    abstract getOrderApi(): OrderAPI;
+export interface FuturesService {
+    getOrderApi(): OrderAPI;
 
-    abstract getPositionsApi(): PositionsAPI;
+    getPositionsApi(): PositionsAPI;
 
-    abstract getFundingFeesApi(): FundingFeesAPI;
+    getFundingFeesApi(): FundingFeesAPI;
 
-    abstract getMarketApi(): MarketAPI;
+    getMarketApi(): MarketAPI;
 }
 
 export class FuturesServiceImpl implements FuturesService {
     private readonly transport: Transport;
-    private readonly order: OrderAPI;
-    private readonly positions: PositionsAPI;
-    private readonly fundingFees: FundingFeesAPI;
-    private readonly market: MarketAPI;
+    private readonly Order: OrderAPI;
+    private readonly Positions: PositionsAPI;
+    private readonly FundingFees: FundingFeesAPI;
+    private readonly Market: MarketAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.order = new OrderAPIImpl(transport);
-        this.positions = new PositionsAPIImpl(transport);
-        this.fundingFees = new FundingFeesAPIImpl(transport);
-        this.market = new MarketAPIImpl(transport);
+        this.Order = new OrderAPIImpl(transport);
+        this.Positions = new PositionsAPIImpl(transport);
+        this.FundingFees = new FundingFeesAPIImpl(transport);
+        this.Market = new MarketAPIImpl(transport);
     }
 
     getOrderApi(): OrderAPI {
-        return this.order;
+        return this.Order;
     }
 
     getPositionsApi(): PositionsAPI {
-        return this.positions;
+        return this.Positions;
     }
 
     getFundingFeesApi(): FundingFeesAPI {
-        return this.fundingFees;
+        return this.FundingFees;
     }
 
     getMarketApi(): MarketAPI {
-        return this.market;
+        return this.Market;
     }
 }

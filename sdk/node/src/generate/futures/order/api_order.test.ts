@@ -69,9 +69,9 @@ describe('Auto Test', () => {
         );
         console.log(resp);
     });
-    test('getOpenOrderValue request test', () => {
+    test('GetOpenOrderValue request test', () => {
         /**
-         * getOpenOrderValue
+         * GetOpenOrderValue
          * Get Open Order Value
          * /api/v1/openOrderStatistics
          */
@@ -84,9 +84,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('getOpenOrderValue response test', () => {
+    test('GetOpenOrderValue response test', () => {
         /**
-         * getOpenOrderValue
+         * GetOpenOrderValue
          * Get Open Order Value
          * /api/v1/openOrderStatistics
          */
@@ -193,9 +193,9 @@ describe('Auto Test', () => {
         );
         console.log(resp);
     });
-    test('getOrderList request test', () => {
+    test('GetOrderList request test', () => {
         /**
-         * getOrderList
+         * GetOrderList
          * Get Order List
          * /api/v1/orders
          */
@@ -209,9 +209,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('getOrderList response test', () => {
+    test('GetOrderList response test', () => {
         /**
-         * getOrderList
+         * GetOrderList
          * Get Order List
          * /api/v1/orders
          */
@@ -414,9 +414,9 @@ describe('Auto Test', () => {
         );
         console.log(resp);
     });
-    test('getRecentClosedOrders request test', () => {
+    test('GetRecentClosedOrders request test', () => {
         /**
-         * getRecentClosedOrders
+         * GetRecentClosedOrders
          * Get Recent Closed Orders
          * /api/v1/recentDoneOrders
          */
@@ -429,9 +429,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('getRecentClosedOrders response test', () => {
+    test('GetRecentClosedOrders response test', () => {
         /**
-         * getRecentClosedOrders
+         * GetRecentClosedOrders
          * Get Recent Closed Orders
          * /api/v1/recentDoneOrders
          */
@@ -539,9 +539,9 @@ describe('Auto Test', () => {
         );
         console.log(resp);
     });
-    test('getStopOrderList request test', () => {
+    test('GetStopOrderList request test', () => {
         /**
-         * getStopOrderList
+         * GetStopOrderList
          * Get Stop Order List
          * /api/v1/stopOrders
          */
@@ -555,9 +555,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('getStopOrderList response test', () => {
+    test('GetStopOrderList response test', () => {
         /**
-         * getStopOrderList
+         * GetStopOrderList
          * Get Stop Order List
          * /api/v1/stopOrders
          */

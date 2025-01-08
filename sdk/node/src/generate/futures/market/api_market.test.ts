@@ -73,17 +73,17 @@ describe('Auto Test', () => {
          * /api/v1/bullet-public
          */
     });
-    test('getAllSymbols request test', () => {
+    test('GetAllSymbols request test', () => {
         /**
-         * getAllSymbols
+         * GetAllSymbols
          * Get All Symbols
          * /api/v1/contracts/active
          */
     });
 
-    test('getAllSymbols response test', () => {
+    test('GetAllSymbols response test', () => {
         /**
-         * getAllSymbols
+         * GetAllSymbols
          * Get All Symbols
          * /api/v1/contracts/active
          */

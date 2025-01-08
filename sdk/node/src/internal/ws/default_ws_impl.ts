@@ -1,24 +1,21 @@
 import { KucoinWSService } from '@api/api_ws';
 import { ClientOption } from '@model/client_option';
-import { SpotPublicWS, SpotPublicWSImpl } from '@generate/spot/spotpublic/api_spot_public';
+import { SpotPublicWS, SpotPublicWSImpl } from '@generate/spot/spotpublic/ws_spot_public';
 import { DomainType } from '@model/constant';
-import { SpotPrivateWS, SpotPrivateWSImpl } from '@generate/spot/spotprivate/api_spot_private';
-import {
-    MarginPublicWS,
-    MarginPublicWSImpl,
-} from '@generate/margin/marginpublic/api_margin_public';
+import { SpotPrivateWS, SpotPrivateWSImpl } from '@generate/spot/spotprivate/ws_spot_private';
+import { MarginPublicWS, MarginPublicWSImpl } from '@generate/margin/marginpublic/ws_margin_public';
 import {
     MarginPrivateWS,
     MarginPrivateWSImpl,
-} from '@generate/margin/marginprivate/api_margin_private';
+} from '@generate/margin/marginprivate/ws_margin_private';
 import {
     FuturesPublicWS,
     FuturesPublicWSImpl,
-} from '@generate/futures/futurespublic/api_futures_public';
+} from '@generate/futures/futurespublic/ws_futures_public';
 import {
     FuturesPrivateWS,
     FuturesPrivateWSImpl,
-} from '@generate/futures/futuresprivate/api_futures_private';
+} from '@generate/futures/futuresprivate/ws_futures_private';
 import { DefaultWsService } from '../infra/default_ws_service';
 import { SdkVersion } from '@generate/version';
 
