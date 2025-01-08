@@ -164,12 +164,6 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
     @Override
     public CodegenProperty fromProperty(String name, Schema p, boolean required) {
         CodegenProperty prop = super.fromProperty(name, p, required);
-        String cc = camelize(prop.name, LOWERCASE_FIRST_LETTER);
-        if (isReservedWord(cc)) {
-            cc = escapeReservedWord(cc);
-        }
-        prop.nameInCamelCase = cc;
-
         if (prop.defaultValue != null && prop.defaultValue.equalsIgnoreCase("undefined")) {
             prop.defaultValue = null;
         }
@@ -177,22 +171,11 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
         if (prop.isEnum) {
             List<EnumEntry> enums = new ArrayList<>();
 
-            Map<String, String> builderVars = new HashMap<>();
-
             List<Map<String, Object>> enumList;
             if (prop.openApiType.equalsIgnoreCase("array")) {
                 enumList = (List<Map<String, Object>>) prop.mostInnerItems.vendorExtensions.get("x-api-enum");
-
-                // list[XX.TypeEnum]
-                builderVars.put("prefix", "list[");
-                builderVars.put("suffix", "." + prop.enumName + "]");
-
             } else {
                 enumList = (List<Map<String, Object>>) prop.vendorExtensions.get("x-api-enum");
-
-                // XX.TypeEnum
-                builderVars.put("prefix", "");
-                builderVars.put("suffix", "." + prop.datatypeWithEnum);
             }
 
 
@@ -232,8 +215,6 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
             prop.allowableValues.put("values", values);
             prop.vendorExtensions.put("x-enum-varnames", names);
             prop.vendorExtensions.put("x-enum-descriptions", description);
-            prop.vendorExtensions.put("x-enum-builder-vars", builderVars);
-
             prop.vendorExtensions.put("x-enums", enums);
         }
 
