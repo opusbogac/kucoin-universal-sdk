@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetStopOrdersListItems implements Serializable<GetStopOrdersListItems> {
     /**
      * Order ID, the ID of an order.

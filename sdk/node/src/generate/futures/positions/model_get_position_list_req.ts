@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetPositionListReq implements Serializable<GetPositionListReq> {
     /**
      * Currency code, Please refer to [rootSymbol](https://www.kucoin.com/docs-new/api-221752070) , such as USDT,XBT. Query all positions when empty

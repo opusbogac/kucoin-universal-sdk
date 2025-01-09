@@ -4,6 +4,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class IsolatedMarginPositionChangeAssetsValue
     implements Serializable<IsolatedMarginPositionChangeAssetsValue>
 {
@@ -32,6 +33,7 @@ export class IsolatedMarginPositionChangeAssetsValue
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): IsolatedMarginPositionChangeAssetsValue {
         return plainToInstance(IsolatedMarginPositionChangeAssetsValue, jsonObject);
     }

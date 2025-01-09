@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetDepositListData } from './model_get_deposit_list_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetDepositListResp implements Response<GetDepositListResp, RestResponse> {
     /**
      *

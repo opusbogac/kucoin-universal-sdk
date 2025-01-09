@@ -4,6 +4,7 @@ import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class MarginModeEvent implements Response<MarginModeEvent, WsMessage> {
     /**
      * The SYMBOL is the key with value  \"CROSS\" or \"ISOLATED\"
@@ -27,6 +28,7 @@ export class MarginModeEvent implements Response<MarginModeEvent, WsMessage> {
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): MarginModeEvent {
         return plainToInstance(MarginModeEvent, jsonObject);
     }

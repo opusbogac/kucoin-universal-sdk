@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetSpotIndexPriceDataList } from './model_get_spot_index_price_data_list';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetSpotIndexPriceResp implements Response<GetSpotIndexPriceResp, RestResponse> {
     /**
      *

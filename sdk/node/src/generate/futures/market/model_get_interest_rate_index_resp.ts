@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetInterestRateIndexDataList } from './model_get_interest_rate_index_data_list';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetInterestRateIndexResp implements Response<GetInterestRateIndexResp, RestResponse> {
     /**
      *

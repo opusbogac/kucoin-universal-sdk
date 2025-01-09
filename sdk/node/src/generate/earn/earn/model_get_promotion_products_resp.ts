@@ -4,6 +4,7 @@ import { GetPromotionProductsData } from './model_get_promotion_products_data';
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetPromotionProductsResp implements Response<GetPromotionProductsResp, RestResponse> {
     /**
      *

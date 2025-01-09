@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetAllTickersData implements Serializable<GetAllTickersData> {
     /**
      * Sequence number, used to judge whether the messages pushed by Websocket is continuous.

@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetBorrowHistoryItems } from './model_get_borrow_history_items';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetBorrowHistoryResp implements Response<GetBorrowHistoryResp, RestResponse> {
     /**
      *

@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetAccountDetailLtv implements Serializable<GetAccountDetailLtv> {
     /**
      * LTV of Restricted Transfers to Funding Account

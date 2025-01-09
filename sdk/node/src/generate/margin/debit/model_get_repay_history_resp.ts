@@ -4,6 +4,7 @@ import { GetRepayHistoryItems } from './model_get_repay_history_items';
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetRepayHistoryResp implements Response<GetRepayHistoryResp, RestResponse> {
     /**
      *

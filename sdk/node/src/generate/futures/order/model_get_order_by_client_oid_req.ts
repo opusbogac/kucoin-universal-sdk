@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetOrderByClientOidReq implements Serializable<GetOrderByClientOidReq> {
     /**
      * The user self-defined order id.

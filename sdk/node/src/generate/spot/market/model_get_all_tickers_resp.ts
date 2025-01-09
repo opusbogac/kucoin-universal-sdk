@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetAllTickersTicker } from './model_get_all_tickers_ticker';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetAllTickersResp implements Response<GetAllTickersResp, RestResponse> {
     /**
      * timestamp

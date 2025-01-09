@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetSymbolsWithOpenOrderReq implements Serializable<GetSymbolsWithOpenOrderReq> {
     /**
      * Cross Margin: MARGIN_TRADE, Isolated Margin: MARGIN_ISOLATED_TRADE

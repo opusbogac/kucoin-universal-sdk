@@ -7,6 +7,7 @@ import { SymbolSnapshotDataMarketChange24h } from './model_symbol_snapshot_data_
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class SymbolSnapshotData implements Serializable<SymbolSnapshotData> {
     /**
      *
@@ -153,6 +154,7 @@ export class SymbolSnapshotData implements Serializable<SymbolSnapshotData> {
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): SymbolSnapshotData {
         return plainToInstance(SymbolSnapshotData, jsonObject);
     }

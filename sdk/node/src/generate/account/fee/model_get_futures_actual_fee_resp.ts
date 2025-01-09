@@ -3,6 +3,7 @@
 import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetFuturesActualFeeResp implements Response<GetFuturesActualFeeResp, RestResponse> {
     /**
      * The unique identity of the trading pair and will not change even if the trading pair is renamed

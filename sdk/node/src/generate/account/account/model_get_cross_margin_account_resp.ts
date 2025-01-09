@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetCrossMarginAccountAccounts } from './model_get_cross_margin_account_accounts';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetCrossMarginAccountResp
     implements Response<GetCrossMarginAccountResp, RestResponse>
 {

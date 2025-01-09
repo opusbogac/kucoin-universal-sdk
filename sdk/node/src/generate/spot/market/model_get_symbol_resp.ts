@@ -3,6 +3,7 @@
 import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetSymbolResp implements Response<GetSymbolResp, RestResponse> {
     /**
      * unique code of a symbol, it would not change after renaming

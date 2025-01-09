@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetStakingProductsData } from './model_get_staking_products_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetStakingProductsResp implements Response<GetStakingProductsResp, RestResponse> {
     /**
      *

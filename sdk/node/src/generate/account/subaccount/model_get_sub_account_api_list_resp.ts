@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetSubAccountApiListData } from './model_get_sub_account_api_list_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetSubAccountApiListResp implements Response<GetSubAccountApiListResp, RestResponse> {
     /**
      *

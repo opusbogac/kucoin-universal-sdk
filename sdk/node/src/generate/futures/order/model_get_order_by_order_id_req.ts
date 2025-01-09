@@ -3,6 +3,7 @@
 import { instanceToPlain, plainToInstance, Expose } from 'class-transformer';
 import 'reflect-metadata';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetOrderByOrderIdReq implements Serializable<GetOrderByOrderIdReq> {
     /**
      *

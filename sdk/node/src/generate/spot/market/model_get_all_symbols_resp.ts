@@ -4,6 +4,7 @@ import { GetAllSymbolsData } from './model_get_all_symbols_data';
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetAllSymbolsResp implements Response<GetAllSymbolsResp, RestResponse> {
     /**
      *

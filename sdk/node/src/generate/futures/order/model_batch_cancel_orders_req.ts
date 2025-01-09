@@ -3,6 +3,7 @@
 import { BatchCancelOrdersClientOidsList } from './model_batch_cancel_orders_client_oids_list';
 import { Type, instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class BatchCancelOrdersReq implements Serializable<BatchCancelOrdersReq> {
     /**
      * the list of orderId

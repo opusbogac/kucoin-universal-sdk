@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetIsolatedMarginAccountListV1Assets } from './model_get_isolated_margin_account_list_v1_assets';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetIsolatedMarginAccountListV1Resp
     implements Response<GetIsolatedMarginAccountListV1Resp, RestResponse>
 {

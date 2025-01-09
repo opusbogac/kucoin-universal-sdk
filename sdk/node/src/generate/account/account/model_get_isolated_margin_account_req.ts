@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetIsolatedMarginAccountReq implements Serializable<GetIsolatedMarginAccountReq> {
     /**
      * For isolated trading pairs, query all without passing

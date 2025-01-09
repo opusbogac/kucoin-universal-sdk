@@ -4,6 +4,7 @@ import { GetSubAccountItems } from './model_get_sub_account_items';
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetSubAccountResp implements Response<GetSubAccountResp, RestResponse> {
     /**
      * Current page

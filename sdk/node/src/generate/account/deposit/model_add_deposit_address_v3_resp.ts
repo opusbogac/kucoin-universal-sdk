@@ -3,6 +3,7 @@
 import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class AddDepositAddressV3Resp implements Response<AddDepositAddressV3Resp, RestResponse> {
     /**
      * Deposit address

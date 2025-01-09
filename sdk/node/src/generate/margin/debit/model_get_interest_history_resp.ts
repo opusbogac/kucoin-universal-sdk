@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetInterestHistoryItems } from './model_get_interest_history_items';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetInterestHistoryResp implements Response<GetInterestHistoryResp, RestResponse> {
     /**
      *

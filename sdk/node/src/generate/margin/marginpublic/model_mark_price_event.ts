@@ -4,6 +4,7 @@ import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class MarkPriceEvent implements Response<MarkPriceEvent, WsMessage> {
     /**
      *
@@ -39,6 +40,7 @@ export class MarkPriceEvent implements Response<MarkPriceEvent, WsMessage> {
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): MarkPriceEvent {
         return plainToInstance(MarkPriceEvent, jsonObject);
     }

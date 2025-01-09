@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetSpotAccountListData } from './model_get_spot_account_list_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetSpotAccountListResp implements Response<GetSpotAccountListResp, RestResponse> {
     /**
      *

@@ -3,6 +3,7 @@
 import { BatchAddOrdersOrderList } from './model_batch_add_orders_order_list';
 import { Type, instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class BatchAddOrdersReq implements Serializable<BatchAddOrdersReq> {
     /**
      * Order List

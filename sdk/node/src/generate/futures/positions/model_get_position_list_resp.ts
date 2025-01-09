@@ -4,6 +4,7 @@ import { GetPositionListData } from './model_get_position_list_data';
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetPositionListResp implements Response<GetPositionListResp, RestResponse> {
     /**
      *

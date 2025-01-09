@@ -3,6 +3,7 @@
 import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class CancelAllOrdersV3Resp implements Response<CancelAllOrdersV3Resp, RestResponse> {
     /**
      * Unique ID of the cancelled order

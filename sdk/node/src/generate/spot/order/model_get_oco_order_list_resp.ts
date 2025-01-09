@@ -4,6 +4,7 @@ import { GetOcoOrderListItems } from './model_get_oco_order_list_items';
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetOcoOrderListResp implements Response<GetOcoOrderListResp, RestResponse> {
     /**
      *

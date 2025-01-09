@@ -69,8 +69,8 @@ export interface Client {
  * DefaultClient provides the default implementation of the Client interface.
  */
 export class DefaultClient implements Client {
-    private restImpl: KucoinRestService;
-    private wsImpl: KucoinWSService;
+    private readonly restImpl: KucoinRestService;
+    private readonly wsImpl: KucoinWSService;
 
     constructor(op: ClientOption) {
         this.restImpl = new DefaultKucoinRestAPIImpl(op);

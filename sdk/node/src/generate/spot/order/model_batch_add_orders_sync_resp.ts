@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { BatchAddOrdersSyncData } from './model_batch_add_orders_sync_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class BatchAddOrdersSyncResp implements Response<BatchAddOrdersSyncResp, RestResponse> {
     /**
      *

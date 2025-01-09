@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetOpenOrdersData } from './model_get_open_orders_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetOpenOrdersResp implements Response<GetOpenOrdersResp, RestResponse> {
     /**
      *

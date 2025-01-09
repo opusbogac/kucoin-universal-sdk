@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetFuturesAccountTransferOutLedgerItems } from './model_get_futures_account_transfer_out_ledger_items';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetFuturesAccountTransferOutLedgerResp
     implements Response<GetFuturesAccountTransferOutLedgerResp, RestResponse>
 {

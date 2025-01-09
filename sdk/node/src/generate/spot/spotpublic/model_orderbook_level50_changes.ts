@@ -4,6 +4,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class OrderbookLevel50Changes implements Serializable<OrderbookLevel50Changes> {
     /**
      *
@@ -22,6 +23,7 @@ export class OrderbookLevel50Changes implements Serializable<OrderbookLevel50Cha
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): OrderbookLevel50Changes {
         return plainToInstance(OrderbookLevel50Changes, jsonObject);
     }

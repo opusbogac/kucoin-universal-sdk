@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetStopOrdersListReq implements Serializable<GetStopOrdersListReq> {
     /**
      * Only list orders for a specific symbol

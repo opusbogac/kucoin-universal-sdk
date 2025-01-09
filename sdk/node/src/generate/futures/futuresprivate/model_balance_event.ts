@@ -4,6 +4,7 @@ import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class BalanceEvent implements Response<BalanceEvent, WsMessage> {
     /**
      * Margin of the cross margin position
@@ -83,6 +84,7 @@ export class BalanceEvent implements Response<BalanceEvent, WsMessage> {
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): BalanceEvent {
         return plainToInstance(BalanceEvent, jsonObject);
     }

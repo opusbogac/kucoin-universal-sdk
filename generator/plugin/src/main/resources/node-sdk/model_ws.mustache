@@ -8,10 +8,12 @@ import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 {{#vendorExtensions.x-response-model}}
 import { Response } from '@internal/interfaces/response';
+
 export class {{classname}} implements  Response<{{classname}}, WsMessage>{
 {{/vendorExtensions.x-response-model}}
 {{^vendorExtensions.x-response-model}}
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class {{classname}} implements Serializable<{{classname}}>{
 {{/vendorExtensions.x-response-model}}
 
@@ -60,6 +62,7 @@ export class {{classname}} implements Serializable<{{classname}}>{
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): {{classname}} {
         return plainToInstance( {{classname}}, jsonObject);
     }

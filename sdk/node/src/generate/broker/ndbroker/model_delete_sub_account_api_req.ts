@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class DeleteSubAccountAPIReq implements Serializable<DeleteSubAccountAPIReq> {
     /**
      * Sub-account UID

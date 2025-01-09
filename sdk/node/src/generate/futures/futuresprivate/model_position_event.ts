@@ -4,6 +4,7 @@ import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class PositionEvent implements Response<PositionEvent, WsMessage> {
     /**
      * Symbol of the contract, Please refer to [Get Symbol endpoint: symbol](https://www.kucoin.com/docs-new/api-221752070)
@@ -207,6 +208,7 @@ export class PositionEvent implements Response<PositionEvent, WsMessage> {
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): PositionEvent {
         return plainToInstance(PositionEvent, jsonObject);
     }

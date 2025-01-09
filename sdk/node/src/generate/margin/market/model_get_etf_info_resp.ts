@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetETFInfoData } from './model_get_etf_info_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetETFInfoResp implements Response<GetETFInfoResp, RestResponse> {
     /**
      *

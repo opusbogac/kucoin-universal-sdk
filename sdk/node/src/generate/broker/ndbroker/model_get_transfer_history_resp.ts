@@ -3,6 +3,7 @@
 import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetTransferHistoryResp implements Response<GetTransferHistoryResp, RestResponse> {
     /**
      * Transfer Order ID

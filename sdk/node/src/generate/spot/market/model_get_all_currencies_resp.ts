@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetAllCurrenciesData } from './model_get_all_currencies_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetAllCurrenciesResp implements Response<GetAllCurrenciesResp, RestResponse> {
     /**
      *

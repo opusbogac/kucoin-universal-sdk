@@ -4,6 +4,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class AccountRelationContext implements Serializable<AccountRelationContext> {
     /**
      *
@@ -22,6 +23,7 @@ export class AccountRelationContext implements Serializable<AccountRelationConte
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): AccountRelationContext {
         return plainToInstance(AccountRelationContext, jsonObject);
     }

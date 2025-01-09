@@ -3,6 +3,7 @@
 import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetRebaseResp implements Response<GetRebaseResp, RestResponse> {
     /**
      * Rebate order file (link is valid for 1 day)

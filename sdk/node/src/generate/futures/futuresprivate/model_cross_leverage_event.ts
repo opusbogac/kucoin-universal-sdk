@@ -5,6 +5,7 @@ import { CrossLeverageDataValue } from './model_cross_leverage_data_value';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class CrossLeverageEvent implements Response<CrossLeverageEvent, WsMessage> {
     /**
      *

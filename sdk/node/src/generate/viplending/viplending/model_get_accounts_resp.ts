@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetAccountsData } from './model_get_accounts_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetAccountsResp implements Response<GetAccountsResp, RestResponse> {
     /**
      *

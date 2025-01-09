@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetLoanMarketInterestRateData } from './model_get_loan_market_interest_rate_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetLoanMarketInterestRateResp
     implements Response<GetLoanMarketInterestRateResp, RestResponse>
 {

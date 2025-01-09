@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class ModifySubAccountApiReq implements Serializable<ModifySubAccountApiReq> {
     /**
      * Password(Must contain 7-32 characters. Cannot contain any spaces.)

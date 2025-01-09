@@ -5,6 +5,7 @@ import { GetFuturesSubAccountListV2Summary } from './model_get_futures_sub_accou
 import { GetFuturesSubAccountListV2Accounts } from './model_get_futures_sub_account_list_v2_accounts';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetFuturesSubAccountListV2Resp
     implements Response<GetFuturesSubAccountListV2Resp, RestResponse>
 {

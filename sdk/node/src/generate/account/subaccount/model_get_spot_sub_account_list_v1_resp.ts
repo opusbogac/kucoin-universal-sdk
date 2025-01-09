@@ -4,6 +4,7 @@ import { GetSpotSubAccountListV1Data } from './model_get_spot_sub_account_list_v
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetSpotSubAccountListV1Resp
     implements Response<GetSpotSubAccountListV1Resp, RestResponse>
 {

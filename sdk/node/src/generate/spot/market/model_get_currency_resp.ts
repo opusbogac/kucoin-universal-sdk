@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetCurrencyChains } from './model_get_currency_chains';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetCurrencyResp implements Response<GetCurrencyResp, RestResponse> {
     /**
      * A unique currency code that will never change

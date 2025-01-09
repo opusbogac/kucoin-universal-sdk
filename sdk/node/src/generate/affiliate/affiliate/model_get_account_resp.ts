@@ -6,6 +6,7 @@ import { GetAccountLtv } from './model_get_account_ltv';
 import { GetAccountOrders } from './model_get_account_orders';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetAccountResp implements Response<GetAccountResp, RestResponse> {
     /**
      * Master account UID

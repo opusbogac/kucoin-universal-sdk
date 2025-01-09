@@ -4,6 +4,7 @@ import { GetCrossMarginSymbolsItems } from './model_get_cross_margin_symbols_ite
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetCrossMarginSymbolsResp
     implements Response<GetCrossMarginSymbolsResp, RestResponse>
 {

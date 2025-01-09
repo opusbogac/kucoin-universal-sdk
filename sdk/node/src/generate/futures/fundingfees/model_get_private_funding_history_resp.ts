@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetPrivateFundingHistoryDataList } from './model_get_private_funding_history_data_list';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetPrivateFundingHistoryResp
     implements Response<GetPrivateFundingHistoryResp, RestResponse>
 {

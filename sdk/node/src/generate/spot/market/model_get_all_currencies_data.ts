@@ -3,6 +3,7 @@
 import { GetAllCurrenciesDataChains } from './model_get_all_currencies_data_chains';
 import { Type, instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetAllCurrenciesData implements Serializable<GetAllCurrenciesData> {
     /**
      * A unique currency code that will never change

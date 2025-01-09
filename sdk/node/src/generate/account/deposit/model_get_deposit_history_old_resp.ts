@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetDepositHistoryOldItems } from './model_get_deposit_history_old_items';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetDepositHistoryOldResp implements Response<GetDepositHistoryOldResp, RestResponse> {
     /**
      * current page

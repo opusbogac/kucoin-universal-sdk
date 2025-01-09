@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetSpotActualFeeData } from './model_get_spot_actual_fee_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetSpotActualFeeResp implements Response<GetSpotActualFeeResp, RestResponse> {
     /**
      *

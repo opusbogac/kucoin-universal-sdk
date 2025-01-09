@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class AddSubAccountReq implements Serializable<AddSubAccountReq> {
     /**
      * Password(7-24 characters, must contain letters and numbers, cannot only contain numbers or include special characters)

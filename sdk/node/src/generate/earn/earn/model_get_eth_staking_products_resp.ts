@@ -4,6 +4,7 @@ import { GetETHStakingProductsData } from './model_get_eth_staking_products_data
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetETHStakingProductsResp
     implements Response<GetETHStakingProductsResp, RestResponse>
 {

@@ -3,6 +3,7 @@
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import 'reflect-metadata';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetOrderByClientOidOldReq implements Serializable<GetOrderByClientOidOldReq> {
     /**
      * Unique order id created by users to identify their orders

@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetTradeHistoryReq implements Serializable<GetTradeHistoryReq> {
     /**
      * List fills for a specific order only (If you specify orderId, other parameters can be ignored)

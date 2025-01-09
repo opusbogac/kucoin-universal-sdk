@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetSpotSubAccountListV1DataMainAccounts
     implements Serializable<GetSpotSubAccountListV1DataMainAccounts>
 {

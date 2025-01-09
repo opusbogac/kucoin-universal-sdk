@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetPurchaseOrdersItems } from './model_get_purchase_orders_items';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetPurchaseOrdersResp implements Response<GetPurchaseOrdersResp, RestResponse> {
     /**
      * Current Page

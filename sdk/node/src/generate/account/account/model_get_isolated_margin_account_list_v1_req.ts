@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetIsolatedMarginAccountListV1Req
     implements Serializable<GetIsolatedMarginAccountListV1Req>
 {

@@ -3,6 +3,7 @@
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import 'reflect-metadata';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetMarkPriceReq implements Serializable<GetMarkPriceReq> {
     /**
      * Symbol of the contract, Please refer to [Get Symbol endpoint: symbol](https://www.kucoin.com/docs-new/api-3470220)

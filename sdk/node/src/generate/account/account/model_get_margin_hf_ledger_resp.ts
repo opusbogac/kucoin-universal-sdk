@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetMarginHFLedgerData } from './model_get_margin_hf_ledger_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetMarginHFLedgerResp implements Response<GetMarginHFLedgerResp, RestResponse> {
     /**
      *

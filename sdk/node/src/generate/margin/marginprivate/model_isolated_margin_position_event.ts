@@ -5,6 +5,7 @@ import { IsolatedMarginPositionChangeAssetsValue } from './model_isolated_margin
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class IsolatedMarginPositionEvent
     implements Response<IsolatedMarginPositionEvent, WsMessage>
 {
@@ -50,6 +51,7 @@ export class IsolatedMarginPositionEvent
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): IsolatedMarginPositionEvent {
         return plainToInstance(IsolatedMarginPositionEvent, jsonObject);
     }

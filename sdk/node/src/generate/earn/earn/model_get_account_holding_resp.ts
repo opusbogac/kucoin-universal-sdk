@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetAccountHoldingItems } from './model_get_account_holding_items';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetAccountHoldingResp implements Response<GetAccountHoldingResp, RestResponse> {
     /**
      * total number

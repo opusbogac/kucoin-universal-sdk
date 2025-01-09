@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetPublicTokenInstanceServers implements Serializable<GetPublicTokenInstanceServers> {
     /**
      * Websocket domain URL, It is recommended to use a dynamic URL as the URL may change

@@ -4,6 +4,7 @@ import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class InstrumentEvent implements Response<InstrumentEvent, WsMessage> {
     /**
      * Granularity (predicted funding rate: 1-min granularity: 60000; Funding rate: 8-hours granularity: 28800000. )
@@ -43,6 +44,7 @@ export class InstrumentEvent implements Response<InstrumentEvent, WsMessage> {
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): InstrumentEvent {
         return plainToInstance(InstrumentEvent, jsonObject);
     }

@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetPositionsHistoryItems } from './model_get_positions_history_items';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetPositionsHistoryResp implements Response<GetPositionsHistoryResp, RestResponse> {
     /**
      * Current page number

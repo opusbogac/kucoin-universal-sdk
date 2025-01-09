@@ -20,7 +20,7 @@ import { DefaultWsService } from '../infra/default_ws_service';
 import { SdkVersion } from '@generate/version';
 
 export class KucoinDefaultWsImpl implements KucoinWSService {
-    private options: ClientOption;
+    private readonly options: ClientOption;
 
     constructor(options: ClientOption) {
         this.options = options;

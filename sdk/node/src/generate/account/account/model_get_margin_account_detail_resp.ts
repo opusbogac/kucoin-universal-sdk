@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetMarginAccountDetailAccounts } from './model_get_margin_account_detail_accounts';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetMarginAccountDetailResp
     implements Response<GetMarginAccountDetailResp, RestResponse>
 {

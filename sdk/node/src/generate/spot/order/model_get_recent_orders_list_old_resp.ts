@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetRecentOrdersListOldData } from './model_get_recent_orders_list_old_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetRecentOrdersListOldResp
     implements Response<GetRecentOrdersListOldResp, RestResponse>
 {

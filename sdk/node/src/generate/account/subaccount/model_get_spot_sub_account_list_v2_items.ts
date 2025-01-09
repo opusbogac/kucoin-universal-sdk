@@ -5,6 +5,7 @@ import { Type, instanceToPlain, plainToInstance } from 'class-transformer';
 import { GetSpotSubAccountListV2ItemsMainAccounts } from './model_get_spot_sub_account_list_v2_items_main_accounts';
 import { GetSpotSubAccountListV2ItemsTradeAccounts } from './model_get_spot_sub_account_list_v2_items_trade_accounts';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetSpotSubAccountListV2Items implements Serializable<GetSpotSubAccountListV2Items> {
     /**
      * The user ID of the sub-user.

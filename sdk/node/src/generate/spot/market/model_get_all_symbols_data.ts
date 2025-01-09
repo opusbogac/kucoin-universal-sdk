@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetAllSymbolsData implements Serializable<GetAllSymbolsData> {
     /**
      * unique code of a symbol, it would not change after renaming

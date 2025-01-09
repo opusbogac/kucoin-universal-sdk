@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetAnnouncementsItems } from './model_get_announcements_items';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetAnnouncementsResp implements Response<GetAnnouncementsResp, RestResponse> {
     /**
      * Total Number

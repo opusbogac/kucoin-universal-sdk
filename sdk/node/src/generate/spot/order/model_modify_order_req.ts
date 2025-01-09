@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class ModifyOrderReq implements Serializable<ModifyOrderReq> {
     /**
      * The old client order id,orderId and clientOid must choose one

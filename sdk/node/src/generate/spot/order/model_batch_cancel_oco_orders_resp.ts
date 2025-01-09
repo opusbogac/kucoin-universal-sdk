@@ -3,6 +3,7 @@
 import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class BatchCancelOcoOrdersResp implements Response<BatchCancelOcoOrdersResp, RestResponse> {
     /**
      * List of two order IDs related to the canceled OCO order

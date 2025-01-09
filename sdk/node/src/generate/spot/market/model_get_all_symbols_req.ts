@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetAllSymbolsReq implements Serializable<GetAllSymbolsReq> {
     /**
      * [The trading market](https://www.kucoin.com/docs-new/api-222921786)

@@ -4,6 +4,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class SymbolSnapshotDataMarketChange4h
     implements Serializable<SymbolSnapshotDataMarketChange4h>
 {
@@ -44,6 +45,7 @@ export class SymbolSnapshotDataMarketChange4h
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): SymbolSnapshotDataMarketChange4h {
         return plainToInstance(SymbolSnapshotDataMarketChange4h, jsonObject);
     }

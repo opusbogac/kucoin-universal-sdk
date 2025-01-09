@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class BatchCancelOcoOrdersReq implements Serializable<BatchCancelOcoOrdersReq> {
     /**
      * Specify the order id, there can be multiple orders, separated by commas. If not passed, all oco orders will be canceled by default.

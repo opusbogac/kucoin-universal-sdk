@@ -3,6 +3,7 @@
 import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class WithdrawalV1Resp implements Response<WithdrawalV1Resp, RestResponse> {
     /**
      * Withdrawal id, a unique ID for a withdrawal

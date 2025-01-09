@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetCrossMarginAccountReq implements Serializable<GetCrossMarginAccountReq> {
     /**
      * quote currency, currently only supports USDT, KCS, BTC, USDT as default

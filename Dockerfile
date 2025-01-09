@@ -43,7 +43,7 @@ ENV PATH="$GOPATH/bin:$PATH"
 
 ENV GO_POST_PROCESS_FILE="/usr/local/go/bin/gofmt -w"
 ENV PYTHON_POST_PROCESS_FILE="/usr/local/bin/yapf -i"
-ENV TS_POST_PROCESS_FILE="/usr/bin/prettier --write"
+ENV TS_POST_PROCESS_FILE="/usr/bin/prettier --write --semi --single-quote --tab-width 4 --trailing-comma all --bracket-spacing --arrow-parens always --end-of-line lf --print-width 100"
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 

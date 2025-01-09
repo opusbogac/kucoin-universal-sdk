@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetDepositAddressV3Req implements Serializable<GetDepositAddressV3Req> {
     /**
      * currency

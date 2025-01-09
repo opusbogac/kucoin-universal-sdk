@@ -5,6 +5,7 @@ import { AccountRelationContext } from './model_account_relation_context';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class AccountEvent implements Response<AccountEvent, WsMessage> {
     /**
      * Account ID
@@ -68,6 +69,7 @@ export class AccountEvent implements Response<AccountEvent, WsMessage> {
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): AccountEvent {
         return plainToInstance(AccountEvent, jsonObject);
     }

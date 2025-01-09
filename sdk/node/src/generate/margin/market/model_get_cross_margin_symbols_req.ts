@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetCrossMarginSymbolsReq implements Serializable<GetCrossMarginSymbolsReq> {
     /**
      * If not provided, all cross margin symbol will be queried. If provided, only the specified symbol will be queried.

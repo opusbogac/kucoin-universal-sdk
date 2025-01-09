@@ -4,6 +4,7 @@ import { GetIsolatedMarginAccountAssets } from './model_get_isolated_margin_acco
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetIsolatedMarginAccountResp
     implements Response<GetIsolatedMarginAccountResp, RestResponse>
 {

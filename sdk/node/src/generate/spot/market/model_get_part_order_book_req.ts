@@ -3,6 +3,7 @@
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import 'reflect-metadata';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetPartOrderBookReq implements Serializable<GetPartOrderBookReq> {
     /**
      * symbol

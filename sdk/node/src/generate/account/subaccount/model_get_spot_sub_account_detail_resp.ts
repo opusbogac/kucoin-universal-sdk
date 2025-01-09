@@ -6,6 +6,7 @@ import { GetSpotSubAccountDetailMainAccounts } from './model_get_spot_sub_accoun
 import { GetSpotSubAccountDetailTradeAccounts } from './model_get_spot_sub_account_detail_trade_accounts';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetSpotSubAccountDetailResp
     implements Response<GetSpotSubAccountDetailResp, RestResponse>
 {

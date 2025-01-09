@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetOcoOrderDetailByOrderIdOrders } from './model_get_oco_order_detail_by_order_id_orders';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetOcoOrderDetailByOrderIdResp
     implements Response<GetOcoOrderDetailByOrderIdResp, RestResponse>
 {

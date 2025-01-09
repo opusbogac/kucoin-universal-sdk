@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { CancelAllOrdersFailedSymbols } from './model_cancel_all_orders_failed_symbols';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class CancelAllOrdersResp implements Response<CancelAllOrdersResp, RestResponse> {
     /**
      * The Symbols Successfully cancelled

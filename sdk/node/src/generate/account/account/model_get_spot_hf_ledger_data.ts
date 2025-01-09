@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetSpotHFLedgerData implements Serializable<GetSpotHFLedgerData> {
     /**
      * Unique id

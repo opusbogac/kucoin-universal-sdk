@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetSpotActualFeeReq implements Serializable<GetSpotActualFeeReq> {
     /**
      * Trading pair (optional, you can inquire fee rates of 10 trading pairs each time at most)

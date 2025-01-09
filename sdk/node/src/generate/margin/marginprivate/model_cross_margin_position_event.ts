@@ -5,6 +5,7 @@ import { CrossMarginPositionAssetListValue } from './model_cross_margin_position
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class CrossMarginPositionEvent implements Response<CrossMarginPositionEvent, WsMessage> {
     /**
      * Debt ratio
@@ -56,6 +57,7 @@ export class CrossMarginPositionEvent implements Response<CrossMarginPositionEve
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): CrossMarginPositionEvent {
         return plainToInstance(CrossMarginPositionEvent, jsonObject);
     }

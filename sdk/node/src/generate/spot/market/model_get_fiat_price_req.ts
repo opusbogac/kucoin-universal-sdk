@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetFiatPriceReq implements Serializable<GetFiatPriceReq> {
     /**
      * Ticker symbol of a base currency,eg.USD,EUR. Default is USD

@@ -5,6 +5,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetIsolatedMarginAccountDetailV1QuoteAsset } from './model_get_isolated_margin_account_detail_v1_quote_asset';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetIsolatedMarginAccountDetailV1Resp
     implements Response<GetIsolatedMarginAccountDetailV1Resp, RestResponse>
 {

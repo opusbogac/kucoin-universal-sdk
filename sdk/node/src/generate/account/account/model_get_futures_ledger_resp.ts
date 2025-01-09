@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetFuturesLedgerDataList } from './model_get_futures_ledger_data_list';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetFuturesLedgerResp implements Response<GetFuturesLedgerResp, RestResponse> {
     /**
      *

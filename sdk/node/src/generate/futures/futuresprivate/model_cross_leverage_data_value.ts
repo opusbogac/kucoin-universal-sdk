@@ -4,6 +4,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class CrossLeverageDataValue implements Serializable<CrossLeverageDataValue> {
     /**
      *
@@ -18,6 +19,7 @@ export class CrossLeverageDataValue implements Serializable<CrossLeverageDataVal
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): CrossLeverageDataValue {
         return plainToInstance(CrossLeverageDataValue, jsonObject);
     }

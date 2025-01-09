@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetSpotSubAccountListV2Req implements Serializable<GetSpotSubAccountListV2Req> {
     /**
      * Current request page. Default is 1

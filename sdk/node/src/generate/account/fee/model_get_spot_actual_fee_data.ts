@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetSpotActualFeeData implements Serializable<GetSpotActualFeeData> {
     /**
      * The unique identity of the trading pair and will not change even if the trading pair is renamed

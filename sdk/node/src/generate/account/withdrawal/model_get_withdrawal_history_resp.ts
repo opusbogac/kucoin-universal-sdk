@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetWithdrawalHistoryItems } from './model_get_withdrawal_history_items';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetWithdrawalHistoryResp implements Response<GetWithdrawalHistoryResp, RestResponse> {
     /**
      * current page

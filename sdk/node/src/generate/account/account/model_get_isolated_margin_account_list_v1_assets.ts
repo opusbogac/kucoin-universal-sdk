@@ -4,6 +4,7 @@ import { GetIsolatedMarginAccountListV1AssetsBaseAsset } from './model_get_isola
 import { Type, instanceToPlain, plainToInstance } from 'class-transformer';
 import { GetIsolatedMarginAccountListV1AssetsQuoteAsset } from './model_get_isolated_margin_account_list_v1_assets_quote_asset';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetIsolatedMarginAccountListV1Assets
     implements Serializable<GetIsolatedMarginAccountListV1Assets>
 {

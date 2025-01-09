@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class InnerTransferReq implements Serializable<InnerTransferReq> {
     /**
      * Unique order id created by users to identify their orders, e.g. UUID, with a maximum length of 128 bits

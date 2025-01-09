@@ -4,6 +4,7 @@ import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class TickerV1Event implements Response<TickerV1Event, WsMessage> {
     /**
      *
@@ -67,6 +68,7 @@ export class TickerV1Event implements Response<TickerV1Event, WsMessage> {
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): TickerV1Event {
         return plainToInstance(TickerV1Event, jsonObject);
     }

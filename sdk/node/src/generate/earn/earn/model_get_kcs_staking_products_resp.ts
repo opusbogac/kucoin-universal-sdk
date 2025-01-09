@@ -4,6 +4,7 @@ import { GetKcsStakingProductsData } from './model_get_kcs_staking_products_data
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetKcsStakingProductsResp
     implements Response<GetKcsStakingProductsResp, RestResponse>
 {

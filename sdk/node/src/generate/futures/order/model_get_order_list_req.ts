@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetOrderListReq implements Serializable<GetOrderListReq> {
     /**
      * active or done, done as default. Only list orders for a specific status

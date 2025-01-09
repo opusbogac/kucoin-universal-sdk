@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetRedeemOrdersItems } from './model_get_redeem_orders_items';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetRedeemOrdersResp implements Response<GetRedeemOrdersResp, RestResponse> {
     /**
      * Current Page

@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetSpotHFLedgerData } from './model_get_spot_hf_ledger_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetSpotHFLedgerResp implements Response<GetSpotHFLedgerResp, RestResponse> {
     /**
      *

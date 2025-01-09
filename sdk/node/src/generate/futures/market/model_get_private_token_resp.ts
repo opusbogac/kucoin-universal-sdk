@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetPrivateTokenInstanceServers } from './model_get_private_token_instance_servers';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetPrivateTokenResp implements Response<GetPrivateTokenResp, RestResponse> {
     /**
      * The token required to establish a websocket connection

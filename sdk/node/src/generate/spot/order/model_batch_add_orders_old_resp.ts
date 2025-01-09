@@ -4,6 +4,7 @@ import { BatchAddOrdersOldData } from './model_batch_add_orders_old_data';
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class BatchAddOrdersOldResp implements Response<BatchAddOrdersOldResp, RestResponse> {
     /**
      *

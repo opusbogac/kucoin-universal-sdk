@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class BatchCancelStopOrderReq implements Serializable<BatchCancelStopOrderReq> {
     /**
      * Cancel the open order for the specified symbol

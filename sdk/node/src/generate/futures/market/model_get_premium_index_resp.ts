@@ -4,6 +4,7 @@ import { GetPremiumIndexDataList } from './model_get_premium_index_data_list';
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetPremiumIndexResp implements Response<GetPremiumIndexResp, RestResponse> {
     /**
      *

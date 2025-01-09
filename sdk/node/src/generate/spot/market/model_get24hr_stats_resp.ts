@@ -3,6 +3,7 @@
 import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class Get24hrStatsResp implements Response<Get24hrStatsResp, RestResponse> {
     /**
      * timestamp

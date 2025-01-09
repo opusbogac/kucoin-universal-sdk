@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetSpotSubAccountListV2Items } from './model_get_spot_sub_account_list_v2_items';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetSpotSubAccountListV2Resp
     implements Response<GetSpotSubAccountListV2Resp, RestResponse>
 {

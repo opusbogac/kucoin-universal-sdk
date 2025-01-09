@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetBrokerInfoReq implements Serializable<GetBrokerInfoReq> {
     /**
      * Start time, for example: 20230110

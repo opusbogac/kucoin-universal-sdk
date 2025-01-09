@@ -3,6 +3,7 @@
 import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetSpotAccountTypeResp implements Response<GetSpotAccountTypeResp, RestResponse> {
     /**
      * Spot account type. True means the current user is a high-frequency spot user, False means the current user is a low-frequency spot user

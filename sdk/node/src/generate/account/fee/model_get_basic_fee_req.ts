@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetBasicFeeReq implements Serializable<GetBasicFeeReq> {
     /**
      * Currency type: 0-crypto currency, 1-fiat currency. default is 0-crypto currency

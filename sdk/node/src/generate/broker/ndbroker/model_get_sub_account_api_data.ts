@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetSubAccountAPIData implements Serializable<GetSubAccountAPIData> {
     /**
      * Sub-Account UID

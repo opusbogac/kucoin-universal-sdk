@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class GetAllCurrenciesDataChains implements Serializable<GetAllCurrenciesDataChains> {
     /**
      * chain name of currency

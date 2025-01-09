@@ -2,6 +2,7 @@
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class AddSubAccountReq implements Serializable<AddSubAccountReq> {
     /**
      * Sub Account Name, Note that this name is unique across the exchange. It is recommended to add a special identifier to prevent name duplication.

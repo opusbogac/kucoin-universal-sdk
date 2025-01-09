@@ -4,6 +4,7 @@ import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class StopOrdersEvent implements Response<StopOrdersEvent, WsMessage> {
     /**
      *
@@ -75,6 +76,7 @@ export class StopOrdersEvent implements Response<StopOrdersEvent, WsMessage> {
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): StopOrdersEvent {
         return plainToInstance(StopOrdersEvent, jsonObject);
     }

@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetDepositAddressV2Data } from './model_get_deposit_address_v2_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetDepositAddressV2Resp implements Response<GetDepositAddressV2Resp, RestResponse> {
     /**
      *

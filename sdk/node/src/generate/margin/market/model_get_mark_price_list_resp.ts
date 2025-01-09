@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetMarkPriceListData } from './model_get_mark_price_list_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetMarkPriceListResp implements Response<GetMarkPriceListResp, RestResponse> {
     /**
      *

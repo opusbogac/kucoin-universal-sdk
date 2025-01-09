@@ -4,6 +4,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Serializable } from '@internal/interfaces/serializable';
+
 export class CrossMarginPositionAssetListValue
     implements Serializable<CrossMarginPositionAssetListValue>
 {
@@ -28,6 +29,7 @@ export class CrossMarginPositionAssetListValue
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): CrossMarginPositionAssetListValue {
         return plainToInstance(CrossMarginPositionAssetListValue, jsonObject);
     }

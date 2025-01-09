@@ -4,6 +4,7 @@ import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class OrderV2Event implements Response<OrderV2Event, WsMessage> {
     /**
      * Cumulative number of cancellations
@@ -111,6 +112,7 @@ export class OrderV2Event implements Response<OrderV2Event, WsMessage> {
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): OrderV2Event {
         return plainToInstance(OrderV2Event, jsonObject);
     }

@@ -6,6 +6,7 @@ import { GetAccountDetailOrders } from './model_get_account_detail_orders';
 import { GetAccountDetailMargins } from './model_get_account_detail_margins';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetAccountDetailResp implements Response<GetAccountDetailResp, RestResponse> {
     /**
      * Master UID

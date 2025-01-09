@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetStopOrderListItems } from './model_get_stop_order_list_items';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetStopOrderListResp implements Response<GetStopOrderListResp, RestResponse> {
     /**
      * Current request page, The default currentPage is 1

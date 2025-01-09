@@ -4,6 +4,7 @@ import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transform
 import { GetIsolatedMarginRiskLimitData } from './model_get_isolated_margin_risk_limit_data';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetIsolatedMarginRiskLimitResp
     implements Response<GetIsolatedMarginRiskLimitResp, RestResponse>
 {

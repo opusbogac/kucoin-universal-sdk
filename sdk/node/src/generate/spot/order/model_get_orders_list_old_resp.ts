@@ -4,6 +4,7 @@ import { GetOrdersListOldItems } from './model_get_orders_list_old_items';
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetOrdersListOldResp implements Response<GetOrdersListOldResp, RestResponse> {
     /**
      *

@@ -5,6 +5,7 @@ import { MarketSnapshotData } from './model_market_snapshot_data';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class MarketSnapshotEvent implements Response<MarketSnapshotEvent, WsMessage> {
     /**
      *
@@ -32,6 +33,7 @@ export class MarketSnapshotEvent implements Response<MarketSnapshotEvent, WsMess
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): MarketSnapshotEvent {
         return plainToInstance(MarketSnapshotEvent, jsonObject);
     }

@@ -4,6 +4,7 @@ import { GetPublicFundingHistoryData } from './model_get_public_funding_history_
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetPublicFundingHistoryResp
     implements Response<GetPublicFundingHistoryResp, RestResponse>
 {

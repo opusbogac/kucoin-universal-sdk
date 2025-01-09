@@ -4,6 +4,7 @@ import { GetDepositAddressV3Data } from './model_get_deposit_address_v3_data';
 import { Type, instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { RestResponse } from '@model/common';
 import { Response } from '@internal/interfaces/response';
+
 export class GetDepositAddressV3Resp implements Response<GetDepositAddressV3Resp, RestResponse> {
     /**
      *

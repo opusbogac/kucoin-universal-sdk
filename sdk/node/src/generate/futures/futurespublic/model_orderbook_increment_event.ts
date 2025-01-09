@@ -4,6 +4,7 @@ import { instanceToPlain, Exclude, plainToInstance } from 'class-transformer';
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Response } from '@internal/interfaces/response';
+
 export class OrderbookIncrementEvent implements Response<OrderbookIncrementEvent, WsMessage> {
     /**
      *
@@ -35,6 +36,7 @@ export class OrderbookIncrementEvent implements Response<OrderbookIncrementEvent
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
+
     fromObject(jsonObject: Object): OrderbookIncrementEvent {
         return plainToInstance(OrderbookIncrementEvent, jsonObject);
     }
