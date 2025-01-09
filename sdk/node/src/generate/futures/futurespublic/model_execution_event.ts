@@ -75,7 +75,7 @@ export class ExecutionEventCallbackWrapper implements WebSocketMessageCallback {
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new ExecutionEvent().fromObject(msg.rawData);
+        let event = new ExecutionEvent().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

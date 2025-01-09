@@ -26,7 +26,6 @@ import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.openapitools.codegen.utils.CamelizeOption.LOWERCASE_FIRST_LETTER;
 import static org.openapitools.codegen.utils.StringUtils.camelize;
 import static org.openapitools.codegen.utils.StringUtils.underscore;
 
@@ -277,9 +276,12 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                 apiName = "api_" + underscore(apiName);
                 break;
             }
-            case TEST:
-            case WS_TEST: {
+            case TEST: {
                 apiName = "api_" + underscore(apiName) + ".test";
+                break;
+            }
+            case WS_TEST: {
+                apiName = "ws_" + underscore(apiName) + ".test";
                 break;
             }
         }
@@ -337,15 +339,10 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
             }
             case WS_TEST: {
-//                String suffix = "event";
-//                imports.add(generateImport(meta.getService().toLowerCase(),
-//                        toModelFilename(meta.getMethod()) + "_" + suffix,
-//                        formatService(meta.getMethod() + camelize(suffix))));
-//
-//                if ((((Map<String, Object>) meta.getOtherProperties().getParas().getType()).containsKey("array"))) {
-//                    imports.add(generateImportSimple("typing", "List"));
-//                }
-
+                String suffix = "event";
+                String fileName = "./" + toModelFilename(meta.getMethod()) + "_" + suffix;
+                String service = formatService(meta.getMethod() + camelize(suffix));
+                imports.computeIfAbsent(fileName, ImportModel::new).component.add(service);
                 break;
             }
             case ENTRY: {

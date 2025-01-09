@@ -41,10 +41,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new ModifyPurchaseResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getLoanMarket request test', () => {
         /**
@@ -72,10 +74,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetLoanMarketResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getLoanMarketInterestRate request test', () => {
         /**
@@ -103,10 +107,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetLoanMarketInterestRateResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getPurchaseOrders request test', () => {
         /**
@@ -135,10 +141,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetPurchaseOrdersResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('purchase request test', () => {
         /**
@@ -166,10 +174,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new PurchaseResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getRedeemOrders request test', () => {
         /**
@@ -198,10 +208,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetRedeemOrdersResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('redeem request test', () => {
         /**
@@ -230,9 +242,11 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new RedeemResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
 });

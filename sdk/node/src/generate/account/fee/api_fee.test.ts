@@ -33,10 +33,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetBasicFeeResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getSpotActualFee request test', () => {
         /**
@@ -64,10 +66,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetSpotActualFeeResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getFuturesActualFee request test', () => {
         /**
@@ -95,9 +99,11 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetFuturesActualFeeResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
 });

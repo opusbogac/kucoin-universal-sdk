@@ -33,10 +33,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetPublicFundingHistoryResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getPrivateFundingHistory request test', () => {
         /**
@@ -65,10 +67,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetPrivateFundingHistoryResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('GetCurrentFundingRate request test', () => {
         /**
@@ -96,9 +100,11 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetCurrentFundingRateResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
 });

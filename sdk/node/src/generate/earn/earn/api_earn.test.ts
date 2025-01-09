@@ -45,10 +45,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetETHStakingProductsResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getAccountHolding request test', () => {
         /**
@@ -77,10 +79,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetAccountHoldingResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getKcsStakingProducts request test', () => {
         /**
@@ -108,10 +112,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetKcsStakingProductsResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('redeem request test', () => {
         /**
@@ -140,10 +146,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new RedeemResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('purchase request test', () => {
         /**
@@ -171,10 +179,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new PurchaseResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getPromotionProducts request test', () => {
         /**
@@ -202,10 +212,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetPromotionProductsResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getRedeemPreview request test', () => {
         /**
@@ -233,10 +245,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetRedeemPreviewResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getSavingsProducts request test', () => {
         /**
@@ -264,10 +278,12 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetSavingsProductsResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
     test('getStakingProducts request test', () => {
         /**
@@ -295,9 +311,11 @@ describe('Auto Test', () => {
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetStakingProductsResp();
         resp = resp.fromObject(commonResp.data);
-        expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(resp);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
     });
 });

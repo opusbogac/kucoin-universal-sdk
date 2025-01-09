@@ -47,7 +47,7 @@ export class MarginModeEventCallbackWrapper implements WebSocketMessageCallback 
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new MarginModeEvent().fromObject(msg.rawData);
+        let event = new MarginModeEvent().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

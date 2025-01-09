@@ -63,7 +63,7 @@ export class OrderbookLevel5EventCallbackWrapper implements WebSocketMessageCall
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new OrderbookLevel5Event().fromObject(msg.rawData);
+        let event = new OrderbookLevel5Event().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

@@ -79,7 +79,7 @@ export class TradeEventCallbackWrapper implements WebSocketMessageCallback {
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new TradeEvent().fromObject(msg.rawData);
+        let event = new TradeEvent().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

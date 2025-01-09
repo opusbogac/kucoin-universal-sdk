@@ -141,7 +141,7 @@ export class IsolatedMarginPositionEventCallbackWrapper implements WebSocketMess
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new IsolatedMarginPositionEvent().fromObject(msg.rawData);
+        let event = new IsolatedMarginPositionEvent().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

@@ -105,7 +105,7 @@ export class CrossMarginPositionEventCallbackWrapper implements WebSocketMessage
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new CrossMarginPositionEvent().fromObject(msg.rawData);
+        let event = new CrossMarginPositionEvent().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

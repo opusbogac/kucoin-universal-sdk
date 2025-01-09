@@ -59,7 +59,7 @@ export class IndexPriceEventCallbackWrapper implements WebSocketMessageCallback 
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new IndexPriceEvent().fromObject(msg.rawData);
+        let event = new IndexPriceEvent().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

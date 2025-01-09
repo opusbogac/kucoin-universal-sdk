@@ -83,7 +83,7 @@ export class SymbolSnapshotEventCallbackWrapper implements WebSocketMessageCallb
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new SymbolSnapshotEvent().fromObject(msg.rawData);
+        let event = new SymbolSnapshotEvent().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

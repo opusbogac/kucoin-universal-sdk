@@ -97,7 +97,7 @@ export class  {{classname}}CallbackWrapper implements WebSocketMessageCallback {
     }
 
     onMessage(msg: WsMessage): void {
-        let event = (new {{classname}}()).fromObject(msg.rawData)
+        let event = (new {{classname}}()).fromObject(msg.data)
         event.setCommonResponse(msg)
         this.callback(msg.topic, msg.subject, event)
     }

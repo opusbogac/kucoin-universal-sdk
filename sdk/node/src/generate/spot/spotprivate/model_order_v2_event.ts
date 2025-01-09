@@ -214,7 +214,7 @@ export class OrderV2EventCallbackWrapper implements WebSocketMessageCallback {
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new OrderV2Event().fromObject(msg.rawData);
+        let event = new OrderV2Event().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

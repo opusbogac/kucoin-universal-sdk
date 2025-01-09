@@ -64,7 +64,7 @@ export class OrderbookIncrementEventCallbackWrapper implements WebSocketMessageC
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new OrderbookIncrementEvent().fromObject(msg.rawData);
+        let event = new OrderbookIncrementEvent().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

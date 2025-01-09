@@ -75,7 +75,7 @@ export class AllTickersEventCallbackWrapper implements WebSocketMessageCallback 
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new AllTickersEvent().fromObject(msg.rawData);
+        let event = new AllTickersEvent().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

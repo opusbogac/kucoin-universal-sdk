@@ -63,19 +63,19 @@ export function checkRestResponseError(resp: RestResponse): Error | null {
 /**
  * WsMessage represents a message between the WebSocket client and server.
  */
-export interface WsMessage {
+export class WsMessage {
     /**
      * A unique identifier for the message
      */
-    id: string;
+    id?: string;
     /**
      * The type of the message (e.g., WelcomeMessage)
      */
-    type: string;
+    type?: string;
     /**
      * Sequence number to track the order of messages
      */
-    sn: number;
+    sn?: number;
     /**
      * The topic or channel the message is associated with
      */
@@ -87,13 +87,22 @@ export interface WsMessage {
     /**
      * Indicates if the message belongs to a private channel
      */
-    privateChannel: boolean;
+    privateChannel?: boolean;
     /**
      * Specifies whether the message is a response
      */
-    response: boolean;
+    response?: boolean;
     /**
      * Raw JSON payload containing additional message data
      */
-    rawData: any;
+    data: any;
+
+    constructor() {
+        this.topic = '';
+        this.subject = '';
+    }
+
+    static fromJson(json: string): WsMessage {
+        return plainToInstance(WsMessage, JSON.parse(json));
+    }
 }

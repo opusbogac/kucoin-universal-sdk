@@ -52,7 +52,7 @@ export class MarketSnapshotEventCallbackWrapper implements WebSocketMessageCallb
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new MarketSnapshotEvent().fromObject(msg.rawData);
+        let event = new MarketSnapshotEvent().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

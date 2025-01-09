@@ -48,7 +48,7 @@ export class CrossLeverageEventCallbackWrapper implements WebSocketMessageCallba
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new CrossLeverageEvent().fromObject(msg.rawData);
+        let event = new CrossLeverageEvent().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }

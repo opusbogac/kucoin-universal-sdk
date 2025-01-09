@@ -59,7 +59,7 @@ export class AnnouncementEventCallbackWrapper implements WebSocketMessageCallbac
     }
 
     onMessage(msg: WsMessage): void {
-        let event = new AnnouncementEvent().fromObject(msg.rawData);
+        let event = new AnnouncementEvent().fromObject(msg.data);
         event.setCommonResponse(msg);
         this.callback(msg.topic, msg.subject, event);
     }
