@@ -4,9 +4,9 @@
 {{#vendorExtensions.x-imports}}
 {{{.}}}
 {{/vendorExtensions.x-imports}}
+{{#vendorExtensions.x-response-model}}
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
-{{#vendorExtensions.x-response-model}}
 import { Response } from '@internal/interfaces/response';
 
 export class {{classname}} implements  Response<{{classname}}, WsMessage>{

@@ -4,8 +4,6 @@ import { MarketSnapshotDataMarketChange4h } from './model_market_snapshot_data_m
 import { MarketSnapshotDataMarketChange24h } from './model_market_snapshot_data_market_change24h';
 import { MarketSnapshotDataMarketChange1h } from './model_market_snapshot_data_market_change1h';
 import { Type, instanceToPlain, plainToInstance } from 'class-transformer';
-import { WsMessage } from '@model/common';
-import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Serializable } from '@internal/interfaces/serializable';
 
 export class MarketSnapshotData implements Serializable<MarketSnapshotData> {

@@ -4,8 +4,6 @@ import { SymbolSnapshotDataMarketChange4h } from './model_symbol_snapshot_data_m
 import { Type, instanceToPlain, plainToInstance } from 'class-transformer';
 import { SymbolSnapshotDataMarketChange1h } from './model_symbol_snapshot_data_market_change1h';
 import { SymbolSnapshotDataMarketChange24h } from './model_symbol_snapshot_data_market_change24h';
-import { WsMessage } from '@model/common';
-import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
 import { Serializable } from '@internal/interfaces/serializable';
 
 export class SymbolSnapshotData implements Serializable<SymbolSnapshotData> {
