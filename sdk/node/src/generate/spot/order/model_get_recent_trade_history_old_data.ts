@@ -72,6 +72,7 @@ export class GetRecentTradeHistoryOldData implements Serializable<GetRecentTrade
      *
      */
     createdAt?: number;
+
     fromJson(input: string): GetRecentTradeHistoryOldData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetRecentTradeHistoryOldData, jsonObject);

@@ -22,6 +22,7 @@ export class IndexPriceEvent implements Response<IndexPriceEvent, WsMessage> {
      *
      */
     value?: number;
+
     /**
      * common response
      */
@@ -53,9 +54,7 @@ export type IndexPriceEventCallback = (
 ) => void;
 
 export class IndexPriceEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: IndexPriceEventCallback;
-
-    constructor(callback: IndexPriceEventCallback) {
+    constructor(private callback: IndexPriceEventCallback) {
         this.callback = callback;
     }
 

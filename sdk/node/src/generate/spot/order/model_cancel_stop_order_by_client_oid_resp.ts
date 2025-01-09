@@ -15,6 +15,7 @@ export class CancelStopOrderByClientOidResp
      * Unique ID of the cancelled order
      */
     cancelledOrderId?: string;
+
     /**
      * common response
      */

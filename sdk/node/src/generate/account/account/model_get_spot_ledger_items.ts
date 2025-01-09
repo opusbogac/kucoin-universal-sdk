@@ -44,6 +44,7 @@ export class GetSpotLedgerItems implements Serializable<GetSpotLedgerItems> {
      * Business related information such as order ID, serial No., etc.
      */
     context?: string;
+
     fromJson(input: string): GetSpotLedgerItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSpotLedgerItems, jsonObject);

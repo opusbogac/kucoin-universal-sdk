@@ -49,6 +49,7 @@ export class GetTickerResp implements Response<GetTickerResp, RestResponse> {
      * Filled time(nanosecond)
      */
     ts?: number;
+
     /**
      * common response
      */

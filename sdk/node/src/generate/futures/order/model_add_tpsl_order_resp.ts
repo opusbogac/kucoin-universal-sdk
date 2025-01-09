@@ -13,6 +13,7 @@ export class AddTPSLOrderResp implements Response<AddTPSLOrderResp, RestResponse
      * The user self-defined order id.
      */
     clientOid?: string;
+
     /**
      * common response
      */

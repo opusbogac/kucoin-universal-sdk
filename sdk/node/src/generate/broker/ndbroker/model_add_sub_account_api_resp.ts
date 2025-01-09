@@ -37,6 +37,7 @@ export class AddSubAccountApiResp implements Response<AddSubAccountApiResp, Rest
      * Creation time, unix timestamp (milliseconds)
      */
     createdAt?: number;
+
     /**
      * common response
      */

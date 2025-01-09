@@ -68,6 +68,7 @@ export class GetAccountHoldingItems implements Serializable<GetAccountHoldingIte
      * Whether the fixed product supports early redemption: 0 (no), 1 (yes)
      */
     earlyRedeemSupported?: GetAccountHoldingItems.EarlyRedeemSupportedEnum;
+
     fromJson(input: string): GetAccountHoldingItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAccountHoldingItems, jsonObject);

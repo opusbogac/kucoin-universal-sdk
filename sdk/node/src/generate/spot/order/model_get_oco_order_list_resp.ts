@@ -27,6 +27,7 @@ export class GetOcoOrderListResp implements Response<GetOcoOrderListResp, RestRe
      */
     @Type(() => GetOcoOrderListItems)
     items?: Array<GetOcoOrderListItems>;
+
     /**
      * common response
      */

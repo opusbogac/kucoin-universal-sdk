@@ -11,6 +11,7 @@ export class GetSubAccountAPIResp implements Response<GetSubAccountAPIResp, Rest
      */
     @Type(() => GetSubAccountAPIData)
     data?: Array<GetSubAccountAPIData>;
+
     /**
      * common response
      */

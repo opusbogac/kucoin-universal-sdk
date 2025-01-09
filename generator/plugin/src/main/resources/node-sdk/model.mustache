@@ -30,6 +30,7 @@ export class {{classname}} implements Serializable<{{classname}}>{
 {{/vendorExtensions.x-typed}}
     {{name}}?: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{#defaultValue}} = {{#isEnum}}{{classname}}.{{/isEnum}}{{{.}}}{{/defaultValue}};
 {{/vars}}
+
 {{#vendorExtensions.x-response-model}}
     /**
     * common response
@@ -54,10 +55,10 @@ export class {{classname}} implements Serializable<{{classname}}>{
     fromObject(jsonObject: Object): {{classname}} {
         return plainToInstance( {{classname}}, {data : jsonObject});
     }
+
 {{/vendorExtensions.x-original-response}}
 {{/vendorExtensions.x-response-model}}
 {{#vendorExtensions.x-request-model}}
-
     /**
     * Creates a new instance of the `{{classname}}` class.
     * The builder pattern allows step-by-step construction of a `{{classname}}` object.
@@ -97,6 +98,7 @@ export class {{classname}} implements Serializable<{{classname}}>{
     fromObject(jsonObject: Object): {{classname}} {
         return plainToInstance( {{classname}}, {items: jsonObject});
     }
+
 {{/vendorExtensions.x-request-raw-array}}
 {{/vendorExtensions.x-request-model}}
 {{^vendorExtensions.x-original-response}}
@@ -113,9 +115,9 @@ export class {{classname}} implements Serializable<{{classname}}>{
     fromObject(jsonObject: Object): {{classname}} {
         return plainToInstance( {{classname}}, jsonObject);
     }
+
 {{/vendorExtensions.x-request-raw-array}}
 {{/vendorExtensions.x-original-response}}
-
 }
 
 {{#hasEnums}}
@@ -134,7 +136,6 @@ export namespace {{classname}} {
 {{/vars}}
 }
 {{/hasEnums}}
-
 
 {{#vendorExtensions.x-request-model}}
 export class {{classname}}Builder {
@@ -155,6 +156,5 @@ export class {{classname}}Builder {
 }
 
 {{/vendorExtensions.x-request-model}}
-
 {{/model}}
 {{/models}}

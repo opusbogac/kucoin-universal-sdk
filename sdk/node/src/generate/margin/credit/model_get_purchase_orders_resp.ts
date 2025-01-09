@@ -27,6 +27,7 @@ export class GetPurchaseOrdersResp implements Response<GetPurchaseOrdersResp, Re
      */
     @Type(() => GetPurchaseOrdersItems)
     items?: Array<GetPurchaseOrdersItems>;
+
     /**
      * common response
      */

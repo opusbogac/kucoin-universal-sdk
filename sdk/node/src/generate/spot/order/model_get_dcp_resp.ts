@@ -21,6 +21,7 @@ export class GetDCPResp implements Response<GetDCPResp, RestResponse> {
      * Trigger cancellation time (in seconds)
      */
     triggerTime?: number;
+
     /**
      * common response
      */

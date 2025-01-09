@@ -15,6 +15,7 @@ export class GetCrossMarginLeverageResp
      * Leverage multiple
      */
     leverage?: string;
+
     /**
      * common response
      */

@@ -16,6 +16,7 @@ export class GetPublicFundingHistoryData implements Serializable<GetPublicFundin
      * Time point (milisecond)
      */
     timepoint?: number;
+
     fromJson(input: string): GetPublicFundingHistoryData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetPublicFundingHistoryData, jsonObject);

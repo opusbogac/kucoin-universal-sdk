@@ -17,6 +17,7 @@ export class GetMarginAccountDetailResp
      */
     @Type(() => GetMarginAccountDetailAccounts)
     accounts?: Array<GetMarginAccountDetailAccounts>;
+
     /**
      * common response
      */

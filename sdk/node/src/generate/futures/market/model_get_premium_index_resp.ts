@@ -15,6 +15,7 @@ export class GetPremiumIndexResp implements Response<GetPremiumIndexResp, RestRe
      * Whether there are more pages
      */
     hasMore?: boolean;
+
     /**
      * common response
      */

@@ -157,6 +157,7 @@ export class GetOrderByClientOidResp implements Response<GetOrderByClientOidResp
      * A mark to reduce the position size only
      */
     reduceOnly?: boolean;
+
     /**
      * common response
      */

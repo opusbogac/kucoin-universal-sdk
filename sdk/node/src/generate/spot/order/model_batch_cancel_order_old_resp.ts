@@ -9,6 +9,7 @@ export class BatchCancelOrderOldResp implements Response<BatchCancelOrderOldResp
      *
      */
     cancelledOrderIds?: Array<string>;
+
     /**
      * common response
      */

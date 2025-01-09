@@ -19,6 +19,7 @@ export class CancelOrderByClientOidOldResp
      *
      */
     cancelledOcoOrderIds?: string;
+
     /**
      * common response
      */

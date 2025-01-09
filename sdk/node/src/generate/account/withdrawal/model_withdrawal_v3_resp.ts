@@ -9,6 +9,7 @@ export class WithdrawalV3Resp implements Response<WithdrawalV3Resp, RestResponse
      * Withdrawal id, a unique ID for a withdrawal
      */
     withdrawalId?: string;
+
     /**
      * common response
      */

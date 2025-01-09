@@ -32,6 +32,7 @@ export class GetAnnouncementsItems implements Serializable<GetAnnouncementsItems
      * Announcement link
      */
     annUrl?: string;
+
     fromJson(input: string): GetAnnouncementsItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAnnouncementsItems, jsonObject);

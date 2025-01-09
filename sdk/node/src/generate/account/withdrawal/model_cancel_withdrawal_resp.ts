@@ -9,6 +9,7 @@ export class CancelWithdrawalResp implements Response<CancelWithdrawalResp, Rest
      *
      */
     data?: string;
+
     /**
      * common response
      */

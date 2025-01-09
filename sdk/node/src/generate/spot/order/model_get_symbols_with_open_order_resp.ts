@@ -11,6 +11,7 @@ export class GetSymbolsWithOpenOrderResp
      * The symbol that has active orders
      */
     symbols?: Array<string>;
+
     /**
      * common response
      */

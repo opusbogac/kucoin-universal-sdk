@@ -37,6 +37,7 @@ export class GetTickerResp implements Response<GetTickerResp, RestResponse> {
      * Best ask size
      */
     bestAskSize?: string;
+
     /**
      * common response
      */

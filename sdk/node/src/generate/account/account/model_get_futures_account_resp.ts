@@ -41,6 +41,7 @@ export class GetFuturesAccountResp implements Response<GetFuturesAccountResp, Re
      * Cross margin risk rate
      */
     riskRatio?: number;
+
     /**
      * common response
      */

@@ -40,6 +40,7 @@ export class GetTradeHistoryData implements Serializable<GetTradeHistoryData> {
      * Filled side, The trade side indicates the taker order side. A taker order is the order that was matched with orders opened on the order book.
      */
     side?: GetTradeHistoryData.SideEnum;
+
     fromJson(input: string): GetTradeHistoryData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetTradeHistoryData, jsonObject);

@@ -13,6 +13,7 @@ export class GetKcsStakingProductsResp
      */
     @Type(() => GetKcsStakingProductsData)
     data?: Array<GetKcsStakingProductsData>;
+
     /**
      * common response
      */

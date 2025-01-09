@@ -21,6 +21,7 @@ export class GetMarginConfigResp implements Response<GetMarginConfigResp, RestRe
      * The debt ratio of the forced liquidation
      */
     liqDebtRatio?: string;
+
     /**
      * common response
      */

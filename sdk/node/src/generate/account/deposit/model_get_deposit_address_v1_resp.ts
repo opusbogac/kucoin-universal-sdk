@@ -33,6 +33,7 @@ export class GetDepositAddressV1Resp implements Response<GetDepositAddressV1Resp
      * The token contract address.
      */
     contractAddress?: string;
+
     /**
      * common response
      */

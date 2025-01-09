@@ -11,6 +11,7 @@ export class GetMarginRiskLimitResp implements Response<GetMarginRiskLimitResp, 
      */
     @Type(() => GetMarginRiskLimitData)
     data?: Array<GetMarginRiskLimitData>;
+
     /**
      * common response
      */

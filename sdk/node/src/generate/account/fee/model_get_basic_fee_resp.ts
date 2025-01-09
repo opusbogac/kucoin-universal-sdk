@@ -13,6 +13,7 @@ export class GetBasicFeeResp implements Response<GetBasicFeeResp, RestResponse> 
      * Base maker fee rate
      */
     makerFeeRate?: string;
+
     /**
      * common response
      */

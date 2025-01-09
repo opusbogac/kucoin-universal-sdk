@@ -56,6 +56,7 @@ export class GetDepositHistoryItems implements Serializable<GetDepositHistoryIte
      * Whether there is any debt.A quick rollback will cause the deposit to fail. If the deposit fails, you will need to repay the balance.
      */
     arrears?: boolean;
+
     fromJson(input: string): GetDepositHistoryItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetDepositHistoryItems, jsonObject);

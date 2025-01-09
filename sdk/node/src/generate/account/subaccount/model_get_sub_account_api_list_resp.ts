@@ -11,6 +11,7 @@ export class GetSubAccountApiListResp implements Response<GetSubAccountApiListRe
      */
     @Type(() => GetSubAccountApiListData)
     data?: Array<GetSubAccountApiListData>;
+
     /**
      * common response
      */

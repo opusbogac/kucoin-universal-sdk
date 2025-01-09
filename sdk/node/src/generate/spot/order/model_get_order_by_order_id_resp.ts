@@ -141,6 +141,7 @@ export class GetOrderByOrderIdResp implements Response<GetOrderByOrderIdResp, Re
      * Order status: true-The status of the order isactive; false-The status of the order is done
      */
     active?: boolean;
+
     /**
      * common response
      */

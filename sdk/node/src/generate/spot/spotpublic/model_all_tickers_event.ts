@@ -38,6 +38,7 @@ export class AllTickersEvent implements Response<AllTickersEvent, WsMessage> {
      * The matching time of the latest transaction
      */
     time?: number;
+
     /**
      * common response
      */
@@ -69,9 +70,7 @@ export type AllTickersEventCallback = (
 ) => void;
 
 export class AllTickersEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: AllTickersEventCallback;
-
-    constructor(callback: AllTickersEventCallback) {
+    constructor(private callback: AllTickersEventCallback) {
         this.callback = callback;
     }
 

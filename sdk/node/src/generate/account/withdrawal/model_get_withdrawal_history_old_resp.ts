@@ -29,6 +29,7 @@ export class GetWithdrawalHistoryOldResp
      */
     @Type(() => GetWithdrawalHistoryOldItems)
     items?: Array<GetWithdrawalHistoryOldItems>;
+
     /**
      * common response
      */

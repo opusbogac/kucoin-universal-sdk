@@ -125,6 +125,7 @@ export class GetOrderByOrderIdOldResp implements Response<GetOrderByOrderIdOldRe
      *
      */
     tradeType?: string;
+
     /**
      * common response
      */

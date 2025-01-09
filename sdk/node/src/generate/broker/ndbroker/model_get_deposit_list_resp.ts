@@ -11,6 +11,7 @@ export class GetDepositListResp implements Response<GetDepositListResp, RestResp
      */
     @Type(() => GetDepositListData)
     data?: Array<GetDepositListData>;
+
     /**
      * common response
      */

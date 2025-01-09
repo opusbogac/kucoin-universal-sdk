@@ -11,6 +11,7 @@ export class GetDepositAddressV2Resp implements Response<GetDepositAddressV2Resp
      */
     @Type(() => GetDepositAddressV2Data)
     data?: Array<GetDepositAddressV2Data>;
+
     /**
      * common response
      */

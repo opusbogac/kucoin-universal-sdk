@@ -20,6 +20,7 @@ export class GetInterestRateIndexDataList implements Serializable<GetInterestRat
      * Interest rate value
      */
     value?: number;
+
     fromJson(input: string): GetInterestRateIndexDataList {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetInterestRateIndexDataList, jsonObject);

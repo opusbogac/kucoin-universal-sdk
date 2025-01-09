@@ -11,6 +11,7 @@ export class CancelStopOrderByOrderIdResp
      * order id array
      */
     cancelledOrderIds?: Array<string>;
+
     /**
      * common response
      */

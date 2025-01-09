@@ -40,6 +40,7 @@ export class GetFuturesLedgerDataList implements Serializable<GetFuturesLedgerDa
      * Currency
      */
     currency?: string;
+
     fromJson(input: string): GetFuturesLedgerDataList {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetFuturesLedgerDataList, jsonObject);

@@ -34,6 +34,7 @@ export class GetIsolatedMarginAccountListV1AssetsBaseAsset
      *
      */
     borrowableAmount?: string;
+
     fromJson(input: string): GetIsolatedMarginAccountListV1AssetsBaseAsset {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetIsolatedMarginAccountListV1AssetsBaseAsset, jsonObject);

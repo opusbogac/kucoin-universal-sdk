@@ -21,6 +21,7 @@ export class GetFullOrderBookResp implements Response<GetFullOrderBookResp, Rest
      * asks, from low to high
      */
     asks?: Array<Array<string>>;
+
     /**
      * common response
      */

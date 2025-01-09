@@ -27,6 +27,7 @@ export class GetStopOrdersListResp implements Response<GetStopOrdersListResp, Re
      */
     @Type(() => GetStopOrdersListItems)
     items?: Array<GetStopOrdersListItems>;
+
     /**
      * common response
      */

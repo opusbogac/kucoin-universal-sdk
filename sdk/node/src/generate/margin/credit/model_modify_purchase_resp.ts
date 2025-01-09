@@ -9,6 +9,7 @@ export class ModifyPurchaseResp implements Response<ModifyPurchaseResp, RestResp
      *
      */
     data?: string;
+
     /**
      * common response
      */

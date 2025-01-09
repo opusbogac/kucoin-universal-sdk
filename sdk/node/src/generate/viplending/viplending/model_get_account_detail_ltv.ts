@@ -24,6 +24,7 @@ export class GetAccountDetailLtv implements Serializable<GetAccountDetailLtv> {
      * Current LTV
      */
     currentLtv?: string;
+
     fromJson(input: string): GetAccountDetailLtv {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAccountDetailLtv, jsonObject);

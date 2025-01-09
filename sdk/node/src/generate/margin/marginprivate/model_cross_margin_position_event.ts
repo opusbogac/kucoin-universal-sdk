@@ -39,6 +39,7 @@ export class CrossMarginPositionEvent implements Response<CrossMarginPositionEve
      * Event type, **Only applicable to \"debt.ratio\" subject**
      */
     type?: CrossMarginPositionEvent.TypeEnum;
+
     /**
      * common response
      */
@@ -99,9 +100,7 @@ export type CrossMarginPositionEventCallback = (
 ) => void;
 
 export class CrossMarginPositionEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: CrossMarginPositionEventCallback;
-
-    constructor(callback: CrossMarginPositionEventCallback) {
+    constructor(private callback: CrossMarginPositionEventCallback) {
         this.callback = callback;
     }
 

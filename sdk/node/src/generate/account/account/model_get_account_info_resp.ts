@@ -53,6 +53,7 @@ export class GetAccountInfoResp implements Response<GetAccountInfoResp, RestResp
      * Max number of sub-accounts with additional Option trading permissions
      */
     maxOptionSubQuantity?: number;
+
     /**
      * common response
      */

@@ -24,6 +24,7 @@ export class GetOcoOrderListItems implements Serializable<GetOcoOrderListItems> 
      * Order status: NEW: New, DONE: Completed, TRIGGERED: Triggered, CANCELLED: Cancelled
      */
     status?: GetOcoOrderListItems.StatusEnum;
+
     fromJson(input: string): GetOcoOrderListItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetOcoOrderListItems, jsonObject);

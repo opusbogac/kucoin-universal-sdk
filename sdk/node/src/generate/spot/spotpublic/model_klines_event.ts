@@ -18,6 +18,7 @@ export class KlinesEvent implements Response<KlinesEvent, WsMessage> {
      * now（us）
      */
     time?: number;
+
     /**
      * common response
      */
@@ -45,9 +46,7 @@ export class KlinesEvent implements Response<KlinesEvent, WsMessage> {
 export type KlinesEventCallback = (topic: string, subject: string, data: KlinesEvent) => void;
 
 export class KlinesEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: KlinesEventCallback;
-
-    constructor(callback: KlinesEventCallback) {
+    constructor(private callback: KlinesEventCallback) {
         this.callback = callback;
     }
 

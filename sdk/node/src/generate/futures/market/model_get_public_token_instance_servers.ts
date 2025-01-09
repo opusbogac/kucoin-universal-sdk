@@ -24,6 +24,7 @@ export class GetPublicTokenInstanceServers implements Serializable<GetPublicToke
      * Heartbeat timeout(millisecond)
      */
     pingTimeout?: number;
+
     fromJson(input: string): GetPublicTokenInstanceServers {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetPublicTokenInstanceServers, jsonObject);

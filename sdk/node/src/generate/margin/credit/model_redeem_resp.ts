@@ -9,6 +9,7 @@ export class RedeemResp implements Response<RedeemResp, RestResponse> {
      * Redeem order id
      */
     orderNo?: string;
+
     /**
      * common response
      */

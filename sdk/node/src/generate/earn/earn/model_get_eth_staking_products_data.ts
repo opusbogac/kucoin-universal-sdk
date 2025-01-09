@@ -96,6 +96,7 @@ export class GetETHStakingProductsData implements Serializable<GetETHStakingProd
      * Product status: ONGOING(Subscription in progress), PENDING(Preheating Subscription), FULL(Subscribed), INTERESTING (Interest in progress)
      */
     status?: GetETHStakingProductsData.StatusEnum;
+
     fromJson(input: string): GetETHStakingProductsData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetETHStakingProductsData, jsonObject);

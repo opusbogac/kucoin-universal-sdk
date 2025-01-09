@@ -15,6 +15,7 @@ export class GetPublicTokenResp implements Response<GetPublicTokenResp, RestResp
      */
     @Type(() => GetPublicTokenInstanceServers)
     instanceServers?: Array<GetPublicTokenInstanceServers>;
+
     /**
      * common response
      */

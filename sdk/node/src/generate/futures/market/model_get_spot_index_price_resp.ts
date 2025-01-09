@@ -15,6 +15,7 @@ export class GetSpotIndexPriceResp implements Response<GetSpotIndexPriceResp, Re
      * Whether there are more pages
      */
     hasMore?: boolean;
+
     /**
      * common response
      */

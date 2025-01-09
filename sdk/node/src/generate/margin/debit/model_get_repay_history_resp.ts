@@ -31,6 +31,7 @@ export class GetRepayHistoryResp implements Response<GetRepayHistoryResp, RestRe
      */
     @Type(() => GetRepayHistoryItems)
     items?: Array<GetRepayHistoryItems>;
+
     /**
      * common response
      */

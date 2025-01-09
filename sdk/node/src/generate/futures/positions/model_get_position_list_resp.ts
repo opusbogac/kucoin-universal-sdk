@@ -11,6 +11,7 @@ export class GetPositionListResp implements Response<GetPositionListResp, RestRe
      */
     @Type(() => GetPositionListData)
     data?: Array<GetPositionListData>;
+
     /**
      * common response
      */

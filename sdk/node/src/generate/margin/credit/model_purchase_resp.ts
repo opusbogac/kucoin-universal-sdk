@@ -9,6 +9,7 @@ export class PurchaseResp implements Response<PurchaseResp, RestResponse> {
      * Purchase order id
      */
     orderNo?: string;
+
     /**
      * common response
      */

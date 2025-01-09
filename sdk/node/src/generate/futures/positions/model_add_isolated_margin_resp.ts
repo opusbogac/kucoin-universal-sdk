@@ -153,6 +153,7 @@ export class AddIsolatedMarginResp implements Response<AddIsolatedMarginResp, Re
      * Currency used to clear and settle the trades
      */
     settleCurrency?: string;
+
     /**
      * common response
      */

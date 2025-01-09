@@ -11,6 +11,7 @@ export class GetAllCurrenciesResp implements Response<GetAllCurrenciesResp, Rest
      */
     @Type(() => GetAllCurrenciesData)
     data?: Array<GetAllCurrenciesData>;
+
     /**
      * common response
      */

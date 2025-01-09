@@ -48,6 +48,7 @@ export class GetAllTickersData implements Serializable<GetAllTickersData> {
      * Filled time(nanosecond)
      */
     ts?: number;
+
     fromJson(input: string): GetAllTickersData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAllTickersData, jsonObject);

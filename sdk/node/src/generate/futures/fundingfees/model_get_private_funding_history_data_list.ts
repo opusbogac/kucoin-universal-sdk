@@ -50,6 +50,7 @@ export class GetPrivateFundingHistoryDataList
      * Margin mode: ISOLATED (isolated), CROSS (cross margin).
      */
     marginMode?: GetPrivateFundingHistoryDataList.MarginModeEnum;
+
     fromJson(input: string): GetPrivateFundingHistoryDataList {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetPrivateFundingHistoryDataList, jsonObject);

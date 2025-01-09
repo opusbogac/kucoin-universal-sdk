@@ -26,6 +26,7 @@ export class {{classname}} implements Serializable<{{classname}}>{
     {{/vendorExtensions.x-use-base-name}}
     {{name}}?: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{#defaultValue}} = {{#isEnum}}{{classname}}.{{/isEnum}}{{{.}}}{{/defaultValue}};
 {{/vars}}
+
 {{#vendorExtensions.x-response-model}}
     /**
     * common response
@@ -36,9 +37,9 @@ export class {{classname}} implements Serializable<{{classname}}>{
     setCommonResponse(response: WsMessage): void {
         this.commonResponse = response;
     }
+
 {{/vendorExtensions.x-response-model}}
 {{#vendorExtensions.x-original-response}}
-
     fromJson(input: string): {{classname}} {
         const jsonObject = JSON.parse(input)
         return plainToInstance( {{classname}}, {data : jsonObject});
@@ -51,9 +52,9 @@ export class {{classname}} implements Serializable<{{classname}}>{
     fromObject(jsonObject: Object): {{classname}} {
         return plainToInstance( {{classname}}, {data : jsonObject});
     }
+
 {{/vendorExtensions.x-original-response}}
 {{^vendorExtensions.x-original-response}}
-
     fromJson(input: string): {{classname}} {
         const jsonObject = JSON.parse(input)
         return plainToInstance( {{classname}}, jsonObject);
@@ -66,6 +67,7 @@ export class {{classname}} implements Serializable<{{classname}}>{
     fromObject(jsonObject: Object): {{classname}} {
         return plainToInstance( {{classname}}, jsonObject);
     }
+
 {{/vendorExtensions.x-original-response}}
 }
 
@@ -90,9 +92,7 @@ export namespace {{classname}} {
 export type {{classname}}Callback = (topic: string, subject: string, data: {{classname}}) => void;
 
 export class  {{classname}}CallbackWrapper implements WebSocketMessageCallback {
-    callback:  {{classname}}Callback;
-
-    constructor(callback:  {{classname}}Callback) {
+    constructor(private callback: {{classname}}Callback) {
         this.callback = callback;
     }
 

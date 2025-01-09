@@ -41,6 +41,7 @@ export class AddSubAccountApiResp implements Response<AddSubAccountApiResp, Rest
      * Time of the event
      */
     createdAt?: number;
+
     /**
      * common response
      */

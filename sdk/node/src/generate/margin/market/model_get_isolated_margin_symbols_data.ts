@@ -60,6 +60,7 @@ export class GetIsolatedMarginSymbolsData implements Serializable<GetIsolatedMar
      *
      */
     quoteBorrowCoefficient?: string;
+
     fromJson(input: string): GetIsolatedMarginSymbolsData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetIsolatedMarginSymbolsData, jsonObject);

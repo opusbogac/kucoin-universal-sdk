@@ -35,6 +35,7 @@ export class GetCurrentFundingRateResp
      * Minimum Funding Rate
      */
     fundingRateFloor?: number;
+
     /**
      * common response
      */

@@ -10,6 +10,7 @@ export class MarginModeEvent implements Response<MarginModeEvent, WsMessage> {
      * The SYMBOL is the key with value  \"CROSS\" or \"ISOLATED\"
      */
     SYMBOL?: string;
+
     /**
      * common response
      */
@@ -41,9 +42,7 @@ export type MarginModeEventCallback = (
 ) => void;
 
 export class MarginModeEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: MarginModeEventCallback;
-
-    constructor(callback: MarginModeEventCallback) {
+    constructor(private callback: MarginModeEventCallback) {
         this.callback = callback;
     }
 

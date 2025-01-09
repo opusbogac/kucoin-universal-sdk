@@ -20,6 +20,7 @@ export class GetSubAccountItems implements Serializable<GetSubAccountItems> {
      * Sub-account VIP level
      */
     level?: number;
+
     fromJson(input: string): GetSubAccountItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSubAccountItems, jsonObject);

@@ -27,6 +27,7 @@ export class GetPositionsHistoryResp implements Response<GetPositionsHistoryResp
      */
     @Type(() => GetPositionsHistoryItems)
     items?: Array<GetPositionsHistoryItems>;
+
     /**
      * common response
      */

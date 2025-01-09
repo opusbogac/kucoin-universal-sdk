@@ -34,6 +34,7 @@ export class GetOcoOrderDetailByOrderIdOrders
      *
      */
     status?: string;
+
     fromJson(input: string): GetOcoOrderDetailByOrderIdOrders {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetOcoOrderDetailByOrderIdOrders, jsonObject);

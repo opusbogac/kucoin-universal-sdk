@@ -24,6 +24,7 @@ export class BatchAddOrdersData implements Serializable<BatchAddOrdersData> {
      *
      */
     msg?: string;
+
     fromJson(input: string): BatchAddOrdersData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(BatchAddOrdersData, jsonObject);

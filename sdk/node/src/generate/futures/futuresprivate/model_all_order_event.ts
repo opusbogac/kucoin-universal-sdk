@@ -94,6 +94,7 @@ export class AllOrderEvent implements Response<AllOrderEvent, WsMessage> {
      * normal order or liquid order
      */
     tradeType?: AllOrderEvent.TradeTypeEnum;
+
     /**
      * common response
      */
@@ -220,9 +221,7 @@ export namespace AllOrderEvent {
 export type AllOrderEventCallback = (topic: string, subject: string, data: AllOrderEvent) => void;
 
 export class AllOrderEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: AllOrderEventCallback;
-
-    constructor(callback: AllOrderEventCallback) {
+    constructor(private callback: AllOrderEventCallback) {
         this.callback = callback;
     }
 

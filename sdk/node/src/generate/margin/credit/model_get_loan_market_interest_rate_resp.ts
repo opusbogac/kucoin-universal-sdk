@@ -13,6 +13,7 @@ export class GetLoanMarketInterestRateResp
      */
     @Type(() => GetLoanMarketInterestRateData)
     data?: Array<GetLoanMarketInterestRateData>;
+
     /**
      * common response
      */

@@ -27,6 +27,7 @@ export class GetSpotLedgerResp implements Response<GetSpotLedgerResp, RestRespon
      */
     @Type(() => GetSpotLedgerItems)
     items?: Array<GetSpotLedgerItems>;
+
     /**
      * common response
      */

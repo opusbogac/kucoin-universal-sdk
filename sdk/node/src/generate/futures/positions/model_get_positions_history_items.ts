@@ -68,6 +68,7 @@ export class GetPositionsHistoryItems implements Serializable<GetPositionsHistor
      * Margin Mode: CROSS，ISOLATED
      */
     marginMode?: GetPositionsHistoryItems.MarginModeEnum;
+
     fromJson(input: string): GetPositionsHistoryItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetPositionsHistoryItems, jsonObject);

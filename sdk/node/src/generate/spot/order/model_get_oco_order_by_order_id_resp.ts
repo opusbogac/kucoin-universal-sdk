@@ -25,6 +25,7 @@ export class GetOcoOrderByOrderIdResp implements Response<GetOcoOrderByOrderIdRe
      * Order status: NEW: New, DONE: Completed, TRIGGERED: Triggered, CANCELLED: Cancelled
      */
     status?: GetOcoOrderByOrderIdResp.StatusEnum;
+
     /**
      * common response
      */

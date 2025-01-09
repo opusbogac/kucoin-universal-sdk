@@ -13,6 +13,7 @@ export class GetServiceStatusResp implements Response<GetServiceStatusResp, Rest
      * Remark for operation
      */
     msg?: string;
+
     /**
      * common response
      */

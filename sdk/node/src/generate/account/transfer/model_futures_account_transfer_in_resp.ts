@@ -11,6 +11,7 @@ export class FuturesAccountTransferInResp
      *
      */
     data?: string;
+
     /**
      * common response
      */

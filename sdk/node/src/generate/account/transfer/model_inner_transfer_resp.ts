@@ -9,6 +9,7 @@ export class InnerTransferResp implements Response<InnerTransferResp, RestRespon
      * Transfer order ID
      */
     orderId?: string;
+
     /**
      * common response
      */

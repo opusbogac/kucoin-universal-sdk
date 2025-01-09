@@ -20,6 +20,7 @@ export class GetPremiumIndexDataList implements Serializable<GetPremiumIndexData
      * Premium index
      */
     value?: number;
+
     fromJson(input: string): GetPremiumIndexDataList {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetPremiumIndexDataList, jsonObject);

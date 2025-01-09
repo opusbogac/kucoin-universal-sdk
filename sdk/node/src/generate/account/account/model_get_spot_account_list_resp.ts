@@ -11,6 +11,7 @@ export class GetSpotAccountListResp implements Response<GetSpotAccountListResp, 
      */
     @Type(() => GetSpotAccountListData)
     data?: Array<GetSpotAccountListData>;
+
     /**
      * common response
      */

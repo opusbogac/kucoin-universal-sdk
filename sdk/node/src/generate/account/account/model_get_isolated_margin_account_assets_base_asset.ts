@@ -38,6 +38,7 @@ export class GetIsolatedMarginAccountAssetsBaseAsset
      * The user\'s remaining maximum loan amount
      */
     maxBorrowSize?: string;
+
     fromJson(input: string): GetIsolatedMarginAccountAssetsBaseAsset {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetIsolatedMarginAccountAssetsBaseAsset, jsonObject);

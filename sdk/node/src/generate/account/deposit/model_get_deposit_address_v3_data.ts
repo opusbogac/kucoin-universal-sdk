@@ -36,6 +36,7 @@ export class GetDepositAddressV3Data implements Serializable<GetDepositAddressV3
      * The chainName of currency
      */
     chainName?: string;
+
     fromJson(input: string): GetDepositAddressV3Data {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetDepositAddressV3Data, jsonObject);

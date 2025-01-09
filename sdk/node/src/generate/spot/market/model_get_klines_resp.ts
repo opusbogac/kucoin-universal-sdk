@@ -9,6 +9,7 @@ export class GetKlinesResp implements Response<GetKlinesResp, RestResponse> {
      *
      */
     data?: Array<Array<string>>;
+
     /**
      * common response
      */

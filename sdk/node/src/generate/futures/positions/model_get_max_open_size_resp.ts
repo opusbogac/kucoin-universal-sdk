@@ -17,6 +17,7 @@ export class GetMaxOpenSizeResp implements Response<GetMaxOpenSizeResp, RestResp
      * Maximum buy size
      */
     maxSellOpenSize?: number;
+
     /**
      * common response
      */

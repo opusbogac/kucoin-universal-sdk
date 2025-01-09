@@ -28,6 +28,7 @@ export class GetETFInfoData implements Serializable<GetETFInfoData> {
      * Basket information
      */
     basket?: string;
+
     fromJson(input: string): GetETFInfoData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetETFInfoData, jsonObject);

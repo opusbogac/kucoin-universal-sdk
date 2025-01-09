@@ -30,6 +30,7 @@ export class GetMarginAccountDetailAccounts
      * Available size to borrow
      */
     maxBorrowSize?: string;
+
     fromJson(input: string): GetMarginAccountDetailAccounts {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetMarginAccountDetailAccounts, jsonObject);

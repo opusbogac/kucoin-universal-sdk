@@ -13,6 +13,7 @@ export class SwitchMarginModeResp implements Response<SwitchMarginModeResp, Rest
      * Margin mode: ISOLATED (isolated), CROSS (cross margin).
      */
     marginMode?: SwitchMarginModeResp.MarginModeEnum;
+
     /**
      * common response
      */

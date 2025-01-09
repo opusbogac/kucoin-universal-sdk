@@ -46,6 +46,7 @@ export class TradeEvent implements Response<TradeEvent, WsMessage> {
      *
      */
     type?: string;
+
     /**
      * common response
      */
@@ -73,9 +74,7 @@ export class TradeEvent implements Response<TradeEvent, WsMessage> {
 export type TradeEventCallback = (topic: string, subject: string, data: TradeEvent) => void;
 
 export class TradeEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: TradeEventCallback;
-
-    constructor(callback: TradeEventCallback) {
+    constructor(private callback: TradeEventCallback) {
         this.callback = callback;
     }
 

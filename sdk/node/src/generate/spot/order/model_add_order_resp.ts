@@ -13,6 +13,7 @@ export class AddOrderResp implements Response<AddOrderResp, RestResponse> {
      * The user self-defined order id.
      */
     clientOid?: string;
+
     /**
      * common response
      */

@@ -25,6 +25,7 @@ export class GetPartOrderBookResp implements Response<GetPartOrderBookResp, Rest
      * Timestamp(nanosecond)
      */
     ts?: number;
+
     /**
      * common response
      */

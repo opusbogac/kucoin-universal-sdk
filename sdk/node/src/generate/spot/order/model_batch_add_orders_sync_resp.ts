@@ -11,6 +11,7 @@ export class BatchAddOrdersSyncResp implements Response<BatchAddOrdersSyncResp, 
      */
     @Type(() => BatchAddOrdersSyncData)
     data?: Array<BatchAddOrdersSyncData>;
+
     /**
      * common response
      */

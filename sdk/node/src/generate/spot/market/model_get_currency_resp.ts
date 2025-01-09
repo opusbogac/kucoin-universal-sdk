@@ -43,6 +43,7 @@ export class GetCurrencyResp implements Response<GetCurrencyResp, RestResponse> 
      */
     @Type(() => GetCurrencyChains)
     chains?: Array<GetCurrencyChains>;
+
     /**
      * common response
      */

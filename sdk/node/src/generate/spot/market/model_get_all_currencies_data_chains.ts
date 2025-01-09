@@ -76,6 +76,7 @@ export class GetAllCurrenciesDataChains implements Serializable<GetAllCurrencies
      *
      */
     depositTierFee?: string;
+
     fromJson(input: string): GetAllCurrenciesDataChains {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAllCurrenciesDataChains, jsonObject);

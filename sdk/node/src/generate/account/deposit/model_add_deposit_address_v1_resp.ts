@@ -29,6 +29,7 @@ export class AddDepositAddressV1Resp implements Response<AddDepositAddressV1Resp
      * currency
      */
     currency?: string;
+
     /**
      * common response
      */

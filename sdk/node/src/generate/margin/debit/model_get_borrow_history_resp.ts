@@ -31,6 +31,7 @@ export class GetBorrowHistoryResp implements Response<GetBorrowHistoryResp, Rest
      */
     @Type(() => GetBorrowHistoryItems)
     items?: Array<GetBorrowHistoryItems>;
+
     /**
      * common response
      */

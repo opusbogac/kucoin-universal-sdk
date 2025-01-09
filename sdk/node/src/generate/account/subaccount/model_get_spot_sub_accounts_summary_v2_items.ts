@@ -50,6 +50,7 @@ export class GetSpotSubAccountsSummaryV2Items
      *
      */
     hostedStatus?: string;
+
     fromJson(input: string): GetSpotSubAccountsSummaryV2Items {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSpotSubAccountsSummaryV2Items, jsonObject);

@@ -33,6 +33,7 @@ export class GetOcoOrderDetailByOrderIdResp
      */
     @Type(() => GetOcoOrderDetailByOrderIdOrders)
     orders?: Array<GetOcoOrderDetailByOrderIdOrders>;
+
     /**
      * common response
      */

@@ -17,6 +17,7 @@ export class GetFuturesActualFeeResp implements Response<GetFuturesActualFeeResp
      * Actual maker fee rate of the trading pair
      */
     makerFeeRate?: string;
+
     /**
      * common response
      */

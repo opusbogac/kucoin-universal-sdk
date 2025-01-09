@@ -28,6 +28,7 @@ export class GetSpotAccountListData implements Serializable<GetSpotAccountListDa
      * Funds on hold (not available for use)
      */
     holds?: string;
+
     fromJson(input: string): GetSpotAccountListData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSpotAccountListData, jsonObject);

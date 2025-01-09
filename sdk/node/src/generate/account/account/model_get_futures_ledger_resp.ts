@@ -15,6 +15,7 @@ export class GetFuturesLedgerResp implements Response<GetFuturesLedgerResp, Rest
      * Is it the last page. If it is false, it means it is the last page, and if it is true, it means need to turn the page.
      */
     hasMore?: boolean;
+
     /**
      * common response
      */

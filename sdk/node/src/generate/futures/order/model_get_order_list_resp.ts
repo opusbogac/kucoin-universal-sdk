@@ -27,6 +27,7 @@ export class GetOrderListResp implements Response<GetOrderListResp, RestResponse
      */
     @Type(() => GetOrderListItems)
     items?: Array<GetOrderListItems>;
+
     /**
      * common response
      */

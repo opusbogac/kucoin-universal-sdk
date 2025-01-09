@@ -96,6 +96,7 @@ export class GetKcsStakingProductsData implements Serializable<GetKcsStakingProd
      * Whether the product is exclusive for new users: 0 (no), 1 (yes)
      */
     newUserOnly?: GetKcsStakingProductsData.NewUserOnlyEnum;
+
     fromJson(input: string): GetKcsStakingProductsData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetKcsStakingProductsData, jsonObject);

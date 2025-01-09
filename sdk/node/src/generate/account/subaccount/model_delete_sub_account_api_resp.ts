@@ -13,6 +13,7 @@ export class DeleteSubAccountApiResp implements Response<DeleteSubAccountApiResp
      * The APIKEY of a sub-user.
      */
     apiKey?: string;
+
     /**
      * common response
      */

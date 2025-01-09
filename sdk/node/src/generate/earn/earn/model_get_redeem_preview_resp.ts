@@ -33,6 +33,7 @@ export class GetRedeemPreviewResp implements Response<GetRedeemPreviewResp, Rest
      * Whether the entire holding must be redeemed, required for early redemption of fixed-term products
      */
     redeemAll?: boolean;
+
     /**
      * common response
      */

@@ -13,6 +13,7 @@ export class GetMarginModeResp implements Response<GetMarginModeResp, RestRespon
      * Margin mode: ISOLATED (isolated), CROSS (cross margin).
      */
     marginMode?: GetMarginModeResp.MarginModeEnum;
+
     /**
      * common response
      */

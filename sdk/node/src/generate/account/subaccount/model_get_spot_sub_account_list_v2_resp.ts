@@ -29,6 +29,7 @@ export class GetSpotSubAccountListV2Resp
      */
     @Type(() => GetSpotSubAccountListV2Items)
     items?: Array<GetSpotSubAccountListV2Items>;
+
     /**
      * common response
      */

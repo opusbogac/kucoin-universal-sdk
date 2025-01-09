@@ -38,6 +38,7 @@ export class GetSpotSubAccountListV1DataTradeAccounts
      *
      */
     tag?: string;
+
     fromJson(input: string): GetSpotSubAccountListV1DataTradeAccounts {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSpotSubAccountListV1DataTradeAccounts, jsonObject);

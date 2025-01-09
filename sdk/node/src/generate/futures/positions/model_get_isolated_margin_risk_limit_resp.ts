@@ -13,6 +13,7 @@ export class GetIsolatedMarginRiskLimitResp
      */
     @Type(() => GetIsolatedMarginRiskLimitData)
     data?: Array<GetIsolatedMarginRiskLimitData>;
+
     /**
      * common response
      */

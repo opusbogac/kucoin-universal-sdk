@@ -27,6 +27,7 @@ export class GetAnnouncementsResp implements Response<GetAnnouncementsResp, Rest
      * Total Page
      */
     totalPage?: number;
+
     /**
      * common response
      */

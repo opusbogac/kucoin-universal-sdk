@@ -15,6 +15,7 @@ export class CancelAllOrdersResp implements Response<CancelAllOrdersResp, RestRe
      */
     @Type(() => CancelAllOrdersFailedSymbols)
     failedSymbols?: Array<CancelAllOrdersFailedSymbols>;
+
     /**
      * common response
      */

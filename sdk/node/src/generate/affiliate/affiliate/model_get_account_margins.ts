@@ -16,6 +16,7 @@ export class GetAccountMargins implements Serializable<GetAccountMargins> {
      * Margin Coefficient return real time margin discount rate to USDT
      */
     marginFactor?: string;
+
     fromJson(input: string): GetAccountMargins {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAccountMargins, jsonObject);

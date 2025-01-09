@@ -11,6 +11,7 @@ export class ModifyIsolatedMarginRiskLimtResp
      * To adjust the level will cancel the open order, the response can only indicate whether the submit of the adjustment request is successful or not.
      */
     data?: boolean;
+
     /**
      * common response
      */

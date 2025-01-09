@@ -32,6 +32,7 @@ export class GetBorrowHistoryItems implements Serializable<GetBorrowHistoryItems
      * borrow time
      */
     createdTime?: number;
+
     fromJson(input: string): GetBorrowHistoryItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetBorrowHistoryItems, jsonObject);

@@ -30,6 +30,7 @@ export class GetIsolatedMarginAccountListV1Assets
      */
     @Type(() => GetIsolatedMarginAccountListV1AssetsQuoteAsset)
     quoteAsset?: GetIsolatedMarginAccountListV1AssetsQuoteAsset;
+
     fromJson(input: string): GetIsolatedMarginAccountListV1Assets {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetIsolatedMarginAccountListV1Assets, jsonObject);

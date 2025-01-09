@@ -9,6 +9,7 @@ export class TransferResp implements Response<TransferResp, RestResponse> {
      *
      */
     orderId?: string;
+
     /**
      * common response
      */

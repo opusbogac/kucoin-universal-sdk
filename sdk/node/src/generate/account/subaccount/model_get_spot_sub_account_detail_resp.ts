@@ -37,6 +37,7 @@ export class GetSpotSubAccountDetailResp
      * This param is deprecated and only valid for some old users
      */
     tradeHFAccounts?: Array<string>;
+
     /**
      * common response
      */

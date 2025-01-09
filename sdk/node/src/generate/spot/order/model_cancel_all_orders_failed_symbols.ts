@@ -12,6 +12,7 @@ export class CancelAllOrdersFailedSymbols implements Serializable<CancelAllOrder
      * error message
      */
     error?: string;
+
     fromJson(input: string): CancelAllOrdersFailedSymbols {
         const jsonObject = JSON.parse(input);
         return plainToInstance(CancelAllOrdersFailedSymbols, jsonObject);

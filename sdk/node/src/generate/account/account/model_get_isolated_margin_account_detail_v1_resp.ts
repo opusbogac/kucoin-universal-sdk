@@ -31,6 +31,7 @@ export class GetIsolatedMarginAccountDetailV1Resp
      */
     @Type(() => GetIsolatedMarginAccountDetailV1QuoteAsset)
     quoteAsset?: GetIsolatedMarginAccountDetailV1QuoteAsset;
+
     /**
      * common response
      */

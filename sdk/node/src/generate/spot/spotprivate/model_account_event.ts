@@ -51,6 +51,7 @@ export class AccountEvent implements Response<AccountEvent, WsMessage> {
      * Total balance = available + hold
      */
     total?: string;
+
     /**
      * common response
      */
@@ -78,9 +79,7 @@ export class AccountEvent implements Response<AccountEvent, WsMessage> {
 export type AccountEventCallback = (topic: string, subject: string, data: AccountEvent) => void;
 
 export class AccountEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: AccountEventCallback;
-
-    constructor(callback: AccountEventCallback) {
+    constructor(private callback: AccountEventCallback) {
         this.callback = callback;
     }
 

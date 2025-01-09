@@ -190,6 +190,7 @@ export class AllPositionEvent implements Response<AllPositionEvent, WsMessage> {
      * Adjustment isolated margin risk limit level failure reason
      */
     msg?: string;
+
     /**
      * common response
      */
@@ -240,9 +241,7 @@ export type AllPositionEventCallback = (
 ) => void;
 
 export class AllPositionEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: AllPositionEventCallback;
-
-    constructor(callback: AllPositionEventCallback) {
+    constructor(private callback: AllPositionEventCallback) {
         this.callback = callback;
     }
 

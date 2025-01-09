@@ -96,6 +96,7 @@ export class GetPromotionProductsData implements Serializable<GetPromotionProduc
      * Whether the product is exclusive for new users: 0 (no), 1 (yes)
      */
     newUserOnly?: GetPromotionProductsData.NewUserOnlyEnum;
+
     fromJson(input: string): GetPromotionProductsData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetPromotionProductsData, jsonObject);

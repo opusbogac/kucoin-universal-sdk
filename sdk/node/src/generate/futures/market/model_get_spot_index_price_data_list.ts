@@ -26,6 +26,7 @@ export class GetSpotIndexPriceDataList implements Serializable<GetSpotIndexPrice
      */
     @Type(() => GetSpotIndexPriceDataListDecomposionList)
     decomposionList?: Array<GetSpotIndexPriceDataListDecomposionList>;
+
     fromJson(input: string): GetSpotIndexPriceDataList {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSpotIndexPriceDataList, jsonObject);

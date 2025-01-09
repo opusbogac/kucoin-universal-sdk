@@ -9,6 +9,7 @@ export class GetRebaseResp implements Response<GetRebaseResp, RestResponse> {
      * Rebate order file (link is valid for 1 day)
      */
     url?: string;
+
     /**
      * common response
      */

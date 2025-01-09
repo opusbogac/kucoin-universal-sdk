@@ -89,6 +89,7 @@ export class GetSymbolResp implements Response<GetSymbolResp, RestResponse> {
      *
      */
     st?: boolean;
+
     /**
      * common response
      */

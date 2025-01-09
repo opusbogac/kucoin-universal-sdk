@@ -11,6 +11,7 @@ export class GetSpotHFLedgerResp implements Response<GetSpotHFLedgerResp, RestRe
      */
     @Type(() => GetSpotHFLedgerData)
     data?: Array<GetSpotHFLedgerData>;
+
     /**
      * common response
      */

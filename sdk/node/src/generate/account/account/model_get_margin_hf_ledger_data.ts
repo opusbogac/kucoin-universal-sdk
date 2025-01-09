@@ -48,6 +48,7 @@ export class GetMarginHFLedgerData implements Serializable<GetMarginHFLedgerData
      *
      */
     tax?: string;
+
     fromJson(input: string): GetMarginHFLedgerData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetMarginHFLedgerData, jsonObject);

@@ -11,6 +11,7 @@ export class ModifyAutoDepositStatusResp
      *
      */
     data?: boolean;
+
     /**
      * common response
      */

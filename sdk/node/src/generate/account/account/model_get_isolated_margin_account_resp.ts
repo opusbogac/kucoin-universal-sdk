@@ -25,6 +25,7 @@ export class GetIsolatedMarginAccountResp
      */
     @Type(() => GetIsolatedMarginAccountAssets)
     assets?: Array<GetIsolatedMarginAccountAssets>;
+
     /**
      * common response
      */

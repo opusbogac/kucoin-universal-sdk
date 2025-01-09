@@ -9,6 +9,7 @@ export class GetServerTimeResp implements Response<GetServerTimeResp, RestRespon
      * ServerTime(millisecond)
      */
     data?: number;
+
     /**
      * common response
      */

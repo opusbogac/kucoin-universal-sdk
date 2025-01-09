@@ -13,6 +13,7 @@ export class GetETHStakingProductsResp
      */
     @Type(() => GetETHStakingProductsData)
     data?: Array<GetETHStakingProductsData>;
+
     /**
      * common response
      */

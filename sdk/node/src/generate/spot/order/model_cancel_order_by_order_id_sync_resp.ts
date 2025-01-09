@@ -31,6 +31,7 @@ export class CancelOrderByOrderIdSyncResp
      * Order Status. open：order is active; done：order has been completed
      */
     status?: CancelOrderByOrderIdSyncResp.StatusEnum;
+
     /**
      * common response
      */

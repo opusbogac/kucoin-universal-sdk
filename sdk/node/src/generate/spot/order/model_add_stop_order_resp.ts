@@ -13,6 +13,7 @@ export class AddStopOrderResp implements Response<AddStopOrderResp, RestResponse
      * The user self-defined order id.
      */
     clientOid?: string;
+
     /**
      * common response
      */

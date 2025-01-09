@@ -32,6 +32,7 @@ export class GetSubAccountAPIData implements Serializable<GetSubAccountAPIData> 
      * Creation time, unix timestamp (milliseconds)
      */
     createdAt?: number;
+
     fromJson(input: string): GetSubAccountAPIData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSubAccountAPIData, jsonObject);

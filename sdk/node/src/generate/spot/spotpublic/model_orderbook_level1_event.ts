@@ -18,6 +18,7 @@ export class OrderbookLevel1Event implements Response<OrderbookLevel1Event, WsMe
      *
      */
     timestamp?: number;
+
     /**
      * common response
      */
@@ -49,9 +50,7 @@ export type OrderbookLevel1EventCallback = (
 ) => void;
 
 export class OrderbookLevel1EventCallbackWrapper implements WebSocketMessageCallback {
-    callback: OrderbookLevel1EventCallback;
-
-    constructor(callback: OrderbookLevel1EventCallback) {
+    constructor(private callback: OrderbookLevel1EventCallback) {
         this.callback = callback;
     }
 

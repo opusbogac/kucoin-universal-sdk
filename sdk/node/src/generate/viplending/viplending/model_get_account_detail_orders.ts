@@ -20,6 +20,7 @@ export class GetAccountDetailOrders implements Serializable<GetAccountDetailOrde
      * Loan Currency
      */
     currency?: string;
+
     fromJson(input: string): GetAccountDetailOrders {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAccountDetailOrders, jsonObject);

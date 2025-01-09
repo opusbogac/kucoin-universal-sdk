@@ -13,6 +13,7 @@ export class ModifyMarginLeverageResp implements Response<ModifyMarginLeverageRe
      *
      */
     leverage?: string;
+
     /**
      * common response
      */

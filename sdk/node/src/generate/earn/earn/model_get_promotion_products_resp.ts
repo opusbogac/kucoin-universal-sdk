@@ -11,6 +11,7 @@ export class GetPromotionProductsResp implements Response<GetPromotionProductsRe
      */
     @Type(() => GetPromotionProductsData)
     data?: Array<GetPromotionProductsData>;
+
     /**
      * common response
      */

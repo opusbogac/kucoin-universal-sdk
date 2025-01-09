@@ -16,6 +16,7 @@ export class GetMarkPriceListData implements Serializable<GetMarkPriceListData> 
      * Mark price
      */
     value?: number;
+
     fromJson(input: string): GetMarkPriceListData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetMarkPriceListData, jsonObject);

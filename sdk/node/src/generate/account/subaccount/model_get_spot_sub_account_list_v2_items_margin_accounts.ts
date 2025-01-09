@@ -38,6 +38,7 @@ export class GetSpotSubAccountListV2ItemsMarginAccounts
      *
      */
     tag?: string;
+
     fromJson(input: string): GetSpotSubAccountListV2ItemsMarginAccounts {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSpotSubAccountListV2ItemsMarginAccounts, jsonObject);

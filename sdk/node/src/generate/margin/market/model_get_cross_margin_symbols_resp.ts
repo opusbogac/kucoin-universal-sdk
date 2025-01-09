@@ -17,6 +17,7 @@ export class GetCrossMarginSymbolsResp
      */
     @Type(() => GetCrossMarginSymbolsItems)
     items?: Array<GetCrossMarginSymbolsItems>;
+
     /**
      * common response
      */

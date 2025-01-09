@@ -13,6 +13,7 @@ export class GetRecentTradeHistoryResp
      */
     @Type(() => GetRecentTradeHistoryData)
     data?: Array<GetRecentTradeHistoryData>;
+
     /**
      * common response
      */

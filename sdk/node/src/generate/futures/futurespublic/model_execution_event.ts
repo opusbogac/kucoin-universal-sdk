@@ -42,6 +42,7 @@ export class ExecutionEvent implements Response<ExecutionEvent, WsMessage> {
      *
      */
     ts?: number;
+
     /**
      * common response
      */
@@ -69,9 +70,7 @@ export class ExecutionEvent implements Response<ExecutionEvent, WsMessage> {
 export type ExecutionEventCallback = (topic: string, subject: string, data: ExecutionEvent) => void;
 
 export class ExecutionEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: ExecutionEventCallback;
-
-    constructor(callback: ExecutionEventCallback) {
+    constructor(private callback: ExecutionEventCallback) {
         this.callback = callback;
     }
 

@@ -69,6 +69,7 @@ export class Get24hrStatsResp implements Response<Get24hrStatsResp, RestResponse
      * The maker fee coefficient. The actual fee needs to be multiplied by this coefficient to get the final fee. Most currencies have a coefficient of 1. If set to 0, it means no fee
      */
     makerCoefficient?: string;
+
     /**
      * common response
      */

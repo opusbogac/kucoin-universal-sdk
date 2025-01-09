@@ -61,6 +61,7 @@ export class GetDepositDetailResp implements Response<GetDepositDetailResp, Rest
      * Creation Time (milliseconds)
      */
     createdAt?: number;
+
     /**
      * common response
      */

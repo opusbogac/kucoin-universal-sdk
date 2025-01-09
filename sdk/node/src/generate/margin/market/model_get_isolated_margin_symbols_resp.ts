@@ -13,6 +13,7 @@ export class GetIsolatedMarginSymbolsResp
      */
     @Type(() => GetIsolatedMarginSymbolsData)
     data?: Array<GetIsolatedMarginSymbolsData>;
+
     /**
      * common response
      */

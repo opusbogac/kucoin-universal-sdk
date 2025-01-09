@@ -32,6 +32,7 @@ export class GetWithdrawalHistoryOldItems implements Serializable<GetWithdrawalH
      * Status
      */
     status?: GetWithdrawalHistoryOldItems.StatusEnum;
+
     fromJson(input: string): GetWithdrawalHistoryOldItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetWithdrawalHistoryOldItems, jsonObject);

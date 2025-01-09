@@ -17,6 +17,7 @@ export class RepayResp implements Response<RepayResp, RestResponse> {
      * Actual repay amount
      */
     actualSize?: string;
+
     /**
      * common response
      */

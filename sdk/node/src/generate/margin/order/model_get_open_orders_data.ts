@@ -152,6 +152,7 @@ export class GetOpenOrdersData implements Serializable<GetOpenOrdersData> {
      * Order status: true-The status of the order isactive; false-The status of the order is done
      */
     active?: boolean;
+
     fromJson(input: string): GetOpenOrdersData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetOpenOrdersData, jsonObject);

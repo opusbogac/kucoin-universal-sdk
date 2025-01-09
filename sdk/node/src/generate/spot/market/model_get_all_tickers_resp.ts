@@ -15,6 +15,7 @@ export class GetAllTickersResp implements Response<GetAllTickersResp, RestRespon
      */
     @Type(() => GetAllTickersTicker)
     ticker?: Array<GetAllTickersTicker>;
+
     /**
      * common response
      */

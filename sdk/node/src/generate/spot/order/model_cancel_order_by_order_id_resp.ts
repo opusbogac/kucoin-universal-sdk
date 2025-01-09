@@ -9,6 +9,7 @@ export class CancelOrderByOrderIdResp implements Response<CancelOrderByOrderIdRe
      * order id
      */
     orderId?: string;
+
     /**
      * common response
      */

@@ -27,6 +27,7 @@ export class GetAccountHoldingResp implements Response<GetAccountHoldingResp, Re
      * total page
      */
     totalPage?: number;
+
     /**
      * common response
      */

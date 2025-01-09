@@ -40,6 +40,7 @@ export class GetSubAccountApiListData implements Serializable<GetSubAccountApiLi
      * Whether it is the master account.
      */
     isMaster?: boolean;
+
     fromJson(input: string): GetSubAccountApiListData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSubAccountApiListData, jsonObject);

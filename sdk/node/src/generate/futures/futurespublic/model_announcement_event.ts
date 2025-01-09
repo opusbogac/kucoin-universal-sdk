@@ -22,6 +22,7 @@ export class AnnouncementEvent implements Response<AnnouncementEvent, WsMessage>
      *
      */
     timestamp?: number;
+
     /**
      * common response
      */
@@ -53,9 +54,7 @@ export type AnnouncementEventCallback = (
 ) => void;
 
 export class AnnouncementEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: AnnouncementEventCallback;
-
-    constructor(callback: AnnouncementEventCallback) {
+    constructor(private callback: AnnouncementEventCallback) {
         this.callback = callback;
     }
 

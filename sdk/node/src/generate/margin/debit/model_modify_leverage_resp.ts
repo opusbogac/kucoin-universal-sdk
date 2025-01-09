@@ -9,6 +9,7 @@ export class ModifyLeverageResp implements Response<ModifyLeverageResp, RestResp
      *
      */
     data?: string;
+
     /**
      * common response
      */

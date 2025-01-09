@@ -27,6 +27,7 @@ export class GetTradeHistoryResp implements Response<GetTradeHistoryResp, RestRe
      */
     @Type(() => GetTradeHistoryItems)
     items?: Array<GetTradeHistoryItems>;
+
     /**
      * common response
      */

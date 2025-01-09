@@ -11,6 +11,7 @@ export class GetMarkPriceListResp implements Response<GetMarkPriceListResp, Rest
      */
     @Type(() => GetMarkPriceListData)
     data?: Array<GetMarkPriceListData>;
+
     /**
      * common response
      */

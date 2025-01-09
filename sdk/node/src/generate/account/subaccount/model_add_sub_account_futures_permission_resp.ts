@@ -11,6 +11,7 @@ export class AddSubAccountFuturesPermissionResp
      *
      */
     data?: boolean;
+
     /**
      * common response
      */

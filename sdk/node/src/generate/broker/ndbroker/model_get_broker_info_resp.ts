@@ -17,6 +17,7 @@ export class GetBrokerInfoResp implements Response<GetBrokerInfoResp, RestRespon
      * Broker level
      */
     level?: number;
+
     /**
      * common response
      */

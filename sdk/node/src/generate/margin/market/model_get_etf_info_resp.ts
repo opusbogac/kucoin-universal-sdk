@@ -11,6 +11,7 @@ export class GetETFInfoResp implements Response<GetETFInfoResp, RestResponse> {
      */
     @Type(() => GetETFInfoData)
     data?: Array<GetETFInfoData>;
+
     /**
      * common response
      */

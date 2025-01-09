@@ -127,6 +127,7 @@ export class GetOrderByClientOidOldResp
      *
      */
     tradeType?: string;
+
     /**
      * common response
      */

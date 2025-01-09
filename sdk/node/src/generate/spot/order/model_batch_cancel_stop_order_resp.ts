@@ -9,6 +9,7 @@ export class BatchCancelStopOrderResp implements Response<BatchCancelStopOrderRe
      * order id array
      */
     cancelledOrderIds?: Array<string>;
+
     /**
      * common response
      */

@@ -9,6 +9,7 @@ export class BatchCancelOcoOrdersResp implements Response<BatchCancelOcoOrdersRe
      * List of two order IDs related to the canceled OCO order
      */
     cancelledOrderIds?: Array<string>;
+
     /**
      * common response
      */

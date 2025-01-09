@@ -76,6 +76,7 @@ export class GetAllTickersTicker implements Serializable<GetAllTickersTicker> {
      * The maker fee coefficient. The actual fee needs to be multiplied by this coefficient to get the final fee. Most currencies have a coefficient of 1. If set to 0, it means no fee
      */
     makerCoefficient?: GetAllTickersTicker.MakerCoefficientEnum;
+
     fromJson(input: string): GetAllTickersTicker {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAllTickersTicker, jsonObject);

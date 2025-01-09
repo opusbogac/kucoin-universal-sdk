@@ -18,6 +18,7 @@ export class GetSpotIndexPriceDataListDecomposionList
      * Weight
      */
     weight?: number;
+
     fromJson(input: string): GetSpotIndexPriceDataListDecomposionList {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSpotIndexPriceDataListDecomposionList, jsonObject);

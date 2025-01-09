@@ -17,6 +17,7 @@ export class GetPrivateFundingHistoryResp
      * Whether there are more pages
      */
     hasMore?: boolean;
+
     /**
      * common response
      */

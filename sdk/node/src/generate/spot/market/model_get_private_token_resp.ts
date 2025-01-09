@@ -15,6 +15,7 @@ export class GetPrivateTokenResp implements Response<GetPrivateTokenResp, RestRe
      */
     @Type(() => GetPrivateTokenInstanceServers)
     instanceServers?: Array<GetPrivateTokenInstanceServers>;
+
     /**
      * common response
      */

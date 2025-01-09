@@ -32,6 +32,7 @@ export class GetRedeemOrdersItems implements Serializable<GetRedeemOrdersItems> 
      * Status: DONE-completed; PENDING-settling
      */
     status?: string;
+
     fromJson(input: string): GetRedeemOrdersItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetRedeemOrdersItems, jsonObject);

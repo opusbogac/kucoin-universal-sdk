@@ -13,6 +13,7 @@ export class ModifyOrderResp implements Response<ModifyOrderResp, RestResponse> 
      * The original client order id
      */
     clientOid?: string;
+
     /**
      * common response
      */

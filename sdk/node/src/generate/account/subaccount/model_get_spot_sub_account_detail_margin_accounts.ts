@@ -38,6 +38,7 @@ export class GetSpotSubAccountDetailMarginAccounts
      *
      */
     tag?: string;
+
     fromJson(input: string): GetSpotSubAccountDetailMarginAccounts {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSpotSubAccountDetailMarginAccounts, jsonObject);

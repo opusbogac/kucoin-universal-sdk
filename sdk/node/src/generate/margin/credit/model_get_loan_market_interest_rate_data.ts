@@ -12,6 +12,7 @@ export class GetLoanMarketInterestRateData implements Serializable<GetLoanMarket
      * Market lending rate
      */
     marketInterestRate?: string;
+
     fromJson(input: string): GetLoanMarketInterestRateData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetLoanMarketInterestRateData, jsonObject);

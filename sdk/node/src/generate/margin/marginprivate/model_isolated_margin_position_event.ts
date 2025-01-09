@@ -33,6 +33,7 @@ export class IsolatedMarginPositionEvent
      *
      */
     timestamp?: number;
+
     /**
      * common response
      */
@@ -135,9 +136,7 @@ export type IsolatedMarginPositionEventCallback = (
 ) => void;
 
 export class IsolatedMarginPositionEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: IsolatedMarginPositionEventCallback;
-
-    constructor(callback: IsolatedMarginPositionEventCallback) {
+    constructor(private callback: IsolatedMarginPositionEventCallback) {
         this.callback = callback;
     }
 

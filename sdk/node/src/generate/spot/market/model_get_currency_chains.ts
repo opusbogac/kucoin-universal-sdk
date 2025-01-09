@@ -64,6 +64,7 @@ export class GetCurrencyChains implements Serializable<GetCurrencyChains> {
      * chain id of currency
      */
     chainId?: string;
+
     fromJson(input: string): GetCurrencyChains {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetCurrencyChains, jsonObject);

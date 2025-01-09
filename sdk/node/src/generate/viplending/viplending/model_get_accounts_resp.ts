@@ -11,6 +11,7 @@ export class GetAccountsResp implements Response<GetAccountsResp, RestResponse> 
      */
     @Type(() => GetAccountsData)
     data?: Array<GetAccountsData>;
+
     /**
      * common response
      */

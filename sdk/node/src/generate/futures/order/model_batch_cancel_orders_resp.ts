@@ -11,6 +11,7 @@ export class BatchCancelOrdersResp implements Response<BatchCancelOrdersResp, Re
      */
     @Type(() => BatchCancelOrdersData)
     data?: Array<BatchCancelOrdersData>;
+
     /**
      * common response
      */

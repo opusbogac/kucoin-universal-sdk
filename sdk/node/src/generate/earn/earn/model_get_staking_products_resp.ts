@@ -11,6 +11,7 @@ export class GetStakingProductsResp implements Response<GetStakingProductsResp, 
      */
     @Type(() => GetStakingProductsData)
     data?: Array<GetStakingProductsData>;
+
     /**
      * common response
      */

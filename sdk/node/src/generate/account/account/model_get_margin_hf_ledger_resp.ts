@@ -11,6 +11,7 @@ export class GetMarginHFLedgerResp implements Response<GetMarginHFLedgerResp, Re
      */
     @Type(() => GetMarginHFLedgerData)
     data?: Array<GetMarginHFLedgerData>;
+
     /**
      * common response
      */

@@ -11,6 +11,7 @@ export class CancelOrderByClientOidResp
      * Client Order Id，unique identifier created by the user
      */
     clientOid?: string;
+
     /**
      * common response
      */

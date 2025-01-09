@@ -53,6 +53,7 @@ export class GetTransferHistoryResp implements Response<GetTransferHistoryResp, 
      * Creation Time (Unix timestamp in milliseconds)
      */
     createdAt?: number;
+
     /**
      * common response
      */

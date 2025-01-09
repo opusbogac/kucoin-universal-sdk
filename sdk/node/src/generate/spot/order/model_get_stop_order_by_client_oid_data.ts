@@ -128,6 +128,7 @@ export class GetStopOrderByClientOidData implements Serializable<GetStopOrderByC
      * Time of place a stop order, accurate to nanoseconds
      */
     orderTime?: number;
+
     fromJson(input: string): GetStopOrderByClientOidData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetStopOrderByClientOidData, jsonObject);

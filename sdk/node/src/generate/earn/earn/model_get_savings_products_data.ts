@@ -96,6 +96,7 @@ export class GetSavingsProductsData implements Serializable<GetSavingsProductsDa
      * Whether the product is exclusive for new users: 0 (no), 1 (yes)
      */
     newUserOnly?: GetSavingsProductsData.NewUserOnlyEnum;
+
     fromJson(input: string): GetSavingsProductsData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSavingsProductsData, jsonObject);

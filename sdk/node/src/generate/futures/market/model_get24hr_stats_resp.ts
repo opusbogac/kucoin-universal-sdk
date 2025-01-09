@@ -9,6 +9,7 @@ export class Get24hrStatsResp implements Response<Get24hrStatsResp, RestResponse
      * 24-hour platform Futures trading volume. Unit is USD
      */
     turnoverOf24h?: number;
+
     /**
      * common response
      */

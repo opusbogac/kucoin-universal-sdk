@@ -13,6 +13,7 @@ export class GetRecentClosedOrdersResp
      */
     @Type(() => GetRecentClosedOrdersData)
     data?: Array<GetRecentClosedOrdersData>;
+
     /**
      * common response
      */

@@ -25,6 +25,7 @@ export class GetMarkPriceResp implements Response<GetMarkPriceResp, RestResponse
      * Index price
      */
     indexPrice?: number;
+
     /**
      * common response
      */

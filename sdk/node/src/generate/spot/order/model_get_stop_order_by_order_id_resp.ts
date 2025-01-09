@@ -131,6 +131,7 @@ export class GetStopOrderByOrderIdResp
      * Time of place a stop order, accurate to nanoseconds
      */
     orderTime?: number;
+
     /**
      * common response
      */

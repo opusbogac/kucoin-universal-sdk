@@ -9,6 +9,7 @@ export class GetMarketListResp implements Response<GetMarketListResp, RestRespon
      *
      */
     data?: Array<string>;
+
     /**
      * common response
      */

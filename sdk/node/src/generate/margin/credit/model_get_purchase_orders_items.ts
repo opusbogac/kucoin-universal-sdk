@@ -36,6 +36,7 @@ export class GetPurchaseOrdersItems implements Serializable<GetPurchaseOrdersIte
      * Status: DONE-completed; PENDING-settling
      */
     status?: GetPurchaseOrdersItems.StatusEnum;
+
     fromJson(input: string): GetPurchaseOrdersItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetPurchaseOrdersItems, jsonObject);

@@ -33,6 +33,7 @@ export class AddDepositAddressV3Resp implements Response<AddDepositAddressV3Resp
      * The chainName of currency
      */
     chainName?: string;
+
     /**
      * common response
      */

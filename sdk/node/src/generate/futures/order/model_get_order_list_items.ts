@@ -156,6 +156,7 @@ export class GetOrderListItems implements Serializable<GetOrderListItems> {
      * A mark to reduce the position size only
      */
     reduceOnly?: boolean;
+
     fromJson(input: string): GetOrderListItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetOrderListItems, jsonObject);

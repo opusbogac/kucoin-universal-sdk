@@ -34,6 +34,7 @@ export class GetIsolatedMarginRiskLimitData
      * Maintenance margin rate
      */
     maintainMargin?: number;
+
     fromJson(input: string): GetIsolatedMarginRiskLimitData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetIsolatedMarginRiskLimitData, jsonObject);

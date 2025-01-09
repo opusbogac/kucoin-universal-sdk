@@ -100,6 +100,7 @@ export class GetTradeHistoryItems implements Serializable<GetTradeHistoryItems> 
      * Time the order created
      */
     createdAt?: number;
+
     fromJson(input: string): GetTradeHistoryItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetTradeHistoryItems, jsonObject);

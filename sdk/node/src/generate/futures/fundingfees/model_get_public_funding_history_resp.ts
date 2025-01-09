@@ -13,6 +13,7 @@ export class GetPublicFundingHistoryResp
      */
     @Type(() => GetPublicFundingHistoryData)
     data?: Array<GetPublicFundingHistoryData>;
+
     /**
      * common response
      */

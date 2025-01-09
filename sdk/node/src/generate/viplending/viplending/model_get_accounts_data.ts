@@ -28,6 +28,7 @@ export class GetAccountsData implements Serializable<GetAccountsData> {
      * If It Is Master Account
      */
     isParent?: boolean;
+
     fromJson(input: string): GetAccountsData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAccountsData, jsonObject);

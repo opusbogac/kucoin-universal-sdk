@@ -124,6 +124,7 @@ export class GetRecentOrdersListOldData implements Serializable<GetRecentOrdersL
      *
      */
     tradeType?: string;
+
     fromJson(input: string): GetRecentOrdersListOldData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetRecentOrdersListOldData, jsonObject);

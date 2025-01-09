@@ -18,6 +18,7 @@ export class OrderbookIncrementEvent implements Response<OrderbookIncrementEvent
      *
      */
     timestamp?: number;
+
     /**
      * common response
      */
@@ -49,9 +50,7 @@ export type OrderbookIncrementEventCallback = (
 ) => void;
 
 export class OrderbookIncrementEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: OrderbookIncrementEventCallback;
-
-    constructor(callback: OrderbookIncrementEventCallback) {
+    constructor(private callback: OrderbookIncrementEventCallback) {
         this.callback = callback;
     }
 

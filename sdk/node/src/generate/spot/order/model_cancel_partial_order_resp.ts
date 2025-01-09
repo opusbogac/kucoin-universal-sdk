@@ -13,6 +13,7 @@ export class CancelPartialOrderResp implements Response<CancelPartialOrderResp, 
      * The size you canceled
      */
     cancelSize?: string;
+
     /**
      * common response
      */

@@ -21,6 +21,7 @@ export class RedeemResp implements Response<RedeemResp, RestResponse> {
      * Redemption amount
      */
     amount?: string;
+
     /**
      * common response
      */

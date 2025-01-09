@@ -9,6 +9,7 @@ export class CancelAllOrdersV3Resp implements Response<CancelAllOrdersV3Resp, Re
      * Unique ID of the cancelled order
      */
     cancelledOrderIds?: Array<string>;
+
     /**
      * common response
      */

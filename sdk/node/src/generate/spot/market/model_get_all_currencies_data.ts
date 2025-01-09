@@ -42,6 +42,7 @@ export class GetAllCurrenciesData implements Serializable<GetAllCurrenciesData> 
      */
     @Type(() => GetAllCurrenciesDataChains)
     chains?: Array<GetAllCurrenciesDataChains>;
+
     fromJson(input: string): GetAllCurrenciesData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAllCurrenciesData, jsonObject);

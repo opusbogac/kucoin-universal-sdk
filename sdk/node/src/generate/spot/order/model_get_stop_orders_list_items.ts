@@ -128,6 +128,7 @@ export class GetStopOrdersListItems implements Serializable<GetStopOrdersListIte
      * stop price
      */
     stopPrice?: string;
+
     fromJson(input: string): GetStopOrdersListItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetStopOrdersListItems, jsonObject);

@@ -15,6 +15,7 @@ export class GetClosedOrdersResp implements Response<GetClosedOrdersResp, RestRe
      */
     @Type(() => GetClosedOrdersItems)
     items?: Array<GetClosedOrdersItems>;
+
     /**
      * common response
      */

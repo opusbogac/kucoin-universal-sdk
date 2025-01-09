@@ -11,6 +11,7 @@ export class GetSpotActualFeeResp implements Response<GetSpotActualFeeResp, Rest
      */
     @Type(() => GetSpotActualFeeData)
     data?: Array<GetSpotActualFeeData>;
+
     /**
      * common response
      */

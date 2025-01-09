@@ -22,6 +22,7 @@ export class MarkPriceEvent implements Response<MarkPriceEvent, WsMessage> {
      *
      */
     value?: number;
+
     /**
      * common response
      */
@@ -49,9 +50,7 @@ export class MarkPriceEvent implements Response<MarkPriceEvent, WsMessage> {
 export type MarkPriceEventCallback = (topic: string, subject: string, data: MarkPriceEvent) => void;
 
 export class MarkPriceEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: MarkPriceEventCallback;
-
-    constructor(callback: MarkPriceEventCallback) {
+    constructor(private callback: MarkPriceEventCallback) {
         this.callback = callback;
     }
 

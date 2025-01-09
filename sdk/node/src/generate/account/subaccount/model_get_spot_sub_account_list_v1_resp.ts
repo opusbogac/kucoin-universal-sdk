@@ -13,6 +13,7 @@ export class GetSpotSubAccountListV1Resp
      */
     @Type(() => GetSpotSubAccountListV1Data)
     data?: Array<GetSpotSubAccountListV1Data>;
+
     /**
      * common response
      */

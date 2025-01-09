@@ -60,6 +60,7 @@ export class GetDepositListData implements Serializable<GetDepositListData> {
      * Update time of the database record
      */
     updatedAt?: number;
+
     fromJson(input: string): GetDepositListData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetDepositListData, jsonObject);

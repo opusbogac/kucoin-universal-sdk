@@ -68,6 +68,7 @@ export class GetCrossMarginSymbolsItems implements Serializable<GetCrossMarginSy
      * the minimum trading amounts
      */
     minFunds?: string;
+
     fromJson(input: string): GetCrossMarginSymbolsItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetCrossMarginSymbolsItems, jsonObject);

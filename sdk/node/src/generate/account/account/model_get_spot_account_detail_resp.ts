@@ -21,6 +21,7 @@ export class GetSpotAccountDetailResp implements Response<GetSpotAccountDetailRe
      * Funds on hold (not available for use)
      */
     holds?: string;
+
     /**
      * common response
      */

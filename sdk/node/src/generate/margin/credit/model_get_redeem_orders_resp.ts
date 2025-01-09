@@ -27,6 +27,7 @@ export class GetRedeemOrdersResp implements Response<GetRedeemOrdersResp, RestRe
      */
     @Type(() => GetRedeemOrdersItems)
     items?: Array<GetRedeemOrdersItems>;
+
     /**
      * common response
      */

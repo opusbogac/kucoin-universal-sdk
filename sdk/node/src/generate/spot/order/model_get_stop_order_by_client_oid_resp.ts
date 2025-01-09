@@ -13,6 +13,7 @@ export class GetStopOrderByClientOidResp
      */
     @Type(() => GetStopOrderByClientOidData)
     data?: Array<GetStopOrderByClientOidData>;
+
     /**
      * common response
      */

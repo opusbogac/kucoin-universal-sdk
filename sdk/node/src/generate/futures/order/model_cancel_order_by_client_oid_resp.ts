@@ -11,6 +11,7 @@ export class CancelOrderByClientOidResp
      *
      */
     clientOid?: string;
+
     /**
      * common response
      */

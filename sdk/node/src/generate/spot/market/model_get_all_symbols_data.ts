@@ -88,6 +88,7 @@ export class GetAllSymbolsData implements Serializable<GetAllSymbolsData> {
      * Whether it is an [Special Treatment](https://www.kucoin.com/legal/special-treatment) symbol
      */
     st?: boolean;
+
     fromJson(input: string): GetAllSymbolsData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAllSymbolsData, jsonObject);

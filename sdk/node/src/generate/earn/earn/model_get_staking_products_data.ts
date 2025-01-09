@@ -96,6 +96,7 @@ export class GetStakingProductsData implements Serializable<GetStakingProductsDa
      * Whether the product is exclusive for new users: 0 (no), 1 (yes)
      */
     newUserOnly?: GetStakingProductsData.NewUserOnlyEnum;
+
     fromJson(input: string): GetStakingProductsData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetStakingProductsData, jsonObject);

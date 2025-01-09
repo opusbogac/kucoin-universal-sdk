@@ -48,6 +48,7 @@ export class BatchAddOrdersSyncData implements Serializable<BatchAddOrdersSyncDa
      * error message
      */
     failMsg?: string;
+
     fromJson(input: string): BatchAddOrdersSyncData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(BatchAddOrdersSyncData, jsonObject);

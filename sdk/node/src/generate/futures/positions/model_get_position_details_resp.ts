@@ -181,6 +181,7 @@ export class GetPositionDetailsResp implements Response<GetPositionDetailsResp, 
      * Maintenance margin rate **Only applicable to Isolated Margin**
      */
     maintainMargin?: number;
+
     /**
      * common response
      */

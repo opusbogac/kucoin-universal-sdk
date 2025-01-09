@@ -15,6 +15,7 @@ export class MarketSnapshotEvent implements Response<MarketSnapshotEvent, WsMess
      *
      */
     data?: MarketSnapshotData;
+
     /**
      * common response
      */
@@ -46,9 +47,7 @@ export type MarketSnapshotEventCallback = (
 ) => void;
 
 export class MarketSnapshotEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: MarketSnapshotEventCallback;
-
-    constructor(callback: MarketSnapshotEventCallback) {
+    constructor(private callback: MarketSnapshotEventCallback) {
         this.callback = callback;
     }
 

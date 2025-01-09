@@ -3591,6 +3591,7 @@ export class GetFiatPriceResp implements Response<GetFiatPriceResp, RestResponse
      *
      */
     COTI?: string;
+
     /**
      * common response
      */

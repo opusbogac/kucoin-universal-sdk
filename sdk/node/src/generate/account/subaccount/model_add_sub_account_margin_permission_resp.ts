@@ -11,6 +11,7 @@ export class AddSubAccountMarginPermissionResp
      *
      */
     data?: string;
+
     /**
      * common response
      */

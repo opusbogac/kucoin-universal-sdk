@@ -11,6 +11,7 @@ export class GetSavingsProductsResp implements Response<GetSavingsProductsResp, 
      */
     @Type(() => GetSavingsProductsData)
     data?: Array<GetSavingsProductsData>;
+
     /**
      * common response
      */

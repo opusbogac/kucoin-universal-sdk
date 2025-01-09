@@ -26,6 +26,7 @@ export class OrderbookLevel5Event implements Response<OrderbookLevel5Event, WsMe
      *
      */
     asks?: Array<Array<any>>;
+
     /**
      * common response
      */
@@ -57,9 +58,7 @@ export type OrderbookLevel5EventCallback = (
 ) => void;
 
 export class OrderbookLevel5EventCallbackWrapper implements WebSocketMessageCallback {
-    callback: OrderbookLevel5EventCallback;
-
-    constructor(callback: OrderbookLevel5EventCallback) {
+    constructor(private callback: OrderbookLevel5EventCallback) {
         this.callback = callback;
     }
 

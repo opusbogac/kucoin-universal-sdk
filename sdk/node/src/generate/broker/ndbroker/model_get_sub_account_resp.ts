@@ -27,6 +27,7 @@ export class GetSubAccountResp implements Response<GetSubAccountResp, RestRespon
      */
     @Type(() => GetSubAccountItems)
     items?: Array<GetSubAccountItems>;
+
     /**
      * common response
      */

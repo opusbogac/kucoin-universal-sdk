@@ -41,6 +41,7 @@ export class GetApikeyInfoResp implements Response<GetApikeyInfoResp, RestRespon
      * Sub Name, There is no such param for the master account
      */
     subName?: string;
+
     /**
      * common response
      */

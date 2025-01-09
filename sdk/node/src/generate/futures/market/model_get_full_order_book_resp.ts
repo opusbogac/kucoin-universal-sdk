@@ -25,6 +25,7 @@ export class GetFullOrderBookResp implements Response<GetFullOrderBookResp, Rest
      * Timestamp(nanosecond)
      */
     ts?: number;
+
     /**
      * common response
      */

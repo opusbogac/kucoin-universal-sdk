@@ -25,6 +25,7 @@ export class GetOpenOrderValueResp implements Response<GetOpenOrderValueResp, Re
      * settlement currency
      */
     settleCurrency?: string;
+
     /**
      * common response
      */

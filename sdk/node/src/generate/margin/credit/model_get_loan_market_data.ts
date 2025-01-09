@@ -48,6 +48,7 @@ export class GetLoanMarketData implements Serializable<GetLoanMarketData> {
      * Whether to allow automatic purchase: true: on, false: off
      */
     autoPurchaseEnable?: boolean;
+
     fromJson(input: string): GetLoanMarketData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetLoanMarketData, jsonObject);

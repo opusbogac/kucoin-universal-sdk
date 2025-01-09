@@ -30,6 +30,7 @@ export class GetSpotSubAccountsSummaryV1Data
      * Sub-account Permission
      */
     access?: string;
+
     fromJson(input: string): GetSpotSubAccountsSummaryV1Data {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSpotSubAccountsSummaryV1Data, jsonObject);

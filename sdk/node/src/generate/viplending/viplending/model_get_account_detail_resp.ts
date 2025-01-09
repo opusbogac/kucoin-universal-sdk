@@ -35,6 +35,7 @@ export class GetAccountDetailResp implements Response<GetAccountDetailResp, Rest
      */
     @Type(() => GetAccountDetailMargins)
     margins?: Array<GetAccountDetailMargins>;
+
     /**
      * common response
      */

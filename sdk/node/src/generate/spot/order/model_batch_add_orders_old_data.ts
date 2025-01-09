@@ -88,6 +88,7 @@ export class BatchAddOrdersOldData implements Serializable<BatchAddOrdersOldData
      *
      */
     clientOid?: string;
+
     fromJson(input: string): BatchAddOrdersOldData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(BatchAddOrdersOldData, jsonObject);

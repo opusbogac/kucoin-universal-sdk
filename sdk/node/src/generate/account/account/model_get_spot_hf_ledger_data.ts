@@ -48,6 +48,7 @@ export class GetSpotHFLedgerData implements Serializable<GetSpotHFLedgerData> {
      * Core transaction parameter
      */
     context?: string;
+
     fromJson(input: string): GetSpotHFLedgerData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSpotHFLedgerData, jsonObject);

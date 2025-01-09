@@ -11,6 +11,7 @@ export class CrossLeverageEvent implements Response<CrossLeverageEvent, WsMessag
      *
      */
     data?: { [key: string]: CrossLeverageDataValue };
+
     /**
      * common response
      */
@@ -42,9 +43,7 @@ export type CrossLeverageEventCallback = (
 ) => void;
 
 export class CrossLeverageEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: CrossLeverageEventCallback;
-
-    constructor(callback: CrossLeverageEventCallback) {
+    constructor(private callback: CrossLeverageEventCallback) {
         this.callback = callback;
     }
 

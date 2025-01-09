@@ -27,6 +27,7 @@ export class GetOcoOrderByClientOidResp
      * Order status: NEW: New, DONE: Completed, TRIGGERED: Triggered, CANCELLED: Cancelled
      */
     status?: string;
+
     /**
      * common response
      */

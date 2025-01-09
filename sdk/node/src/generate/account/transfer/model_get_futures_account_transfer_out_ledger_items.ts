@@ -46,6 +46,7 @@ export class GetFuturesAccountTransferOutLedgerItems
      * User remark
      */
     remark?: string;
+
     fromJson(input: string): GetFuturesAccountTransferOutLedgerItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetFuturesAccountTransferOutLedgerItems, jsonObject);

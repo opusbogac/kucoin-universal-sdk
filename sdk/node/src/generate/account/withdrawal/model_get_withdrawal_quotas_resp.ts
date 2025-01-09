@@ -69,6 +69,7 @@ export class GetWithdrawalQuotasResp implements Response<GetWithdrawalQuotasResp
      * Total locked amount (including the amount locked into USDT for each currency)
      */
     lockedAmount?: string;
+
     /**
      * common response
      */

@@ -36,6 +36,7 @@ export class GetRepayHistoryItems implements Serializable<GetRepayHistoryItems> 
      * Repayment time
      */
     createdTime?: number;
+
     fromJson(input: string): GetRepayHistoryItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetRepayHistoryItems, jsonObject);

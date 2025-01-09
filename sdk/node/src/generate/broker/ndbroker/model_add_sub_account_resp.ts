@@ -21,6 +21,7 @@ export class AddSubAccountResp implements Response<AddSubAccountResp, RestRespon
      * Subaccount VIP level
      */
     level?: number;
+
     /**
      * common response
      */

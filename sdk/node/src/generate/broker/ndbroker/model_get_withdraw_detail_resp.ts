@@ -61,6 +61,7 @@ export class GetWithdrawDetailResp implements Response<GetWithdrawDetailResp, Re
      * Creation Time (milliseconds)
      */
     createdAt?: number;
+
     /**
      * common response
      */

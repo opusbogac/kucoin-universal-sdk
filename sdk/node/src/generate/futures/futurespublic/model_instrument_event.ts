@@ -26,6 +26,7 @@ export class InstrumentEvent implements Response<InstrumentEvent, WsMessage> {
      *
      */
     indexPrice?: number;
+
     /**
      * common response
      */
@@ -57,9 +58,7 @@ export type InstrumentEventCallback = (
 ) => void;
 
 export class InstrumentEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: InstrumentEventCallback;
-
-    constructor(callback: InstrumentEventCallback) {
+    constructor(private callback: InstrumentEventCallback) {
         this.callback = callback;
     }
 

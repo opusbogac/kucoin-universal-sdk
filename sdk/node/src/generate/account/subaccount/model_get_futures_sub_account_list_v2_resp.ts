@@ -19,6 +19,7 @@ export class GetFuturesSubAccountListV2Resp
      */
     @Type(() => GetFuturesSubAccountListV2Accounts)
     accounts?: Array<GetFuturesSubAccountListV2Accounts>;
+
     /**
      * common response
      */

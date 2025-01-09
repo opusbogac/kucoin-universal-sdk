@@ -26,6 +26,7 @@ export class GetPrivateTokenInstanceServers
      * Heartbeat timeout(millisecond)
      */
     pingTimeout?: number;
+
     fromJson(input: string): GetPrivateTokenInstanceServers {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetPrivateTokenInstanceServers, jsonObject);

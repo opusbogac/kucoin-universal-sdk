@@ -152,6 +152,7 @@ export class GetClosedOrdersItems implements Serializable<GetClosedOrdersItems> 
      * Order status: true-The status of the order isactive; false-The status of the order is done
      */
     active?: boolean;
+
     fromJson(input: string): GetClosedOrdersItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetClosedOrdersItems, jsonObject);

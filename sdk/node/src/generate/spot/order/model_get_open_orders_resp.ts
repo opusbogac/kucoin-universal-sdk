@@ -11,6 +11,7 @@ export class GetOpenOrdersResp implements Response<GetOpenOrdersResp, RestRespon
      */
     @Type(() => GetOpenOrdersData)
     data?: Array<GetOpenOrdersData>;
+
     /**
      * common response
      */

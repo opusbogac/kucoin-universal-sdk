@@ -29,6 +29,7 @@ export class GetCrossMarginAccountResp
      */
     @Type(() => GetCrossMarginAccountAccounts)
     accounts?: Array<GetCrossMarginAccountAccounts>;
+
     /**
      * common response
      */

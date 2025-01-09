@@ -32,6 +32,7 @@ export class GetDepositAddressV2Data implements Serializable<GetDepositAddressV2
      * The token contract address.
      */
     contractAddress?: string;
+
     fromJson(input: string): GetDepositAddressV2Data {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetDepositAddressV2Data, jsonObject);

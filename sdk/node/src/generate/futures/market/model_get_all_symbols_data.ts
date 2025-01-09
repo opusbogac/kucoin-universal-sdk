@@ -252,6 +252,7 @@ export class GetAllSymbolsData implements Serializable<GetAllSymbolsData> {
      * Whether support Cross Margin
      */
     supportCross?: boolean;
+
     fromJson(input: string): GetAllSymbolsData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAllSymbolsData, jsonObject);

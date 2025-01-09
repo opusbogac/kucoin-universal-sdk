@@ -38,6 +38,7 @@ export class GetFuturesSubAccountListV2Summary
      *
      */
     currency?: string;
+
     fromJson(input: string): GetFuturesSubAccountListV2Summary {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetFuturesSubAccountListV2Summary, jsonObject);

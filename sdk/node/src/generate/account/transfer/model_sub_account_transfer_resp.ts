@@ -9,6 +9,7 @@ export class SubAccountTransferResp implements Response<SubAccountTransferResp, 
      * Transfer order ID
      */
     orderId?: string;
+
     /**
      * common response
      */

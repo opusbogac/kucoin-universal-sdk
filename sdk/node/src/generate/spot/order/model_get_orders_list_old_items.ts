@@ -124,6 +124,7 @@ export class GetOrdersListOldItems implements Serializable<GetOrdersListOldItems
      *
      */
     tradeType?: string;
+
     fromJson(input: string): GetOrdersListOldItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetOrdersListOldItems, jsonObject);

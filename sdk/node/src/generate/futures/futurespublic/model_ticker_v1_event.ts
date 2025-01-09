@@ -50,6 +50,7 @@ export class TickerV1Event implements Response<TickerV1Event, WsMessage> {
      *
      */
     ts?: number;
+
     /**
      * common response
      */
@@ -77,9 +78,7 @@ export class TickerV1Event implements Response<TickerV1Event, WsMessage> {
 export type TickerV1EventCallback = (topic: string, subject: string, data: TickerV1Event) => void;
 
 export class TickerV1EventCallbackWrapper implements WebSocketMessageCallback {
-    callback: TickerV1EventCallback;
-
-    constructor(callback: TickerV1EventCallback) {
+    constructor(private callback: TickerV1EventCallback) {
         this.callback = callback;
     }
 

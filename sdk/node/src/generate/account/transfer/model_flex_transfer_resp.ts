@@ -9,6 +9,7 @@ export class FlexTransferResp implements Response<FlexTransferResp, RestResponse
      * Transfer order ID
      */
     orderId?: string;
+
     /**
      * common response
      */

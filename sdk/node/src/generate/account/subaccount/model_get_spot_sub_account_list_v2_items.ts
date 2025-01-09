@@ -34,6 +34,7 @@ export class GetSpotSubAccountListV2Items implements Serializable<GetSpotSubAcco
      * This param is deprecated and only valid for some old users
      */
     tradeHFAccounts?: Array<string>;
+
     fromJson(input: string): GetSpotSubAccountListV2Items {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSpotSubAccountListV2Items, jsonObject);

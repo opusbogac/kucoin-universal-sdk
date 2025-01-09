@@ -9,6 +9,7 @@ export class DeleteSubAccountAPIResp implements Response<DeleteSubAccountAPIResp
      *
      */
     data?: boolean;
+
     /**
      * common response
      */

@@ -124,6 +124,7 @@ export class GetMarginRiskLimitData implements Serializable<GetMarginRiskLimitDa
      * ISOLATED MARGIN RESPONSES, [Quote Margin Coefficient](https://www.kucoin.com/land/price-protect)
      */
     quoteMarginCoefficient?: string;
+
     fromJson(input: string): GetMarginRiskLimitData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetMarginRiskLimitData, jsonObject);

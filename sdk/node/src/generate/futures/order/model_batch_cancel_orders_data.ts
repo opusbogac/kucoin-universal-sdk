@@ -20,6 +20,7 @@ export class BatchCancelOrdersData implements Serializable<BatchCancelOrdersData
      *
      */
     msg?: string;
+
     fromJson(input: string): BatchCancelOrdersData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(BatchCancelOrdersData, jsonObject);

@@ -56,6 +56,7 @@ export class GetWithdrawalHistoryItems implements Serializable<GetWithdrawalHist
      * remark
      */
     remark?: string;
+
     fromJson(input: string): GetWithdrawalHistoryItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetWithdrawalHistoryItems, jsonObject);

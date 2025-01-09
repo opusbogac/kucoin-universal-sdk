@@ -24,6 +24,7 @@ export class GetTradeHistoryData implements Serializable<GetTradeHistoryData> {
      * Filled timestamp(nanosecond)
      */
     time?: number;
+
     fromJson(input: string): GetTradeHistoryData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetTradeHistoryData, jsonObject);

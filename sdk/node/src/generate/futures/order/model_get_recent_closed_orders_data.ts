@@ -156,6 +156,7 @@ export class GetRecentClosedOrdersData implements Serializable<GetRecentClosedOr
      * A mark to reduce the position size only
      */
     reduceOnly?: boolean;
+
     fromJson(input: string): GetRecentClosedOrdersData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetRecentClosedOrdersData, jsonObject);

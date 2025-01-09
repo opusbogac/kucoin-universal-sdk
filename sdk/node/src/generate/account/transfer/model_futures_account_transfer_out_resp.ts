@@ -75,6 +75,7 @@ export class FuturesAccountTransferOutResp
      * Update time
      */
     updatedAt?: number;
+
     /**
      * common response
      */

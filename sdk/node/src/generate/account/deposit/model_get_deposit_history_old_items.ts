@@ -28,6 +28,7 @@ export class GetDepositHistoryOldItems implements Serializable<GetDepositHistory
      *
      */
     status?: GetDepositHistoryOldItems.StatusEnum;
+
     fromJson(input: string): GetDepositHistoryOldItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetDepositHistoryOldItems, jsonObject);

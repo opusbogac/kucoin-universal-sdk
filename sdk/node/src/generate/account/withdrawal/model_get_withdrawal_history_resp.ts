@@ -27,6 +27,7 @@ export class GetWithdrawalHistoryResp implements Response<GetWithdrawalHistoryRe
      */
     @Type(() => GetWithdrawalHistoryItems)
     items?: Array<GetWithdrawalHistoryItems>;
+
     /**
      * common response
      */

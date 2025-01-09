@@ -31,6 +31,7 @@ export class GetInterestHistoryResp implements Response<GetInterestHistoryResp, 
      */
     @Type(() => GetInterestHistoryItems)
     items?: Array<GetInterestHistoryItems>;
+
     /**
      * common response
      */

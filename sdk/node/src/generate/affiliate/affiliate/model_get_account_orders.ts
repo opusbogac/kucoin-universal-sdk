@@ -20,6 +20,7 @@ export class GetAccountOrders implements Serializable<GetAccountOrders> {
      * Interest to Be Repaid
      */
     interest?: string;
+
     fromJson(input: string): GetAccountOrders {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetAccountOrders, jsonObject);

@@ -58,6 +58,7 @@ export class StopOrdersEvent implements Response<StopOrdersEvent, WsMessage> {
      * Order Type
      */
     type?: StopOrdersEvent.TypeEnum;
+
     /**
      * common response
      */
@@ -142,9 +143,7 @@ export type StopOrdersEventCallback = (
 ) => void;
 
 export class StopOrdersEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: StopOrdersEventCallback;
-
-    constructor(callback: StopOrdersEventCallback) {
+    constructor(private callback: StopOrdersEventCallback) {
         this.callback = callback;
     }
 

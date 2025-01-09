@@ -157,6 +157,7 @@ export class GetOrderByOrderIdResp implements Response<GetOrderByOrderIdResp, Re
      * A mark to reduce the position size only
      */
     reduceOnly?: boolean;
+
     /**
      * common response
      */

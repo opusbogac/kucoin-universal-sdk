@@ -21,6 +21,7 @@ export class AddOrderTestV1Resp implements Response<AddOrderTestV1Resp, RestResp
      * This return value is invalid
      */
     clientOid?: string;
+
     /**
      * common response
      */

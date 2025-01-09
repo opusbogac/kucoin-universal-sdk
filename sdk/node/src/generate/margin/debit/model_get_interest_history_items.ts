@@ -20,6 +20,7 @@ export class GetInterestHistoryItems implements Serializable<GetInterestHistoryI
      * Interest Timestamp
      */
     createdTime?: number;
+
     fromJson(input: string): GetInterestHistoryItems {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetInterestHistoryItems, jsonObject);

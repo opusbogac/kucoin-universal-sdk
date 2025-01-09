@@ -27,6 +27,7 @@ export class GetDepositHistoryOldResp implements Response<GetDepositHistoryOldRe
      */
     @Type(() => GetDepositHistoryOldItems)
     items?: Array<GetDepositHistoryOldItems>;
+
     /**
      * common response
      */

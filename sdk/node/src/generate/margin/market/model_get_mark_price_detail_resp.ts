@@ -17,6 +17,7 @@ export class GetMarkPriceDetailResp implements Response<GetMarkPriceDetailResp, 
      * Mark price
      */
     value?: number;
+
     /**
      * common response
      */

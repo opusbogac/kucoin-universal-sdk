@@ -11,6 +11,7 @@ export class GetLoanMarketResp implements Response<GetLoanMarketResp, RestRespon
      */
     @Type(() => GetLoanMarketData)
     data?: Array<GetLoanMarketData>;
+
     /**
      * common response
      */

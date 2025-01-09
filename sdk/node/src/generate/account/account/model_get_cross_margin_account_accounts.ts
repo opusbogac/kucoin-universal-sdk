@@ -36,6 +36,7 @@ export class GetCrossMarginAccountAccounts implements Serializable<GetCrossMargi
      * Support transfer or not
      */
     transferInEnabled?: boolean;
+
     fromJson(input: string): GetCrossMarginAccountAccounts {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetCrossMarginAccountAccounts, jsonObject);

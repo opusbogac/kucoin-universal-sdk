@@ -253,6 +253,7 @@ export class GetSymbolResp implements Response<GetSymbolResp, RestResponse> {
      * Whether support Cross Margin
      */
     supportCross?: boolean;
+
     /**
      * common response
      */

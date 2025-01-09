@@ -11,6 +11,7 @@ export class GetAllSymbolsResp implements Response<GetAllSymbolsResp, RestRespon
      */
     @Type(() => GetAllSymbolsData)
     data?: Array<GetAllSymbolsData>;
+
     /**
      * common response
      */

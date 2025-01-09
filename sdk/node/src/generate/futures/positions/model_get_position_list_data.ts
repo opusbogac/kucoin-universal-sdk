@@ -180,6 +180,7 @@ export class GetPositionListData implements Serializable<GetPositionListData> {
      * Maintenance margin rate **Only applicable to Isolated Margin**
      */
     maintainMargin?: number;
+
     fromJson(input: string): GetPositionListData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetPositionListData, jsonObject);

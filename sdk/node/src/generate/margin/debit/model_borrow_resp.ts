@@ -13,6 +13,7 @@ export class BorrowResp implements Response<BorrowResp, RestResponse> {
      * Actual borrowed amount
      */
     actualSize?: string;
+
     /**
      * common response
      */

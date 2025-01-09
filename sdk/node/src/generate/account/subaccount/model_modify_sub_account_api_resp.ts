@@ -21,6 +21,7 @@ export class ModifySubAccountApiResp implements Response<ModifySubAccountApiResp
      * IP whitelist
      */
     ipWhitelist?: string;
+
     /**
      * common response
      */

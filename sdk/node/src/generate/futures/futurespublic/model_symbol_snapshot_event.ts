@@ -46,6 +46,7 @@ export class SymbolSnapshotEvent implements Response<SymbolSnapshotEvent, WsMess
      *
      */
     volume?: number;
+
     /**
      * common response
      */
@@ -77,9 +78,7 @@ export type SymbolSnapshotEventCallback = (
 ) => void;
 
 export class SymbolSnapshotEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: SymbolSnapshotEventCallback;
-
-    constructor(callback: SymbolSnapshotEventCallback) {
+    constructor(private callback: SymbolSnapshotEventCallback) {
         this.callback = callback;
     }
 

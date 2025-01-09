@@ -13,6 +13,7 @@ export class AddOrderTestResp implements Response<AddOrderTestResp, RestResponse
      * The user self-defined order id.
      */
     clientOid?: string;
+
     /**
      * common response
      */

@@ -41,6 +41,7 @@ export class AddOrderSyncResp implements Response<AddOrderSyncResp, RestResponse
      *
      */
     matchTime?: number;
+
     /**
      * common response
      */

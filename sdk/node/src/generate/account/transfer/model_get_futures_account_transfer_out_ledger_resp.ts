@@ -29,6 +29,7 @@ export class GetFuturesAccountTransferOutLedgerResp
      */
     @Type(() => GetFuturesAccountTransferOutLedgerItems)
     items?: Array<GetFuturesAccountTransferOutLedgerItems>;
+
     /**
      * common response
      */

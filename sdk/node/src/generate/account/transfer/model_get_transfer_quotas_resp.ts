@@ -25,6 +25,7 @@ export class GetTransferQuotasResp implements Response<GetTransferQuotasResp, Re
      * Funds available to transfer.
      */
     transferable?: string;
+
     /**
      * common response
      */

@@ -11,6 +11,7 @@ export class BatchAddOrdersOldResp implements Response<BatchAddOrdersOldResp, Re
      */
     @Type(() => BatchAddOrdersOldData)
     data?: Array<BatchAddOrdersOldData>;
+
     /**
      * common response
      */

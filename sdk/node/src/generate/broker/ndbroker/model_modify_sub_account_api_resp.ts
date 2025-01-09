@@ -33,6 +33,7 @@ export class ModifySubAccountApiResp implements Response<ModifySubAccountApiResp
      * Creation time, unix timestamp (milliseconds)
      */
     createdAt?: number;
+
     /**
      * common response
      */

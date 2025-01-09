@@ -15,6 +15,7 @@ export class GetInterestRateIndexResp implements Response<GetInterestRateIndexRe
      * Whether there are more pages
      */
     hasMore?: boolean;
+
     /**
      * common response
      */

@@ -13,6 +13,7 @@ export class PurchaseResp implements Response<PurchaseResp, RestResponse> {
      * Subscription order ID
      */
     orderTxId?: string;
+
     /**
      * common response
      */

@@ -66,6 +66,7 @@ export class BalanceEvent implements Response<BalanceEvent, WsMessage> {
      * Last modified time
      */
     timestamp?: string;
+
     /**
      * common response
      */
@@ -93,9 +94,7 @@ export class BalanceEvent implements Response<BalanceEvent, WsMessage> {
 export type BalanceEventCallback = (topic: string, subject: string, data: BalanceEvent) => void;
 
 export class BalanceEventCallbackWrapper implements WebSocketMessageCallback {
-    callback: BalanceEventCallback;
-
-    constructor(callback: BalanceEventCallback) {
+    constructor(private callback: BalanceEventCallback) {
         this.callback = callback;
     }
 

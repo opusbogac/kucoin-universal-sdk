@@ -16,6 +16,7 @@ export class GetSpotActualFeeData implements Serializable<GetSpotActualFeeData> 
      * Actual maker fee rate of the symbol
      */
     makerFeeRate?: string;
+
     fromJson(input: string): GetSpotActualFeeData {
         const jsonObject = JSON.parse(input);
         return plainToInstance(GetSpotActualFeeData, jsonObject);

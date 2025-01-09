@@ -21,6 +21,7 @@ export class GetPartOrderBookResp implements Response<GetPartOrderBookResp, Rest
      * asks, from low to high
      */
     asks?: Array<Array<string>>;
+
     /**
      * common response
      */
