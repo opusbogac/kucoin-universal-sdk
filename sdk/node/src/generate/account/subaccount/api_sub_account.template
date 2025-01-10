@@ -1,0 +1,226 @@
+
+describe('Auto Test', ()=> {
+    let api: SubAccountAPI;
+
+    beforeAll(()=> {
+        api = ??
+    });
+    test('getFuturesSubAccountListV2 request test', ()=> {
+    /**
+    * getFuturesSubAccountListV2
+    * Get SubAccount List - Futures Balance(V2)
+    * /api/v1/account-overview-all
+    */
+    let builder = GetFuturesSubAccountListV2Req.builder();
+    builder.setCurrency(?);
+    let req = builder.build();
+    let resp = api.getFuturesSubAccountListV2(req);
+    return resp.then(result => {
+        expect(result.summary).toEqual(expect.anything());
+        expect(result.accounts).toEqual(expect.anything());
+    });
+    })
+
+    test('getSpotSubAccountListV1 request test', ()=> {
+    /**
+    * getSpotSubAccountListV1
+    * Get SubAccount List - Spot Balance(V1)
+    * /api/v1/sub-accounts
+    */
+    let resp = api.getSpotSubAccountListV1();
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+    test('getSpotSubAccountDetail request test', ()=> {
+    /**
+    * getSpotSubAccountDetail
+    * Get SubAccount Detail - Balance
+    * /api/v1/sub-accounts/{subUserId}
+    */
+    let builder = GetSpotSubAccountDetailReq.builder();
+    builder.setSubUserId(?).setIncludeBaseAmount(?);
+    let req = builder.build();
+    let resp = api.getSpotSubAccountDetail(req);
+    return resp.then(result => {
+        expect(result.subUserId).toEqual(expect.anything());
+        expect(result.subName).toEqual(expect.anything());
+        expect(result.mainAccounts).toEqual(expect.anything());
+        expect(result.tradeAccounts).toEqual(expect.anything());
+        expect(result.marginAccounts).toEqual(expect.anything());
+        expect(result.tradeHFAccounts).toEqual(expect.anything());
+    });
+    })
+
+    test('deleteSubAccountApi request test', ()=> {
+    /**
+    * deleteSubAccountApi
+    * Delete SubAccount API
+    * /api/v1/sub/api-key
+    */
+    let builder = DeleteSubAccountApiReq.builder();
+    builder.setApiKey(?).setSubName(?).setPassphrase(?);
+    let req = builder.build();
+    let resp = api.deleteSubAccountApi(req);
+    return resp.then(result => {
+        expect(result.subName).toEqual(expect.anything());
+        expect(result.apiKey).toEqual(expect.anything());
+    });
+    })
+
+    test('getSubAccountApiList request test', ()=> {
+    /**
+    * getSubAccountApiList
+    * Get SubAccount API List
+    * /api/v1/sub/api-key
+    */
+    let builder = GetSubAccountApiListReq.builder();
+    builder.setApiKey(?).setSubName(?);
+    let req = builder.build();
+    let resp = api.getSubAccountApiList(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+    test('addSubAccountApi request test', ()=> {
+    /**
+    * addSubAccountApi
+    * Add SubAccount API
+    * /api/v1/sub/api-key
+    */
+    let builder = AddSubAccountApiReq.builder();
+    builder.setPassphrase(?).setRemark(?).setPermission(?).setIpWhitelist(?).setExpire(?).setSubName(?);
+    let req = builder.build();
+    let resp = api.addSubAccountApi(req);
+    return resp.then(result => {
+        expect(result.subName).toEqual(expect.anything());
+        expect(result.remark).toEqual(expect.anything());
+        expect(result.apiKey).toEqual(expect.anything());
+        expect(result.apiSecret).toEqual(expect.anything());
+        expect(result.apiVersion).toEqual(expect.anything());
+        expect(result.passphrase).toEqual(expect.anything());
+        expect(result.permission).toEqual(expect.anything());
+        expect(result.ipWhitelist).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+    });
+    })
+
+    test('modifySubAccountApi request test', ()=> {
+    /**
+    * modifySubAccountApi
+    * Modify SubAccount API
+    * /api/v1/sub/api-key/update
+    */
+    let builder = ModifySubAccountApiReq.builder();
+    builder.setPassphrase(?).setPermission(?).setIpWhitelist(?).setExpire(?).setSubName(?).setApiKey(?);
+    let req = builder.build();
+    let resp = api.modifySubAccountApi(req);
+    return resp.then(result => {
+        expect(result.subName).toEqual(expect.anything());
+        expect(result.apiKey).toEqual(expect.anything());
+        expect(result.permission).toEqual(expect.anything());
+        expect(result.ipWhitelist).toEqual(expect.anything());
+    });
+    })
+
+    test('getSpotSubAccountsSummaryV1 request test', ()=> {
+    /**
+    * getSpotSubAccountsSummaryV1
+    * Get SubAccount List - Summary Info(V1)
+    * /api/v1/sub/user
+    */
+    let resp = api.getSpotSubAccountsSummaryV1();
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+    test('getSpotSubAccountListV2 request test', ()=> {
+    /**
+    * getSpotSubAccountListV2
+    * Get SubAccount List - Spot Balance(V2)
+    * /api/v2/sub-accounts
+    */
+    let builder = GetSpotSubAccountListV2Req.builder();
+    builder.setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getSpotSubAccountListV2(req);
+    return resp.then(result => {
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+    });
+    })
+
+    test('addSubAccount request test', ()=> {
+    /**
+    * addSubAccount
+    * Add SubAccount
+    * /api/v2/sub/user/created
+    */
+    let builder = AddSubAccountReq.builder();
+    builder.setPassword(?).setRemarks(?).setSubName(?).setAccess(?);
+    let req = builder.build();
+    let resp = api.addSubAccount(req);
+    return resp.then(result => {
+        expect(result.uid).toEqual(expect.anything());
+        expect(result.subName).toEqual(expect.anything());
+        expect(result.remarks).toEqual(expect.anything());
+        expect(result.access).toEqual(expect.anything());
+    });
+    })
+
+    test('getSpotSubAccountsSummaryV2 request test', ()=> {
+    /**
+    * getSpotSubAccountsSummaryV2
+    * Get SubAccount List - Summary Info
+    * /api/v2/sub/user
+    */
+    let builder = GetSpotSubAccountsSummaryV2Req.builder();
+    builder.setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getSpotSubAccountsSummaryV2(req);
+    return resp.then(result => {
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+    });
+    })
+
+    test('addSubAccountFuturesPermission request test', ()=> {
+    /**
+    * addSubAccountFuturesPermission
+    * Add SubAccount Futures Permission
+    * /api/v3/sub/user/futures/enable
+    */
+    let builder = AddSubAccountFuturesPermissionReq.builder();
+    builder.setUid(?);
+    let req = builder.build();
+    let resp = api.addSubAccountFuturesPermission(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+    test('addSubAccountMarginPermission request test', ()=> {
+    /**
+    * addSubAccountMarginPermission
+    * Add SubAccount Margin Permission
+    * /api/v3/sub/user/margin/enable
+    */
+    let builder = AddSubAccountMarginPermissionReq.builder();
+    builder.setUid(?);
+    let req = builder.build();
+    let resp = api.addSubAccountMarginPermission(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+})

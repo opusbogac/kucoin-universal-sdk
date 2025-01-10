@@ -1,0 +1,60 @@
+
+describe('Auto Test', ()=> {
+    let api: FundingFeesAPI;
+
+    beforeAll(()=> {
+        api = ??
+    });
+    test('GetPublicFundingHistory request test', ()=> {
+    /**
+    * GetPublicFundingHistory
+    * Get Public Funding History
+    * /api/v1/contract/funding-rates
+    */
+    let builder = GetPublicFundingHistoryReq.builder();
+    builder.setSymbol(?).setFrom(?).setTo(?);
+    let req = builder.build();
+    let resp = api.GetPublicFundingHistory(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+    test('getPrivateFundingHistory request test', ()=> {
+    /**
+    * getPrivateFundingHistory
+    * Get Private Funding History
+    * /api/v1/funding-history
+    */
+    let builder = GetPrivateFundingHistoryReq.builder();
+    builder.setSymbol(?).setFrom(?).setTo(?).setReverse(?).setOffset(?).setForward(?).setMaxCount(?);
+    let req = builder.build();
+    let resp = api.getPrivateFundingHistory(req);
+    return resp.then(result => {
+        expect(result.dataList).toEqual(expect.anything());
+        expect(result.hasMore).toEqual(expect.anything());
+    });
+    })
+
+    test('GetCurrentFundingRate request test', ()=> {
+    /**
+    * GetCurrentFundingRate
+    * Get Current Funding Rate
+    * /api/v1/funding-rate/{symbol}/current
+    */
+    let builder = GetCurrentFundingRateReq.builder();
+    builder.setSymbol(?);
+    let req = builder.build();
+    let resp = api.GetCurrentFundingRate(req);
+    return resp.then(result => {
+        expect(result.symbol).toEqual(expect.anything());
+        expect(result.granularity).toEqual(expect.anything());
+        expect(result.timePoint).toEqual(expect.anything());
+        expect(result.value).toEqual(expect.anything());
+        expect(result.predictedValue).toEqual(expect.anything());
+        expect(result.fundingRateCap).toEqual(expect.anything());
+        expect(result.fundingRateFloor).toEqual(expect.anything());
+    });
+    })
+
+})

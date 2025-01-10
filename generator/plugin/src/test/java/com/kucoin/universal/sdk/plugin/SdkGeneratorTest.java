@@ -8,8 +8,8 @@ import org.openapitools.codegen.config.CodegenConfigurator;
 public class SdkGeneratorTest {
 
     private static final String SDK_NAME = "node-sdk";
-    private static final String SPEC_NAME = "../../spec/rest/api/openapi-viplending-viplending.json";
-    private static final String SPEC_ENTRY_NAME = "../../spec/rest/entry/openapi-viplending.json";
+    private static final String SPEC_NAME = "../../spec/rest/api/openapi-account-account.json";
+    private static final String SPEC_ENTRY_NAME = "../../spec/rest/entry/openapi-account.json";
     private static final String WS_SPEC_NAME = "../../spec/ws/openapi-futures-private.json";
     private static final String OUTPUT_DIR = "./out";
 

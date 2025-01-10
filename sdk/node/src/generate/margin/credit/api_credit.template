@@ -1,0 +1,121 @@
+
+describe('Auto Test', ()=> {
+    let api: CreditAPI;
+
+    beforeAll(()=> {
+        api = ??
+    });
+    test('modifyPurchase request test', ()=> {
+    /**
+    * modifyPurchase
+    * Modify Purchase
+    * /api/v3/lend/purchase/update
+    */
+    let builder = ModifyPurchaseReq.builder();
+    builder.setCurrency(?).setInterestRate(?).setPurchaseOrderNo(?);
+    let req = builder.build();
+    let resp = api.modifyPurchase(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+    test('getLoanMarket request test', ()=> {
+    /**
+    * getLoanMarket
+    * Get Loan Market
+    * /api/v3/project/list
+    */
+    let builder = GetLoanMarketReq.builder();
+    builder.setCurrency(?);
+    let req = builder.build();
+    let resp = api.getLoanMarket(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+    test('getLoanMarketInterestRate request test', ()=> {
+    /**
+    * getLoanMarketInterestRate
+    * Get Loan Market Interest Rate
+    * /api/v3/project/marketInterestRate
+    */
+    let builder = GetLoanMarketInterestRateReq.builder();
+    builder.setCurrency(?);
+    let req = builder.build();
+    let resp = api.getLoanMarketInterestRate(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+    test('getPurchaseOrders request test', ()=> {
+    /**
+    * getPurchaseOrders
+    * Get Purchase Orders
+    * /api/v3/purchase/orders
+    */
+    let builder = GetPurchaseOrdersReq.builder();
+    builder.setCurrency(?).setStatus(?).setPurchaseOrderNo(?).setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getPurchaseOrders(req);
+    return resp.then(result => {
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+    });
+    })
+
+    test('purchase request test', ()=> {
+    /**
+    * purchase
+    * Purchase
+    * /api/v3/purchase
+    */
+    let builder = PurchaseReq.builder();
+    builder.setCurrency(?).setSize(?).setInterestRate(?);
+    let req = builder.build();
+    let resp = api.purchase(req);
+    return resp.then(result => {
+        expect(result.orderNo).toEqual(expect.anything());
+    });
+    })
+
+    test('getRedeemOrders request test', ()=> {
+    /**
+    * getRedeemOrders
+    * Get Redeem Orders
+    * /api/v3/redeem/orders
+    */
+    let builder = GetRedeemOrdersReq.builder();
+    builder.setCurrency(?).setStatus(?).setRedeemOrderNo(?).setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getRedeemOrders(req);
+    return resp.then(result => {
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+    });
+    })
+
+    test('redeem request test', ()=> {
+    /**
+    * redeem
+    * Redeem
+    * /api/v3/redeem
+    */
+    let builder = RedeemReq.builder();
+    builder.setCurrency(?).setSize(?).setPurchaseOrderNo(?);
+    let req = builder.build();
+    let resp = api.redeem(req);
+    return resp.then(result => {
+        expect(result.orderNo).toEqual(expect.anything());
+    });
+    })
+
+})

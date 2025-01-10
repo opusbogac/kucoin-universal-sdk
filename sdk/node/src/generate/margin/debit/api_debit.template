@@ -1,0 +1,116 @@
+
+describe('Auto Test', ()=> {
+    let api: DebitAPI;
+
+    beforeAll(()=> {
+        api = ??
+    });
+    test('getBorrowHistory request test', ()=> {
+    /**
+    * getBorrowHistory
+    * Get Borrow History
+    * /api/v3/margin/borrow
+    */
+    let builder = GetBorrowHistoryReq.builder();
+    builder.setCurrency(?).setIsIsolated(?).setSymbol(?).setOrderNo(?).setStartTime(?).setEndTime(?).setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getBorrowHistory(req);
+    return resp.then(result => {
+        expect(result.timestamp).toEqual(expect.anything());
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+    });
+    })
+
+    test('borrow request test', ()=> {
+    /**
+    * borrow
+    * Borrow
+    * /api/v3/margin/borrow
+    */
+    let builder = BorrowReq.builder();
+    builder.setCurrency(?).setSize(?).setTimeInForce(?).setSymbol(?).setIsIsolated(?).setIsHf(?);
+    let req = builder.build();
+    let resp = api.borrow(req);
+    return resp.then(result => {
+        expect(result.orderNo).toEqual(expect.anything());
+        expect(result.actualSize).toEqual(expect.anything());
+    });
+    })
+
+    test('getInterestHistory request test', ()=> {
+    /**
+    * getInterestHistory
+    * Get Interest History
+    * /api/v3/margin/interest
+    */
+    let builder = GetInterestHistoryReq.builder();
+    builder.setCurrency(?).setIsIsolated(?).setSymbol(?).setStartTime(?).setEndTime(?).setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getInterestHistory(req);
+    return resp.then(result => {
+        expect(result.timestamp).toEqual(expect.anything());
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+    });
+    })
+
+    test('getRepayHistory request test', ()=> {
+    /**
+    * getRepayHistory
+    * Get Repay History
+    * /api/v3/margin/repay
+    */
+    let builder = GetRepayHistoryReq.builder();
+    builder.setCurrency(?).setIsIsolated(?).setSymbol(?).setOrderNo(?).setStartTime(?).setEndTime(?).setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getRepayHistory(req);
+    return resp.then(result => {
+        expect(result.timestamp).toEqual(expect.anything());
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+    });
+    })
+
+    test('repay request test', ()=> {
+    /**
+    * repay
+    * Repay
+    * /api/v3/margin/repay
+    */
+    let builder = RepayReq.builder();
+    builder.setCurrency(?).setSize(?).setSymbol(?).setIsIsolated(?).setIsHf(?);
+    let req = builder.build();
+    let resp = api.repay(req);
+    return resp.then(result => {
+        expect(result.timestamp).toEqual(expect.anything());
+        expect(result.orderNo).toEqual(expect.anything());
+        expect(result.actualSize).toEqual(expect.anything());
+    });
+    })
+
+    test('modifyLeverage request test', ()=> {
+    /**
+    * modifyLeverage
+    * Modify Leverage
+    * /api/v3/position/update-user-leverage
+    */
+    let builder = ModifyLeverageReq.builder();
+    builder.setSymbol(?).setIsIsolated(?).setLeverage(?);
+    let req = builder.build();
+    let resp = api.modifyLeverage(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+})

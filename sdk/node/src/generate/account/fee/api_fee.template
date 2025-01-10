@@ -1,0 +1,56 @@
+
+describe('Auto Test', ()=> {
+    let api: FeeAPI;
+
+    beforeAll(()=> {
+        api = ??
+    });
+    test('getBasicFee request test', ()=> {
+    /**
+    * getBasicFee
+    * Get Basic Fee - Spot/Margin
+    * /api/v1/base-fee
+    */
+    let builder = GetBasicFeeReq.builder();
+    builder.setCurrencyType(?);
+    let req = builder.build();
+    let resp = api.getBasicFee(req);
+    return resp.then(result => {
+        expect(result.takerFeeRate).toEqual(expect.anything());
+        expect(result.makerFeeRate).toEqual(expect.anything());
+    });
+    })
+
+    test('getSpotActualFee request test', ()=> {
+    /**
+    * getSpotActualFee
+    * Get Actual Fee - Spot/Margin
+    * /api/v1/trade-fees
+    */
+    let builder = GetSpotActualFeeReq.builder();
+    builder.setSymbols(?);
+    let req = builder.build();
+    let resp = api.getSpotActualFee(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+    test('getFuturesActualFee request test', ()=> {
+    /**
+    * getFuturesActualFee
+    * Get Actual Fee - Futures
+    * /api/v1/trade-fees
+    */
+    let builder = GetFuturesActualFeeReq.builder();
+    builder.setSymbol(?);
+    let req = builder.build();
+    let resp = api.getFuturesActualFee(req);
+    return resp.then(result => {
+        expect(result.symbol).toEqual(expect.anything());
+        expect(result.takerFeeRate).toEqual(expect.anything());
+        expect(result.makerFeeRate).toEqual(expect.anything());
+    });
+    })
+
+})

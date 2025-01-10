@@ -1,0 +1,262 @@
+
+describe('Auto Test', ()=> {
+    let api: NDBrokerAPI;
+
+    beforeAll(()=> {
+        api = ??
+    });
+    test('getDepositList request test', ()=> {
+    /**
+    * getDepositList
+    * Get Deposit List
+    * /api/v1/asset/ndbroker/deposit/list
+    */
+    let builder = GetDepositListReq.builder();
+    builder.setCurrency(?).setStatus(?).setHash(?).setStartTimestamp(?).setEndTimestamp(?).setLimit(?);
+    let req = builder.build();
+    let resp = api.getDepositList(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+    test('deleteSubAccountAPI request test', ()=> {
+    /**
+    * deleteSubAccountAPI
+    * Delete SubAccount API
+    * /api/v1/broker/nd/account/apikey
+    */
+    let builder = DeleteSubAccountAPIReq.builder();
+    builder.setUid(?).setApiKey(?);
+    let req = builder.build();
+    let resp = api.deleteSubAccountAPI(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+    test('getSubAccountAPI request test', ()=> {
+    /**
+    * getSubAccountAPI
+    * Get SubAccount API
+    * /api/v1/broker/nd/account/apikey
+    */
+    let builder = GetSubAccountAPIReq.builder();
+    builder.setUid(?).setApiKey(?);
+    let req = builder.build();
+    let resp = api.getSubAccountAPI(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+    });
+    })
+
+    test('addSubAccountApi request test', ()=> {
+    /**
+    * addSubAccountApi
+    * Add SubAccount API
+    * /api/v1/broker/nd/account/apikey
+    */
+    let builder = AddSubAccountApiReq.builder();
+    builder.setUid(?).setPassphrase(?).setIpWhitelist(?).setPermissions(?).setLabel(?);
+    let req = builder.build();
+    let resp = api.addSubAccountApi(req);
+    return resp.then(result => {
+        expect(result.uid).toEqual(expect.anything());
+        expect(result.label).toEqual(expect.anything());
+        expect(result.apiKey).toEqual(expect.anything());
+        expect(result.secretKey).toEqual(expect.anything());
+        expect(result.apiVersion).toEqual(expect.anything());
+        expect(result.permissions).toEqual(expect.anything());
+        expect(result.ipWhitelist).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+    });
+    })
+
+    test('getSubAccount request test', ()=> {
+    /**
+    * getSubAccount
+    * Get SubAccount
+    * /api/v1/broker/nd/account
+    */
+    let builder = GetSubAccountReq.builder();
+    builder.setUid(?).setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getSubAccount(req);
+    return resp.then(result => {
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+    });
+    })
+
+    test('addSubAccount request test', ()=> {
+    /**
+    * addSubAccount
+    * Add SubAccount
+    * /api/v1/broker/nd/account
+    */
+    let builder = AddSubAccountReq.builder();
+    builder.setAccountName(?);
+    let req = builder.build();
+    let resp = api.addSubAccount(req);
+    return resp.then(result => {
+        expect(result.accountName).toEqual(expect.anything());
+        expect(result.uid).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+        expect(result.level).toEqual(expect.anything());
+    });
+    })
+
+    test('modifySubAccountApi request test', ()=> {
+    /**
+    * modifySubAccountApi
+    * Modify SubAccount API
+    * /api/v1/broker/nd/account/update-apikey
+    */
+    let builder = ModifySubAccountApiReq.builder();
+    builder.setUid(?).setIpWhitelist(?).setPermissions(?).setLabel(?).setApiKey(?);
+    let req = builder.build();
+    let resp = api.modifySubAccountApi(req);
+    return resp.then(result => {
+        expect(result.uid).toEqual(expect.anything());
+        expect(result.label).toEqual(expect.anything());
+        expect(result.apiKey).toEqual(expect.anything());
+        expect(result.apiVersion).toEqual(expect.anything());
+        expect(result.permissions).toEqual(expect.anything());
+        expect(result.ipWhitelist).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+    });
+    })
+
+    test('getBrokerInfo request test', ()=> {
+    /**
+    * getBrokerInfo
+    * Get Broker Info
+    * /api/v1/broker/nd/info
+    */
+    let builder = GetBrokerInfoReq.builder();
+    builder.setBegin(?).setEnd(?).setTradeType(?);
+    let req = builder.build();
+    let resp = api.getBrokerInfo(req);
+    return resp.then(result => {
+        expect(result.accountSize).toEqual(expect.anything());
+        expect(result.maxAccountSize).toEqual(expect.anything());
+        expect(result.level).toEqual(expect.anything());
+    });
+    })
+
+    test('getRebase request test', ()=> {
+    /**
+    * getRebase
+    * Get Broker Rebate
+    * /api/v1/broker/nd/rebase/download
+    */
+    let builder = GetRebaseReq.builder();
+    builder.setBegin(?).setEnd(?).setTradeType(?);
+    let req = builder.build();
+    let resp = api.getRebase(req);
+    return resp.then(result => {
+        expect(result.url).toEqual(expect.anything());
+    });
+    })
+
+    test('transfer request test', ()=> {
+    /**
+    * transfer
+    * Transfer
+    * /api/v1/broker/nd/transfer
+    */
+    let builder = TransferReq.builder();
+    builder.setCurrency(?).setAmount(?).setDirection(?).setAccountType(?).setSpecialUid(?).setSpecialAccountType(?).setClientOid(?);
+    let req = builder.build();
+    let resp = api.transfer(req);
+    return resp.then(result => {
+        expect(result.orderId).toEqual(expect.anything());
+    });
+    })
+
+    test('getDepositDetail request test', ()=> {
+    /**
+    * getDepositDetail
+    * Get Deposit Detail
+    * /api/v3/broker/nd/deposit/detail
+    */
+    let builder = GetDepositDetailReq.builder();
+    builder.setCurrency(?).setHash(?);
+    let req = builder.build();
+    let resp = api.getDepositDetail(req);
+    return resp.then(result => {
+        expect(result.chain).toEqual(expect.anything());
+        expect(result.hash).toEqual(expect.anything());
+        expect(result.walletTxId).toEqual(expect.anything());
+        expect(result.uid).toEqual(expect.anything());
+        expect(result.updatedAt).toEqual(expect.anything());
+        expect(result.amount).toEqual(expect.anything());
+        expect(result.memo).toEqual(expect.anything());
+        expect(result.fee).toEqual(expect.anything());
+        expect(result.address).toEqual(expect.anything());
+        expect(result.remark).toEqual(expect.anything());
+        expect(result.isInner).toEqual(expect.anything());
+        expect(result.currency).toEqual(expect.anything());
+        expect(result.status).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+    });
+    })
+
+    test('getTransferHistory request test', ()=> {
+    /**
+    * getTransferHistory
+    * Get Transfer History
+    * /api/v3/broker/nd/transfer/detail
+    */
+    let builder = GetTransferHistoryReq.builder();
+    builder.setOrderId(?);
+    let req = builder.build();
+    let resp = api.getTransferHistory(req);
+    return resp.then(result => {
+        expect(result.orderId).toEqual(expect.anything());
+        expect(result.currency).toEqual(expect.anything());
+        expect(result.amount).toEqual(expect.anything());
+        expect(result.fromUid).toEqual(expect.anything());
+        expect(result.fromAccountType).toEqual(expect.anything());
+        expect(result.fromAccountTag).toEqual(expect.anything());
+        expect(result.toUid).toEqual(expect.anything());
+        expect(result.toAccountType).toEqual(expect.anything());
+        expect(result.toAccountTag).toEqual(expect.anything());
+        expect(result.status).toEqual(expect.anything());
+        expect(result.reason).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+    });
+    })
+
+    test('getWithdrawDetail request test', ()=> {
+    /**
+    * getWithdrawDetail
+    * Get Withdraw Detail
+    * /api/v3/broker/nd/withdraw/detail
+    */
+    let builder = GetWithdrawDetailReq.builder();
+    builder.setWithdrawalId(?);
+    let req = builder.build();
+    let resp = api.getWithdrawDetail(req);
+    return resp.then(result => {
+        expect(result.id).toEqual(expect.anything());
+        expect(result.chain).toEqual(expect.anything());
+        expect(result.walletTxId).toEqual(expect.anything());
+        expect(result.uid).toEqual(expect.anything());
+        expect(result.updatedAt).toEqual(expect.anything());
+        expect(result.amount).toEqual(expect.anything());
+        expect(result.memo).toEqual(expect.anything());
+        expect(result.fee).toEqual(expect.anything());
+        expect(result.address).toEqual(expect.anything());
+        expect(result.remark).toEqual(expect.anything());
+        expect(result.isInner).toEqual(expect.anything());
+        expect(result.currency).toEqual(expect.anything());
+        expect(result.status).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+    });
+    })
+
+})

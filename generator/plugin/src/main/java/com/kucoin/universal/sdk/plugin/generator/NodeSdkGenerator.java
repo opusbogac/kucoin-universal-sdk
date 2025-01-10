@@ -411,8 +411,11 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                     }
                     case TEST_TEMPLATE: {
                         String reqName = meta.getMethodServiceFmt().toLowerCase() + "Req";
+                        String responseName = meta.getMethodServiceFmt().toLowerCase() + "Resp";
                         allModels.stream().filter(m -> reqName.equalsIgnoreCase((String) m.get("importPath"))).
                                 forEach(m -> op.vendorExtensions.put("x-request-model", m.getModel()));
+                        allModels.stream().filter(m -> responseName.equalsIgnoreCase((String) m.get("importPath"))).
+                                forEach(m -> op.vendorExtensions.put("x-response-model", m.getModel()));
                         break;
                     }
                 }
