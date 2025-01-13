@@ -57,12 +57,12 @@ export interface Client {
     /**
      * Get RESTful service.
      */
-    RestService(): KucoinRestService;
+    restService(): KucoinRestService;
 
     /**
      * Get WebSocket service.
      */
-    WsService(): KucoinWSService;
+    wsService(): KucoinWSService;
 }
 
 /**
@@ -80,14 +80,14 @@ export class DefaultClient implements Client {
     /**
      * Get RESTful service implementation.
      */
-    RestService(): KucoinRestService {
+    restService(): KucoinRestService {
         return this.restImpl;
     }
 
     /**
      * Get WebSocket service implementation.
      */
-    WsService(): KucoinWSService {
+    wsService(): KucoinWSService {
         return this.wsImpl;
     }
 }

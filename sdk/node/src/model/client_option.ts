@@ -8,39 +8,39 @@ export interface ClientOption {
     /**
      * Key is the authentication key for the client
      */
-    key: string;
+    key?: string;
     /**
      * Secret is the authentication secret for the client
      */
-    secret: string;
+    secret?: string;
     /**
      * Passphrase is the authentication passphrase for the client
      */
-    passphrase: string;
+    passphrase?: string;
     /**
      * BrokerName The name of the broker
      */
-    brokerName: string;
+    brokerName?: string;
     /**
      * BrokerPartner The partner associated with the broker
      */
-    brokerPartner: string;
+    brokerPartner?: string;
     /**
      * BrokerKey The secret key for the broker
      */
-    brokerKey: string;
+    brokerKey?: string;
     /**
      * SpotEndpoint is the spot market API endpoint for the client
      */
-    spotEndpoint: string;
+    spotEndpoint?: string;
     /**
      * FuturesEndpoint is the futures market API endpoint for the client
      */
-    futuresEndpoint: string;
+    futuresEndpoint?: string;
     /**
      * BrokerEndpoint is the broker API endpoint for the client
      */
-    brokerEndpoint: string;
+    brokerEndpoint?: string;
     /**
      * TransportOption is an optional configuration for HTTP network transport
      */
@@ -54,7 +54,7 @@ export interface ClientOption {
 /**
  * ClientOptionBuilder is the builder for ClientOption
  */
-class ClientOptionBuilder {
+export class ClientOptionBuilder {
     private clientOption: ClientOption;
 
     constructor() {
@@ -72,89 +72,89 @@ class ClientOptionBuilder {
     }
 
     /**
-     * WithKey sets the authentication key
+     * setKey sets the authentication key
      */
-    withKey(key: string): ClientOptionBuilder {
+    setKey(key: string): ClientOptionBuilder {
         this.clientOption.key = key;
         return this;
     }
 
     /**
-     * WithSecret sets the authentication secret
+     * setSecret sets the authentication secret
      */
-    withSecret(secret: string): ClientOptionBuilder {
+    setSecret(secret: string): ClientOptionBuilder {
         this.clientOption.secret = secret;
         return this;
     }
 
     /**
-     * WithPassphrase sets the authentication passphrase
+     * setPassphrase sets the authentication passphrase
      */
-    withPassphrase(passphrase: string): ClientOptionBuilder {
+    setPassphrase(passphrase: string): ClientOptionBuilder {
         this.clientOption.passphrase = passphrase;
         return this;
     }
 
     /**
-     * WithBrokerName sets the broker name
+     * setBrokerName sets the broker name
      */
-    withBrokerName(brokerName: string): ClientOptionBuilder {
+    setBrokerName(brokerName: string): ClientOptionBuilder {
         this.clientOption.brokerName = brokerName;
         return this;
     }
 
     /**
-     * WithBrokerPartner sets the broker partner
+     * setBrokerPartner sets the broker partner
      */
-    withBrokerPartner(brokerPartner: string): ClientOptionBuilder {
+    setBrokerPartner(brokerPartner: string): ClientOptionBuilder {
         this.clientOption.brokerPartner = brokerPartner;
         return this;
     }
 
     /**
-     * WithBrokerKey sets the broker key
+     * setBrokerKey sets the broker key
      */
-    withBrokerKey(brokerKey: string): ClientOptionBuilder {
+    setBrokerKey(brokerKey: string): ClientOptionBuilder {
         this.clientOption.brokerKey = brokerKey;
         return this;
     }
 
     /**
-     * WithSpotEndpoint sets the spot market API endpoint
+     * setSpotEndpoint sets the spot market API endpoint
      */
-    withSpotEndpoint(endpoint: string): ClientOptionBuilder {
+    setSpotEndpoint(endpoint: string): ClientOptionBuilder {
         this.clientOption.spotEndpoint = endpoint;
         return this;
     }
 
     /**
-     * WithFuturesEndpoint sets the futures market API endpoint
+     * setFuturesEndpoint sets the futures market API endpoint
      */
-    withFuturesEndpoint(endpoint: string): ClientOptionBuilder {
+    setFuturesEndpoint(endpoint: string): ClientOptionBuilder {
         this.clientOption.futuresEndpoint = endpoint;
         return this;
     }
 
     /**
-     * WithBrokerEndpoint sets the broker API endpoint
+     * setBrokerEndpoint sets the broker API endpoint
      */
-    withBrokerEndpoint(endpoint: string): ClientOptionBuilder {
+    setBrokerEndpoint(endpoint: string): ClientOptionBuilder {
         this.clientOption.brokerEndpoint = endpoint;
         return this;
     }
 
     /**
-     * WithTransportOption sets the HTTP transport options
+     * setTransportOption sets the HTTP transport options
      */
-    withTransportOption(option: TransportOption): ClientOptionBuilder {
+    setTransportOption(option: TransportOption): ClientOptionBuilder {
         this.clientOption.transportOption = option;
         return this;
     }
 
     /**
-     * WithWebSocketClientOption sets the WebSocket client options
+     * setWebSocketClientOption sets the WebSocket client options
      */
-    withWebSocketClientOption(option: WebSocketClientOption): ClientOptionBuilder {
+    setWebSocketClientOption(option: WebSocketClientOption): ClientOptionBuilder {
         this.clientOption.webSocketClientOption = option;
         return this;
     }
