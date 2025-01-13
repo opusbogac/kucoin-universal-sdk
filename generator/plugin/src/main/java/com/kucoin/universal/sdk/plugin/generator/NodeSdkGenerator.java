@@ -366,16 +366,9 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
         }
     }
 
-    private void generateApiExport(Meta meta, boolean req, Set<String> export) {
+    private void generateApiExport(Meta meta, Set<String> export) {
         switch (modeSwitch.getMode()) {
             case API: {
-                String suffix = "resp";
-                if (req) {
-                    suffix = "req";
-                }
-                export.add(String.format("export * from \"./%s\"", toModelFilename(meta.getMethod()) + "_" + suffix));
-
-
                 operationService.getServiceMeta().forEach((k, v) -> {
                     if (v.getService().equalsIgnoreCase(meta.getService())) {
                         export.add(String.format("export * from \"./%s\"", toApiFilename(formatMethodName(k))));
@@ -450,7 +443,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                         objs.put("api_entry", apiEntryInfo);
                         entryValue.forEach(m -> {
                             generateApiImport(meta, false, imports);
-                            generateApiExport(meta, false, exports);
+                            generateApiExport(meta, exports);
 
                         });
                         break;
@@ -458,18 +451,24 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
                     case API:
                     case TEST: {
+                        allModels.stream().forEach(m -> {
+                            String path = (String) m.get("importPath");
+                            path = toModelFilename(path);
+                            exports.add(String.format("export * from \"./%s\"", path));
+                        });
+
                         if (op.hasParams) {
                             generateApiImport(meta, true, imports);
-                            generateApiExport(meta, true, exports);
                         }
                         generateApiImport(meta, false, imports);
-                        generateApiExport(meta, false, exports);
+                        generateApiExport(meta, exports);
+
                         break;
                     }
                     case WS:
                     case WS_TEST: {
                         generateApiImport(meta, false, imports);
-                        generateApiExport(meta, false, exports);
+                        generateApiExport(meta, exports);
                         break;
                     }
                     case TEST_TEMPLATE: {
