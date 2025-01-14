@@ -64,6 +64,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
     private String service;
     private String subService;
     private Set<String> exports = new LinkedHashSet<>();
+    private static final Set<String> wsServices = Set.of("spot", "futures", "margin");
 
     public CodegenType getTag() {
         return CodegenType.OTHER;
@@ -274,10 +275,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
     public String toApiFilename(String name) {
         String apiName = name.replaceAll("-", "_");
         switch (modeSwitch.getMode()) {
-            case WS: {
-                apiName = "ws_" + underscore(apiName);
-                break;
-            }
+            case WS:
             case API:
             case ENTRY:
             case TEST_TEMPLATE: {
@@ -372,7 +370,8 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
     private void generateApiExport(Meta meta, Set<String> export) {
         switch (modeSwitch.getMode()) {
-            case API: {
+            case API:
+            case WS: {
                 operationService.getServiceMeta().forEach((k, v) -> {
                     if (v.getService().equalsIgnoreCase(meta.getService())) {
                         export.add(String.format("export * from \"./%s\"", toApiFilename(sanitizeName(k))));
@@ -381,14 +380,14 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
                 break;
             }
-            case WS: {
-                String suffix = "event";
-                String fileName = "./" + toModelFilename(meta.getMethod()) + "_" + suffix;
-                export.add(String.format("export * from \"%s\"", fileName));
-                break;
-
-            }
             case ENTRY: {
+                // index.ts
+                // export const Spot = {
+                //    ...ORDER,
+                //    ...MARKET,
+                //    ...
+                //};
+
                 List<String> serviceAliases = new LinkedList<>();
                 operationService.getServiceMeta().forEach((k, v) -> {
                     if (v.getService().equalsIgnoreCase(meta.getService())) {
@@ -397,6 +396,19 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                         serviceAliases.add(serviceAlias);
                     }
                 });
+
+                if (wsServices.contains(service.toLowerCase())) {
+
+                    String privateService = service.toUpperCase() + "PRIVATE";
+                    String publicService = service.toUpperCase() + "PUBLIC";
+
+                    export.add(String.format("import * as %s from \"./%s\"", privateService, formatPackage(privateService)));
+                    export.add(String.format("import * as %s from \"./%s\"", publicService, formatPackage(publicService)));
+
+                    serviceAliases.add(privateService);
+                    serviceAliases.add(publicService);
+                }
+
 
                 String exportService = camelize(service.toLowerCase(), CamelizeOption.UPPERCASE_FIRST_CHAR);
                 export.add(String.format("export const %s = \n{\n%s\n};", exportService,
@@ -472,6 +484,11 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                     case WS:
                     case WS_TEST: {
                         generateApiImport(meta, false, imports);
+                        allModels.stream().forEach(m -> {
+                            String path = (String) m.get("importPath");
+                            path = toModelFilename(path);
+                            exports.add(String.format("export * from \"./%s\"", path));
+                        });
                         generateApiExport(meta, exports);
                         break;
                     }
@@ -560,8 +577,8 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
         String csvPath = (String) additionalProperties.get("CSV_PATH");
         if (csvPath == null) {
-           log.error("no csv path found");
-           return data;
+            log.error("no csv path found");
+            return data;
         }
 
         Set<String> serviceExports = new TreeSet<>();
@@ -581,7 +598,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
             throw new RuntimeException("read csv fail", e);
         }
 
-        services.forEach(s-> {
+        services.forEach(s -> {
             serviceExports.add(String.format("export * from \"./%s_api\"", s));
             generatedExports.add(String.format("export * from \"./%s\"", s));
         });

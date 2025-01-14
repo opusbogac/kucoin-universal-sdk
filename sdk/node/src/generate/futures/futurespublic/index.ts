@@ -8,3 +8,4 @@ export * from './model_orderbook_level5_event';
 export * from './model_symbol_snapshot_event';
 export * from './model_ticker_v1_event';
 export * from './model_ticker_v2_event';
+export * from './api_futures_public';
