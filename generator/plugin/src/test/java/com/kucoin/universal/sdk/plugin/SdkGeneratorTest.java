@@ -12,6 +12,7 @@ public class SdkGeneratorTest {
     private static final String SPEC_ENTRY_NAME = "../../spec/rest/entry/openapi-viplending.json";
     private static final String WS_SPEC_NAME = "../../spec/ws/openapi-futures-private.json";
     private static final String OUTPUT_DIR = "./out";
+    private static final String CSV_PATH = "../../spec";
 
     @Test
     public void launchCodeGenerator() {
@@ -33,6 +34,7 @@ public class SdkGeneratorTest {
                     .setInputSpec(SPEC_ENTRY_NAME)
                     .setValidateSpec(false)
                     .addAdditionalProperty("GEN_MODE", "ENTRY")
+                    .addAdditionalProperty("CSV_PATH", CSV_PATH)
                     .setOutputDir(OUTPUT_DIR);
 
             final ClientOptInput clientOptInput = configurator.toClientOptInput();

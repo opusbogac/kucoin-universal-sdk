@@ -9,6 +9,7 @@ import com.kucoin.universal.sdk.plugin.service.SchemaService;
 import com.kucoin.universal.sdk.plugin.service.impl.OperationServiceImpl;
 import com.kucoin.universal.sdk.plugin.service.impl.SchemaServiceImpl;
 import com.kucoin.universal.sdk.plugin.util.SpecificationUtil;
+import com.opencsv.CSVReader;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
@@ -24,6 +25,7 @@ import org.openapitools.codegen.model.OperationsMap;
 import org.openapitools.codegen.utils.CamelizeOption;
 
 import java.io.File;
+import java.io.FileReader;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -105,6 +107,8 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
             case ENTRY: {
                 apiTemplateFiles.put("api_entry.mustache", ".ts");
                 supportingFiles.add(new SupportingFile("module.mustache", String.format("./%s/index.ts", service)));
+                supportingFiles.add(new SupportingFile("module_service.mustache", "./service/index.ts"));
+                supportingFiles.add(new SupportingFile("module_generated.mustache", "index.ts"));
                 break;
             }
             case WS: {
@@ -395,9 +399,9 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                 });
 
                 String exportService = camelize(service.toLowerCase(), CamelizeOption.UPPERCASE_FIRST_CHAR);
-                export.add(String.format("const %s = \n{\n%s\n};", exportService,
+                export.add(String.format("export const %s = \n{\n%s\n};", exportService,
                         serviceAliases.stream().map(s -> "    ..." + s).collect(Collectors.joining(",\n"))));
-                export.add(String.format("export default %s;", exportService));
+
 
                 break;
             }
@@ -553,6 +557,40 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
         Map<String, Object> data = super.postProcessSupportingFileData(objs);
         data.put("exports", exports);
+
+        String csvPath = (String) additionalProperties.get("CSV_PATH");
+        if (csvPath == null) {
+           log.error("no csv path found");
+           return data;
+        }
+
+        Set<String> serviceExports = new TreeSet<>();
+        Set<String> generatedExports = new TreeSet<>();
+
+        String apiCsvFile = csvPath + "/apis.csv";
+
+        Set<String> services = new TreeSet<>();
+        try {
+
+            CSVReader reader = new CSVReader(new FileReader(apiCsvFile));
+            List<String[]> rows = reader.readAll();
+            for (int i = 1; i < rows.size(); i++) {
+                services.add(rows.get(i)[0].toLowerCase());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("read csv fail", e);
+        }
+
+        services.forEach(s-> {
+            serviceExports.add(String.format("export * from \"./%s_api\"", s));
+            generatedExports.add(String.format("export * from \"./%s\"", s));
+        });
+
+        generatedExports.add("export * from \"./service\"");
+
+        data.put("service-exports", serviceExports);
+        data.put("generated-exports", generatedExports);
+
         return data;
     }
 }

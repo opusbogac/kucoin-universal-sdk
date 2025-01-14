@@ -57,7 +57,7 @@ define generate-entry
 	     -g $(2)-sdk \
 	     -o $(3) \
 		 --skip-validate-spec \
-	     --additional-properties=GEN_MODE=entry,API_VERSION=$(VERSION),API_DATE=$(DATE) > logs/$(service)-$(lang)-entry.log 2>&1 || \
+	     --additional-properties=GEN_MODE=entry,API_VERSION=$(VERSION),API_DATE=$(DATE),CSV_PATH=/local/spec > logs/$(service)-$(lang)-entry.log 2>&1 || \
 		 { echo "$(RED)Entry Task $(service) for $(lang) failed$(NC)"; exit 1; }
 endef
 

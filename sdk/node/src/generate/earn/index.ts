@@ -1,5 +1,4 @@
 import * as EARN from './earn';
-const Earn = {
+export const Earn = {
     ...EARN,
 };
-export default Earn;

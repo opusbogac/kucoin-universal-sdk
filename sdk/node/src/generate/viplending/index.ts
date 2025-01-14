@@ -1,5 +1,4 @@
 import * as VIPLENDING from './viplending';
-const Viplending = {
+export const Viplending = {
     ...VIPLENDING,
 };
-export default Viplending;

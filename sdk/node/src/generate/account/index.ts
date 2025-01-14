@@ -4,7 +4,7 @@ import * as WITHDRAWAL from './withdrawal';
 import * as FEE from './fee';
 import * as SUBACCOUNT from './subaccount';
 import * as TRANSFER from './transfer';
-const Account = {
+export const Account = {
     ...ACCOUNT,
     ...DEPOSIT,
     ...WITHDRAWAL,
@@ -12,4 +12,3 @@ const Account = {
     ...SUBACCOUNT,
     ...TRANSFER,
 };
-export default Account;
