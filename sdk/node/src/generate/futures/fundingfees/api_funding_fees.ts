@@ -10,7 +10,7 @@ import { GetCurrentFundingRateReq } from './model_get_current_funding_rate_req';
 
 export interface FundingFeesAPI {
     /**
-     * GetPublicFundingHistory Get Public Funding History
+     * getPublicFundingHistory Get Public Funding History
      * Description: Query the funding rate at each settlement time point within a certain time range of the corresponding contract
      * Documentation: https://www.kucoin.com/docs-new/api-3470266
      * +---------------------+---------+
@@ -23,7 +23,7 @@ export interface FundingFeesAPI {
      * | API-RATE-LIMIT      | 5       |
      * +---------------------+---------+
      */
-    GetPublicFundingHistory(req: GetPublicFundingHistoryReq): Promise<GetPublicFundingHistoryResp>;
+    getPublicFundingHistory(req: GetPublicFundingHistoryReq): Promise<GetPublicFundingHistoryResp>;
 
     /**
      * getPrivateFundingHistory Get Private Funding History
@@ -44,7 +44,7 @@ export interface FundingFeesAPI {
     ): Promise<GetPrivateFundingHistoryResp>;
 
     /**
-     * GetCurrentFundingRate Get Current Funding Rate
+     * getCurrentFundingRate Get Current Funding Rate
      * Description: get Current Funding Rate
      * Documentation: https://www.kucoin.com/docs-new/api-3470265
      * +---------------------+---------+
@@ -57,13 +57,13 @@ export interface FundingFeesAPI {
      * | API-RATE-LIMIT      | 2       |
      * +---------------------+---------+
      */
-    GetCurrentFundingRate(req: GetCurrentFundingRateReq): Promise<GetCurrentFundingRateResp>;
+    getCurrentFundingRate(req: GetCurrentFundingRateReq): Promise<GetCurrentFundingRateResp>;
 }
 
 export class FundingFeesAPIImpl implements FundingFeesAPI {
     constructor(private transport: Transport) {}
 
-    GetPublicFundingHistory(req: GetPublicFundingHistoryReq): Promise<GetPublicFundingHistoryResp> {
+    getPublicFundingHistory(req: GetPublicFundingHistoryReq): Promise<GetPublicFundingHistoryResp> {
         return this.transport.call(
             'futures',
             false,
@@ -89,7 +89,7 @@ export class FundingFeesAPIImpl implements FundingFeesAPI {
         );
     }
 
-    GetCurrentFundingRate(req: GetCurrentFundingRateReq): Promise<GetCurrentFundingRateResp> {
+    getCurrentFundingRate(req: GetCurrentFundingRateReq): Promise<GetCurrentFundingRateResp> {
         return this.transport.call(
             'futures',
             false,

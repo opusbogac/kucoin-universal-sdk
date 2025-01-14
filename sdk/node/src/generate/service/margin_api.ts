@@ -22,38 +22,38 @@ export interface MarginService {
 
 export class MarginServiceImpl implements MarginService {
     private readonly transport: Transport;
-    private readonly Order: OrderAPI;
-    private readonly Debit: DebitAPI;
-    private readonly Credit: CreditAPI;
-    private readonly Market: MarketAPI;
-    private readonly RiskLimit: RiskLimitAPI;
+    private readonly order: OrderAPI;
+    private readonly debit: DebitAPI;
+    private readonly credit: CreditAPI;
+    private readonly market: MarketAPI;
+    private readonly riskLimit: RiskLimitAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.Order = new OrderAPIImpl(transport);
-        this.Debit = new DebitAPIImpl(transport);
-        this.Credit = new CreditAPIImpl(transport);
-        this.Market = new MarketAPIImpl(transport);
-        this.RiskLimit = new RiskLimitAPIImpl(transport);
+        this.order = new OrderAPIImpl(transport);
+        this.debit = new DebitAPIImpl(transport);
+        this.credit = new CreditAPIImpl(transport);
+        this.market = new MarketAPIImpl(transport);
+        this.riskLimit = new RiskLimitAPIImpl(transport);
     }
 
     getOrderApi(): OrderAPI {
-        return this.Order;
+        return this.order;
     }
 
     getDebitApi(): DebitAPI {
-        return this.Debit;
+        return this.debit;
     }
 
     getCreditApi(): CreditAPI {
-        return this.Credit;
+        return this.credit;
     }
 
     getMarketApi(): MarketAPI {
-        return this.Market;
+        return this.market;
     }
 
     getRiskLimitApi(): RiskLimitAPI {
-        return this.RiskLimit;
+        return this.riskLimit;
     }
 }

@@ -10,14 +10,14 @@ export interface VIPLendingService {
 
 export class VIPLendingServiceImpl implements VIPLendingService {
     private readonly transport: Transport;
-    private readonly VIPLending: VIPLendingAPI;
+    private readonly vIPLending: VIPLendingAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.VIPLending = new VIPLendingAPIImpl(transport);
+        this.vIPLending = new VIPLendingAPIImpl(transport);
     }
 
     getVIPLendingApi(): VIPLendingAPI {
-        return this.VIPLending;
+        return this.vIPLending;
     }
 }

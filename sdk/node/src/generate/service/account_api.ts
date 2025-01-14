@@ -25,44 +25,44 @@ export interface AccountService {
 
 export class AccountServiceImpl implements AccountService {
     private readonly transport: Transport;
-    private readonly Account: AccountAPI;
-    private readonly Deposit: DepositAPI;
-    private readonly Withdrawal: WithdrawalAPI;
-    private readonly Fee: FeeAPI;
-    private readonly SubAccount: SubAccountAPI;
-    private readonly Transfer: TransferAPI;
+    private readonly account: AccountAPI;
+    private readonly deposit: DepositAPI;
+    private readonly withdrawal: WithdrawalAPI;
+    private readonly fee: FeeAPI;
+    private readonly subAccount: SubAccountAPI;
+    private readonly transfer: TransferAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.Account = new AccountAPIImpl(transport);
-        this.Deposit = new DepositAPIImpl(transport);
-        this.Withdrawal = new WithdrawalAPIImpl(transport);
-        this.Fee = new FeeAPIImpl(transport);
-        this.SubAccount = new SubAccountAPIImpl(transport);
-        this.Transfer = new TransferAPIImpl(transport);
+        this.account = new AccountAPIImpl(transport);
+        this.deposit = new DepositAPIImpl(transport);
+        this.withdrawal = new WithdrawalAPIImpl(transport);
+        this.fee = new FeeAPIImpl(transport);
+        this.subAccount = new SubAccountAPIImpl(transport);
+        this.transfer = new TransferAPIImpl(transport);
     }
 
     getAccountApi(): AccountAPI {
-        return this.Account;
+        return this.account;
     }
 
     getDepositApi(): DepositAPI {
-        return this.Deposit;
+        return this.deposit;
     }
 
     getWithdrawalApi(): WithdrawalAPI {
-        return this.Withdrawal;
+        return this.withdrawal;
     }
 
     getFeeApi(): FeeAPI {
-        return this.Fee;
+        return this.fee;
     }
 
     getSubAccountApi(): SubAccountAPI {
-        return this.SubAccount;
+        return this.subAccount;
     }
 
     getTransferApi(): TransferAPI {
-        return this.Transfer;
+        return this.transfer;
     }
 }

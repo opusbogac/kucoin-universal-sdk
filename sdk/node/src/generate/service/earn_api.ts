@@ -10,14 +10,14 @@ export interface EarnService {
 
 export class EarnServiceImpl implements EarnService {
     private readonly transport: Transport;
-    private readonly Earn: EarnAPI;
+    private readonly earn: EarnAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.Earn = new EarnAPIImpl(transport);
+        this.earn = new EarnAPIImpl(transport);
     }
 
     getEarnApi(): EarnAPI {
-        return this.Earn;
+        return this.earn;
     }
 }

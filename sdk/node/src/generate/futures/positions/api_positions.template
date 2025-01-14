@@ -20,16 +20,16 @@ describe('Auto Test', ()=> {
     });
     })
 
-    test('GetPositionsHistory request test', ()=> {
+    test('getPositionsHistory request test', ()=> {
     /**
-    * GetPositionsHistory
+    * getPositionsHistory
     * Get Positions History
     * /api/v1/history-positions
     */
     let builder = GetPositionsHistoryReq.builder();
     builder.setSymbol(?).setFrom(?).setTo(?).setLimit(?).setPageId(?);
     let req = builder.build();
-    let resp = api.GetPositionsHistory(req);
+    let resp = api.getPositionsHistory(req);
     return resp.then(result => {
         expect(result.currentPage).toEqual(expect.anything());
         expect(result.pageSize).toEqual(expect.anything());
@@ -39,46 +39,46 @@ describe('Auto Test', ()=> {
     });
     })
 
-    test('GetMaxWithdrawMargin request test', ()=> {
+    test('getMaxWithdrawMargin request test', ()=> {
     /**
-    * GetMaxWithdrawMargin
+    * getMaxWithdrawMargin
     * Get Max Withdraw Margin
     * /api/v1/margin/maxWithdrawMargin
     */
     let builder = GetMaxWithdrawMarginReq.builder();
     builder.setSymbol(?);
     let req = builder.build();
-    let resp = api.GetMaxWithdrawMargin(req);
+    let resp = api.getMaxWithdrawMargin(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
     });
     })
 
-    test('RemoveIsolatedMargin request test', ()=> {
+    test('removeIsolatedMargin request test', ()=> {
     /**
-    * RemoveIsolatedMargin
+    * removeIsolatedMargin
     * Remove Isolated Margin
     * /api/v1/margin/withdrawMargin
     */
     let builder = RemoveIsolatedMarginReq.builder();
     builder.setSymbol(?).setWithdrawAmount(?);
     let req = builder.build();
-    let resp = api.RemoveIsolatedMargin(req);
+    let resp = api.removeIsolatedMargin(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
     });
     })
 
-    test('GetPositionDetails request test', ()=> {
+    test('getPositionDetails request test', ()=> {
     /**
-    * GetPositionDetails
+    * getPositionDetails
     * Get Position Details
     * /api/v1/position
     */
     let builder = GetPositionDetailsReq.builder();
     builder.setSymbol(?);
     let req = builder.build();
-    let resp = api.GetPositionDetails(req);
+    let resp = api.getPositionDetails(req);
     return resp.then(result => {
         expect(result.id).toEqual(expect.anything());
         expect(result.symbol).toEqual(expect.anything());
@@ -142,16 +142,16 @@ describe('Auto Test', ()=> {
     });
     })
 
-    test('AddIsolatedMargin request test', ()=> {
+    test('addIsolatedMargin request test', ()=> {
     /**
-    * AddIsolatedMargin
+    * addIsolatedMargin
     * Add Isolated Margin
     * /api/v1/position/margin/deposit-margin
     */
     let builder = AddIsolatedMarginReq.builder();
     builder.setSymbol(?).setMargin(?).setBizNo(?);
     let req = builder.build();
-    let resp = api.AddIsolatedMargin(req);
+    let resp = api.addIsolatedMargin(req);
     return resp.then(result => {
         expect(result.id).toEqual(expect.anything());
         expect(result.symbol).toEqual(expect.anything());
@@ -208,31 +208,31 @@ describe('Auto Test', ()=> {
     });
     })
 
-    test('GetPositionList request test', ()=> {
+    test('getPositionList request test', ()=> {
     /**
-    * GetPositionList
+    * getPositionList
     * Get Position List
     * /api/v1/positions
     */
     let builder = GetPositionListReq.builder();
     builder.setCurrency(?);
     let req = builder.build();
-    let resp = api.GetPositionList(req);
+    let resp = api.getPositionList(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
     });
     })
 
-    test('ModifyMarginLeverage request test', ()=> {
+    test('modifyMarginLeverage request test', ()=> {
     /**
-    * ModifyMarginLeverage
+    * modifyMarginLeverage
     * Modify Cross Margin Leverage
     * /api/v2/changeCrossUserLeverage
     */
     let builder = ModifyMarginLeverageReq.builder();
     builder.setSymbol(?).setLeverage(?);
     let req = builder.build();
-    let resp = api.ModifyMarginLeverage(req);
+    let resp = api.modifyMarginLeverage(req);
     return resp.then(result => {
         expect(result.symbol).toEqual(expect.anything());
         expect(result.leverage).toEqual(expect.anything());
@@ -255,16 +255,16 @@ describe('Auto Test', ()=> {
     });
     })
 
-    test('GetMaxOpenSize request test', ()=> {
+    test('getMaxOpenSize request test', ()=> {
     /**
-    * GetMaxOpenSize
+    * getMaxOpenSize
     * Get Max Open Size
     * /api/v2/getMaxOpenSize
     */
     let builder = GetMaxOpenSizeReq.builder();
     builder.setSymbol(?).setPrice(?).setLeverage(?);
     let req = builder.build();
-    let resp = api.GetMaxOpenSize(req);
+    let resp = api.getMaxOpenSize(req);
     return resp.then(result => {
         expect(result.symbol).toEqual(expect.anything());
         expect(result.maxBuyOpenSize).toEqual(expect.anything());

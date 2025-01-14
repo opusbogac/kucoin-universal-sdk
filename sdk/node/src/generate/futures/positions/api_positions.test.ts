@@ -62,9 +62,9 @@ describe('Auto Test', () => {
             console.log(resp);
         }
     });
-    test('GetPositionsHistory request test', () => {
+    test('getPositionsHistory request test', () => {
         /**
-         * GetPositionsHistory
+         * getPositionsHistory
          * Get Positions History
          * /api/v1/history-positions
          */
@@ -78,9 +78,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('GetPositionsHistory response test', () => {
+    test('getPositionsHistory response test', () => {
         /**
-         * GetPositionsHistory
+         * getPositionsHistory
          * Get Positions History
          * /api/v1/history-positions
          */
@@ -96,9 +96,9 @@ describe('Auto Test', () => {
             console.log(resp);
         }
     });
-    test('GetMaxWithdrawMargin request test', () => {
+    test('getMaxWithdrawMargin request test', () => {
         /**
-         * GetMaxWithdrawMargin
+         * getMaxWithdrawMargin
          * Get Max Withdraw Margin
          * /api/v1/margin/maxWithdrawMargin
          */
@@ -111,9 +111,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('GetMaxWithdrawMargin response test', () => {
+    test('getMaxWithdrawMargin response test', () => {
         /**
-         * GetMaxWithdrawMargin
+         * getMaxWithdrawMargin
          * Get Max Withdraw Margin
          * /api/v1/margin/maxWithdrawMargin
          */
@@ -128,9 +128,9 @@ describe('Auto Test', () => {
             console.log(resp);
         }
     });
-    test('RemoveIsolatedMargin request test', () => {
+    test('removeIsolatedMargin request test', () => {
         /**
-         * RemoveIsolatedMargin
+         * removeIsolatedMargin
          * Remove Isolated Margin
          * /api/v1/margin/withdrawMargin
          */
@@ -143,9 +143,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('RemoveIsolatedMargin response test', () => {
+    test('removeIsolatedMargin response test', () => {
         /**
-         * RemoveIsolatedMargin
+         * removeIsolatedMargin
          * Remove Isolated Margin
          * /api/v1/margin/withdrawMargin
          */
@@ -160,9 +160,9 @@ describe('Auto Test', () => {
             console.log(resp);
         }
     });
-    test('GetPositionDetails request test', () => {
+    test('getPositionDetails request test', () => {
         /**
-         * GetPositionDetails
+         * getPositionDetails
          * Get Position Details
          * /api/v1/position
          */
@@ -175,9 +175,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('GetPositionDetails response test', () => {
+    test('getPositionDetails response test', () => {
         /**
-         * GetPositionDetails
+         * getPositionDetails
          * Get Position Details
          * /api/v1/position
          */
@@ -225,9 +225,9 @@ describe('Auto Test', () => {
             console.log(resp);
         }
     });
-    test('AddIsolatedMargin request test', () => {
+    test('addIsolatedMargin request test', () => {
         /**
-         * AddIsolatedMargin
+         * addIsolatedMargin
          * Add Isolated Margin
          * /api/v1/position/margin/deposit-margin
          */
@@ -240,9 +240,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('AddIsolatedMargin response test', () => {
+    test('addIsolatedMargin response test', () => {
         /**
-         * AddIsolatedMargin
+         * addIsolatedMargin
          * Add Isolated Margin
          * /api/v1/position/margin/deposit-margin
          */
@@ -290,9 +290,9 @@ describe('Auto Test', () => {
             console.log(resp);
         }
     });
-    test('GetPositionList request test', () => {
+    test('getPositionList request test', () => {
         /**
-         * GetPositionList
+         * getPositionList
          * Get Position List
          * /api/v1/positions
          */
@@ -305,9 +305,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('GetPositionList response test', () => {
+    test('getPositionList response test', () => {
         /**
-         * GetPositionList
+         * getPositionList
          * Get Position List
          * /api/v1/positions
          */
@@ -323,9 +323,9 @@ describe('Auto Test', () => {
             console.log(resp);
         }
     });
-    test('ModifyMarginLeverage request test', () => {
+    test('modifyMarginLeverage request test', () => {
         /**
-         * ModifyMarginLeverage
+         * modifyMarginLeverage
          * Modify Cross Margin Leverage
          * /api/v2/changeCrossUserLeverage
          */
@@ -338,9 +338,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('ModifyMarginLeverage response test', () => {
+    test('modifyMarginLeverage response test', () => {
         /**
-         * ModifyMarginLeverage
+         * modifyMarginLeverage
          * Modify Cross Margin Leverage
          * /api/v2/changeCrossUserLeverage
          */
@@ -389,9 +389,9 @@ describe('Auto Test', () => {
             console.log(resp);
         }
     });
-    test('GetMaxOpenSize request test', () => {
+    test('getMaxOpenSize request test', () => {
         /**
-         * GetMaxOpenSize
+         * getMaxOpenSize
          * Get Max Open Size
          * /api/v2/getMaxOpenSize
          */
@@ -405,9 +405,9 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('GetMaxOpenSize response test', () => {
+    test('getMaxOpenSize response test', () => {
         /**
-         * GetMaxOpenSize
+         * getMaxOpenSize
          * Get Max Open Size
          * /api/v2/getMaxOpenSize
          */

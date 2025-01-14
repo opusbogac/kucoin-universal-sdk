@@ -24,16 +24,16 @@ describe('Auto Test', ()=> {
     });
     })
 
-    test('GetOpenOrderValue request test', ()=> {
+    test('getOpenOrderValue request test', ()=> {
     /**
-    * GetOpenOrderValue
+    * getOpenOrderValue
     * Get Open Order Value
     * /api/v1/openOrderStatistics
     */
     let builder = GetOpenOrderValueReq.builder();
     builder.setSymbol(?);
     let req = builder.build();
-    let resp = api.GetOpenOrderValue(req);
+    let resp = api.getOpenOrderValue(req);
     return resp.then(result => {
         expect(result.openOrderBuySize).toEqual(expect.anything());
         expect(result.openOrderSellSize).toEqual(expect.anything());
@@ -125,16 +125,16 @@ describe('Auto Test', ()=> {
     });
     })
 
-    test('GetOrderList request test', ()=> {
+    test('getOrderList request test', ()=> {
     /**
-    * GetOrderList
+    * getOrderList
     * Get Order List
     * /api/v1/orders
     */
     let builder = GetOrderListReq.builder();
     builder.setStatus(?).setSymbol(?).setSide(?).setType(?).setStartAt(?).setEndAt(?).setCurrentPage(?).setPageSize(?);
     let req = builder.build();
-    let resp = api.GetOrderList(req);
+    let resp = api.getOrderList(req);
     return resp.then(result => {
         expect(result.currentPage).toEqual(expect.anything());
         expect(result.pageSize).toEqual(expect.anything());
@@ -273,16 +273,16 @@ describe('Auto Test', ()=> {
     });
     })
 
-    test('GetRecentClosedOrders request test', ()=> {
+    test('getRecentClosedOrders request test', ()=> {
     /**
-    * GetRecentClosedOrders
+    * getRecentClosedOrders
     * Get Recent Closed Orders
     * /api/v1/recentDoneOrders
     */
     let builder = GetRecentClosedOrdersReq.builder();
     builder.setSymbol(?);
     let req = builder.build();
-    let resp = api.GetRecentClosedOrders(req);
+    let resp = api.getRecentClosedOrders(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
     });
@@ -334,16 +334,16 @@ describe('Auto Test', ()=> {
     });
     })
 
-    test('GetStopOrderList request test', ()=> {
+    test('getStopOrderList request test', ()=> {
     /**
-    * GetStopOrderList
+    * getStopOrderList
     * Get Stop Order List
     * /api/v1/stopOrders
     */
     let builder = GetStopOrderListReq.builder();
     builder.setSymbol(?).setSide(?).setType(?).setStartAt(?).setEndAt(?).setCurrentPage(?).setPageSize(?);
     let req = builder.build();
-    let resp = api.GetStopOrderList(req);
+    let resp = api.getStopOrderList(req);
     return resp.then(result => {
         expect(result.currentPage).toEqual(expect.anything());
         expect(result.pageSize).toEqual(expect.anything());

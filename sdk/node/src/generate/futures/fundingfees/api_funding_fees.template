@@ -5,16 +5,16 @@ describe('Auto Test', ()=> {
     beforeAll(()=> {
         api = ??
     });
-    test('GetPublicFundingHistory request test', ()=> {
+    test('getPublicFundingHistory request test', ()=> {
     /**
-    * GetPublicFundingHistory
+    * getPublicFundingHistory
     * Get Public Funding History
     * /api/v1/contract/funding-rates
     */
     let builder = GetPublicFundingHistoryReq.builder();
     builder.setSymbol(?).setFrom(?).setTo(?);
     let req = builder.build();
-    let resp = api.GetPublicFundingHistory(req);
+    let resp = api.getPublicFundingHistory(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
     });
@@ -36,16 +36,16 @@ describe('Auto Test', ()=> {
     });
     })
 
-    test('GetCurrentFundingRate request test', ()=> {
+    test('getCurrentFundingRate request test', ()=> {
     /**
-    * GetCurrentFundingRate
+    * getCurrentFundingRate
     * Get Current Funding Rate
     * /api/v1/funding-rate/{symbol}/current
     */
     let builder = GetCurrentFundingRateReq.builder();
     builder.setSymbol(?);
     let req = builder.build();
-    let resp = api.GetCurrentFundingRate(req);
+    let resp = api.getCurrentFundingRate(req);
     return resp.then(result => {
         expect(result.symbol).toEqual(expect.anything());
         expect(result.granularity).toEqual(expect.anything());

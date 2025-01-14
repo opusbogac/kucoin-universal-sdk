@@ -155,7 +155,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
     @Override
     public String formatMethodName(String name) {
-        return sanitizeName(name);
+        return camelize(sanitizeName(name), CamelizeOption.LOWERCASE_FIRST_CHAR);
     }
 
     @Override
@@ -358,7 +358,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                     if (v.getService().equalsIgnoreCase(meta.getService())) {
                         List<String> services = Arrays.asList(formatService(k + "API"), formatService(k + "APIImpl"));
                         String fileName = String.format("@generate/%s/%s/%s", formatPackage(v.getService()),
-                                formatPackage(v.getSubService()), toApiFilename(formatMethodName(k)));
+                                formatPackage(v.getSubService()), toApiFilename(sanitizeName(k)));
                         imports.computeIfAbsent(fileName, ImportModel::new).component.addAll(services);
                     }
                 });
@@ -375,7 +375,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
             case API: {
                 operationService.getServiceMeta().forEach((k, v) -> {
                     if (v.getService().equalsIgnoreCase(meta.getService())) {
-                        export.add(String.format("export * from \"./%s\"", toApiFilename(formatMethodName(k))));
+                        export.add(String.format("export * from \"./%s\"", toApiFilename(sanitizeName(k))));
                     }
                 });
 

@@ -19,32 +19,32 @@ export interface FuturesService {
 
 export class FuturesServiceImpl implements FuturesService {
     private readonly transport: Transport;
-    private readonly Order: OrderAPI;
-    private readonly Positions: PositionsAPI;
-    private readonly FundingFees: FundingFeesAPI;
-    private readonly Market: MarketAPI;
+    private readonly order: OrderAPI;
+    private readonly positions: PositionsAPI;
+    private readonly fundingFees: FundingFeesAPI;
+    private readonly market: MarketAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.Order = new OrderAPIImpl(transport);
-        this.Positions = new PositionsAPIImpl(transport);
-        this.FundingFees = new FundingFeesAPIImpl(transport);
-        this.Market = new MarketAPIImpl(transport);
+        this.order = new OrderAPIImpl(transport);
+        this.positions = new PositionsAPIImpl(transport);
+        this.fundingFees = new FundingFeesAPIImpl(transport);
+        this.market = new MarketAPIImpl(transport);
     }
 
     getOrderApi(): OrderAPI {
-        return this.Order;
+        return this.order;
     }
 
     getPositionsApi(): PositionsAPI {
-        return this.Positions;
+        return this.positions;
     }
 
     getFundingFeesApi(): FundingFeesAPI {
-        return this.FundingFees;
+        return this.fundingFees;
     }
 
     getMarketApi(): MarketAPI {
-        return this.Market;
+        return this.market;
     }
 }

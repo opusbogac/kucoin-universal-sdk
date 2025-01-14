@@ -13,20 +13,20 @@ export interface SpotService {
 
 export class SpotServiceImpl implements SpotService {
     private readonly transport: Transport;
-    private readonly Order: OrderAPI;
-    private readonly Market: MarketAPI;
+    private readonly order: OrderAPI;
+    private readonly market: MarketAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.Order = new OrderAPIImpl(transport);
-        this.Market = new MarketAPIImpl(transport);
+        this.order = new OrderAPIImpl(transport);
+        this.market = new MarketAPIImpl(transport);
     }
 
     getOrderApi(): OrderAPI {
-        return this.Order;
+        return this.order;
     }
 
     getMarketApi(): MarketAPI {
-        return this.Market;
+        return this.market;
     }
 }

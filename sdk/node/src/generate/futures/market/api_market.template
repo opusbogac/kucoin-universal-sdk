@@ -43,13 +43,13 @@ describe('Auto Test', ()=> {
     });
     })
 
-    test('GetAllSymbols request test', ()=> {
+    test('getAllSymbols request test', ()=> {
     /**
-    * GetAllSymbols
+    * getAllSymbols
     * Get All Symbols
     * /api/v1/contracts/active
     */
-    let resp = api.GetAllSymbols();
+    let resp = api.getAllSymbols();
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
     });

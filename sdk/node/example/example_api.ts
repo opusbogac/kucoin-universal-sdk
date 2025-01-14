@@ -125,7 +125,7 @@ async function spotServiceExample(spotService: SpotService) {
 
 async function futuresServiceExample(futuresService: FuturesService) {
     const marketApi = futuresService.getMarketApi();
-    const allSymbolResp = await marketApi.GetAllSymbols();
+    const allSymbolResp = await marketApi.getAllSymbols();
 
     const maxQuery = Math.min(allSymbolResp.data!.length, 10);
     for (let i = 0; i < maxQuery; i++) {

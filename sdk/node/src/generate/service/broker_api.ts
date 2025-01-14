@@ -13,20 +13,20 @@ export interface BrokerService {
 
 export class BrokerServiceImpl implements BrokerService {
     private readonly transport: Transport;
-    private readonly APIBroker: APIBrokerAPI;
-    private readonly NDBroker: NDBrokerAPI;
+    private readonly aPIBroker: APIBrokerAPI;
+    private readonly nDBroker: NDBrokerAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.APIBroker = new APIBrokerAPIImpl(transport);
-        this.NDBroker = new NDBrokerAPIImpl(transport);
+        this.aPIBroker = new APIBrokerAPIImpl(transport);
+        this.nDBroker = new NDBrokerAPIImpl(transport);
     }
 
     getAPIBrokerApi(): APIBrokerAPI {
-        return this.APIBroker;
+        return this.aPIBroker;
     }
 
     getNDBrokerApi(): NDBrokerAPI {
-        return this.NDBroker;
+        return this.nDBroker;
     }
 }

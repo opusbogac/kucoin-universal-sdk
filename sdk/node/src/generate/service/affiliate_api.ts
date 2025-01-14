@@ -10,14 +10,14 @@ export interface AffiliateService {
 
 export class AffiliateServiceImpl implements AffiliateService {
     private readonly transport: Transport;
-    private readonly Affiliate: AffiliateAPI;
+    private readonly affiliate: AffiliateAPI;
 
     constructor(transport: Transport) {
         this.transport = transport;
-        this.Affiliate = new AffiliateAPIImpl(transport);
+        this.affiliate = new AffiliateAPIImpl(transport);
     }
 
     getAffiliateApi(): AffiliateAPI {
-        return this.Affiliate;
+        return this.affiliate;
     }
 }
