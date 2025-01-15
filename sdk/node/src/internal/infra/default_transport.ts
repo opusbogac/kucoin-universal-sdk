@@ -170,7 +170,7 @@ export class DefaultTransport implements Transport {
         }).join('&');
     }
 
-    private async processRequest(
+    private processRequest(
         requestObj: Serializable<any> | null,
         broker: boolean,
         path: string,
@@ -178,7 +178,7 @@ export class DefaultTransport implements Transport {
         method: string,
         requestAsJson: boolean,
         args?: any
-    ): Promise<AxiosRequestConfig> {
+    ): AxiosRequestConfig {
         const fullPath = endpoint + path;
         const rawUrl = path;
         let reqBody = '';
@@ -220,7 +220,7 @@ export class DefaultTransport implements Transport {
         return config;
     }
 
-    private doWithRetry(req_config: AxiosRequestConfig): AxiosResponse {
+    private doWithRetry(req_config: AxiosRequestConfig): Promise<AxiosResponse> {
         try {
             if(this.transportOption.interceptors){
                 for (const interceptor of this.transportOption.interceptors) {
@@ -228,17 +228,18 @@ export class DefaultTransport implements Transport {
                 }
             }
 
-            let response = this.httpClient.request(req_config);
-
-            if(this.transportOption.interceptors){
-                for (const interceptor of this.transportOption.interceptors) {
-                    response = interceptor.after(req_config,response,null);
+            return this.httpClient.request(req_config).then(response => {
+                if(this.transportOption.interceptors){
+                    for (const interceptor of this.transportOption.interceptors) {
+                        response = interceptor.after(req_config, response, null);
+                    }
                 }
-            }
-
-            return response;
+                return response;
+            }).catch(err => {
+                throw err;
+            });
         } catch (err) {
-            throw err;
+            return Promise.reject(err);
         }
     }
 
@@ -280,7 +281,7 @@ export class DefaultTransport implements Transport {
         return responseObj;
     }
 
-    async call(
+    call(
         domain: string,
         isBroker: boolean,
         method: string,
@@ -295,10 +296,14 @@ export class DefaultTransport implements Transport {
 
         const endpoint = this.getEndpoint(domain);
         const processedPath = this.processPathVariable(path, requestObj);
-        const config = await this.processRequest(requestObj, isBroker, processedPath, endpoint, method, requestJson, args);
-        const response = await this.doWithRetry(config);
-
-        return this.processResponse(response, responseObj);
+        const config = this.processRequest(requestObj, isBroker, processedPath, endpoint, method, requestJson, args);
+        
+        return this.doWithRetry(config).then(response => {
+            return this.processResponse(response, responseObj);
+        }).catch(error => {
+            console.error('[CALL ERROR]', error);
+            throw error;
+        });
     }
 
     private getEndpoint(domain: string): string {
