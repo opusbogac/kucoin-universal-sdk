@@ -193,8 +193,9 @@ export class DefaultTransport implements Transport {
             }
         } else if(requestObj){
             reqBody = JSON.stringify(requestObj);
-        } else {
-            throw new Error('Invalid request object');
+        } else if (method === 'POST') {
+            // For POST requests, if no request body is provided, use an empty object
+            reqBody = '{}';
         }
 
         const config: AxiosRequestConfig = {
