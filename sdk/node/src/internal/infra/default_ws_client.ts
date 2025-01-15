@@ -307,12 +307,17 @@ export class WebSocketClient {
         const msg = this.writeMsg.dequeue();
         if (msg) {
             try {
-                //Send message TODO:
-                this.conn.send(msg.msg.data);
+                // Send the complete message as JSON string
+                this.conn.send(JSON.stringify(msg.msg));
                 console.debug("Message sent:", msg.msg);
                 msg.ts = Date.now();
+                msg.complete();
             } catch (e) {
-                console.error("Error sending message:", e);
+                console.error("Failed to send message:", e);
+                if (msg.msg.id) {
+                    this.ackEvents.delete(msg.msg.id);
+                }
+                msg.setException(e as Error);
             }
         }
     }
