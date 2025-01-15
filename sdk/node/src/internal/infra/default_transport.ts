@@ -177,7 +177,7 @@ export class DefaultTransport implements Transport {
         return config;
     }
 
-    private async doWithRetry(req_config: AxiosRequestConfig): Promise<AxiosResponse> {
+    private doWithRetry(req_config: AxiosRequestConfig): AxiosResponse {
         try {
             if(this.transportOption.interceptors){
                 for (const interceptor of this.transportOption.interceptors) {
@@ -185,7 +185,7 @@ export class DefaultTransport implements Transport {
                 }
             }
 
-            let response = await this.httpClient.request(req_config);
+            let response = this.httpClient.request(req_config);
 
             if(this.transportOption.interceptors){
                 for (const interceptor of this.transportOption.interceptors) {
@@ -261,10 +261,19 @@ export class DefaultTransport implements Transport {
     private getEndpoint(domain: string): string {
         switch (domain.toLowerCase()) {
             case DomainType.Spot:
+                if (!this.option.spotEndpoint) {
+                    throw new Error('Spot endpoint is not set');
+                }
                 return this.option.spotEndpoint;
             case DomainType.Futures:
+                if (!this.option.futuresEndpoint) {
+                    throw new Error('Futures endpoint is not set');
+                }
                 return this.option.futuresEndpoint;
             case DomainType.Broker:
+                if (!this.option.brokerEndpoint) {
+                    throw new Error('Broker endpoint is not set');
+                }
                 return this.option.brokerEndpoint;
             default:
                 throw new Error(`Invalid domain: ${domain}`);
