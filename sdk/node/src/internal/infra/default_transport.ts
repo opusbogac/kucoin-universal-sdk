@@ -9,6 +9,7 @@ import { KcSigner } from './default_signer';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import "reflect-metadata";
 import axiosRetry from 'axios-retry';
+import { HttpAgent, HttpsAgent } from "agentkeepalive";
 
 
 export class DefaultTransport implements Transport {
@@ -67,6 +68,22 @@ export class DefaultTransport implements Transport {
             }
         });
 
+        instance.defaults.httpAgent = new HttpAgent({
+            maxSockets: trans_option.maxConnsPerHost || 100,
+            maxFreeSockets: trans_option.maxIdleConnsPerHost || 10,
+            timeout: trans_option.timeout || 60000,
+            freeSocketTimeout: trans_option.idleConnTimeout || 30000,
+            keepAlive: trans_option.keepAlive !== undefined ? trans_option.keepAlive : true
+        });
+
+        instance.defaults.httpsAgent = new HttpsAgent({
+            maxSockets: trans_option.maxConnsPerHost || 100,
+            maxFreeSockets: trans_option.maxIdleConnsPerHost || 10,
+            timeout: trans_option.timeout || 60000,
+            freeSocketTimeout: trans_option.idleConnTimeout || 30000,
+            keepAlive: trans_option.keepAlive !== undefined ? trans_option.keepAlive : true
+        });
+        
         instance.interceptors.request.use(
             config => {
                 console.log('[REQUEST]', {
