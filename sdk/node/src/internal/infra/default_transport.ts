@@ -6,9 +6,10 @@ import { RestRateLimit, RestResponse } from '@model/common';
 import { DomainType } from '@model/constant';
 import { TransportOption } from '@model/transport_option';
 import { KcSigner } from './default_signer';
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import type { AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import "reflect-metadata";
+import axiosRetry from 'axios-retry';
+
 
 export class DefaultTransport implements Transport {
 
@@ -40,6 +41,30 @@ export class DefaultTransport implements Transport {
             headers: {
                 'Connection': trans_option.keepAlive ? 'keep-alive' : 'close',
             },
+        });
+
+        // Add retry logic
+        axiosRetry(instance, {
+            retries: trans_option.maxRetries || 3,
+            shouldResetTimeout: true,
+            retryDelay: (retryCount, error) => {
+                const delay = trans_option.retryDelay;
+                return delay;
+            },
+            retryCondition: (error) => {
+                // acquire request config
+                const currentRetry = ((error.config as any)?._retry || 0);
+                const maxRetries = trans_option.maxRetries || 3;
+                
+                // change retry condition here
+                const shouldRetry = (
+                    axiosRetry.isNetworkOrIdempotentRequestError(error) || 
+                    error.message.includes('timeout') ||
+                    (error.response && error.response.status >= 500) ||
+                    error.code === 'ECONNABORTED'
+                );
+                return shouldRetry && currentRetry < maxRetries;
+            }
         });
 
         instance.interceptors.request.use(
