@@ -198,19 +198,23 @@ export class DefaultTransport implements Transport {
         let reqBody = '';
         let queryPath = path;
 
-        // TODO wrong logic
-        if (requestAsJson && requestObj) {
-            reqBody = JSON.stringify(requestObj);
-        } else if (method === 'GET' || method === 'DELETE') {
-            const queryParams = this.rawQuery(requestObj || {});
-            if (queryParams) {
-                queryPath = `${path}?${queryParams}`;
+        if (requestAsJson) {
+            if (requestObj){
+                reqBody = JSON.stringify(requestObj);
             }
-        } else if (requestObj) {
-            reqBody = JSON.stringify(requestObj);
-        } else if (method === 'POST') {
-            // For POST requests, if no request body is provided, use an empty object
-            reqBody = '{}';
+        }else{
+            if (method === 'GET' || method === 'DELETE') {
+                const queryParams = this.rawQuery(requestObj || {});
+                if (queryParams) {
+                    queryPath = `${path}?${queryParams}`;
+                }
+            } else if (method == "POST") {
+                if (requestObj){
+                    reqBody = JSON.stringify(requestObj);
+                }
+            }else{
+                throw new Error(`Invalid method: ${method}`);
+            }
         }
 
         const config: AxiosRequestConfig = {
@@ -245,11 +249,6 @@ export class DefaultTransport implements Transport {
             remaining,
             reset,
         };
-
-        // todo delete
-        if (remaining <= Math.ceil(limit * 0.1)) {
-            console.warn('[RATE LIMIT WARNING]', rateLimit);
-        }
 
         return rateLimit;
     }
@@ -336,7 +335,20 @@ export class DefaultTransport implements Transport {
     }
 
     close(): Promise<void> {
-        // TODO release resource
+        // Cancel any pending requests
+        if (this.httpClient) {
+            // Clear any persistent connections
+            if (this.httpClient.defaults.httpAgent) {
+                this.httpClient.defaults.httpAgent.destroy();
+            }
+            if (this.httpClient.defaults.httpsAgent) {
+                this.httpClient.defaults.httpsAgent.destroy();
+            }
+            
+            // Remove reference to the client
+            (this.httpClient as any) = null;
+        }
+        
         return Promise.resolve(undefined);
     }
 }

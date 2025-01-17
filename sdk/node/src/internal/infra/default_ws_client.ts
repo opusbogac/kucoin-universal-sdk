@@ -533,7 +533,6 @@ export class WebSocketClient {
         });
     }
 
-    // TODO:
     private notifyEvent(event: WebSocketEvent, msg: string, msg2: string = ''): void {
         try {
             if (this.options.eventCallback) {
