@@ -1,4 +1,4 @@
-import WebSocket from 'ws';
+import WebSocket, { Data as WebSocketData } from 'ws';
 import { EventEmitter } from 'events';
 import { Queue } from 'queue-typescript';
 
@@ -175,9 +175,13 @@ export class WebSocketClient {
                         resolve();
                     });
 
-                    this.conn.on('message', (data) => this.onMessage(data.toString()));
-                    this.conn.on('error', (error) => this.onError(error));
-                    this.conn.on('close', (code, reason) => this.onClose(code, reason.toString()));
+                    this.conn.on('message', (data: WebSocketData) =>
+                        this.onMessage(data.toString()),
+                    );
+                    this.conn.on('error', (error: Error) => this.onError(error));
+                    this.conn.on('close', (code: number, reason: string) =>
+                        this.onClose(code, reason.toString()),
+                    );
 
                     setTimeout(() => {
                         if (!this.welcomeReceived) {

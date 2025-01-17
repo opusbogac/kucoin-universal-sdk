@@ -44,6 +44,7 @@ export class DefaultWsService implements WebSocketService {
         privateChannel: boolean,
         versionString: string,
     ) {
+        this.option = option;
         if (!option.webSocketClientOption) {
             throw new Error('WebSocketClientOption is undefined');
         }

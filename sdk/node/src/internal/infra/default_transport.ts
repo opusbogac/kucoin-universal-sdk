@@ -6,16 +6,12 @@ import { RestRateLimit, RestResponse } from '@model/common';
 import { DomainType } from '@model/constant';
 import { DEFAULT_TRANSPORT_OPTION, TransportOption } from '@model/transport_option';
 import { KcSigner } from './default_signer';
-import axios, {
-    AxiosInstance,
-    AxiosRequestConfig,
-    AxiosResponse,
-    AxiosResponseHeaders,
-    RawAxiosResponseHeaders,
-} from 'axios';
+import axios from 'axios';
+import type { CreateAxiosDefaults, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import 'reflect-metadata';
 import axiosRetry from 'axios-retry';
-import { HttpAgent, HttpsAgent } from 'agentkeepalive';
+import { Agent as HttpAgent } from 'http';
+import { Agent as HttpsAgent } from 'https';
 
 export class DefaultTransport implements Transport {
     private readonly option: ClientOption;
@@ -48,7 +44,25 @@ export class DefaultTransport implements Transport {
             headers: {
                 Connection: trans_option.keepAlive ? 'keep-alive' : 'close',
             },
-        });
+            httpAgent: trans_option.keepAlive
+                ? new HttpAgent({
+                      maxSockets: trans_option.maxConnsPerHost || 100,
+                      maxFreeSockets: trans_option.maxIdleConnsPerHost || 10,
+                      timeout: trans_option.timeout || 60000,
+                      keepAlive: true,
+                      keepAliveMsecs: trans_option.idleConnTimeout || 30000,
+                  })
+                : undefined,
+            httpsAgent: trans_option.keepAlive
+                ? new HttpsAgent({
+                      maxSockets: trans_option.maxConnsPerHost || 100,
+                      maxFreeSockets: trans_option.maxIdleConnsPerHost || 10,
+                      timeout: trans_option.timeout || 60000,
+                      keepAlive: true,
+                      keepAliveMsecs: trans_option.idleConnTimeout || 30000,
+                  })
+                : undefined,
+        } as CreateAxiosDefaults);
 
         // Add retry logic
         axiosRetry(instance, {
@@ -71,26 +85,6 @@ export class DefaultTransport implements Transport {
                     error.code === 'ECONNABORTED';
                 return shouldRetry && currentRetry < maxRetries;
             },
-        });
-
-        instance.defaults.httpAgent = new HttpAgent({
-            maxSockets: trans_option.maxConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxConnsPerHost,
-            maxFreeSockets:
-                trans_option.maxIdleConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxIdleConnsPerHost,
-            timeout: trans_option.timeout || DEFAULT_TRANSPORT_OPTION.timeout,
-            freeSocketTimeout:
-                trans_option.idleConnTimeout || DEFAULT_TRANSPORT_OPTION.idleConnTimeout,
-            keepAlive: trans_option.keepAlive !== undefined ? trans_option.keepAlive : true,
-        });
-
-        instance.defaults.httpsAgent = new HttpsAgent({
-            maxSockets: trans_option.maxConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxConnsPerHost,
-            maxFreeSockets:
-                trans_option.maxIdleConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxIdleConnsPerHost,
-            timeout: trans_option.timeout || DEFAULT_TRANSPORT_OPTION.timeout,
-            freeSocketTimeout:
-                trans_option.idleConnTimeout || DEFAULT_TRANSPORT_OPTION.idleConnTimeout,
-            keepAlive: trans_option.keepAlive !== undefined ? trans_option.keepAlive : true,
         });
 
         // todo: Use user interceptors, avoid defaults.
@@ -241,7 +235,7 @@ export class DefaultTransport implements Transport {
         return config;
     }
 
-    private processLimit(headers: RawAxiosResponseHeaders | AxiosResponseHeaders): RestRateLimit {
+    private processLimit(headers: any): RestRateLimit {
         const limit = parseInt(headers['gw-ratelimit-limit'] || '-1', 10);
         const remaining = parseInt(headers['gw-ratelimit-remaining'] || '-1', 10);
         const reset = parseInt(headers['gw-ratelimit-reset'] || '-1', 10);

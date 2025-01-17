@@ -29,6 +29,9 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.5",
+    "@types/uuid": "^9.0.8",
+    "@types/ws": "^8.5.13",
     "@typescript-eslint/eslint-plugin": "^8.19.0",
     "@typescript-eslint/parser": "^8.19.0",
     "eslint": "^9.17.0",
@@ -49,7 +52,9 @@
     "axios": "^1.7.9",
     "axios-retry": "^4.5.0",
     "class-transformer": "^0.5.1",
+    "queue-typescript": "^1.0.1",
     "reflect-metadata": "^0.2.2",
-    "uuid": "^11.0.5"
+    "uuid": "^11.0.5",
+    "ws": "^8.18.0"
   }
 }
