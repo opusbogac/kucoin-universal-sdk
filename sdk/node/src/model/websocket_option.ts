@@ -67,7 +67,7 @@ export interface WebSocketClientOption {
 /**
  * Default values for WebSocketClientOption
  */
-const DEFAULT_WEBSOCKET_CLIENT_OPTION: WebSocketClientOption = {
+export const DEFAULT_WEBSOCKET_CLIENT_OPTION: WebSocketClientOption = {
     reconnect: true,
     reconnectAttempts: -1,
     reconnectInterval: 5000, // 5 seconds

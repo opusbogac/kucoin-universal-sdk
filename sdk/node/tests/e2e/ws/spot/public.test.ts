@@ -1,12 +1,12 @@
 import {
     ClientOptionBuilder,
-    DefaultClient,
     GlobalApiEndpoint,
     GlobalBrokerApiEndpoint,
     GlobalFuturesApiEndpoint,
-    TransportOptionBuilder,
-} from '../../../../src';
+    WebSocketClientOptionBuilder,
+} from '@model/index';
 import { AllTickersEvent, SpotPublicWS } from '@src/generate/spot/spotpublic';
+import { DefaultClient } from '@api/index';
 
 function delay(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -15,17 +15,13 @@ function delay(ms: number): Promise<void> {
 describe('Auto Test', () => {
     let api: SpotPublicWS;
 
-    beforeAll(() => {
+    beforeAll(async () => {
         const key = process.env.API_KEY || '';
         const secret = process.env.API_SECRET || '';
         const passphrase = process.env.API_PASSPHRASE || '';
 
         // Set specific options, others will fall back to default values
-        const httpTransportOption = new TransportOptionBuilder()
-            .setKeepAlive(true)
-            .setMaxConnsPerHost(10)
-            .setMaxIdleConns(10)
-            .build();
+        const websocketClientOption = new WebSocketClientOptionBuilder().build();
 
         // Create a client using the specified options
         const clientOption = new ClientOptionBuilder()
@@ -35,7 +31,7 @@ describe('Auto Test', () => {
             .setSpotEndpoint(GlobalApiEndpoint)
             .setFuturesEndpoint(GlobalFuturesApiEndpoint)
             .setBrokerEndpoint(GlobalBrokerApiEndpoint)
-            .setTransportOption(httpTransportOption)
+            .setWebSocketClientOption(websocketClientOption)
             .build();
 
         const client = new DefaultClient(clientOption);
@@ -43,14 +39,14 @@ describe('Auto Test', () => {
         // Get the Restful Service
         const wsService = client.wsService();
         api = wsService.newSpotPublicWS();
-        api.start();
+        await api.start();
     });
 
     afterAll(() => {
         api.stop();
     });
 
-    test('getAccountInfo request test', () => {
+    test('allTickers test', () => {
         let subid = api.allTickers((topic: string, subject: string, data: AllTickersEvent) => {
             expect(data.bestAsk).toEqual(expect.anything());
             expect(data.bestAskSize).toEqual(expect.anything());
@@ -65,7 +61,7 @@ describe('Auto Test', () => {
 
         return subid
             .then(async (id) => {
-                await delay(1000);
+                await delay(5000);
                 return id;
             })
             .then((id) => {

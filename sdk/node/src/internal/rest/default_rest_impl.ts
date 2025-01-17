@@ -10,6 +10,7 @@ import { VIPLendingService, VIPLendingServiceImpl } from '@generate/service/vipl
 import { ClientOption } from '@model/client_option';
 import { SdkVersion } from '@generate/version';
 import { DefaultTransport } from '@internal/infra/default_transport';
+import { DEFAULT_TRANSPORT_OPTION } from '@src/model';
 
 export class DefaultKucoinRestAPIImpl implements KucoinRestService {
     private readonly accountService: AccountService;
@@ -22,8 +23,12 @@ export class DefaultKucoinRestAPIImpl implements KucoinRestService {
     private readonly vipLendingService: VIPLendingService;
 
     constructor(options: ClientOption) {
-        if (!options || !options.transportOption) {
-            throw new Error('No transport option provided');
+        if (!options) {
+            throw new Error('No option provided');
+        }
+
+        if (!options.transportOption) {
+            options.transportOption = DEFAULT_TRANSPORT_OPTION;
         }
 
         console.info(`SDK version: ${SdkVersion}`);
