@@ -14,7 +14,7 @@ export class WriteMsg {
     public ts: number;
     public timeout: number;
     public exception: Error | null;
-    private eventEmitter: EventEmitter;
+    public eventEmitter: EventEmitter;
 
     constructor(msg: WsMessage, timeout: number) {
         this.msg = msg;
@@ -24,28 +24,9 @@ export class WriteMsg {
         this.eventEmitter = new EventEmitter();
     }
 
-    // TODO:
     setException(exception: Error): void {
         this.exception = exception;
-        this.eventEmitter.emit('complete');
-    }
-
-    // TODO:
-    waitForCompletion(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const timeout = setTimeout(() => {
-                reject(new Error('Operation timed out'));
-            }, this.timeout);
-
-            this.eventEmitter.once('complete', () => {
-                clearTimeout(timeout);
-                if (this.exception) {
-                    reject(this.exception);
-                } else {
-                    resolve();
-                }
-            });
-        });
+        this.eventEmitter.emit('error', exception);
     }
 
     complete(): void {
@@ -111,22 +92,23 @@ export class WebSocketClient {
     }
 
     // # Start the WebSocket client
-    async start(): Promise<void> {
+    start(): Promise<void> {
         if (this.connected) {
             console.warn("WebSocket client is already connected.");
-            return;
+            return Promise.resolve();
         }
 
-        try {
-            await this.dial();
-            this.connected = true;
-            this.notifyEvent(WebSocketEvent.EventConnected, "");
-            this.run();
-            this.reconnect();
-        } catch (err) {
-            console.error("Failed to start WebSocket client:", err);
-            throw err;
-        }
+        return this.dial()
+            .then(() => {
+                this.connected = true;
+                this.notifyEvent(WebSocketEvent.EventConnected, "");
+                this.run();
+                this.reconnect();
+            })
+            .catch(err => {
+                console.error("Failed to start WebSocket client:", err);
+                throw err;
+            });
     }
 
     // Start the message processing and keep-alive
@@ -142,52 +124,73 @@ export class WebSocketClient {
     }
 
     // Stop the WebSocket client
-    async stop(): Promise<void> {
-        this.notifyEvent(WebSocketEvent.EventClientShutdown, "");
+    public async stop(): Promise<void> {
+        // Set shutdown flag to prevent reconnection attempts
         this.shutdown = true;
-        await this.close();
+        this.reconnectClosed = true;
+        
+        // Clear intervals
+        if (this.keepAliveInterval) {
+            clearInterval(this.keepAliveInterval);
+            this.keepAliveInterval = null;
+        }
+        if (this.writeInterval) {
+            clearInterval(this.writeInterval);
+            this.writeInterval = null;
+        }
+
+        // Wait for any pending messages to be processed
+        await new Promise<void>((resolve) => {
+            setTimeout(async () => {
+                try {
+                    await this.close();
+                } catch (error) {
+                    console.error('Error during WebSocket close:', error);
+                }
+                resolve();
+            }, 100);
+        });
     }
 
     // dial connects to the WebSocket server
-    private async dial(): Promise<void> {
-        try {
-            // get token
-            const tokenInfos = await this.tokenProvider.getToken();
-            this.tokenInfo = this.randomEndpoint(tokenInfos);
-            
-            // create WebSocket connection
-            const queryParams = new URLSearchParams({
-                connectId: Date.now().toString(),
-                token: this.tokenInfo.token
-            });
-
-            //  create WebSocket connection
-            const wsUrl = `${this.tokenInfo.endpoint}?${queryParams.toString()}`;
-            this.conn = new WebSocket(wsUrl);
-
-            await new Promise<void>((resolve, reject) => {
-                if (!this.conn) return reject(new Error('No connection'));
-
-                this.conn.on('open', () => {
-                    this.onOpen();
-                    resolve();
+    private dial(): Promise<void> {
+        return this.tokenProvider.getToken()
+            .then(tokenInfos => {
+                this.tokenInfo = this.randomEndpoint(tokenInfos);
+                
+                // create WebSocket connection
+                const queryParams = new URLSearchParams({
+                    connectId: Date.now().toString(),
+                    token: this.tokenInfo.token
                 });
 
-                this.conn.on('message', (data) => this.onMessage(data.toString()));
-                this.conn.on('error', (error) => this.onError(error));
-                this.conn.on('close', (code, reason) => this.onClose(code, reason.toString()));
+                // create WebSocket connection
+                const wsUrl = `${this.tokenInfo.endpoint}?${queryParams.toString()}`;
+                this.conn = new WebSocket(wsUrl);
 
-                setTimeout(() => {
-                    if (!this.welcomeReceived) {
-                        reject(new Error("Did not receive welcome message"));
-                    }
-                }, 5000);
+                return new Promise<void>((resolve, reject) => {
+                    if (!this.conn) return reject(new Error('No connection'));
+
+                    this.conn.on('open', () => {
+                        this.onOpen();
+                        resolve();
+                    });
+
+                    this.conn.on('message', (data) => this.onMessage(data.toString()));
+                    this.conn.on('error', (error) => this.onError(error));
+                    this.conn.on('close', (code, reason) => this.onClose(code, reason.toString()));
+
+                    setTimeout(() => {
+                        if (!this.welcomeReceived) {
+                            reject(new Error("Did not receive welcome message"));
+                        }
+                    }, 5000);
+                });
+            })
+            .catch(err => {
+                console.error("Failed to dial WebSocket server:", err);
+                throw err;
             });
-        } catch (err) {
-            this.connected = false;
-            console.error("Failed to connect or validate welcome message:", err);
-            throw err;
-        }
     }
 
     // open callback
@@ -204,15 +207,40 @@ export class WebSocketClient {
 
     // close callback
     private onClose(code: number, reason: string): void {
+        console.log(`WebSocket closed with status code ${code}, message: ${reason}`);
         this.connected = false;
         this.disconnected = true;
-        console.log(`WebSocket closed with status code ${code}, message: ${reason}`);
+
+        // Clear any pending messages and intervals
+        this.clearMessageQueues();
+        if (this.keepAliveInterval) {
+            clearInterval(this.keepAliveInterval);
+            this.keepAliveInterval = null;
+        }
+        if (this.writeInterval) {
+            clearInterval(this.writeInterval);
+            this.writeInterval = null;
+        }
+
+        // Notify event
+        this.notifyEvent(WebSocketEvent.EventDisconnected, reason);
     }
 
     // receive message callback
     private onMessage(message: string): void {
-        console.debug("Received message:", message);
-        const m = WsMessage.fromJson(message);
+        if (this.shutdown || this.closed) {
+            console.debug("Ignoring message as client is shutting down or closed");
+            return;
+        }
+
+        console.debug("onMessage Received type:message    message:" + message);
+        let m: WsMessage;
+        try {
+            m = JSON.parse(message);
+        } catch (e) {
+            console.error("Failed to parse message:", e);
+            return;
+        }
 
         switch (m.type) {
             case MessageType.WelcomeMessage:
@@ -221,13 +249,15 @@ export class WebSocketClient {
                 break;
 
             case MessageType.Message:
-                this.notifyEvent(WebSocketEvent.EventMessageReceived, "");
-                // queue message
-                if (this.readMsg.length < this.readMsgMaxSize) {
-                    this.readMsg.enqueue(m);
-                } else {
-                    this.notifyEvent(WebSocketEvent.EventReadBufferFull, "");
-                    console.warn("Read buffer full");
+                if (!this.shutdown && !this.closed) {
+                    this.notifyEvent(WebSocketEvent.EventMessageReceived, "");
+                    // queue message
+                    if (this.readMsg.length < this.readMsgMaxSize) {
+                        this.readMsg.enqueue(m);
+                    } else {
+                        this.notifyEvent(WebSocketEvent.EventReadBufferFull, "");
+                        console.warn("Read buffer full");
+                    }
                 }
                 break;
 
@@ -247,71 +277,100 @@ export class WebSocketClient {
         }
     }
 
-    // TODO: 
+    // Handle acknowledgment events (pong, ack, error)
     private handleAckEvent(m: WsMessage): void {
-        const data = m.id ? this.ackEvents.get(m.id) : undefined;
-        if (!data) {
-            console.warn("Cannot find ack event, id:", m.id);
+        if (!m.id) return;
+
+        const data = this.ackEvents.get(m.id);
+        if (!data) return;
+
+        this.ackEvents.delete(m.id);
+
+        if (m.type === MessageType.PongMessage) {
+            console.debug('[HandleAckEvent] Handling pong message');
+            this.metric.pingSuccess++;
+            data.complete();
             return;
         }
 
-        if (m.id) {
-            this.ackEvents.delete(m.id);
-        }
         if (m.type === MessageType.ErrorMessage) {
             const error = m.data;
             this.notifyEvent(WebSocketEvent.EventErrorReceived, error);
             data.setException(new Error(error));
+            this.metric.pingErr++;
         } else {
             data.complete();
         }
     }
 
-    // read message
-    read(): WsMessage[] {
-        return this.readMsg.toArray();
+    /**
+     * Read a single message from the queue and remove it
+     * @returns The first message in the queue, or undefined if queue is empty
+     */
+    read(): WsMessage | undefined {
+        if (this.readMsg.length === 0) {
+            return undefined;
+        }
+        return this.readMsg.dequeue();
     }
 
     // write message
-    async write(ms: WsMessage, timeout: number): Promise<void> {
-        console.log("Write message:", ms);
-        if (!this.connected) {
-            throw new Error("Not connected");
-        }
+    write(ms: WsMessage, timeout: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            console.log("Write message:", ms);
+            if (!this.connected) {
+                reject(new Error("Not connected"));
+                return;
+            }
 
-        const msg = new WriteMsg(ms, timeout);
-        if (ms.id) {
-            this.ackEvents.set(ms.id, msg);
-        } else {
-            throw new Error("Message ID is undefined");
-        }
+            const msg = new WriteMsg(ms, timeout);
+            if (!ms.id) {
+                reject(new Error("Message ID is undefined"));
+                return;
+            }
 
-        try {
             // write message to queue and check if it reaches the max size
             if (this.writeMsg.length < this.writeMsgMaxSize) {
                 this.writeMsg.enqueue(msg);
+                this.ackEvents.set(ms.id, msg);
+                
+                // Listen for message completion
+                msg.eventEmitter.once('complete', () => {
+                    resolve();
+                });
+
+                msg.eventEmitter.once('error', (error) => {
+                    reject(error);
+                });
+
+                // Trigger message sending
+                setImmediate(() => this.writeMessage());
             } else {
-                throw new Error("Write buffer is full");
+                reject(new Error("Write buffer is full"));
             }
-            await msg.waitForCompletion();
-        } catch (e) {
-            this.ackEvents.delete(ms.id);
-            throw e;
-        }
+        });
     }
 
-    // send message TODO:
+    // send message 
     private writeMessage(): void {
         if (this.closed || !this.conn) return;
 
-        const msg = this.writeMsg.dequeue();
-        if (msg) {
+        // Process all messages in the queue
+        while (this.writeMsg.length > 0) {
+            const msg = this.writeMsg.dequeue();
+            if (!msg) break;
+
             try {
                 // Send the complete message as JSON string
                 this.conn.send(JSON.stringify(msg.msg));
                 console.debug("Message sent:", msg.msg);
                 msg.ts = Date.now();
-                msg.complete();
+                
+                // Only complete non-ping messages immediately
+                // Ping messages will be completed when we receive the pong response
+                if (msg.msg.type !== MessageType.PingMessage) {
+                    msg.complete();
+                }
             } catch (e) {
                 console.error("Failed to send message:", e);
                 if (msg.msg.id) {
@@ -323,23 +382,34 @@ export class WebSocketClient {
     }
 
     // keep-alive
-    private async keepAlive(): Promise<void> {
-        if (!this.tokenInfo || this.shutdown || this.closed) return;
+    private keepAlive(): void {
+        console.debug('[KeepAlive] Start checking...');
+        
+        if (!this.tokenInfo || this.shutdown || this.closed) {
+            console.debug('[KeepAlive] Skip - tokenInfo/shutdown/closed check failed');
+            return;
+        }
 
         const interval = this.tokenInfo.pingInterval / 1000;
         const timeout = this.tokenInfo.pingTimeout / 1000;
         const currentTime = Date.now() / 1000;
+        const timeSinceLastPing = currentTime - (this.lastPingTime || 0);
 
-        if (currentTime - (this.lastPingTime || 0) >= interval) {
+        console.debug(`[KeepAlive] Current: ${currentTime}, LastPing: ${this.lastPingTime}, Interval: ${interval}, TimeSince: ${timeSinceLastPing}`);
+
+        if (timeSinceLastPing >= interval) {
+            console.debug('[KeepAlive] Sending ping message...');
             const pingMsg = this.newPingMessage();
             try {
-                await this.write(pingMsg, timeout);
-                this.metric.pingSuccess++;
+                this.write(pingMsg, timeout).catch((e) => console.error("[KeepAlive] Heartbeat ping error:", e));
+                console.debug('[KeepAlive] Ping sent');
             } catch (e) {
-                console.error("Heartbeat ping error:", e);
+                console.error("[KeepAlive] Heartbeat ping error:", e);
                 this.metric.pingErr++;
             }
             this.lastPingTime = currentTime;
+        } else {
+            console.debug('[KeepAlive] Skip - interval not reached');
         }
     }
 
@@ -388,47 +458,65 @@ export class WebSocketClient {
         });
     }
 
-    // TODO:
+    // Clear all message queues and cleanup resources
     private clearMessageQueues(): void {
-        // clear message queues
+        // Clear read message queue
         while (this.readMsg.length > 0) {
             this.readMsg.dequeue();
         }
-
+        
+        // Clear write message queue and reject pending promises
         while (this.writeMsg.length > 0) {
-            this.writeMsg.dequeue();
+            const writeMsg = this.writeMsg.dequeue();
+            if (writeMsg) {
+                writeMsg.setException(new Error('WebSocket connection closed'));
+                writeMsg.complete();
+            }
         }
+        
+        // Clear ack events
+        this.ackEvents.forEach((writeMsg) => {
+            writeMsg.setException(new Error('WebSocket connection closed'));
+            writeMsg.complete();
+        });
+        this.ackEvents.clear();
     }
 
-    // close the WebSocket connection
-    // TODO: need to confirm the logic of closing the connection, and release the resources that have been opened
-    private async close(): Promise<void> {
-        if (this.connected) {
-            this.shutdown = true;
-            this.disconnected = true;
-            this.reconnectClosed = true;
-            this.connected = false;
-
-            this.ackEvents.forEach(msg => msg.complete());
-            this.ackEvents.clear();
-            this.clearMessageQueues();
-
-            if (this.conn) {
-                this.conn.close();
-                this.conn = null;
-                this.closed = true;
-                console.log("WebSocket connection closed.");
+    // close the WebSocket connection and clean up resources
+    close(): Promise<void> {
+        return new Promise<void>((resolve) => {
+            // Clear intervals
+            if (this.keepAliveInterval) {
+                clearInterval(this.keepAliveInterval);
+                this.keepAliveInterval = null;
+            }
+            if (this.writeInterval) {
+                clearInterval(this.writeInterval);
+                this.writeInterval = null;
             }
 
-            if (this.keepAliveInterval) clearInterval(this.keepAliveInterval);
-            if (this.writeInterval) clearInterval(this.writeInterval);
+            // Clear message queues
+            this.clearMessageQueues();
 
+            // Close WebSocket connection
+            if (this.conn) {
+                // Listen for close event before closing
+                this.conn.once('close', () => {
+                    this.conn = null;
+                    this.connected = false;
+                    this.closed = true;
+                    resolve();
+                });
 
-            console.log("Closing token provider...");
-            this.tokenProvider.close();
-            this.notifyEvent(WebSocketEvent.EventDisconnected, "");
-            console.log("WebSocket client closed.");
-        }
+                // Close the connection
+                this.conn.close();
+            } else {
+                // If no connection exists, resolve immediately
+                this.connected = false;
+                this.closed = true;
+                resolve();
+            }
+        });
     }
 
     // TODO:
