@@ -8,7 +8,6 @@ import { WebSocketClientOption } from '../../model/websocket_option';
 import { WebSocketEvent } from '../../model/websocket_option';
 import { WsToken, WsTokenProvider } from '../interfaces/websocket';
 
-
 export class WriteMsg {
     public msg: WsMessage;
     public ts: number;
@@ -62,7 +61,6 @@ export class WebSocketClient {
     private eventEmitter: EventEmitter;
     private lastPingTime: number | null;
 
-
     constructor(tokenProvider: WsTokenProvider, options: WebSocketClientOption) {
         this.options = options;
         this.conn = null;
@@ -94,26 +92,26 @@ export class WebSocketClient {
     // # Start the WebSocket client
     start(): Promise<void> {
         if (this.connected) {
-            console.warn("WebSocket client is already connected.");
+            console.warn('WebSocket client is already connected.');
             return Promise.resolve();
         }
 
         return this.dial()
             .then(() => {
                 this.connected = true;
-                this.notifyEvent(WebSocketEvent.EventConnected, "");
+                this.notifyEvent(WebSocketEvent.EventConnected, '');
                 this.run();
                 this.reconnect();
             })
-            .catch(err => {
-                console.error("Failed to start WebSocket client:", err);
+            .catch((err) => {
+                console.error('Failed to start WebSocket client:', err);
                 throw err;
             });
     }
 
     // Start the message processing and keep-alive
     private run(): void {
-        // 
+        //
         if (!this.keepAliveInterval) {
             this.keepAliveInterval = setInterval(() => this.keepAlive(), 1000);
         }
@@ -128,7 +126,7 @@ export class WebSocketClient {
         // Set shutdown flag to prevent reconnection attempts
         this.shutdown = true;
         this.reconnectClosed = true;
-        
+
         // Clear intervals
         if (this.keepAliveInterval) {
             clearInterval(this.keepAliveInterval);
@@ -154,14 +152,15 @@ export class WebSocketClient {
 
     // dial connects to the WebSocket server
     private dial(): Promise<void> {
-        return this.tokenProvider.getToken()
-            .then(tokenInfos => {
+        return this.tokenProvider
+            .getToken()
+            .then((tokenInfos) => {
                 this.tokenInfo = this.randomEndpoint(tokenInfos);
-                
+
                 // create WebSocket connection
                 const queryParams = new URLSearchParams({
                     connectId: Date.now().toString(),
-                    token: this.tokenInfo.token
+                    token: this.tokenInfo.token,
                 });
 
                 // create WebSocket connection
@@ -182,26 +181,26 @@ export class WebSocketClient {
 
                     setTimeout(() => {
                         if (!this.welcomeReceived) {
-                            reject(new Error("Did not receive welcome message"));
+                            reject(new Error('Did not receive welcome message'));
                         }
                     }, 5000);
                 });
             })
-            .catch(err => {
-                console.error("Failed to dial WebSocket server:", err);
+            .catch((err) => {
+                console.error('Failed to dial WebSocket server:', err);
                 throw err;
             });
     }
 
     // open callback
     private onOpen(): void {
-        console.log("WebSocket connection opened.");
-        this.notifyEvent(WebSocketEvent.EventConnected, "WebSocket connection opened.");
+        console.log('WebSocket connection opened.');
+        this.notifyEvent(WebSocketEvent.EventConnected, 'WebSocket connection opened.');
     }
 
     // error callback
     private onError(error: Error): void {
-        console.error("WebSocket error:", error);
+        console.error('WebSocket error:', error);
         this.disconnected = true;
     }
 
@@ -229,41 +228,41 @@ export class WebSocketClient {
     // receive message callback
     private onMessage(message: string): void {
         if (this.shutdown || this.closed) {
-            console.debug("Ignoring message as client is shutting down or closed");
+            console.debug('Ignoring message as client is shutting down or closed');
             return;
         }
 
-        console.debug("onMessage Received type:message    message:" + message);
+        console.debug('onMessage Received type:message    message:' + message);
         let m: WsMessage;
         try {
             m = JSON.parse(message);
         } catch (e) {
-            console.error("Failed to parse message:", e);
+            console.error('Failed to parse message:', e);
             return;
         }
 
         switch (m.type) {
             case MessageType.WelcomeMessage:
                 this.welcomeReceived = true;
-                console.log("Welcome message received.");
+                console.log('Welcome message received.');
                 break;
 
             case MessageType.Message:
                 if (!this.shutdown && !this.closed) {
-                    this.notifyEvent(WebSocketEvent.EventMessageReceived, "");
+                    this.notifyEvent(WebSocketEvent.EventMessageReceived, '');
                     // queue message
                     if (this.readMsg.length < this.readMsgMaxSize) {
                         this.readMsg.enqueue(m);
                     } else {
-                        this.notifyEvent(WebSocketEvent.EventReadBufferFull, "");
-                        console.warn("Read buffer full");
+                        this.notifyEvent(WebSocketEvent.EventReadBufferFull, '');
+                        console.warn('Read buffer full');
                     }
                 }
                 break;
 
             case MessageType.PongMessage:
-                this.notifyEvent(WebSocketEvent.EventPongReceived, "");
-                console.debug("PONG received");
+                this.notifyEvent(WebSocketEvent.EventPongReceived, '');
+                console.debug('PONG received');
                 this.handleAckEvent(m);
                 break;
 
@@ -273,7 +272,7 @@ export class WebSocketClient {
                 break;
 
             default:
-                console.warn("Unknown message type:", m.type);
+                console.warn('Unknown message type:', m.type);
         }
     }
 
@@ -317,15 +316,15 @@ export class WebSocketClient {
     // write message
     write(ms: WsMessage, timeout: number): Promise<void> {
         return new Promise((resolve, reject) => {
-            console.log("Write message:", ms);
+            console.log('Write message:', ms);
             if (!this.connected) {
-                reject(new Error("Not connected"));
+                reject(new Error('Not connected'));
                 return;
             }
 
             const msg = new WriteMsg(ms, timeout);
             if (!ms.id) {
-                reject(new Error("Message ID is undefined"));
+                reject(new Error('Message ID is undefined'));
                 return;
             }
 
@@ -333,7 +332,7 @@ export class WebSocketClient {
             if (this.writeMsg.length < this.writeMsgMaxSize) {
                 this.writeMsg.enqueue(msg);
                 this.ackEvents.set(ms.id, msg);
-                
+
                 // Listen for message completion
                 msg.eventEmitter.once('complete', () => {
                     resolve();
@@ -346,12 +345,12 @@ export class WebSocketClient {
                 // Trigger message sending
                 setImmediate(() => this.writeMessage());
             } else {
-                reject(new Error("Write buffer is full"));
+                reject(new Error('Write buffer is full'));
             }
         });
     }
 
-    // send message 
+    // send message
     private writeMessage(): void {
         if (this.closed || !this.conn) return;
 
@@ -363,16 +362,16 @@ export class WebSocketClient {
             try {
                 // Send the complete message as JSON string
                 this.conn.send(JSON.stringify(msg.msg));
-                console.debug("Message sent:", msg.msg);
+                console.debug('Message sent:', msg.msg);
                 msg.ts = Date.now();
-                
+
                 // Only complete non-ping messages immediately
                 // Ping messages will be completed when we receive the pong response
                 if (msg.msg.type !== MessageType.PingMessage) {
                     msg.complete();
                 }
             } catch (e) {
-                console.error("Failed to send message:", e);
+                console.error('Failed to send message:', e);
                 if (msg.msg.id) {
                     this.ackEvents.delete(msg.msg.id);
                 }
@@ -384,7 +383,7 @@ export class WebSocketClient {
     // keep-alive
     private keepAlive(): void {
         console.debug('[KeepAlive] Start checking...');
-        
+
         if (!this.tokenInfo || this.shutdown || this.closed) {
             console.debug('[KeepAlive] Skip - tokenInfo/shutdown/closed check failed');
             return;
@@ -395,16 +394,20 @@ export class WebSocketClient {
         const currentTime = Date.now() / 1000;
         const timeSinceLastPing = currentTime - (this.lastPingTime || 0);
 
-        console.debug(`[KeepAlive] Current: ${currentTime}, LastPing: ${this.lastPingTime}, Interval: ${interval}, TimeSince: ${timeSinceLastPing}`);
+        console.debug(
+            `[KeepAlive] Current: ${currentTime}, LastPing: ${this.lastPingTime}, Interval: ${interval}, TimeSince: ${timeSinceLastPing}`,
+        );
 
         if (timeSinceLastPing >= interval) {
             console.debug('[KeepAlive] Sending ping message...');
             const pingMsg = this.newPingMessage();
             try {
-                this.write(pingMsg, timeout).catch((e) => console.error("[KeepAlive] Heartbeat ping error:", e));
+                this.write(pingMsg, timeout).catch((e) =>
+                    console.error('[KeepAlive] Heartbeat ping error:', e),
+                );
                 console.debug('[KeepAlive] Ping sent');
             } catch (e) {
-                console.error("[KeepAlive] Heartbeat ping error:", e);
+                console.error('[KeepAlive] Heartbeat ping error:', e);
                 this.metric.pingErr++;
             }
             this.lastPingTime = currentTime;
@@ -417,23 +420,30 @@ export class WebSocketClient {
         const reconnectLoop = async () => {
             while (!this.reconnectClosed) {
                 if (this.disconnected && !this.shutdown) {
-                    console.log("Broken WebSocket connection, starting reconnection");
+                    console.log('Broken WebSocket connection, starting reconnection');
                     await this.close();
-                    this.notifyEvent(WebSocketEvent.EventTryReconnect, "");
+                    this.notifyEvent(WebSocketEvent.EventTryReconnect, '');
                     this.disconnected = false;
 
                     let attempt = 0;
                     let reconnected = false;
 
-                    while (!reconnected && 
-                           this.options.reconnect && 
-                           (this.options.reconnectAttempts === -1 || attempt < this.options.reconnectAttempts)) {
-                        console.log(`Reconnecting in ${this.options.reconnectInterval} seconds... (attempt ${attempt})`);
-                        await new Promise(resolve => setTimeout(resolve, this.options.reconnectInterval * 1000));
+                    while (
+                        !reconnected &&
+                        this.options.reconnect &&
+                        (this.options.reconnectAttempts === -1 ||
+                            attempt < this.options.reconnectAttempts)
+                    ) {
+                        console.log(
+                            `Reconnecting in ${this.options.reconnectInterval} seconds... (attempt ${attempt})`,
+                        );
+                        await new Promise((resolve) =>
+                            setTimeout(resolve, this.options.reconnectInterval * 1000),
+                        );
 
                         try {
                             await this.dial();
-                            this.notifyEvent(WebSocketEvent.EventConnected, "");
+                            this.notifyEvent(WebSocketEvent.EventConnected, '');
                             this.connected = true;
                             this.run();
                             reconnected = true;
@@ -445,16 +455,16 @@ export class WebSocketClient {
                     }
 
                     if (!reconnected) {
-                        this.notifyEvent(WebSocketEvent.EventClientFail, "");
-                        console.error("Failed to reconnect after all attempts.");
+                        this.notifyEvent(WebSocketEvent.EventClientFail, '');
+                        console.error('Failed to reconnect after all attempts.');
                     }
                 }
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                await new Promise((resolve) => setTimeout(resolve, 1000));
             }
         };
 
-        reconnectLoop().catch(err => {
-            console.error("Error in reconnect loop:", err);
+        reconnectLoop().catch((err) => {
+            console.error('Error in reconnect loop:', err);
         });
     }
 
@@ -464,7 +474,7 @@ export class WebSocketClient {
         while (this.readMsg.length > 0) {
             this.readMsg.dequeue();
         }
-        
+
         // Clear write message queue and reject pending promises
         while (this.writeMsg.length > 0) {
             const writeMsg = this.writeMsg.dequeue();
@@ -473,7 +483,7 @@ export class WebSocketClient {
                 writeMsg.complete();
             }
         }
-        
+
         // Clear ack events
         this.ackEvents.forEach((writeMsg) => {
             writeMsg.setException(new Error('WebSocket connection closed'));
@@ -520,25 +530,25 @@ export class WebSocketClient {
     }
 
     // TODO:
-    private notifyEvent(event: WebSocketEvent, msg: string, msg2: string = ""): void {
+    private notifyEvent(event: WebSocketEvent, msg: string, msg2: string = ''): void {
         try {
             if (this.options.eventCallback) {
                 this.options.eventCallback(event, msg);
             }
         } catch (e) {
-            console.error("Exception in notify_event:", e);
+            console.error('Exception in notify_event:', e);
         }
     }
 
-    //  
+    //
     private randomEndpoint(tokens: WsToken[]): WsToken {
         if (!tokens.length) {
-            throw new Error("Tokens list is empty");
+            throw new Error('Tokens list is empty');
         }
         return tokens[Math.floor(Math.random() * tokens.length)];
     }
 
-    // 
+    //
     private newPingMessage(): WsMessage {
         const pingMessage = new WsMessage();
         pingMessage.id = Date.now().toString();

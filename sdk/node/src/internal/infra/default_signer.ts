@@ -18,19 +18,22 @@ export class KcSigner {
         apiPassphrase: string = '',
         brokerName: string = '',
         brokerPartner: string = '',
-        brokerKey: string = ''
+        brokerKey: string = '',
     ) {
         this.apiKey = apiKey;
         this.apiSecret = apiSecret;
-        this.apiPassphrase = apiPassphrase && apiSecret 
-            ? this.sign(Buffer.from(apiPassphrase), Buffer.from(apiSecret))
-            : apiPassphrase;
+        this.apiPassphrase =
+            apiPassphrase && apiSecret
+                ? this.sign(Buffer.from(apiPassphrase), Buffer.from(apiSecret))
+                : apiPassphrase;
         this.brokerName = brokerName;
         this.brokerPartner = brokerPartner;
         this.brokerKey = brokerKey;
 
         if (!apiKey || !apiSecret || !apiPassphrase) {
-            console.warn('[AUTH WARNING] API credentials incomplete. Access is restricted to public interfaces only.');
+            console.warn(
+                '[AUTH WARNING] API credentials incomplete. Access is restricted to public interfaces only.',
+            );
         }
     }
 
@@ -58,7 +61,7 @@ export class KcSigner {
             'KC-API-PASSPHRASE': this.apiPassphrase,
             'KC-API-TIMESTAMP': timestamp,
             'KC-API-SIGN': signature,
-            'KC-API-KEY-VERSION': '2'
+            'KC-API-KEY-VERSION': '2',
         };
 
         return headers;
@@ -75,16 +78,10 @@ export class KcSigner {
 
         const timestamp = Date.now().toString();
         const signatureInput = timestamp + plain;
-        const signature = this.sign(
-            Buffer.from(signatureInput),
-            Buffer.from(this.apiSecret)
-        );
+        const signature = this.sign(Buffer.from(signatureInput), Buffer.from(this.apiSecret));
 
         const partnerInput = timestamp + this.brokerPartner + this.apiKey;
-        const partnerSignature = this.sign(
-            Buffer.from(partnerInput),
-            Buffer.from(this.apiSecret)
-        );
+        const partnerSignature = this.sign(Buffer.from(partnerInput), Buffer.from(this.apiSecret));
 
         const headers = {
             'KC-API-KEY': this.apiKey,
@@ -95,7 +92,7 @@ export class KcSigner {
             'KC-API-PARTNER': this.brokerPartner,
             'KC-BROKER-NAME': this.brokerName,
             'KC-API-PARTNER-VERIFY': 'true',
-            'KC-API-PARTNER-SIGN': partnerSignature
+            'KC-API-PARTNER-SIGN': partnerSignature,
         };
 
         return headers;

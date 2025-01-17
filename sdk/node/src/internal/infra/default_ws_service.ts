@@ -55,7 +55,7 @@ export class DefaultWsService implements WebSocketService {
         this.topicManager = new TopicManager();
         this.client = new WebSocketClient(
             new DefaultWsTokenProvider(this.tokenTransport, domain, privateChannel),
-            this.wsOption
+            this.wsOption,
         );
     }
 
@@ -88,7 +88,10 @@ export class DefaultWsService implements WebSocketService {
                     this.notifyEvent(WebSocketEvent.EventReSubscribeOK, subId);
                 }
             } catch (err) {
-                this.notifyEvent(WebSocketEvent.EventReSubscribeError, `id: ${sub.toId()}, err: ${err}`);
+                this.notifyEvent(
+                    WebSocketEvent.EventReSubscribeError,
+                    `id: ${sub.toId()}, err: ${err}`,
+                );
             }
         }
     }
@@ -110,19 +113,23 @@ export class DefaultWsService implements WebSocketService {
                 // Process all messages in the queue
                 while (true) {
                     const msg = await this.client.read();
-                    if (!msg) break;  // Exit loop when queue is empty
-                    
+                    if (!msg) break; // Exit loop when queue is empty
+
                     if (msg.type !== MessageType.Message) continue;
 
                     const callbackManager = this.topicManager.getCallbackManager(msg.topic);
                     if (!callbackManager) {
-                        console.error(`Cannot find callback manager, id: ${msg.id}, topic: ${msg.topic}`);
+                        console.error(
+                            `Cannot find callback manager, id: ${msg.id}, topic: ${msg.topic}`,
+                        );
                         continue;
                     }
 
                     const cb = callbackManager.get(msg.topic);
                     if (!cb) {
-                        console.error(`Cannot find callback for id: ${msg.id}, topic: ${msg.topic}`);
+                        console.error(
+                            `Cannot find callback for id: ${msg.id}, topic: ${msg.topic}`,
+                        );
                         continue;
                     }
 
@@ -153,20 +160,20 @@ export class DefaultWsService implements WebSocketService {
 
             if (this.client.isReconnected()) {
                 console.info('WebSocket client reconnected, resubscribe...');
-                
+
                 const oldTopicManager = this.topicManager;
                 this.topicManager = new TopicManager();
-                
+
                 // Create an array of promises for all resubscribe operations
                 const resubscribePromises: Promise<void>[] = [];
                 oldTopicManager.range((key, value) => {
                     resubscribePromises.push(this.resubscribe(value));
                     return true;
                 });
-                
+
                 // Wait for all resubscribe operations to complete
                 await Promise.all(resubscribePromises);
-                
+
                 this.client.clearReconnectedFlag();
             }
         }, 1000);
@@ -178,13 +185,14 @@ export class DefaultWsService implements WebSocketService {
      * @throws Error if client initialization fails
      */
     start(): Promise<void> {
-        return this.client.start()
+        return this.client
+            .start()
             .then(() => {
                 this.stopSignal = false;
                 this.startMessageLoop();
                 this.startRecoveryLoop();
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error('Failed to start client:', err);
                 throw err;
             });
@@ -213,17 +221,17 @@ export class DefaultWsService implements WebSocketService {
         // Create subscription info with prefix, args, and callback
         const subInfo = new SubInfo(prefix, args || [], callback);
         const subId = subInfo.toId();
-    
+
         // Get callback manager for the prefix and attempt to add subscription
         const callbackManager = this.topicManager.getCallbackManager(prefix);
         const created = callbackManager.add(subInfo);
-        
+
         // Check if already subscribed
         if (!created) {
             console.info(`Already subscribed: ${subId}`);
             return Promise.reject(new Error('Already subscribed'));
         }
-    
+
         // Create subscription message
         const subEvent = new WsMessage();
         subEvent.id = subId;
@@ -231,10 +239,11 @@ export class DefaultWsService implements WebSocketService {
         subEvent.topic = subInfo.subTopic();
         subEvent.privateChannel = this.privateChannel;
         subEvent.response = true;
-    
-        return this.client.write(subEvent, this.wsOption.writeTimeout)
+
+        return this.client
+            .write(subEvent, this.wsOption.writeTimeout)
             .then(() => subId)
-            .catch(err => {
+            .catch((err) => {
                 // Clean up on failure
                 const callbackManager = this.topicManager.getCallbackManager(subInfo.prefix);
                 callbackManager.remove(subId);
@@ -253,7 +262,7 @@ export class DefaultWsService implements WebSocketService {
             try {
                 const subInfo = SubInfo.fromId(id);
                 const callbackManager = this.topicManager.getCallbackManager(subInfo.prefix);
-    
+
                 const subEvent = new WsMessage();
 
                 subEvent.id = uuidv4().toString();
@@ -261,11 +270,12 @@ export class DefaultWsService implements WebSocketService {
                 subEvent.topic = subInfo.subTopic();
                 subEvent.privateChannel = this.privateChannel;
                 subEvent.response = true;
-    
+
                 callbackManager.remove(id);
                 console.log('[DEBUG] callback removed for id:', id);
-    
-                this.client.write(subEvent, this.wsOption.writeTimeout)
+
+                this.client
+                    .write(subEvent, this.wsOption.writeTimeout)
                     .then(() => {
                         console.log('[DEBUG] unsubscribe message sent successfully');
                         resolve();

@@ -64,14 +64,14 @@ export class TokenResponseImpl implements TokenResponse {
             token: obj.token,
             instanceServers: Array.isArray(obj.instanceServers)
                 ? obj.instanceServers.map((item: any) => ({
-                    token: item.token || '',
-                    pingInterval: item.pingInterval || 0,
-                    endpoint: item.endpoint || '',
-                    protocol: item.protocol || '',
-                    encrypt: item.encrypt || false,
-                    pingTimeout: item.pingTimeout || 0
-                }))
-                : undefined
+                      token: item.token || '',
+                      pingInterval: item.pingInterval || 0,
+                      endpoint: item.endpoint || '',
+                      protocol: item.protocol || '',
+                      encrypt: item.encrypt || false,
+                      pingTimeout: item.pingTimeout || 0,
+                  }))
+                : undefined,
         });
     }
 
@@ -83,7 +83,7 @@ export class TokenResponseImpl implements TokenResponse {
     toJson(): string {
         return JSON.stringify({
             token: this.token,
-            instanceServers: this.instanceServers
+            instanceServers: this.instanceServers,
         });
     }
 
@@ -115,28 +115,28 @@ export class DefaultWsTokenProvider implements WsTokenProvider {
      */
     async getToken(): Promise<WsToken[]> {
         const path = this.isPrivate ? PATH_PRIVATE : PATH_PUBLIC;
-        
+
         try {
             const response = new TokenResponseImpl();
-            const result = await this.transport.call(
+            const result = (await this.transport.call(
                 this.domain,
                 false,
                 'POST',
                 path,
                 null,
                 response,
-                false
-            ) as TokenResponseImpl;
+                false,
+            )) as TokenResponseImpl;
 
             if (result.instanceServers && result.token) {
                 // Assign token to each instance server
-                const token: string = result.token;  
-                result.instanceServers.forEach(server => {
+                const token: string = result.token;
+                result.instanceServers.forEach((server) => {
                     server.token = token;
                 });
                 return result.instanceServers;
             }
-            
+
             return [];
         } catch (error) {
             throw error;

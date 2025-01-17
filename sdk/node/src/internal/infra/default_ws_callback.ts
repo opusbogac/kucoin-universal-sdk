@@ -2,14 +2,14 @@ import { WebSocketMessageCallback } from '../interfaces/websocket';
 import { SubInfo } from '@internal/util/sub';
 
 // callback class, used to store callback function and related info
-// callback: callback function 
+// callback: callback function
 // id:function id
 // topic:topic related
 class Callback {
     constructor(
         public callback: WebSocketMessageCallback,
         public id: string,
-        public topic: string
+        public topic: string,
     ) {}
 }
 
@@ -25,7 +25,7 @@ export class CallbackManager {
         this.topicPrefix = topicPrefix;
     }
 
-    // 
+    //
     isEmpty(): boolean {
         return this.idTopicMapping.size === 0 && this.topicCallbackMapping.size === 0;
     }
@@ -33,16 +33,15 @@ export class CallbackManager {
     // get sub info
     getSubInfo(): SubInfo[] {
         const subInfoList: SubInfo[] = [];
-        
-        
+
         for (const topics of this.idTopicMapping.values()) {
-            // 
+            //
             const info = new SubInfo(this.topicPrefix, [], null);
-            
+
             //
             for (const topic of topics.keys()) {
                 // split topic
-                const parts = topic.split(":");
+                const parts = topic.split(':');
                 // if split into 2 parts, then it's a valid topic
                 if (parts.length === 2) {
                     // add the second part to info.args
@@ -61,7 +60,7 @@ export class CallbackManager {
             // add to list
             subInfoList.push(info);
         }
-        
+
         // return list of sub info
         return subInfoList;
     }
@@ -89,10 +88,7 @@ export class CallbackManager {
             // add topic to map
             topicMap.set(topic, true);
             // add new Callback object to topicCallbackMapping
-            this.topicCallbackMapping.set(
-                topic,
-                new Callback(subInfo.callback!, id, topic)
-            );
+            this.topicCallbackMapping.set(topic, new Callback(subInfo.callback!, id, topic));
         }
 
         // add id and topic map to idTopicMapping
@@ -132,7 +128,7 @@ export class TopicManager {
     getCallbackManager(topic: string): CallbackManager {
         const parts = topic.split(':');
         let prefix = topic;
-        if (parts.length === 2 && parts[1] !== "all") {
+        if (parts.length === 2 && parts[1] !== 'all') {
             prefix = parts[0];
         }
 
