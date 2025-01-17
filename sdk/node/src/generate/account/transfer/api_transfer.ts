@@ -4,8 +4,8 @@ import { Transport } from '@internal/interfaces/transport';
 import { GetFuturesAccountTransferOutLedgerResp } from './model_get_futures_account_transfer_out_ledger_resp';
 import { FuturesAccountTransferInResp } from './model_futures_account_transfer_in_resp';
 import { InnerTransferResp } from './model_inner_transfer_resp';
-import { SubAccountTransferResp } from './model_sub_account_transfer_resp';
 import { InnerTransferReq } from './model_inner_transfer_req';
+import { SubAccountTransferResp } from './model_sub_account_transfer_resp';
 import { FlexTransferResp } from './model_flex_transfer_resp';
 import { SubAccountTransferReq } from './model_sub_account_transfer_req';
 import { GetTransferQuotasResp } from './model_get_transfer_quotas_resp';
@@ -32,6 +32,75 @@ export interface TransferAPI {
      * +---------------------+------------+
      */
     getTransferQuotas(req: GetTransferQuotasReq): Promise<GetTransferQuotasResp>;
+
+    /**
+     * flexTransfer Flex Transfer
+     * Description: This interface can be used for transfers between master and sub accounts and inner transfers
+     * Documentation: https://www.kucoin.com/docs-new/api-3470147
+     * +---------------------+---------------+
+     * | Extra API Info      | Value         |
+     * +---------------------+---------------+
+     * | API-DOMAIN          | SPOT          |
+     * | API-CHANNEL         | PRIVATE       |
+     * | API-PERMISSION      | FLEXTRANSFERS |
+     * | API-RATE-LIMIT-POOL | MANAGEMENT    |
+     * | API-RATE-LIMIT      | 4             |
+     * +---------------------+---------------+
+     */
+    flexTransfer(req: FlexTransferReq): Promise<FlexTransferResp>;
+
+    /**
+     * @deprecated
+     * subAccountTransfer SubAccount Transfer
+     * Description: Funds in the main account, trading account and margin account of a Master Account can be transferred to the main account, trading account, futures account and margin account of its Sub-Account. The futures account of both the Master Account and Sub-Account can only accept funds transferred in from the main account, trading account and margin account and cannot transfer out to these accounts.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470301
+     * +---------------------+------------+
+     * | Extra API Info      | Value      |
+     * +---------------------+------------+
+     * | API-DOMAIN          | SPOT       |
+     * | API-CHANNEL         | PRIVATE    |
+     * | API-PERMISSION      | SPOT       |
+     * | API-RATE-LIMIT-POOL | MANAGEMENT |
+     * | API-RATE-LIMIT      | 30         |
+     * +---------------------+------------+
+     */
+    subAccountTransfer(req: SubAccountTransferReq): Promise<SubAccountTransferResp>;
+
+    /**
+     * @deprecated
+     * innerTransfer Inner Transfer
+     * Description: This API endpoint can be used to transfer funds between accounts internally. Users can transfer funds between their account free of charge.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470302
+     * +---------------------+------------+
+     * | Extra API Info      | Value      |
+     * +---------------------+------------+
+     * | API-DOMAIN          | SPOT       |
+     * | API-CHANNEL         | PRIVATE    |
+     * | API-PERMISSION      | SPOT       |
+     * | API-RATE-LIMIT-POOL | MANAGEMENT |
+     * | API-RATE-LIMIT      | 10         |
+     * +---------------------+------------+
+     */
+    innerTransfer(req: InnerTransferReq): Promise<InnerTransferResp>;
+
+    /**
+     * @deprecated
+     * futuresAccountTransferOut Futures Account Transfer Out
+     * Description: The amount to be transferred will be deducted from the KuCoin Futures Account. Please ensure that you have sufficient funds in your KuCoin Futures Account, or the transfer will fail.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470303
+     * +---------------------+------------+
+     * | Extra API Info      | Value      |
+     * +---------------------+------------+
+     * | API-DOMAIN          | FUTURES    |
+     * | API-CHANNEL         | PRIVATE    |
+     * | API-PERMISSION      | FUTURES    |
+     * | API-RATE-LIMIT-POOL | MANAGEMENT |
+     * | API-RATE-LIMIT      | 20         |
+     * +---------------------+------------+
+     */
+    futuresAccountTransferOut(
+        req: FuturesAccountTransferOutReq,
+    ): Promise<FuturesAccountTransferOutResp>;
 
     /**
      * @deprecated
@@ -70,75 +139,6 @@ export interface TransferAPI {
     getFuturesAccountTransferOutLedger(
         req: GetFuturesAccountTransferOutLedgerReq,
     ): Promise<GetFuturesAccountTransferOutLedgerResp>;
-
-    /**
-     * @deprecated
-     * innerTransfer Inner Transfer
-     * Description: This API endpoint can be used to transfer funds between accounts internally. Users can transfer funds between their account free of charge.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470302
-     * +---------------------+------------+
-     * | Extra API Info      | Value      |
-     * +---------------------+------------+
-     * | API-DOMAIN          | SPOT       |
-     * | API-CHANNEL         | PRIVATE    |
-     * | API-PERMISSION      | SPOT       |
-     * | API-RATE-LIMIT-POOL | MANAGEMENT |
-     * | API-RATE-LIMIT      | 10         |
-     * +---------------------+------------+
-     */
-    innerTransfer(req: InnerTransferReq): Promise<InnerTransferResp>;
-
-    /**
-     * @deprecated
-     * subAccountTransfer SubAccount Transfer
-     * Description: Funds in the main account, trading account and margin account of a Master Account can be transferred to the main account, trading account, futures account and margin account of its Sub-Account. The futures account of both the Master Account and Sub-Account can only accept funds transferred in from the main account, trading account and margin account and cannot transfer out to these accounts.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470301
-     * +---------------------+------------+
-     * | Extra API Info      | Value      |
-     * +---------------------+------------+
-     * | API-DOMAIN          | SPOT       |
-     * | API-CHANNEL         | PRIVATE    |
-     * | API-PERMISSION      | SPOT       |
-     * | API-RATE-LIMIT-POOL | MANAGEMENT |
-     * | API-RATE-LIMIT      | 30         |
-     * +---------------------+------------+
-     */
-    subAccountTransfer(req: SubAccountTransferReq): Promise<SubAccountTransferResp>;
-
-    /**
-     * flexTransfer Flex Transfer
-     * Description: This interface can be used for transfers between master and sub accounts and inner transfers
-     * Documentation: https://www.kucoin.com/docs-new/api-3470147
-     * +---------------------+---------------+
-     * | Extra API Info      | Value         |
-     * +---------------------+---------------+
-     * | API-DOMAIN          | SPOT          |
-     * | API-CHANNEL         | PRIVATE       |
-     * | API-PERMISSION      | FLEXTRANSFERS |
-     * | API-RATE-LIMIT-POOL | MANAGEMENT    |
-     * | API-RATE-LIMIT      | 4             |
-     * +---------------------+---------------+
-     */
-    flexTransfer(req: FlexTransferReq): Promise<FlexTransferResp>;
-
-    /**
-     * @deprecated
-     * futuresAccountTransferOut Futures Account Transfer Out
-     * Description: The amount to be transferred will be deducted from the KuCoin Futures Account. Please ensure that you have sufficient funds in your KuCoin Futures Account, or the transfer will fail.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470303
-     * +---------------------+------------+
-     * | Extra API Info      | Value      |
-     * +---------------------+------------+
-     * | API-DOMAIN          | FUTURES    |
-     * | API-CHANNEL         | PRIVATE    |
-     * | API-PERMISSION      | FUTURES    |
-     * | API-RATE-LIMIT-POOL | MANAGEMENT |
-     * | API-RATE-LIMIT      | 20         |
-     * +---------------------+------------+
-     */
-    futuresAccountTransferOut(
-        req: FuturesAccountTransferOutReq,
-    ): Promise<FuturesAccountTransferOutResp>;
 }
 
 export class TransferAPIImpl implements TransferAPI {
@@ -152,6 +152,56 @@ export class TransferAPIImpl implements TransferAPI {
             '/api/v1/accounts/transferable',
             req,
             new GetTransferQuotasResp(),
+            false,
+        );
+    }
+
+    flexTransfer(req: FlexTransferReq): Promise<FlexTransferResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'POST',
+            '/api/v3/accounts/universal-transfer',
+            req,
+            new FlexTransferResp(),
+            false,
+        );
+    }
+
+    subAccountTransfer(req: SubAccountTransferReq): Promise<SubAccountTransferResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'POST',
+            '/api/v2/accounts/sub-transfer',
+            req,
+            new SubAccountTransferResp(),
+            false,
+        );
+    }
+
+    innerTransfer(req: InnerTransferReq): Promise<InnerTransferResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'POST',
+            '/api/v2/accounts/inner-transfer',
+            req,
+            new InnerTransferResp(),
+            false,
+        );
+    }
+
+    futuresAccountTransferOut(
+        req: FuturesAccountTransferOutReq,
+    ): Promise<FuturesAccountTransferOutResp> {
+        return this.transport.call(
+            'futures',
+            false,
+            'POST',
+            '/api/v3/transfer-out',
+            req,
+            new FuturesAccountTransferOutResp(),
             false,
         );
     }
@@ -180,56 +230,6 @@ export class TransferAPIImpl implements TransferAPI {
             '/api/v1/transfer-list',
             req,
             new GetFuturesAccountTransferOutLedgerResp(),
-            false,
-        );
-    }
-
-    innerTransfer(req: InnerTransferReq): Promise<InnerTransferResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'POST',
-            '/api/v2/accounts/inner-transfer',
-            req,
-            new InnerTransferResp(),
-            false,
-        );
-    }
-
-    subAccountTransfer(req: SubAccountTransferReq): Promise<SubAccountTransferResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'POST',
-            '/api/v2/accounts/sub-transfer',
-            req,
-            new SubAccountTransferResp(),
-            false,
-        );
-    }
-
-    flexTransfer(req: FlexTransferReq): Promise<FlexTransferResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'POST',
-            '/api/v3/accounts/universal-transfer',
-            req,
-            new FlexTransferResp(),
-            false,
-        );
-    }
-
-    futuresAccountTransferOut(
-        req: FuturesAccountTransferOutReq,
-    ): Promise<FuturesAccountTransferOutResp> {
-        return this.transport.call(
-            'futures',
-            false,
-            'POST',
-            '/api/v3/transfer-out',
-            req,
-            new FuturesAccountTransferOutResp(),
             false,
         );
     }

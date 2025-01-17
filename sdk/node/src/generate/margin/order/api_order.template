@@ -5,74 +5,6 @@ describe('Auto Test', ()=> {
     beforeAll(()=> {
         api = ??
     });
-    test('addOrderV1 request test', ()=> {
-    /**
-    * addOrderV1
-    * Add Order - V1
-    * /api/v1/margin/order
-    */
-    let builder = AddOrderV1Req.builder();
-    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setCancelAfter(?).setFunds(?).setAutoBorrow(?).setAutoRepay(?).setMarginModel(?);
-    let req = builder.build();
-    let resp = api.addOrderV1(req);
-    return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
-        expect(result.loanApplyId).toEqual(expect.anything());
-        expect(result.borrowSize).toEqual(expect.anything());
-        expect(result.clientOid).toEqual(expect.anything());
-    });
-    })
-
-    test('addOrderTestV1 request test', ()=> {
-    /**
-    * addOrderTestV1
-    * Add Order Test - V1
-    * /api/v1/margin/order/test
-    */
-    let builder = AddOrderTestV1Req.builder();
-    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setCancelAfter(?).setFunds(?).setAutoBorrow(?).setAutoRepay(?).setMarginModel(?);
-    let req = builder.build();
-    let resp = api.addOrderTestV1(req);
-    return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
-        expect(result.loanApplyId).toEqual(expect.anything());
-        expect(result.borrowSize).toEqual(expect.anything());
-        expect(result.clientOid).toEqual(expect.anything());
-    });
-    })
-
-    test('getTradeHistory request test', ()=> {
-    /**
-    * getTradeHistory
-    * Get Trade History
-    * /api/v3/hf/margin/fills
-    */
-    let builder = GetTradeHistoryReq.builder();
-    builder.setSymbol(?).setTradeType(?).setOrderId(?).setSide(?).setType(?).setLastId(?).setLimit(?).setStartAt(?).setEndAt(?);
-    let req = builder.build();
-    let resp = api.getTradeHistory(req);
-    return resp.then(result => {
-        expect(result.items).toEqual(expect.anything());
-        expect(result.lastId).toEqual(expect.anything());
-    });
-    })
-
-    test('getSymbolsWithOpenOrder request test', ()=> {
-    /**
-    * getSymbolsWithOpenOrder
-    * Get Symbols With Open Order
-    * /api/v3/hf/margin/order/active/symbols
-    */
-    let builder = GetSymbolsWithOpenOrderReq.builder();
-    builder.setTradeType(?);
-    let req = builder.build();
-    let resp = api.getSymbolsWithOpenOrder(req);
-    return resp.then(result => {
-        expect(result.symbolSize).toEqual(expect.anything());
-        expect(result.symbols).toEqual(expect.anything());
-    });
-    })
-
     test('addOrder request test', ()=> {
     /**
     * addOrder
@@ -88,6 +20,7 @@ describe('Auto Test', ()=> {
         expect(result.loanApplyId).toEqual(expect.anything());
         expect(result.borrowSize).toEqual(expect.anything());
         expect(result.clientOid).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -106,21 +39,23 @@ describe('Auto Test', ()=> {
         expect(result.loanApplyId).toEqual(expect.anything());
         expect(result.borrowSize).toEqual(expect.anything());
         expect(result.clientOid).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getOpenOrders request test', ()=> {
+    test('cancelOrderByOrderId request test', ()=> {
     /**
-    * getOpenOrders
-    * Get Open Orders
-    * /api/v3/hf/margin/orders/active
+    * cancelOrderByOrderId
+    * Cancel Order By OrderId
+    * /api/v3/hf/margin/orders/{orderId}
     */
-    let builder = GetOpenOrdersReq.builder();
-    builder.setSymbol(?).setTradeType(?);
+    let builder = CancelOrderByOrderIdReq.builder();
+    builder.setOrderId(?).setSymbol(?);
     let req = builder.build();
-    let resp = api.getOpenOrders(req);
+    let resp = api.cancelOrderByOrderId(req);
     return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
+        expect(result.orderId).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -136,57 +71,7 @@ describe('Auto Test', ()=> {
     let resp = api.cancelOrderByClientOid(req);
     return resp.then(result => {
         expect(result.clientOid).toEqual(expect.anything());
-    });
-    })
-
-    test('getOrderByClientOid request test', ()=> {
-    /**
-    * getOrderByClientOid
-    * Get Order By ClientOid
-    * /api/v3/hf/margin/orders/client-order/{clientOid}
-    */
-    let builder = GetOrderByClientOidReq.builder();
-    builder.setSymbol(?).setClientOid(?);
-    let req = builder.build();
-    let resp = api.getOrderByClientOid(req);
-    return resp.then(result => {
-        expect(result.id).toEqual(expect.anything());
-        expect(result.symbol).toEqual(expect.anything());
-        expect(result.opType).toEqual(expect.anything());
-        expect(result.type).toEqual(expect.anything());
-        expect(result.side).toEqual(expect.anything());
-        expect(result.price).toEqual(expect.anything());
-        expect(result.size).toEqual(expect.anything());
-        expect(result.funds).toEqual(expect.anything());
-        expect(result.dealSize).toEqual(expect.anything());
-        expect(result.dealFunds).toEqual(expect.anything());
-        expect(result.fee).toEqual(expect.anything());
-        expect(result.feeCurrency).toEqual(expect.anything());
-        expect(result.stp).toEqual(expect.anything());
-        expect(result.stop).toEqual(expect.anything());
-        expect(result.stopTriggered).toEqual(expect.anything());
-        expect(result.stopPrice).toEqual(expect.anything());
-        expect(result.timeInForce).toEqual(expect.anything());
-        expect(result.postOnly).toEqual(expect.anything());
-        expect(result.hidden).toEqual(expect.anything());
-        expect(result.iceberg).toEqual(expect.anything());
-        expect(result.visibleSize).toEqual(expect.anything());
-        expect(result.cancelAfter).toEqual(expect.anything());
-        expect(result.channel).toEqual(expect.anything());
-        expect(result.clientOid).toEqual(expect.anything());
-        expect(result.remark).toEqual(expect.anything());
-        expect(result.tags).toEqual(expect.anything());
-        expect(result.cancelExist).toEqual(expect.anything());
-        expect(result.createdAt).toEqual(expect.anything());
-        expect(result.lastUpdatedAt).toEqual(expect.anything());
-        expect(result.tradeType).toEqual(expect.anything());
-        expect(result.inOrderBook).toEqual(expect.anything());
-        expect(result.cancelledSize).toEqual(expect.anything());
-        expect(result.cancelledFunds).toEqual(expect.anything());
-        expect(result.remainSize).toEqual(expect.anything());
-        expect(result.remainFunds).toEqual(expect.anything());
-        expect(result.tax).toEqual(expect.anything());
-        expect(result.active).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -202,6 +87,40 @@ describe('Auto Test', ()=> {
     let resp = api.cancelAllOrdersBySymbol(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getSymbolsWithOpenOrder request test', ()=> {
+    /**
+    * getSymbolsWithOpenOrder
+    * Get Symbols With Open Order
+    * /api/v3/hf/margin/order/active/symbols
+    */
+    let builder = GetSymbolsWithOpenOrderReq.builder();
+    builder.setTradeType(?);
+    let req = builder.build();
+    let resp = api.getSymbolsWithOpenOrder(req);
+    return resp.then(result => {
+        expect(result.symbolSize).toEqual(expect.anything());
+        expect(result.symbols).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getOpenOrders request test', ()=> {
+    /**
+    * getOpenOrders
+    * Get Open Orders
+    * /api/v3/hf/margin/orders/active
+    */
+    let builder = GetOpenOrdersReq.builder();
+    builder.setSymbol(?).setTradeType(?);
+    let req = builder.build();
+    let resp = api.getOpenOrders(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -218,21 +137,24 @@ describe('Auto Test', ()=> {
     return resp.then(result => {
         expect(result.lastId).toEqual(expect.anything());
         expect(result.items).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('cancelOrderByOrderId request test', ()=> {
+    test('getTradeHistory request test', ()=> {
     /**
-    * cancelOrderByOrderId
-    * Cancel Order By OrderId
-    * /api/v3/hf/margin/orders/{orderId}
+    * getTradeHistory
+    * Get Trade History
+    * /api/v3/hf/margin/fills
     */
-    let builder = CancelOrderByOrderIdReq.builder();
-    builder.setOrderId(?).setSymbol(?);
+    let builder = GetTradeHistoryReq.builder();
+    builder.setSymbol(?).setTradeType(?).setOrderId(?).setSide(?).setType(?).setLastId(?).setLimit(?).setStartAt(?).setEndAt(?);
     let req = builder.build();
-    let resp = api.cancelOrderByOrderId(req);
+    let resp = api.getTradeHistory(req);
     return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+        expect(result.lastId).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -284,6 +206,97 @@ describe('Auto Test', ()=> {
         expect(result.remainFunds).toEqual(expect.anything());
         expect(result.tax).toEqual(expect.anything());
         expect(result.active).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getOrderByClientOid request test', ()=> {
+    /**
+    * getOrderByClientOid
+    * Get Order By ClientOid
+    * /api/v3/hf/margin/orders/client-order/{clientOid}
+    */
+    let builder = GetOrderByClientOidReq.builder();
+    builder.setSymbol(?).setClientOid(?);
+    let req = builder.build();
+    let resp = api.getOrderByClientOid(req);
+    return resp.then(result => {
+        expect(result.id).toEqual(expect.anything());
+        expect(result.symbol).toEqual(expect.anything());
+        expect(result.opType).toEqual(expect.anything());
+        expect(result.type).toEqual(expect.anything());
+        expect(result.side).toEqual(expect.anything());
+        expect(result.price).toEqual(expect.anything());
+        expect(result.size).toEqual(expect.anything());
+        expect(result.funds).toEqual(expect.anything());
+        expect(result.dealSize).toEqual(expect.anything());
+        expect(result.dealFunds).toEqual(expect.anything());
+        expect(result.fee).toEqual(expect.anything());
+        expect(result.feeCurrency).toEqual(expect.anything());
+        expect(result.stp).toEqual(expect.anything());
+        expect(result.stop).toEqual(expect.anything());
+        expect(result.stopTriggered).toEqual(expect.anything());
+        expect(result.stopPrice).toEqual(expect.anything());
+        expect(result.timeInForce).toEqual(expect.anything());
+        expect(result.postOnly).toEqual(expect.anything());
+        expect(result.hidden).toEqual(expect.anything());
+        expect(result.iceberg).toEqual(expect.anything());
+        expect(result.visibleSize).toEqual(expect.anything());
+        expect(result.cancelAfter).toEqual(expect.anything());
+        expect(result.channel).toEqual(expect.anything());
+        expect(result.clientOid).toEqual(expect.anything());
+        expect(result.remark).toEqual(expect.anything());
+        expect(result.tags).toEqual(expect.anything());
+        expect(result.cancelExist).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+        expect(result.lastUpdatedAt).toEqual(expect.anything());
+        expect(result.tradeType).toEqual(expect.anything());
+        expect(result.inOrderBook).toEqual(expect.anything());
+        expect(result.cancelledSize).toEqual(expect.anything());
+        expect(result.cancelledFunds).toEqual(expect.anything());
+        expect(result.remainSize).toEqual(expect.anything());
+        expect(result.remainFunds).toEqual(expect.anything());
+        expect(result.tax).toEqual(expect.anything());
+        expect(result.active).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('addOrderV1 request test', ()=> {
+    /**
+    * addOrderV1
+    * Add Order - V1
+    * /api/v1/margin/order
+    */
+    let builder = AddOrderV1Req.builder();
+    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setCancelAfter(?).setFunds(?).setAutoBorrow(?).setAutoRepay(?).setMarginModel(?);
+    let req = builder.build();
+    let resp = api.addOrderV1(req);
+    return resp.then(result => {
+        expect(result.orderId).toEqual(expect.anything());
+        expect(result.loanApplyId).toEqual(expect.anything());
+        expect(result.borrowSize).toEqual(expect.anything());
+        expect(result.clientOid).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('addOrderTestV1 request test', ()=> {
+    /**
+    * addOrderTestV1
+    * Add Order Test - V1
+    * /api/v1/margin/order/test
+    */
+    let builder = AddOrderTestV1Req.builder();
+    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setCancelAfter(?).setFunds(?).setAutoBorrow(?).setAutoRepay(?).setMarginModel(?);
+    let req = builder.build();
+    let resp = api.addOrderTestV1(req);
+    return resp.then(result => {
+        expect(result.orderId).toEqual(expect.anything());
+        expect(result.loanApplyId).toEqual(expect.anything());
+        expect(result.borrowSize).toEqual(expect.anything());
+        expect(result.clientOid).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

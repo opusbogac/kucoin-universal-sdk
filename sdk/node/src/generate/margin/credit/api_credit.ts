@@ -18,22 +18,6 @@ import { GetLoanMarketReq } from './model_get_loan_market_req';
 
 export interface CreditAPI {
     /**
-     * modifyPurchase Modify Purchase
-     * Description: This API endpoint is used to update the interest rates of subscription orders, which will take effect at the beginning of the next hour.,Please ensure that the funds are in the main(funding) account
-     * Documentation: https://www.kucoin.com/docs-new/api-3470217
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | SPOT    |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | MARGIN  |
-     * | API-RATE-LIMIT-POOL | SPOT    |
-     * | API-RATE-LIMIT      | 10      |
-     * +---------------------+---------+
-     */
-    modifyPurchase(req: ModifyPurchaseReq): Promise<ModifyPurchaseResp>;
-
-    /**
      * getLoanMarket Get Loan Market
      * Description: This API endpoint is used to get the information about the currencies available for lending.
      * Documentation: https://www.kucoin.com/docs-new/api-3470212
@@ -68,22 +52,6 @@ export interface CreditAPI {
     ): Promise<GetLoanMarketInterestRateResp>;
 
     /**
-     * getPurchaseOrders Get Purchase Orders
-     * Description: This API endpoint provides pagination query for the purchase orders.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470213
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | SPOT    |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | SPOT    |
-     * | API-RATE-LIMIT      | 10      |
-     * +---------------------+---------+
-     */
-    getPurchaseOrders(req: GetPurchaseOrdersReq): Promise<GetPurchaseOrdersResp>;
-
-    /**
      * purchase Purchase
      * Description: Invest credit in the market and earn interest
      * Documentation: https://www.kucoin.com/docs-new/api-3470216
@@ -100,9 +68,25 @@ export interface CreditAPI {
     purchase(req: PurchaseReq): Promise<PurchaseResp>;
 
     /**
-     * getRedeemOrders Get Redeem Orders
-     * Description: This API endpoint provides pagination query for the redeem orders.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470214
+     * modifyPurchase Modify Purchase
+     * Description: This API endpoint is used to update the interest rates of subscription orders, which will take effect at the beginning of the next hour.,Please ensure that the funds are in the main(funding) account
+     * Documentation: https://www.kucoin.com/docs-new/api-3470217
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | SPOT    |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | MARGIN  |
+     * | API-RATE-LIMIT-POOL | SPOT    |
+     * | API-RATE-LIMIT      | 10      |
+     * +---------------------+---------+
+     */
+    modifyPurchase(req: ModifyPurchaseReq): Promise<ModifyPurchaseResp>;
+
+    /**
+     * getPurchaseOrders Get Purchase Orders
+     * Description: This API endpoint provides pagination query for the purchase orders.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470213
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
@@ -113,7 +97,7 @@ export interface CreditAPI {
      * | API-RATE-LIMIT      | 10      |
      * +---------------------+---------+
      */
-    getRedeemOrders(req: GetRedeemOrdersReq): Promise<GetRedeemOrdersResp>;
+    getPurchaseOrders(req: GetPurchaseOrdersReq): Promise<GetPurchaseOrdersResp>;
 
     /**
      * redeem Redeem
@@ -130,22 +114,26 @@ export interface CreditAPI {
      * +---------------------+---------+
      */
     redeem(req: RedeemReq): Promise<RedeemResp>;
+
+    /**
+     * getRedeemOrders Get Redeem Orders
+     * Description: This API endpoint provides pagination query for the redeem orders.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470214
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | SPOT    |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | SPOT    |
+     * | API-RATE-LIMIT      | 10      |
+     * +---------------------+---------+
+     */
+    getRedeemOrders(req: GetRedeemOrdersReq): Promise<GetRedeemOrdersResp>;
 }
 
 export class CreditAPIImpl implements CreditAPI {
     constructor(private transport: Transport) {}
-
-    modifyPurchase(req: ModifyPurchaseReq): Promise<ModifyPurchaseResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'POST',
-            '/api/v3/lend/purchase/update',
-            req,
-            new ModifyPurchaseResp(),
-            false,
-        );
-    }
 
     getLoanMarket(req: GetLoanMarketReq): Promise<GetLoanMarketResp> {
         return this.transport.call(
@@ -173,18 +161,6 @@ export class CreditAPIImpl implements CreditAPI {
         );
     }
 
-    getPurchaseOrders(req: GetPurchaseOrdersReq): Promise<GetPurchaseOrdersResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'GET',
-            '/api/v3/purchase/orders',
-            req,
-            new GetPurchaseOrdersResp(),
-            false,
-        );
-    }
-
     purchase(req: PurchaseReq): Promise<PurchaseResp> {
         return this.transport.call(
             'spot',
@@ -197,14 +173,26 @@ export class CreditAPIImpl implements CreditAPI {
         );
     }
 
-    getRedeemOrders(req: GetRedeemOrdersReq): Promise<GetRedeemOrdersResp> {
+    modifyPurchase(req: ModifyPurchaseReq): Promise<ModifyPurchaseResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'POST',
+            '/api/v3/lend/purchase/update',
+            req,
+            new ModifyPurchaseResp(),
+            false,
+        );
+    }
+
+    getPurchaseOrders(req: GetPurchaseOrdersReq): Promise<GetPurchaseOrdersResp> {
         return this.transport.call(
             'spot',
             false,
             'GET',
-            '/api/v3/redeem/orders',
+            '/api/v3/purchase/orders',
             req,
-            new GetRedeemOrdersResp(),
+            new GetPurchaseOrdersResp(),
             false,
         );
     }
@@ -217,6 +205,18 @@ export class CreditAPIImpl implements CreditAPI {
             '/api/v3/redeem',
             req,
             new RedeemResp(),
+            false,
+        );
+    }
+
+    getRedeemOrders(req: GetRedeemOrdersReq): Promise<GetRedeemOrdersResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'GET',
+            '/api/v3/redeem/orders',
+            req,
+            new GetRedeemOrdersResp(),
             false,
         );
     }

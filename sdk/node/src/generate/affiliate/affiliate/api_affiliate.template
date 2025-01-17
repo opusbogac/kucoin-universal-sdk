@@ -19,6 +19,7 @@ describe('Auto Test', ()=> {
         expect(result.totalMarginAmount).toEqual(expect.anything());
         expect(result.transferMarginAmount).toEqual(expect.anything());
         expect(result.margins).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

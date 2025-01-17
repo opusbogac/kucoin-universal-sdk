@@ -5,193 +5,6 @@ describe('Auto Test', ()=> {
     beforeAll(()=> {
         api = ??
     });
-    test('getFuturesAccount request test', ()=> {
-    /**
-    * getFuturesAccount
-    * Get Account - Futures
-    * /api/v1/account-overview
-    */
-    let builder = GetFuturesAccountReq.builder();
-    builder.setCurrency(?);
-    let req = builder.build();
-    let resp = api.getFuturesAccount(req);
-    return resp.then(result => {
-        expect(result.accountEquity).toEqual(expect.anything());
-        expect(result.unrealisedPNL).toEqual(expect.anything());
-        expect(result.marginBalance).toEqual(expect.anything());
-        expect(result.positionMargin).toEqual(expect.anything());
-        expect(result.orderMargin).toEqual(expect.anything());
-        expect(result.frozenFunds).toEqual(expect.anything());
-        expect(result.availableBalance).toEqual(expect.anything());
-        expect(result.currency).toEqual(expect.anything());
-        expect(result.riskRatio).toEqual(expect.anything());
-    });
-    })
-
-    test('getSpotAccountDetail request test', ()=> {
-    /**
-    * getSpotAccountDetail
-    * Get Account Detail - Spot
-    * /api/v1/accounts/{accountId}
-    */
-    let builder = GetSpotAccountDetailReq.builder();
-    builder.setAccountId(?);
-    let req = builder.build();
-    let resp = api.getSpotAccountDetail(req);
-    return resp.then(result => {
-        expect(result.currency).toEqual(expect.anything());
-        expect(result.balance).toEqual(expect.anything());
-        expect(result.available).toEqual(expect.anything());
-        expect(result.holds).toEqual(expect.anything());
-    });
-    })
-
-    test('getSpotAccountList request test', ()=> {
-    /**
-    * getSpotAccountList
-    * Get Account List - Spot
-    * /api/v1/accounts
-    */
-    let builder = GetSpotAccountListReq.builder();
-    builder.setCurrency(?).setType(?);
-    let req = builder.build();
-    let resp = api.getSpotAccountList(req);
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('getSpotLedger request test', ()=> {
-    /**
-    * getSpotLedger
-    * Get Account Ledgers - Spot/Margin
-    * /api/v1/accounts/ledgers
-    */
-    let builder = GetSpotLedgerReq.builder();
-    builder.setCurrency(?).setDirection(?).setBizType(?).setStartAt(?).setEndAt(?).setCurrentPage(?).setPageSize(?);
-    let req = builder.build();
-    let resp = api.getSpotLedger(req);
-    return resp.then(result => {
-        expect(result.currentPage).toEqual(expect.anything());
-        expect(result.pageSize).toEqual(expect.anything());
-        expect(result.totalNum).toEqual(expect.anything());
-        expect(result.totalPage).toEqual(expect.anything());
-        expect(result.items).toEqual(expect.anything());
-    });
-    })
-
-    test('getSpotHFLedger request test', ()=> {
-    /**
-    * getSpotHFLedger
-    * Get Account Ledgers - Trade_hf
-    * /api/v1/hf/accounts/ledgers
-    */
-    let builder = GetSpotHFLedgerReq.builder();
-    builder.setCurrency(?).setDirection(?).setBizType(?).setLastId(?).setLimit(?).setStartAt(?).setEndAt(?);
-    let req = builder.build();
-    let resp = api.getSpotHFLedger(req);
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('getSpotAccountType request test', ()=> {
-    /**
-    * getSpotAccountType
-    * Get Account Type - Spot 
-    * /api/v1/hf/accounts/opened
-    */
-    let resp = api.getSpotAccountType();
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('getIsolatedMarginAccountDetailV1 request test', ()=> {
-    /**
-    * getIsolatedMarginAccountDetailV1
-    * Get Account Detail - Isolated Margin - V1
-    * /api/v1/isolated/account/{symbol}
-    */
-    let builder = GetIsolatedMarginAccountDetailV1Req.builder();
-    builder.setSymbol(?);
-    let req = builder.build();
-    let resp = api.getIsolatedMarginAccountDetailV1(req);
-    return resp.then(result => {
-        expect(result.symbol).toEqual(expect.anything());
-        expect(result.status).toEqual(expect.anything());
-        expect(result.debtRatio).toEqual(expect.anything());
-        expect(result.baseAsset).toEqual(expect.anything());
-        expect(result.quoteAsset).toEqual(expect.anything());
-    });
-    })
-
-    test('getIsolatedMarginAccountListV1 request test', ()=> {
-    /**
-    * getIsolatedMarginAccountListV1
-    * Get Account List - Isolated Margin - V1
-    * /api/v1/isolated/accounts
-    */
-    let builder = GetIsolatedMarginAccountListV1Req.builder();
-    builder.setBalanceCurrency(?);
-    let req = builder.build();
-    let resp = api.getIsolatedMarginAccountListV1(req);
-    return resp.then(result => {
-        expect(result.totalConversionBalance).toEqual(expect.anything());
-        expect(result.liabilityConversionBalance).toEqual(expect.anything());
-        expect(result.assets).toEqual(expect.anything());
-    });
-    })
-
-    test('getMarginAccountDetail request test', ()=> {
-    /**
-    * getMarginAccountDetail
-    * Get Account Detail - Margin
-    * /api/v1/margin/account
-    */
-    let resp = api.getMarginAccountDetail();
-    return resp.then(result => {
-        expect(result.debtRatio).toEqual(expect.anything());
-        expect(result.accounts).toEqual(expect.anything());
-    });
-    })
-
-    test('getFuturesLedger request test', ()=> {
-    /**
-    * getFuturesLedger
-    * Get Account Ledgers - Futures
-    * /api/v1/transaction-history
-    */
-    let builder = GetFuturesLedgerReq.builder();
-    builder.setCurrency(?).setType(?).setOffset(?).setForward(?).setMaxCount(?).setStartAt(?).setEndAt(?);
-    let req = builder.build();
-    let resp = api.getFuturesLedger(req);
-    return resp.then(result => {
-        expect(result.dataList).toEqual(expect.anything());
-        expect(result.hasMore).toEqual(expect.anything());
-    });
-    })
-
-    test('getApikeyInfo request test', ()=> {
-    /**
-    * getApikeyInfo
-    * Get Apikey Info
-    * /api/v1/user/api-key
-    */
-    let resp = api.getApikeyInfo();
-    return resp.then(result => {
-        expect(result.remark).toEqual(expect.anything());
-        expect(result.apiKey).toEqual(expect.anything());
-        expect(result.apiVersion).toEqual(expect.anything());
-        expect(result.permission).toEqual(expect.anything());
-        expect(result.ipWhitelist).toEqual(expect.anything());
-        expect(result.createdAt).toEqual(expect.anything());
-        expect(result.uid).toEqual(expect.anything());
-        expect(result.isMaster).toEqual(expect.anything());
-        expect(result.subName).toEqual(expect.anything());
-    });
-    })
-
     test('getAccountInfo request test', ()=> {
     /**
     * getAccountInfo
@@ -212,39 +25,76 @@ describe('Auto Test', ()=> {
         expect(result.maxMarginSubQuantity).toEqual(expect.anything());
         expect(result.maxFuturesSubQuantity).toEqual(expect.anything());
         expect(result.maxOptionSubQuantity).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getMarginHFLedger request test', ()=> {
+    test('getApikeyInfo request test', ()=> {
     /**
-    * getMarginHFLedger
-    * Get Account Ledgers - Margin_hf
-    * /api/v3/hf/margin/account/ledgers
+    * getApikeyInfo
+    * Get Apikey Info
+    * /api/v1/user/api-key
     */
-    let builder = GetMarginHFLedgerReq.builder();
-    builder.setCurrency(?).setDirection(?).setBizType(?).setLastId(?).setLimit(?).setStartAt(?).setEndAt(?);
-    let req = builder.build();
-    let resp = api.getMarginHFLedger(req);
+    let resp = api.getApikeyInfo();
+    return resp.then(result => {
+        expect(result.remark).toEqual(expect.anything());
+        expect(result.apiKey).toEqual(expect.anything());
+        expect(result.apiVersion).toEqual(expect.anything());
+        expect(result.permission).toEqual(expect.anything());
+        expect(result.ipWhitelist).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+        expect(result.uid).toEqual(expect.anything());
+        expect(result.isMaster).toEqual(expect.anything());
+        expect(result.subName).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getSpotAccountType request test', ()=> {
+    /**
+    * getSpotAccountType
+    * Get Account Type - Spot 
+    * /api/v1/hf/accounts/opened
+    */
+    let resp = api.getSpotAccountType();
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getIsolatedMarginAccount request test', ()=> {
+    test('getSpotAccountList request test', ()=> {
     /**
-    * getIsolatedMarginAccount
-    * Get Account - Isolated Margin
-    * /api/v3/isolated/accounts
+    * getSpotAccountList
+    * Get Account List - Spot
+    * /api/v1/accounts
     */
-    let builder = GetIsolatedMarginAccountReq.builder();
-    builder.setSymbol(?).setQuoteCurrency(?).setQueryType(?);
+    let builder = GetSpotAccountListReq.builder();
+    builder.setCurrency(?).setType(?);
     let req = builder.build();
-    let resp = api.getIsolatedMarginAccount(req);
+    let resp = api.getSpotAccountList(req);
     return resp.then(result => {
-        expect(result.totalAssetOfQuoteCurrency).toEqual(expect.anything());
-        expect(result.totalLiabilityOfQuoteCurrency).toEqual(expect.anything());
-        expect(result.timestamp).toEqual(expect.anything());
-        expect(result.assets).toEqual(expect.anything());
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getSpotAccountDetail request test', ()=> {
+    /**
+    * getSpotAccountDetail
+    * Get Account Detail - Spot
+    * /api/v1/accounts/{accountId}
+    */
+    let builder = GetSpotAccountDetailReq.builder();
+    builder.setAccountId(?);
+    let req = builder.build();
+    let resp = api.getSpotAccountDetail(req);
+    return resp.then(result => {
+        expect(result.currency).toEqual(expect.anything());
+        expect(result.balance).toEqual(expect.anything());
+        expect(result.available).toEqual(expect.anything());
+        expect(result.holds).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -264,6 +114,171 @@ describe('Auto Test', ()=> {
         expect(result.debtRatio).toEqual(expect.anything());
         expect(result.status).toEqual(expect.anything());
         expect(result.accounts).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getIsolatedMarginAccount request test', ()=> {
+    /**
+    * getIsolatedMarginAccount
+    * Get Account - Isolated Margin
+    * /api/v3/isolated/accounts
+    */
+    let builder = GetIsolatedMarginAccountReq.builder();
+    builder.setSymbol(?).setQuoteCurrency(?).setQueryType(?);
+    let req = builder.build();
+    let resp = api.getIsolatedMarginAccount(req);
+    return resp.then(result => {
+        expect(result.totalAssetOfQuoteCurrency).toEqual(expect.anything());
+        expect(result.totalLiabilityOfQuoteCurrency).toEqual(expect.anything());
+        expect(result.timestamp).toEqual(expect.anything());
+        expect(result.assets).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getFuturesAccount request test', ()=> {
+    /**
+    * getFuturesAccount
+    * Get Account - Futures
+    * /api/v1/account-overview
+    */
+    let builder = GetFuturesAccountReq.builder();
+    builder.setCurrency(?);
+    let req = builder.build();
+    let resp = api.getFuturesAccount(req);
+    return resp.then(result => {
+        expect(result.accountEquity).toEqual(expect.anything());
+        expect(result.unrealisedPNL).toEqual(expect.anything());
+        expect(result.marginBalance).toEqual(expect.anything());
+        expect(result.positionMargin).toEqual(expect.anything());
+        expect(result.orderMargin).toEqual(expect.anything());
+        expect(result.frozenFunds).toEqual(expect.anything());
+        expect(result.availableBalance).toEqual(expect.anything());
+        expect(result.currency).toEqual(expect.anything());
+        expect(result.riskRatio).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getSpotLedger request test', ()=> {
+    /**
+    * getSpotLedger
+    * Get Account Ledgers - Spot/Margin
+    * /api/v1/accounts/ledgers
+    */
+    let builder = GetSpotLedgerReq.builder();
+    builder.setCurrency(?).setDirection(?).setBizType(?).setStartAt(?).setEndAt(?).setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getSpotLedger(req);
+    return resp.then(result => {
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getSpotHFLedger request test', ()=> {
+    /**
+    * getSpotHFLedger
+    * Get Account Ledgers - Trade_hf
+    * /api/v1/hf/accounts/ledgers
+    */
+    let builder = GetSpotHFLedgerReq.builder();
+    builder.setCurrency(?).setDirection(?).setBizType(?).setLastId(?).setLimit(?).setStartAt(?).setEndAt(?);
+    let req = builder.build();
+    let resp = api.getSpotHFLedger(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getMarginHFLedger request test', ()=> {
+    /**
+    * getMarginHFLedger
+    * Get Account Ledgers - Margin_hf
+    * /api/v3/hf/margin/account/ledgers
+    */
+    let builder = GetMarginHFLedgerReq.builder();
+    builder.setCurrency(?).setDirection(?).setBizType(?).setLastId(?).setLimit(?).setStartAt(?).setEndAt(?);
+    let req = builder.build();
+    let resp = api.getMarginHFLedger(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getFuturesLedger request test', ()=> {
+    /**
+    * getFuturesLedger
+    * Get Account Ledgers - Futures
+    * /api/v1/transaction-history
+    */
+    let builder = GetFuturesLedgerReq.builder();
+    builder.setCurrency(?).setType(?).setOffset(?).setForward(?).setMaxCount(?).setStartAt(?).setEndAt(?);
+    let req = builder.build();
+    let resp = api.getFuturesLedger(req);
+    return resp.then(result => {
+        expect(result.dataList).toEqual(expect.anything());
+        expect(result.hasMore).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getMarginAccountDetail request test', ()=> {
+    /**
+    * getMarginAccountDetail
+    * Get Account Detail - Margin
+    * /api/v1/margin/account
+    */
+    let resp = api.getMarginAccountDetail();
+    return resp.then(result => {
+        expect(result.debtRatio).toEqual(expect.anything());
+        expect(result.accounts).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getIsolatedMarginAccountListV1 request test', ()=> {
+    /**
+    * getIsolatedMarginAccountListV1
+    * Get Account List - Isolated Margin - V1
+    * /api/v1/isolated/accounts
+    */
+    let builder = GetIsolatedMarginAccountListV1Req.builder();
+    builder.setBalanceCurrency(?);
+    let req = builder.build();
+    let resp = api.getIsolatedMarginAccountListV1(req);
+    return resp.then(result => {
+        expect(result.totalConversionBalance).toEqual(expect.anything());
+        expect(result.liabilityConversionBalance).toEqual(expect.anything());
+        expect(result.assets).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getIsolatedMarginAccountDetailV1 request test', ()=> {
+    /**
+    * getIsolatedMarginAccountDetailV1
+    * Get Account Detail - Isolated Margin - V1
+    * /api/v1/isolated/account/{symbol}
+    */
+    let builder = GetIsolatedMarginAccountDetailV1Req.builder();
+    builder.setSymbol(?);
+    let req = builder.build();
+    let resp = api.getIsolatedMarginAccountDetailV1(req);
+    return resp.then(result => {
+        expect(result.symbol).toEqual(expect.anything());
+        expect(result.status).toEqual(expect.anything());
+        expect(result.debtRatio).toEqual(expect.anything());
+        expect(result.baseAsset).toEqual(expect.anything());
+        expect(result.quoteAsset).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

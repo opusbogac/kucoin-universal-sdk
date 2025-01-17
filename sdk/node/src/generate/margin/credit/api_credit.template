@@ -5,21 +5,6 @@ describe('Auto Test', ()=> {
     beforeAll(()=> {
         api = ??
     });
-    test('modifyPurchase request test', ()=> {
-    /**
-    * modifyPurchase
-    * Modify Purchase
-    * /api/v3/lend/purchase/update
-    */
-    let builder = ModifyPurchaseReq.builder();
-    builder.setCurrency(?).setInterestRate(?).setPurchaseOrderNo(?);
-    let req = builder.build();
-    let resp = api.modifyPurchase(req);
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
     test('getLoanMarket request test', ()=> {
     /**
     * getLoanMarket
@@ -32,6 +17,7 @@ describe('Auto Test', ()=> {
     let resp = api.getLoanMarket(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -47,6 +33,39 @@ describe('Auto Test', ()=> {
     let resp = api.getLoanMarketInterestRate(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('purchase request test', ()=> {
+    /**
+    * purchase
+    * Purchase
+    * /api/v3/purchase
+    */
+    let builder = PurchaseReq.builder();
+    builder.setCurrency(?).setSize(?).setInterestRate(?);
+    let req = builder.build();
+    let resp = api.purchase(req);
+    return resp.then(result => {
+        expect(result.orderNo).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('modifyPurchase request test', ()=> {
+    /**
+    * modifyPurchase
+    * Modify Purchase
+    * /api/v3/lend/purchase/update
+    */
+    let builder = ModifyPurchaseReq.builder();
+    builder.setCurrency(?).setInterestRate(?).setPurchaseOrderNo(?);
+    let req = builder.build();
+    let resp = api.modifyPurchase(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -66,21 +85,23 @@ describe('Auto Test', ()=> {
         expect(result.totalNum).toEqual(expect.anything());
         expect(result.totalPage).toEqual(expect.anything());
         expect(result.items).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('purchase request test', ()=> {
+    test('redeem request test', ()=> {
     /**
-    * purchase
-    * Purchase
-    * /api/v3/purchase
+    * redeem
+    * Redeem
+    * /api/v3/redeem
     */
-    let builder = PurchaseReq.builder();
-    builder.setCurrency(?).setSize(?).setInterestRate(?);
+    let builder = RedeemReq.builder();
+    builder.setCurrency(?).setSize(?).setPurchaseOrderNo(?);
     let req = builder.build();
-    let resp = api.purchase(req);
+    let resp = api.redeem(req);
     return resp.then(result => {
         expect(result.orderNo).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -100,21 +121,7 @@ describe('Auto Test', ()=> {
         expect(result.totalNum).toEqual(expect.anything());
         expect(result.totalPage).toEqual(expect.anything());
         expect(result.items).toEqual(expect.anything());
-    });
-    })
-
-    test('redeem request test', ()=> {
-    /**
-    * redeem
-    * Redeem
-    * /api/v3/redeem
-    */
-    let builder = RedeemReq.builder();
-    builder.setCurrency(?).setSize(?).setPurchaseOrderNo(?);
-    let req = builder.build();
-    let resp = api.redeem(req);
-    return resp.then(result => {
-        expect(result.orderNo).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

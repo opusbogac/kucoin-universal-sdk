@@ -5,15 +5,20 @@ describe('Auto Test', ()=> {
     beforeAll(()=> {
         api = ??
     });
-    test('getIsolatedMarginSymbols request test', ()=> {
+    test('getCrossMarginSymbols request test', ()=> {
     /**
-    * getIsolatedMarginSymbols
-    * Get Symbols - Isolated Margin
-    * /api/v1/isolated/symbols
+    * getCrossMarginSymbols
+    * Get Symbols - Cross Margin
+    * /api/v3/margin/symbols
     */
-    let resp = api.getIsolatedMarginSymbols();
+    let builder = GetCrossMarginSymbolsReq.builder();
+    builder.setSymbol(?);
+    let req = builder.build();
+    let resp = api.getCrossMarginSymbols(req);
     return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
+        expect(result.timestamp).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -29,6 +34,36 @@ describe('Auto Test', ()=> {
         expect(result.maxLeverage).toEqual(expect.anything());
         expect(result.warningDebtRatio).toEqual(expect.anything());
         expect(result.liqDebtRatio).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getETFInfo request test', ()=> {
+    /**
+    * getETFInfo
+    * Get ETF Info
+    * /api/v3/etf/info
+    */
+    let builder = GetETFInfoReq.builder();
+    builder.setCurrency(?);
+    let req = builder.build();
+    let resp = api.getETFInfo(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getMarkPriceList request test', ()=> {
+    /**
+    * getMarkPriceList
+    * Get Mark Price List
+    * /api/v3/mark-price/all-symbols
+    */
+    let resp = api.getMarkPriceList();
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -46,49 +81,20 @@ describe('Auto Test', ()=> {
         expect(result.symbol).toEqual(expect.anything());
         expect(result.timePoint).toEqual(expect.anything());
         expect(result.value).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getETFInfo request test', ()=> {
+    test('getIsolatedMarginSymbols request test', ()=> {
     /**
-    * getETFInfo
-    * Get ETF Info
-    * /api/v3/etf/info
+    * getIsolatedMarginSymbols
+    * Get Symbols - Isolated Margin
+    * /api/v1/isolated/symbols
     */
-    let builder = GetETFInfoReq.builder();
-    builder.setCurrency(?);
-    let req = builder.build();
-    let resp = api.getETFInfo(req);
+    let resp = api.getIsolatedMarginSymbols();
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('getCrossMarginSymbols request test', ()=> {
-    /**
-    * getCrossMarginSymbols
-    * Get Symbols - Cross Margin
-    * /api/v3/margin/symbols
-    */
-    let builder = GetCrossMarginSymbolsReq.builder();
-    builder.setSymbol(?);
-    let req = builder.build();
-    let resp = api.getCrossMarginSymbols(req);
-    return resp.then(result => {
-        expect(result.timestamp).toEqual(expect.anything());
-        expect(result.items).toEqual(expect.anything());
-    });
-    })
-
-    test('getMarkPriceList request test', ()=> {
-    /**
-    * getMarkPriceList
-    * Get Mark Price List
-    * /api/v3/mark-price/all-symbols
-    */
-    let resp = api.getMarkPriceList();
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

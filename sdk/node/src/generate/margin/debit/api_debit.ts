@@ -16,22 +16,6 @@ import { GetBorrowHistoryResp } from './model_get_borrow_history_resp';
 
 export interface DebitAPI {
     /**
-     * getBorrowHistory Get Borrow History
-     * Description: This API endpoint is used to get the borrowing orders for cross and isolated margin accounts
-     * Documentation: https://www.kucoin.com/docs-new/api-3470207
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | SPOT    |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | MARGIN  |
-     * | API-RATE-LIMIT-POOL | SPOT    |
-     * | API-RATE-LIMIT      | 15      |
-     * +---------------------+---------+
-     */
-    getBorrowHistory(req: GetBorrowHistoryReq): Promise<GetBorrowHistoryResp>;
-
-    /**
      * borrow Borrow
      * Description: This API endpoint is used to initiate an application for cross or isolated margin borrowing.
      * Documentation: https://www.kucoin.com/docs-new/api-3470206
@@ -48,9 +32,9 @@ export interface DebitAPI {
     borrow(req: BorrowReq): Promise<BorrowResp>;
 
     /**
-     * getInterestHistory Get Interest History
-     * Description: Request via this endpoint to get the interest records of the cross/isolated margin lending.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470209
+     * getBorrowHistory Get Borrow History
+     * Description: This API endpoint is used to get the borrowing orders for cross and isolated margin accounts
+     * Documentation: https://www.kucoin.com/docs-new/api-3470207
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
@@ -58,10 +42,26 @@ export interface DebitAPI {
      * | API-CHANNEL         | PRIVATE |
      * | API-PERMISSION      | MARGIN  |
      * | API-RATE-LIMIT-POOL | SPOT    |
-     * | API-RATE-LIMIT      | 20      |
+     * | API-RATE-LIMIT      | 15      |
      * +---------------------+---------+
      */
-    getInterestHistory(req: GetInterestHistoryReq): Promise<GetInterestHistoryResp>;
+    getBorrowHistory(req: GetBorrowHistoryReq): Promise<GetBorrowHistoryResp>;
+
+    /**
+     * repay Repay
+     * Description: This API endpoint is used to initiate an application for cross or isolated margin repayment.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470210
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | SPOT    |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | MARGIN  |
+     * | API-RATE-LIMIT-POOL | SPOT    |
+     * | API-RATE-LIMIT      | 10      |
+     * +---------------------+---------+
+     */
+    repay(req: RepayReq): Promise<RepayResp>;
 
     /**
      * getRepayHistory Get Repay History
@@ -80,9 +80,9 @@ export interface DebitAPI {
     getRepayHistory(req: GetRepayHistoryReq): Promise<GetRepayHistoryResp>;
 
     /**
-     * repay Repay
-     * Description: This API endpoint is used to initiate an application for cross or isolated margin repayment.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470210
+     * getInterestHistory Get Interest History
+     * Description: Request via this endpoint to get the interest records of the cross/isolated margin lending.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470209
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
@@ -90,10 +90,10 @@ export interface DebitAPI {
      * | API-CHANNEL         | PRIVATE |
      * | API-PERMISSION      | MARGIN  |
      * | API-RATE-LIMIT-POOL | SPOT    |
-     * | API-RATE-LIMIT      | 10      |
+     * | API-RATE-LIMIT      | 20      |
      * +---------------------+---------+
      */
-    repay(req: RepayReq): Promise<RepayResp>;
+    getInterestHistory(req: GetInterestHistoryReq): Promise<GetInterestHistoryResp>;
 
     /**
      * modifyLeverage Modify Leverage
@@ -115,18 +115,6 @@ export interface DebitAPI {
 export class DebitAPIImpl implements DebitAPI {
     constructor(private transport: Transport) {}
 
-    getBorrowHistory(req: GetBorrowHistoryReq): Promise<GetBorrowHistoryResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'GET',
-            '/api/v3/margin/borrow',
-            req,
-            new GetBorrowHistoryResp(),
-            false,
-        );
-    }
-
     borrow(req: BorrowReq): Promise<BorrowResp> {
         return this.transport.call(
             'spot',
@@ -139,14 +127,26 @@ export class DebitAPIImpl implements DebitAPI {
         );
     }
 
-    getInterestHistory(req: GetInterestHistoryReq): Promise<GetInterestHistoryResp> {
+    getBorrowHistory(req: GetBorrowHistoryReq): Promise<GetBorrowHistoryResp> {
         return this.transport.call(
             'spot',
             false,
             'GET',
-            '/api/v3/margin/interest',
+            '/api/v3/margin/borrow',
             req,
-            new GetInterestHistoryResp(),
+            new GetBorrowHistoryResp(),
+            false,
+        );
+    }
+
+    repay(req: RepayReq): Promise<RepayResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'POST',
+            '/api/v3/margin/repay',
+            req,
+            new RepayResp(),
             false,
         );
     }
@@ -163,14 +163,14 @@ export class DebitAPIImpl implements DebitAPI {
         );
     }
 
-    repay(req: RepayReq): Promise<RepayResp> {
+    getInterestHistory(req: GetInterestHistoryReq): Promise<GetInterestHistoryResp> {
         return this.transport.call(
             'spot',
             false,
-            'POST',
-            '/api/v3/margin/repay',
+            'GET',
+            '/api/v3/margin/interest',
             req,
-            new RepayResp(),
+            new GetInterestHistoryResp(),
             false,
         );
     }

@@ -11,39 +11,87 @@ import { GetSpotLedgerReq } from './model_get_spot_ledger_req';
 import { GetSpotAccountListReq } from './model_get_spot_account_list_req';
 import { GetSpotAccountDetailReq } from './model_get_spot_account_detail_req';
 import { GetMarginHFLedgerResp } from './model_get_margin_hf_ledger_resp';
-import { GetIsolatedMarginAccountReq } from './model_get_isolated_margin_account_req';
 import { GetFuturesAccountResp } from './model_get_futures_account_resp';
+import { GetIsolatedMarginAccountReq } from './model_get_isolated_margin_account_req';
 import { GetIsolatedMarginAccountDetailV1Req } from './model_get_isolated_margin_account_detail_v1_req';
 import { GetSpotHFLedgerResp } from './model_get_spot_hf_ledger_resp';
 import { GetSpotLedgerResp } from './model_get_spot_ledger_resp';
 import { GetIsolatedMarginAccountDetailV1Resp } from './model_get_isolated_margin_account_detail_v1_resp';
 import { GetIsolatedMarginAccountResp } from './model_get_isolated_margin_account_resp';
 import { GetSpotHFLedgerReq } from './model_get_spot_hf_ledger_req';
-import { GetApikeyInfoResp } from './model_get_apikey_info_resp';
 import { GetFuturesLedgerResp } from './model_get_futures_ledger_resp';
+import { GetApikeyInfoResp } from './model_get_apikey_info_resp';
 import { GetSpotAccountListResp } from './model_get_spot_account_list_resp';
 import { GetMarginAccountDetailResp } from './model_get_margin_account_detail_resp';
-import { GetMarginHFLedgerReq } from './model_get_margin_hf_ledger_req';
 import { GetIsolatedMarginAccountListV1Resp } from './model_get_isolated_margin_account_list_v1_resp';
+import { GetMarginHFLedgerReq } from './model_get_margin_hf_ledger_req';
 import { GetSpotAccountDetailResp } from './model_get_spot_account_detail_resp';
 import { GetSpotAccountTypeResp } from './model_get_spot_account_type_resp';
 
 export interface AccountAPI {
     /**
-     * getFuturesAccount Get Account - Futures
-     * Description: Request via this endpoint to get the info of the futures account.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470129
+     * getAccountInfo Get Account Summary Info
+     * Description: This endpoint can be used to obtain account summary information.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470119
+     * +---------------------+------------+
+     * | Extra API Info      | Value      |
+     * +---------------------+------------+
+     * | API-DOMAIN          | SPOT       |
+     * | API-CHANNEL         | PRIVATE    |
+     * | API-PERMISSION      | GENERAL    |
+     * | API-RATE-LIMIT-POOL | MANAGEMENT |
+     * | API-RATE-LIMIT      | 20         |
+     * +---------------------+------------+
+     */
+    getAccountInfo(): Promise<GetAccountInfoResp>;
+
+    /**
+     * getApikeyInfo Get Apikey Info
+     * Description: Get the information of the api key. Use the api key pending to be checked to call the endpoint. Both master and sub user\&#39;s api key are applicable.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470130
+     * +---------------------+------------+
+     * | Extra API Info      | Value      |
+     * +---------------------+------------+
+     * | API-DOMAIN          | SPOT       |
+     * | API-CHANNEL         | PRIVATE    |
+     * | API-PERMISSION      | GENERAL    |
+     * | API-RATE-LIMIT-POOL | MANAGEMENT |
+     * | API-RATE-LIMIT      | 20         |
+     * +---------------------+------------+
+     */
+    getApikeyInfo(): Promise<GetApikeyInfoResp>;
+
+    /**
+     * getSpotAccountType Get Account Type - Spot
+     * Description: This interface determines whether the current user is a spot high-frequency user or a spot low-frequency user.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470120
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
-     * | API-DOMAIN          | FUTURES |
+     * | API-DOMAIN          | SPOT    |
      * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | FUTURES |
-     * | API-RATE-LIMIT-POOL | FUTURES |
-     * | API-RATE-LIMIT      | 5       |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | SPOT    |
+     * | API-RATE-LIMIT      | 30      |
      * +---------------------+---------+
      */
-    getFuturesAccount(req: GetFuturesAccountReq): Promise<GetFuturesAccountResp>;
+    getSpotAccountType(): Promise<GetSpotAccountTypeResp>;
+
+    /**
+     * getSpotAccountList Get Account List - Spot
+     * Description: Get a list of accounts. Please Deposit to the main account firstly, then transfer the funds to the trade account via Inner Transfer before transaction.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470125
+     * +---------------------+------------+
+     * | Extra API Info      | Value      |
+     * +---------------------+------------+
+     * | API-DOMAIN          | SPOT       |
+     * | API-CHANNEL         | PRIVATE    |
+     * | API-PERMISSION      | GENERAL    |
+     * | API-RATE-LIMIT-POOL | MANAGEMENT |
+     * | API-RATE-LIMIT      | 5          |
+     * +---------------------+------------+
+     */
+    getSpotAccountList(req: GetSpotAccountListReq): Promise<GetSpotAccountListResp>;
 
     /**
      * getSpotAccountDetail Get Account Detail - Spot
@@ -62,20 +110,54 @@ export interface AccountAPI {
     getSpotAccountDetail(req: GetSpotAccountDetailReq): Promise<GetSpotAccountDetailResp>;
 
     /**
-     * getSpotAccountList Get Account List - Spot
-     * Description: Get a list of accounts. Please Deposit to the main account firstly, then transfer the funds to the trade account via Inner Transfer before transaction.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470125
-     * +---------------------+------------+
-     * | Extra API Info      | Value      |
-     * +---------------------+------------+
-     * | API-DOMAIN          | SPOT       |
-     * | API-CHANNEL         | PRIVATE    |
-     * | API-PERMISSION      | GENERAL    |
-     * | API-RATE-LIMIT-POOL | MANAGEMENT |
-     * | API-RATE-LIMIT      | 5          |
-     * +---------------------+------------+
+     * getCrossMarginAccount Get Account - Cross Margin
+     * Description: Request via this endpoint to get the info of the cross margin account.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470127
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | SPOT    |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | SPOT    |
+     * | API-RATE-LIMIT      | 15      |
+     * +---------------------+---------+
      */
-    getSpotAccountList(req: GetSpotAccountListReq): Promise<GetSpotAccountListResp>;
+    getCrossMarginAccount(req: GetCrossMarginAccountReq): Promise<GetCrossMarginAccountResp>;
+
+    /**
+     * getIsolatedMarginAccount Get Account - Isolated Margin
+     * Description: Request via this endpoint to get the info of the isolated margin account.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470128
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | SPOT    |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | SPOT    |
+     * | API-RATE-LIMIT      | 15      |
+     * +---------------------+---------+
+     */
+    getIsolatedMarginAccount(
+        req: GetIsolatedMarginAccountReq,
+    ): Promise<GetIsolatedMarginAccountResp>;
+
+    /**
+     * getFuturesAccount Get Account - Futures
+     * Description: Request via this endpoint to get the info of the futures account.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470129
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | FUTURES |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | FUTURES |
+     * | API-RATE-LIMIT-POOL | FUTURES |
+     * | API-RATE-LIMIT      | 5       |
+     * +---------------------+---------+
+     */
+    getFuturesAccount(req: GetFuturesAccountReq): Promise<GetFuturesAccountResp>;
 
     /**
      * getSpotLedger Get Account Ledgers - Spot/Margin
@@ -110,9 +192,9 @@ export interface AccountAPI {
     getSpotHFLedger(req: GetSpotHFLedgerReq): Promise<GetSpotHFLedgerResp>;
 
     /**
-     * getSpotAccountType Get Account Type - Spot
-     * Description: This interface determines whether the current user is a spot high-frequency user or a spot low-frequency user.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470120
+     * getMarginHFLedger Get Account Ledgers - Margin_hf
+     * Description: This API endpoint returns all transfer (in and out) records in high-frequency margin trading account and supports multi-coin queries. The query results are sorted in descending order by createdAt and id.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470123
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
@@ -120,16 +202,32 @@ export interface AccountAPI {
      * | API-CHANNEL         | PRIVATE |
      * | API-PERMISSION      | GENERAL |
      * | API-RATE-LIMIT-POOL | SPOT    |
-     * | API-RATE-LIMIT      | 30      |
+     * | API-RATE-LIMIT      | 2       |
      * +---------------------+---------+
      */
-    getSpotAccountType(): Promise<GetSpotAccountTypeResp>;
+    getMarginHFLedger(req: GetMarginHFLedgerReq): Promise<GetMarginHFLedgerResp>;
+
+    /**
+     * getFuturesLedger Get Account Ledgers - Futures
+     * Description: This interface can query the ledger records of the futures business line
+     * Documentation: https://www.kucoin.com/docs-new/api-3470124
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | FUTURES |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | FUTURES |
+     * | API-RATE-LIMIT      | 2       |
+     * +---------------------+---------+
+     */
+    getFuturesLedger(req: GetFuturesLedgerReq): Promise<GetFuturesLedgerResp>;
 
     /**
      * @deprecated
-     * getIsolatedMarginAccountDetailV1 Get Account Detail - Isolated Margin - V1
-     * Description: Request via this endpoint to get the info of the isolated margin account.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470315
+     * getMarginAccountDetail Get Account Detail - Margin
+     * Description: Request via this endpoint to get the info of the margin account.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470311
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
@@ -137,12 +235,10 @@ export interface AccountAPI {
      * | API-CHANNEL         | PRIVATE |
      * | API-PERMISSION      | GENERAL |
      * | API-RATE-LIMIT-POOL | SPOT    |
-     * | API-RATE-LIMIT      | 50      |
+     * | API-RATE-LIMIT      | 40      |
      * +---------------------+---------+
      */
-    getIsolatedMarginAccountDetailV1(
-        req: GetIsolatedMarginAccountDetailV1Req,
-    ): Promise<GetIsolatedMarginAccountDetailV1Resp>;
+    getMarginAccountDetail(): Promise<GetMarginAccountDetailResp>;
 
     /**
      * @deprecated
@@ -165,89 +261,9 @@ export interface AccountAPI {
 
     /**
      * @deprecated
-     * getMarginAccountDetail Get Account Detail - Margin
-     * Description: Request via this endpoint to get the info of the margin account.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470311
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | SPOT    |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | SPOT    |
-     * | API-RATE-LIMIT      | 40      |
-     * +---------------------+---------+
-     */
-    getMarginAccountDetail(): Promise<GetMarginAccountDetailResp>;
-
-    /**
-     * getFuturesLedger Get Account Ledgers - Futures
-     * Description: This interface can query the ledger records of the futures business line
-     * Documentation: https://www.kucoin.com/docs-new/api-3470124
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | FUTURES |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | FUTURES |
-     * | API-RATE-LIMIT      | 2       |
-     * +---------------------+---------+
-     */
-    getFuturesLedger(req: GetFuturesLedgerReq): Promise<GetFuturesLedgerResp>;
-
-    /**
-     * getApikeyInfo Get Apikey Info
-     * Description: Get the information of the api key. Use the api key pending to be checked to call the endpoint. Both master and sub user\&#39;s api key are applicable.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470130
-     * +---------------------+------------+
-     * | Extra API Info      | Value      |
-     * +---------------------+------------+
-     * | API-DOMAIN          | SPOT       |
-     * | API-CHANNEL         | PRIVATE    |
-     * | API-PERMISSION      | GENERAL    |
-     * | API-RATE-LIMIT-POOL | MANAGEMENT |
-     * | API-RATE-LIMIT      | 20         |
-     * +---------------------+------------+
-     */
-    getApikeyInfo(): Promise<GetApikeyInfoResp>;
-
-    /**
-     * getAccountInfo Get Account Summary Info
-     * Description: This endpoint can be used to obtain account summary information.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470119
-     * +---------------------+------------+
-     * | Extra API Info      | Value      |
-     * +---------------------+------------+
-     * | API-DOMAIN          | SPOT       |
-     * | API-CHANNEL         | PRIVATE    |
-     * | API-PERMISSION      | GENERAL    |
-     * | API-RATE-LIMIT-POOL | MANAGEMENT |
-     * | API-RATE-LIMIT      | 20         |
-     * +---------------------+------------+
-     */
-    getAccountInfo(): Promise<GetAccountInfoResp>;
-
-    /**
-     * getMarginHFLedger Get Account Ledgers - Margin_hf
-     * Description: This API endpoint returns all transfer (in and out) records in high-frequency margin trading account and supports multi-coin queries. The query results are sorted in descending order by createdAt and id.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470123
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | SPOT    |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | SPOT    |
-     * | API-RATE-LIMIT      | 2       |
-     * +---------------------+---------+
-     */
-    getMarginHFLedger(req: GetMarginHFLedgerReq): Promise<GetMarginHFLedgerResp>;
-
-    /**
-     * getIsolatedMarginAccount Get Account - Isolated Margin
+     * getIsolatedMarginAccountDetailV1 Get Account Detail - Isolated Margin - V1
      * Description: Request via this endpoint to get the info of the isolated margin account.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470128
+     * Documentation: https://www.kucoin.com/docs-new/api-3470315
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
@@ -255,41 +271,61 @@ export interface AccountAPI {
      * | API-CHANNEL         | PRIVATE |
      * | API-PERMISSION      | GENERAL |
      * | API-RATE-LIMIT-POOL | SPOT    |
-     * | API-RATE-LIMIT      | 15      |
+     * | API-RATE-LIMIT      | 50      |
      * +---------------------+---------+
      */
-    getIsolatedMarginAccount(
-        req: GetIsolatedMarginAccountReq,
-    ): Promise<GetIsolatedMarginAccountResp>;
-
-    /**
-     * getCrossMarginAccount Get Account - Cross Margin
-     * Description: Request via this endpoint to get the info of the cross margin account.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470127
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | SPOT    |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | SPOT    |
-     * | API-RATE-LIMIT      | 15      |
-     * +---------------------+---------+
-     */
-    getCrossMarginAccount(req: GetCrossMarginAccountReq): Promise<GetCrossMarginAccountResp>;
+    getIsolatedMarginAccountDetailV1(
+        req: GetIsolatedMarginAccountDetailV1Req,
+    ): Promise<GetIsolatedMarginAccountDetailV1Resp>;
 }
 
 export class AccountAPIImpl implements AccountAPI {
     constructor(private transport: Transport) {}
 
-    getFuturesAccount(req: GetFuturesAccountReq): Promise<GetFuturesAccountResp> {
+    getAccountInfo(): Promise<GetAccountInfoResp> {
         return this.transport.call(
-            'futures',
+            'spot',
             false,
             'GET',
-            '/api/v1/account-overview',
+            '/api/v2/user-info',
+            null,
+            new GetAccountInfoResp(),
+            false,
+        );
+    }
+
+    getApikeyInfo(): Promise<GetApikeyInfoResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'GET',
+            '/api/v1/user/api-key',
+            null,
+            new GetApikeyInfoResp(),
+            false,
+        );
+    }
+
+    getSpotAccountType(): Promise<GetSpotAccountTypeResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'GET',
+            '/api/v1/hf/accounts/opened',
+            null,
+            new GetSpotAccountTypeResp(),
+            false,
+        );
+    }
+
+    getSpotAccountList(req: GetSpotAccountListReq): Promise<GetSpotAccountListResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'GET',
+            '/api/v1/accounts',
             req,
-            new GetFuturesAccountResp(),
+            new GetSpotAccountListResp(),
             false,
         );
     }
@@ -306,14 +342,40 @@ export class AccountAPIImpl implements AccountAPI {
         );
     }
 
-    getSpotAccountList(req: GetSpotAccountListReq): Promise<GetSpotAccountListResp> {
+    getCrossMarginAccount(req: GetCrossMarginAccountReq): Promise<GetCrossMarginAccountResp> {
         return this.transport.call(
             'spot',
             false,
             'GET',
-            '/api/v1/accounts',
+            '/api/v3/margin/accounts',
             req,
-            new GetSpotAccountListResp(),
+            new GetCrossMarginAccountResp(),
+            false,
+        );
+    }
+
+    getIsolatedMarginAccount(
+        req: GetIsolatedMarginAccountReq,
+    ): Promise<GetIsolatedMarginAccountResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'GET',
+            '/api/v3/isolated/accounts',
+            req,
+            new GetIsolatedMarginAccountResp(),
+            false,
+        );
+    }
+
+    getFuturesAccount(req: GetFuturesAccountReq): Promise<GetFuturesAccountResp> {
+        return this.transport.call(
+            'futures',
+            false,
+            'GET',
+            '/api/v1/account-overview',
+            req,
+            new GetFuturesAccountResp(),
             false,
         );
     }
@@ -342,28 +404,38 @@ export class AccountAPIImpl implements AccountAPI {
         );
     }
 
-    getSpotAccountType(): Promise<GetSpotAccountTypeResp> {
+    getMarginHFLedger(req: GetMarginHFLedgerReq): Promise<GetMarginHFLedgerResp> {
         return this.transport.call(
             'spot',
             false,
             'GET',
-            '/api/v1/hf/accounts/opened',
-            null,
-            new GetSpotAccountTypeResp(),
+            '/api/v3/hf/margin/account/ledgers',
+            req,
+            new GetMarginHFLedgerResp(),
             false,
         );
     }
 
-    getIsolatedMarginAccountDetailV1(
-        req: GetIsolatedMarginAccountDetailV1Req,
-    ): Promise<GetIsolatedMarginAccountDetailV1Resp> {
+    getFuturesLedger(req: GetFuturesLedgerReq): Promise<GetFuturesLedgerResp> {
+        return this.transport.call(
+            'futures',
+            false,
+            'GET',
+            '/api/v1/transaction-history',
+            req,
+            new GetFuturesLedgerResp(),
+            false,
+        );
+    }
+
+    getMarginAccountDetail(): Promise<GetMarginAccountDetailResp> {
         return this.transport.call(
             'spot',
             false,
             'GET',
-            '/api/v1/isolated/account/{symbol}',
-            req,
-            new GetIsolatedMarginAccountDetailV1Resp(),
+            '/api/v1/margin/account',
+            null,
+            new GetMarginAccountDetailResp(),
             false,
         );
     }
@@ -382,88 +454,16 @@ export class AccountAPIImpl implements AccountAPI {
         );
     }
 
-    getMarginAccountDetail(): Promise<GetMarginAccountDetailResp> {
+    getIsolatedMarginAccountDetailV1(
+        req: GetIsolatedMarginAccountDetailV1Req,
+    ): Promise<GetIsolatedMarginAccountDetailV1Resp> {
         return this.transport.call(
             'spot',
             false,
             'GET',
-            '/api/v1/margin/account',
-            null,
-            new GetMarginAccountDetailResp(),
-            false,
-        );
-    }
-
-    getFuturesLedger(req: GetFuturesLedgerReq): Promise<GetFuturesLedgerResp> {
-        return this.transport.call(
-            'futures',
-            false,
-            'GET',
-            '/api/v1/transaction-history',
+            '/api/v1/isolated/account/{symbol}',
             req,
-            new GetFuturesLedgerResp(),
-            false,
-        );
-    }
-
-    getApikeyInfo(): Promise<GetApikeyInfoResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'GET',
-            '/api/v1/user/api-key',
-            null,
-            new GetApikeyInfoResp(),
-            false,
-        );
-    }
-
-    getAccountInfo(): Promise<GetAccountInfoResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'GET',
-            '/api/v2/user-info',
-            null,
-            new GetAccountInfoResp(),
-            false,
-        );
-    }
-
-    getMarginHFLedger(req: GetMarginHFLedgerReq): Promise<GetMarginHFLedgerResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'GET',
-            '/api/v3/hf/margin/account/ledgers',
-            req,
-            new GetMarginHFLedgerResp(),
-            false,
-        );
-    }
-
-    getIsolatedMarginAccount(
-        req: GetIsolatedMarginAccountReq,
-    ): Promise<GetIsolatedMarginAccountResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'GET',
-            '/api/v3/isolated/accounts',
-            req,
-            new GetIsolatedMarginAccountResp(),
-            false,
-        );
-    }
-
-    getCrossMarginAccount(req: GetCrossMarginAccountReq): Promise<GetCrossMarginAccountResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'GET',
-            '/api/v3/margin/accounts',
-            req,
-            new GetCrossMarginAccountResp(),
+            new GetIsolatedMarginAccountDetailV1Resp(),
             false,
         );
     }

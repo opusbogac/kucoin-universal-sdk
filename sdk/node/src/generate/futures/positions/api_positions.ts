@@ -7,14 +7,14 @@ import { ModifyAutoDepositStatusReq } from './model_modify_auto_deposit_status_r
 import { GetMaxOpenSizeReq } from './model_get_max_open_size_req';
 import { GetMaxWithdrawMarginResp } from './model_get_max_withdraw_margin_resp';
 import { AddIsolatedMarginResp } from './model_add_isolated_margin_resp';
-import { GetMarginModeReq } from './model_get_margin_mode_req';
 import { GetCrossMarginLeverageResp } from './model_get_cross_margin_leverage_resp';
+import { GetMarginModeReq } from './model_get_margin_mode_req';
 import { SwitchMarginModeResp } from './model_switch_margin_mode_resp';
 import { GetPositionsHistoryResp } from './model_get_positions_history_resp';
 import { GetPositionListReq } from './model_get_position_list_req';
 import { GetIsolatedMarginRiskLimitReq } from './model_get_isolated_margin_risk_limit_req';
-import { GetCrossMarginLeverageReq } from './model_get_cross_margin_leverage_req';
 import { GetIsolatedMarginRiskLimitResp } from './model_get_isolated_margin_risk_limit_resp';
+import { GetCrossMarginLeverageReq } from './model_get_cross_margin_leverage_req';
 import { GetMarginModeResp } from './model_get_margin_mode_resp';
 import { ModifyMarginLeverageReq } from './model_modify_margin_leverage_req';
 import { RemoveIsolatedMarginResp } from './model_remove_isolated_margin_resp';
@@ -22,8 +22,8 @@ import { ModifyMarginLeverageResp } from './model_modify_margin_leverage_resp';
 import { GetPositionDetailsReq } from './model_get_position_details_req';
 import { ModifyAutoDepositStatusResp } from './model_modify_auto_deposit_status_resp';
 import { SwitchMarginModeReq } from './model_switch_margin_mode_req';
-import { GetMaxOpenSizeResp } from './model_get_max_open_size_resp';
 import { GetPositionListResp } from './model_get_position_list_resp';
+import { GetMaxOpenSizeResp } from './model_get_max_open_size_resp';
 import { GetPositionDetailsResp } from './model_get_position_details_resp';
 import { ModifyIsolatedMarginRiskLimtResp } from './model_modify_isolated_margin_risk_limt_resp';
 import { ModifyIsolatedMarginRiskLimtReq } from './model_modify_isolated_margin_risk_limt_req';
@@ -32,22 +32,84 @@ import { GetMaxWithdrawMarginReq } from './model_get_max_withdraw_margin_req';
 
 export interface PositionsAPI {
     /**
-     * getIsolatedMarginRiskLimit Get Isolated Margin Risk Limit
-     * Description: This interface can be used to obtain information about risk limit level of a specific contract(Only valid for isolated Margin).
-     * Documentation: https://www.kucoin.com/docs-new/api-3470263
+     * getMarginMode Get Margin Mode
+     * Description: This interface can query the margin mode of the current symbol.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470259
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
      * | API-DOMAIN          | FUTURES |
      * | API-CHANNEL         | PRIVATE |
      * | API-PERMISSION      | FUTURES |
-     * | API-RATE-LIMIT-POOL | PUBLIC  |
-     * | API-RATE-LIMIT      | 5       |
+     * | API-RATE-LIMIT-POOL | FUTURES |
+     * | API-RATE-LIMIT      | 2       |
      * +---------------------+---------+
      */
-    getIsolatedMarginRiskLimit(
-        req: GetIsolatedMarginRiskLimitReq,
-    ): Promise<GetIsolatedMarginRiskLimitResp>;
+    getMarginMode(req: GetMarginModeReq): Promise<GetMarginModeResp>;
+
+    /**
+     * switchMarginMode Switch Margin Mode
+     * Description: This interface can modify the margin mode of the current symbol.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470262
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | FUTURES |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | FUTURES |
+     * | API-RATE-LIMIT-POOL | FUTURES |
+     * | API-RATE-LIMIT      | 2       |
+     * +---------------------+---------+
+     */
+    switchMarginMode(req: SwitchMarginModeReq): Promise<SwitchMarginModeResp>;
+
+    /**
+     * getMaxOpenSize Get Max Open Size
+     * Description: Get Maximum Open Position Size.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470251
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | FUTURES |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | FUTURES |
+     * | API-RATE-LIMIT-POOL | FUTURES |
+     * | API-RATE-LIMIT      | 2       |
+     * +---------------------+---------+
+     */
+    getMaxOpenSize(req: GetMaxOpenSizeReq): Promise<GetMaxOpenSizeResp>;
+
+    /**
+     * getPositionDetails Get Position Details
+     * Description: Get the position details of a specified position.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470252
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | FUTURES |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | FUTURES |
+     * | API-RATE-LIMIT-POOL | FUTURES |
+     * | API-RATE-LIMIT      | 2       |
+     * +---------------------+---------+
+     */
+    getPositionDetails(req: GetPositionDetailsReq): Promise<GetPositionDetailsResp>;
+
+    /**
+     * getPositionList Get Position List
+     * Description: Get the position details of a specified position.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470253
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | FUTURES |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | FUTURES |
+     * | API-RATE-LIMIT-POOL | FUTURES |
+     * | API-RATE-LIMIT      | 2       |
+     * +---------------------+---------+
+     */
+    getPositionList(req: GetPositionListReq): Promise<GetPositionListResp>;
 
     /**
      * getPositionsHistory Get Positions History
@@ -82,25 +144,9 @@ export interface PositionsAPI {
     getMaxWithdrawMargin(req: GetMaxWithdrawMarginReq): Promise<GetMaxWithdrawMarginResp>;
 
     /**
-     * removeIsolatedMargin Remove Isolated Margin
-     * Description: Remove Isolated Margin Manually.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470256
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | FUTURES |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | FUTURES |
-     * | API-RATE-LIMIT-POOL | FUTURES |
-     * | API-RATE-LIMIT      | 10      |
-     * +---------------------+---------+
-     */
-    removeIsolatedMargin(req: RemoveIsolatedMarginReq): Promise<RemoveIsolatedMarginResp>;
-
-    /**
-     * getPositionDetails Get Position Details
-     * Description: Get the position details of a specified position.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470252
+     * getCrossMarginLeverage Get Cross Margin Leverage
+     * Description: This interface can query the current symbol’s cross-margin leverage multiple.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470260
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
@@ -111,13 +157,12 @@ export interface PositionsAPI {
      * | API-RATE-LIMIT      | 2       |
      * +---------------------+---------+
      */
-    getPositionDetails(req: GetPositionDetailsReq): Promise<GetPositionDetailsResp>;
+    getCrossMarginLeverage(req: GetCrossMarginLeverageReq): Promise<GetCrossMarginLeverageResp>;
 
     /**
-     * @deprecated
-     * modifyAutoDepositStatus Modify Isolated Margin Auto-Deposit Status
-     * Description: This endpoint is only applicable to isolated margin and is no longer recommended. It is recommended to use cross margin instead.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470255
+     * modifyMarginLeverage Modify Cross Margin Leverage
+     * Description: This interface can modify the current symbol’s cross-margin leverage multiple.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470261
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
@@ -125,10 +170,10 @@ export interface PositionsAPI {
      * | API-CHANNEL         | PRIVATE |
      * | API-PERMISSION      | FUTURES |
      * | API-RATE-LIMIT-POOL | FUTURES |
-     * | API-RATE-LIMIT      | 4       |
+     * | API-RATE-LIMIT      | 2       |
      * +---------------------+---------+
      */
-    modifyAutoDepositStatus(req: ModifyAutoDepositStatusReq): Promise<ModifyAutoDepositStatusResp>;
+    modifyMarginLeverage(req: ModifyMarginLeverageReq): Promise<ModifyMarginLeverageResp>;
 
     /**
      * addIsolatedMargin Add Isolated Margin
@@ -145,6 +190,40 @@ export interface PositionsAPI {
      * +---------------------+---------+
      */
     addIsolatedMargin(req: AddIsolatedMarginReq): Promise<AddIsolatedMarginResp>;
+
+    /**
+     * removeIsolatedMargin Remove Isolated Margin
+     * Description: Remove Isolated Margin Manually.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470256
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | FUTURES |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | FUTURES |
+     * | API-RATE-LIMIT-POOL | FUTURES |
+     * | API-RATE-LIMIT      | 10      |
+     * +---------------------+---------+
+     */
+    removeIsolatedMargin(req: RemoveIsolatedMarginReq): Promise<RemoveIsolatedMarginResp>;
+
+    /**
+     * getIsolatedMarginRiskLimit Get Isolated Margin Risk Limit
+     * Description: This interface can be used to obtain information about risk limit level of a specific contract(Only valid for isolated Margin).
+     * Documentation: https://www.kucoin.com/docs-new/api-3470263
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | FUTURES |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | FUTURES |
+     * | API-RATE-LIMIT-POOL | PUBLIC  |
+     * | API-RATE-LIMIT      | 5       |
+     * +---------------------+---------+
+     */
+    getIsolatedMarginRiskLimit(
+        req: GetIsolatedMarginRiskLimitReq,
+    ): Promise<GetIsolatedMarginRiskLimitResp>;
 
     /**
      * modifyIsolatedMarginRiskLimt Modify Isolated Margin Risk Limit
@@ -165,9 +244,10 @@ export interface PositionsAPI {
     ): Promise<ModifyIsolatedMarginRiskLimtResp>;
 
     /**
-     * getPositionList Get Position List
-     * Description: Get the position details of a specified position.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470253
+     * @deprecated
+     * modifyAutoDepositStatus Modify Isolated Margin Auto-Deposit Status
+     * Description: This endpoint is only applicable to isolated margin and is no longer recommended. It is recommended to use cross margin instead.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470255
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
@@ -175,105 +255,71 @@ export interface PositionsAPI {
      * | API-CHANNEL         | PRIVATE |
      * | API-PERMISSION      | FUTURES |
      * | API-RATE-LIMIT-POOL | FUTURES |
-     * | API-RATE-LIMIT      | 2       |
+     * | API-RATE-LIMIT      | 4       |
      * +---------------------+---------+
      */
-    getPositionList(req: GetPositionListReq): Promise<GetPositionListResp>;
-
-    /**
-     * modifyMarginLeverage Modify Cross Margin Leverage
-     * Description: This interface can modify the current symbol’s cross-margin leverage multiple.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470261
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | FUTURES |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | FUTURES |
-     * | API-RATE-LIMIT-POOL | FUTURES |
-     * | API-RATE-LIMIT      | 2       |
-     * +---------------------+---------+
-     */
-    modifyMarginLeverage(req: ModifyMarginLeverageReq): Promise<ModifyMarginLeverageResp>;
-
-    /**
-     * getCrossMarginLeverage Get Cross Margin Leverage
-     * Description: This interface can query the current symbol’s cross-margin leverage multiple.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470260
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | FUTURES |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | FUTURES |
-     * | API-RATE-LIMIT-POOL | FUTURES |
-     * | API-RATE-LIMIT      | 2       |
-     * +---------------------+---------+
-     */
-    getCrossMarginLeverage(req: GetCrossMarginLeverageReq): Promise<GetCrossMarginLeverageResp>;
-
-    /**
-     * getMaxOpenSize Get Max Open Size
-     * Description: Get Maximum Open Position Size.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470251
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | FUTURES |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | FUTURES |
-     * | API-RATE-LIMIT-POOL | FUTURES |
-     * | API-RATE-LIMIT      | 2       |
-     * +---------------------+---------+
-     */
-    getMaxOpenSize(req: GetMaxOpenSizeReq): Promise<GetMaxOpenSizeResp>;
-
-    /**
-     * switchMarginMode Switch Margin Mode
-     * Description: This interface can modify the margin mode of the current symbol.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470262
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | FUTURES |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | FUTURES |
-     * | API-RATE-LIMIT-POOL | FUTURES |
-     * | API-RATE-LIMIT      | 2       |
-     * +---------------------+---------+
-     */
-    switchMarginMode(req: SwitchMarginModeReq): Promise<SwitchMarginModeResp>;
-
-    /**
-     * getMarginMode Get Margin Mode
-     * Description: This interface can query the margin mode of the current symbol.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470259
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | FUTURES |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | FUTURES |
-     * | API-RATE-LIMIT-POOL | FUTURES |
-     * | API-RATE-LIMIT      | 2       |
-     * +---------------------+---------+
-     */
-    getMarginMode(req: GetMarginModeReq): Promise<GetMarginModeResp>;
+    modifyAutoDepositStatus(req: ModifyAutoDepositStatusReq): Promise<ModifyAutoDepositStatusResp>;
 }
 
 export class PositionsAPIImpl implements PositionsAPI {
     constructor(private transport: Transport) {}
 
-    getIsolatedMarginRiskLimit(
-        req: GetIsolatedMarginRiskLimitReq,
-    ): Promise<GetIsolatedMarginRiskLimitResp> {
+    getMarginMode(req: GetMarginModeReq): Promise<GetMarginModeResp> {
         return this.transport.call(
             'futures',
             false,
             'GET',
-            '/api/v1/contracts/risk-limit/{symbol}',
+            '/api/v2/position/getMarginMode',
             req,
-            new GetIsolatedMarginRiskLimitResp(),
+            new GetMarginModeResp(),
+            false,
+        );
+    }
+
+    switchMarginMode(req: SwitchMarginModeReq): Promise<SwitchMarginModeResp> {
+        return this.transport.call(
+            'futures',
+            false,
+            'POST',
+            '/api/v2/position/changeMarginMode',
+            req,
+            new SwitchMarginModeResp(),
+            false,
+        );
+    }
+
+    getMaxOpenSize(req: GetMaxOpenSizeReq): Promise<GetMaxOpenSizeResp> {
+        return this.transport.call(
+            'futures',
+            false,
+            'GET',
+            '/api/v2/getMaxOpenSize',
+            req,
+            new GetMaxOpenSizeResp(),
+            false,
+        );
+    }
+
+    getPositionDetails(req: GetPositionDetailsReq): Promise<GetPositionDetailsResp> {
+        return this.transport.call(
+            'futures',
+            false,
+            'GET',
+            '/api/v1/position',
+            req,
+            new GetPositionDetailsResp(),
+            false,
+        );
+    }
+
+    getPositionList(req: GetPositionListReq): Promise<GetPositionListResp> {
+        return this.transport.call(
+            'futures',
+            false,
+            'GET',
+            '/api/v1/positions',
+            req,
+            new GetPositionListResp(),
             false,
         );
     }
@@ -302,38 +348,26 @@ export class PositionsAPIImpl implements PositionsAPI {
         );
     }
 
-    removeIsolatedMargin(req: RemoveIsolatedMarginReq): Promise<RemoveIsolatedMarginResp> {
-        return this.transport.call(
-            'futures',
-            false,
-            'POST',
-            '/api/v1/margin/withdrawMargin',
-            req,
-            new RemoveIsolatedMarginResp(),
-            false,
-        );
-    }
-
-    getPositionDetails(req: GetPositionDetailsReq): Promise<GetPositionDetailsResp> {
+    getCrossMarginLeverage(req: GetCrossMarginLeverageReq): Promise<GetCrossMarginLeverageResp> {
         return this.transport.call(
             'futures',
             false,
             'GET',
-            '/api/v1/position',
+            '/api/v2/getCrossUserLeverage',
             req,
-            new GetPositionDetailsResp(),
+            new GetCrossMarginLeverageResp(),
             false,
         );
     }
 
-    modifyAutoDepositStatus(req: ModifyAutoDepositStatusReq): Promise<ModifyAutoDepositStatusResp> {
+    modifyMarginLeverage(req: ModifyMarginLeverageReq): Promise<ModifyMarginLeverageResp> {
         return this.transport.call(
             'futures',
             false,
             'POST',
-            '/api/v1/position/margin/auto-deposit-status',
+            '/api/v2/changeCrossUserLeverage',
             req,
-            new ModifyAutoDepositStatusResp(),
+            new ModifyMarginLeverageResp(),
             false,
         );
     }
@@ -346,6 +380,32 @@ export class PositionsAPIImpl implements PositionsAPI {
             '/api/v1/position/margin/deposit-margin',
             req,
             new AddIsolatedMarginResp(),
+            false,
+        );
+    }
+
+    removeIsolatedMargin(req: RemoveIsolatedMarginReq): Promise<RemoveIsolatedMarginResp> {
+        return this.transport.call(
+            'futures',
+            false,
+            'POST',
+            '/api/v1/margin/withdrawMargin',
+            req,
+            new RemoveIsolatedMarginResp(),
+            false,
+        );
+    }
+
+    getIsolatedMarginRiskLimit(
+        req: GetIsolatedMarginRiskLimitReq,
+    ): Promise<GetIsolatedMarginRiskLimitResp> {
+        return this.transport.call(
+            'futures',
+            false,
+            'GET',
+            '/api/v1/contracts/risk-limit/{symbol}',
+            req,
+            new GetIsolatedMarginRiskLimitResp(),
             false,
         );
     }
@@ -364,74 +424,14 @@ export class PositionsAPIImpl implements PositionsAPI {
         );
     }
 
-    getPositionList(req: GetPositionListReq): Promise<GetPositionListResp> {
-        return this.transport.call(
-            'futures',
-            false,
-            'GET',
-            '/api/v1/positions',
-            req,
-            new GetPositionListResp(),
-            false,
-        );
-    }
-
-    modifyMarginLeverage(req: ModifyMarginLeverageReq): Promise<ModifyMarginLeverageResp> {
+    modifyAutoDepositStatus(req: ModifyAutoDepositStatusReq): Promise<ModifyAutoDepositStatusResp> {
         return this.transport.call(
             'futures',
             false,
             'POST',
-            '/api/v2/changeCrossUserLeverage',
+            '/api/v1/position/margin/auto-deposit-status',
             req,
-            new ModifyMarginLeverageResp(),
-            false,
-        );
-    }
-
-    getCrossMarginLeverage(req: GetCrossMarginLeverageReq): Promise<GetCrossMarginLeverageResp> {
-        return this.transport.call(
-            'futures',
-            false,
-            'GET',
-            '/api/v2/getCrossUserLeverage',
-            req,
-            new GetCrossMarginLeverageResp(),
-            false,
-        );
-    }
-
-    getMaxOpenSize(req: GetMaxOpenSizeReq): Promise<GetMaxOpenSizeResp> {
-        return this.transport.call(
-            'futures',
-            false,
-            'GET',
-            '/api/v2/getMaxOpenSize',
-            req,
-            new GetMaxOpenSizeResp(),
-            false,
-        );
-    }
-
-    switchMarginMode(req: SwitchMarginModeReq): Promise<SwitchMarginModeResp> {
-        return this.transport.call(
-            'futures',
-            false,
-            'POST',
-            '/api/v2/position/changeMarginMode',
-            req,
-            new SwitchMarginModeResp(),
-            false,
-        );
-    }
-
-    getMarginMode(req: GetMarginModeReq): Promise<GetMarginModeResp> {
-        return this.transport.call(
-            'futures',
-            false,
-            'GET',
-            '/api/v2/position/getMarginMode',
-            req,
-            new GetMarginModeResp(),
+            new ModifyAutoDepositStatusResp(),
             false,
         );
     }

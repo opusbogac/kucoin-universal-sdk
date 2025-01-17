@@ -29,6 +29,7 @@ describe('Auto Test', ()=> {
         {{#vars}}
         expect(result.{{name}}).toEqual(expect.anything());
         {{/vars}}
+        console.log(resp);
     {{/vendorExtensions.x-response-model}}
     });
     })

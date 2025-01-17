@@ -17,6 +17,7 @@ describe('Auto Test', ()=> {
     let resp = api.getRebase(req);
     return resp.then(result => {
         expect(result.url).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

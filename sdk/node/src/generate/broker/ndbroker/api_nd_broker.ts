@@ -23,48 +23,16 @@ import { GetSubAccountAPIResp } from './model_get_sub_account_api_resp';
 import { GetBrokerInfoResp } from './model_get_broker_info_resp';
 import { GetTransferHistoryReq } from './model_get_transfer_history_req';
 import { AddSubAccountResp } from './model_add_sub_account_resp';
-import { GetBrokerInfoReq } from './model_get_broker_info_req';
 import { GetDepositListReq } from './model_get_deposit_list_req';
+import { GetBrokerInfoReq } from './model_get_broker_info_req';
 import { ModifySubAccountApiReq } from './model_modify_sub_account_api_req';
 import { TransferReq } from './model_transfer_req';
 
 export interface NDBrokerAPI {
     /**
-     * getDepositList Get Deposit List
-     * Description: This endpoint can obtain the deposit records of each sub-account under the ND Broker.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470285
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | BROKER  |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | BROKER  |
-     * | API-RATE-LIMIT      | 10      |
-     * +---------------------+---------+
-     */
-    getDepositList(req: GetDepositListReq): Promise<GetDepositListResp>;
-
-    /**
-     * deleteSubAccountAPI Delete SubAccount API
-     * Description: This interface supports deleting Broker’s sub-account APIKEY
-     * Documentation: https://www.kucoin.com/docs-new/api-3470289
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | BROKER  |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | BROKER  |
-     * | API-RATE-LIMIT      | 3       |
-     * +---------------------+---------+
-     */
-    deleteSubAccountAPI(req: DeleteSubAccountAPIReq): Promise<DeleteSubAccountAPIResp>;
-
-    /**
-     * getSubAccountAPI Get SubAccount API
-     * Description: This interface supports querying the Broker’s sub-account APIKEY
-     * Documentation: https://www.kucoin.com/docs-new/api-3470284
+     * getBrokerInfo Get Broker Info
+     * Description: This endpoint supports querying the basic information of the current Broker
+     * Documentation: https://www.kucoin.com/docs-new/api-3470282
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
@@ -75,39 +43,7 @@ export interface NDBrokerAPI {
      * | API-RATE-LIMIT      | 2       |
      * +---------------------+---------+
      */
-    getSubAccountAPI(req: GetSubAccountAPIReq): Promise<GetSubAccountAPIResp>;
-
-    /**
-     * addSubAccountApi Add SubAccount API
-     * Description: This interface supports the creation of Broker sub-account APIKEY
-     * Documentation: https://www.kucoin.com/docs-new/api-3470291
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | BROKER  |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | BROKER  |
-     * | API-RATE-LIMIT      | 3       |
-     * +---------------------+---------+
-     */
-    addSubAccountApi(req: AddSubAccountApiReq): Promise<AddSubAccountApiResp>;
-
-    /**
-     * getSubAccount Get SubAccount
-     * Description: This interface supports querying sub-accounts created by Broker
-     * Documentation: https://www.kucoin.com/docs-new/api-3470283
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | BROKER  |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | BROKER  |
-     * | API-RATE-LIMIT      | 2       |
-     * +---------------------+---------+
-     */
-    getSubAccount(req: GetSubAccountReq): Promise<GetSubAccountResp>;
+    getBrokerInfo(req: GetBrokerInfoReq): Promise<GetBrokerInfoResp>;
 
     /**
      * addSubAccount Add SubAccount
@@ -126,6 +62,54 @@ export interface NDBrokerAPI {
     addSubAccount(req: AddSubAccountReq): Promise<AddSubAccountResp>;
 
     /**
+     * getSubAccount Get SubAccount
+     * Description: This interface supports querying sub-accounts created by Broker
+     * Documentation: https://www.kucoin.com/docs-new/api-3470283
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | BROKER  |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | BROKER  |
+     * | API-RATE-LIMIT      | 2       |
+     * +---------------------+---------+
+     */
+    getSubAccount(req: GetSubAccountReq): Promise<GetSubAccountResp>;
+
+    /**
+     * addSubAccountApi Add SubAccount API
+     * Description: This interface supports the creation of Broker sub-account APIKEY
+     * Documentation: https://www.kucoin.com/docs-new/api-3470291
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | BROKER  |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | BROKER  |
+     * | API-RATE-LIMIT      | 3       |
+     * +---------------------+---------+
+     */
+    addSubAccountApi(req: AddSubAccountApiReq): Promise<AddSubAccountApiResp>;
+
+    /**
+     * getSubAccountAPI Get SubAccount API
+     * Description: This interface supports querying the Broker’s sub-account APIKEY
+     * Documentation: https://www.kucoin.com/docs-new/api-3470284
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | BROKER  |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | BROKER  |
+     * | API-RATE-LIMIT      | 2       |
+     * +---------------------+---------+
+     */
+    getSubAccountAPI(req: GetSubAccountAPIReq): Promise<GetSubAccountAPIResp>;
+
+    /**
      * modifySubAccountApi Modify SubAccount API
      * Description: This interface supports modify the Broker’s sub-account APIKEY
      * Documentation: https://www.kucoin.com/docs-new/api-3470292
@@ -142,25 +126,9 @@ export interface NDBrokerAPI {
     modifySubAccountApi(req: ModifySubAccountApiReq): Promise<ModifySubAccountApiResp>;
 
     /**
-     * getBrokerInfo Get Broker Info
-     * Description: This endpoint supports querying the basic information of the current Broker
-     * Documentation: https://www.kucoin.com/docs-new/api-3470282
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | BROKER  |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | BROKER  |
-     * | API-RATE-LIMIT      | 2       |
-     * +---------------------+---------+
-     */
-    getBrokerInfo(req: GetBrokerInfoReq): Promise<GetBrokerInfoResp>;
-
-    /**
-     * getRebase Get Broker Rebate
-     * Description: This interface supports downloading Broker rebate orders
-     * Documentation: https://www.kucoin.com/docs-new/api-3470281
+     * deleteSubAccountAPI Delete SubAccount API
+     * Description: This interface supports deleting Broker’s sub-account APIKEY
+     * Documentation: https://www.kucoin.com/docs-new/api-3470289
      * +---------------------+---------+
      * | Extra API Info      | Value   |
      * +---------------------+---------+
@@ -171,7 +139,7 @@ export interface NDBrokerAPI {
      * | API-RATE-LIMIT      | 3       |
      * +---------------------+---------+
      */
-    getRebase(req: GetRebaseReq): Promise<GetRebaseResp>;
+    deleteSubAccountAPI(req: DeleteSubAccountAPIReq): Promise<DeleteSubAccountAPIResp>;
 
     /**
      * transfer Transfer
@@ -190,22 +158,6 @@ export interface NDBrokerAPI {
     transfer(req: TransferReq): Promise<TransferResp>;
 
     /**
-     * getDepositDetail Get Deposit Detail
-     * Description: This endpoint supports querying the deposit record of sub-accounts created by a Broker (excluding main account of nd broker)
-     * Documentation: https://www.kucoin.com/docs-new/api-3470288
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | BROKER  |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | BROKER  |
-     * | API-RATE-LIMIT      | 1       |
-     * +---------------------+---------+
-     */
-    getDepositDetail(req: GetDepositDetailReq): Promise<GetDepositDetailResp>;
-
-    /**
      * getTransferHistory Get Transfer History
      * Description: This endpoint supports querying transfer records of the broker itself and its created sub-accounts.
      * Documentation: https://www.kucoin.com/docs-new/api-3470286
@@ -222,6 +174,38 @@ export interface NDBrokerAPI {
     getTransferHistory(req: GetTransferHistoryReq): Promise<GetTransferHistoryResp>;
 
     /**
+     * getDepositList Get Deposit List
+     * Description: This endpoint can obtain the deposit records of each sub-account under the ND Broker.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470285
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | BROKER  |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | BROKER  |
+     * | API-RATE-LIMIT      | 10      |
+     * +---------------------+---------+
+     */
+    getDepositList(req: GetDepositListReq): Promise<GetDepositListResp>;
+
+    /**
+     * getDepositDetail Get Deposit Detail
+     * Description: This endpoint supports querying the deposit record of sub-accounts created by a Broker (excluding main account of nd broker)
+     * Documentation: https://www.kucoin.com/docs-new/api-3470288
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | BROKER  |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | BROKER  |
+     * | API-RATE-LIMIT      | 1       |
+     * +---------------------+---------+
+     */
+    getDepositDetail(req: GetDepositDetailReq): Promise<GetDepositDetailResp>;
+
+    /**
      * getWithdrawDetail Get Withdraw Detail
      * Description: This endpoint supports querying the withdrawal records of sub-accounts created by a Broker (excluding main account of nd broker).
      * Documentation: https://www.kucoin.com/docs-new/api-3470287
@@ -236,67 +220,35 @@ export interface NDBrokerAPI {
      * +---------------------+---------+
      */
     getWithdrawDetail(req: GetWithdrawDetailReq): Promise<GetWithdrawDetailResp>;
+
+    /**
+     * getRebase Get Broker Rebate
+     * Description: This interface supports downloading Broker rebate orders
+     * Documentation: https://www.kucoin.com/docs-new/api-3470281
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | BROKER  |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | BROKER  |
+     * | API-RATE-LIMIT      | 3       |
+     * +---------------------+---------+
+     */
+    getRebase(req: GetRebaseReq): Promise<GetRebaseResp>;
 }
 
 export class NDBrokerAPIImpl implements NDBrokerAPI {
     constructor(private transport: Transport) {}
 
-    getDepositList(req: GetDepositListReq): Promise<GetDepositListResp> {
+    getBrokerInfo(req: GetBrokerInfoReq): Promise<GetBrokerInfoResp> {
         return this.transport.call(
             'broker',
             true,
             'GET',
-            '/api/v1/asset/ndbroker/deposit/list',
+            '/api/v1/broker/nd/info',
             req,
-            new GetDepositListResp(),
-            false,
-        );
-    }
-
-    deleteSubAccountAPI(req: DeleteSubAccountAPIReq): Promise<DeleteSubAccountAPIResp> {
-        return this.transport.call(
-            'broker',
-            true,
-            'DELETE',
-            '/api/v1/broker/nd/account/apikey',
-            req,
-            new DeleteSubAccountAPIResp(),
-            false,
-        );
-    }
-
-    getSubAccountAPI(req: GetSubAccountAPIReq): Promise<GetSubAccountAPIResp> {
-        return this.transport.call(
-            'broker',
-            true,
-            'GET',
-            '/api/v1/broker/nd/account/apikey',
-            req,
-            new GetSubAccountAPIResp(),
-            false,
-        );
-    }
-
-    addSubAccountApi(req: AddSubAccountApiReq): Promise<AddSubAccountApiResp> {
-        return this.transport.call(
-            'broker',
-            true,
-            'POST',
-            '/api/v1/broker/nd/account/apikey',
-            req,
-            new AddSubAccountApiResp(),
-            false,
-        );
-    }
-
-    getSubAccount(req: GetSubAccountReq): Promise<GetSubAccountResp> {
-        return this.transport.call(
-            'broker',
-            true,
-            'GET',
-            '/api/v1/broker/nd/account',
-            req,
-            new GetSubAccountResp(),
+            new GetBrokerInfoResp(),
             false,
         );
     }
@@ -313,6 +265,42 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
         );
     }
 
+    getSubAccount(req: GetSubAccountReq): Promise<GetSubAccountResp> {
+        return this.transport.call(
+            'broker',
+            true,
+            'GET',
+            '/api/v1/broker/nd/account',
+            req,
+            new GetSubAccountResp(),
+            false,
+        );
+    }
+
+    addSubAccountApi(req: AddSubAccountApiReq): Promise<AddSubAccountApiResp> {
+        return this.transport.call(
+            'broker',
+            true,
+            'POST',
+            '/api/v1/broker/nd/account/apikey',
+            req,
+            new AddSubAccountApiResp(),
+            false,
+        );
+    }
+
+    getSubAccountAPI(req: GetSubAccountAPIReq): Promise<GetSubAccountAPIResp> {
+        return this.transport.call(
+            'broker',
+            true,
+            'GET',
+            '/api/v1/broker/nd/account/apikey',
+            req,
+            new GetSubAccountAPIResp(),
+            false,
+        );
+    }
+
     modifySubAccountApi(req: ModifySubAccountApiReq): Promise<ModifySubAccountApiResp> {
         return this.transport.call(
             'broker',
@@ -325,26 +313,14 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
         );
     }
 
-    getBrokerInfo(req: GetBrokerInfoReq): Promise<GetBrokerInfoResp> {
+    deleteSubAccountAPI(req: DeleteSubAccountAPIReq): Promise<DeleteSubAccountAPIResp> {
         return this.transport.call(
             'broker',
             true,
-            'GET',
-            '/api/v1/broker/nd/info',
+            'DELETE',
+            '/api/v1/broker/nd/account/apikey',
             req,
-            new GetBrokerInfoResp(),
-            false,
-        );
-    }
-
-    getRebase(req: GetRebaseReq): Promise<GetRebaseResp> {
-        return this.transport.call(
-            'broker',
-            true,
-            'GET',
-            '/api/v1/broker/nd/rebase/download',
-            req,
-            new GetRebaseResp(),
+            new DeleteSubAccountAPIResp(),
             false,
         );
     }
@@ -361,18 +337,6 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
         );
     }
 
-    getDepositDetail(req: GetDepositDetailReq): Promise<GetDepositDetailResp> {
-        return this.transport.call(
-            'broker',
-            true,
-            'GET',
-            '/api/v3/broker/nd/deposit/detail',
-            req,
-            new GetDepositDetailResp(),
-            false,
-        );
-    }
-
     getTransferHistory(req: GetTransferHistoryReq): Promise<GetTransferHistoryResp> {
         return this.transport.call(
             'broker',
@@ -385,6 +349,30 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
         );
     }
 
+    getDepositList(req: GetDepositListReq): Promise<GetDepositListResp> {
+        return this.transport.call(
+            'broker',
+            true,
+            'GET',
+            '/api/v1/asset/ndbroker/deposit/list',
+            req,
+            new GetDepositListResp(),
+            false,
+        );
+    }
+
+    getDepositDetail(req: GetDepositDetailReq): Promise<GetDepositDetailResp> {
+        return this.transport.call(
+            'broker',
+            true,
+            'GET',
+            '/api/v3/broker/nd/deposit/detail',
+            req,
+            new GetDepositDetailResp(),
+            false,
+        );
+    }
+
     getWithdrawDetail(req: GetWithdrawDetailReq): Promise<GetWithdrawDetailResp> {
         return this.transport.call(
             'broker',
@@ -393,6 +381,18 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             '/api/v3/broker/nd/withdraw/detail',
             req,
             new GetWithdrawDetailResp(),
+            false,
+        );
+    }
+
+    getRebase(req: GetRebaseReq): Promise<GetRebaseResp> {
+        return this.transport.call(
+            'broker',
+            true,
+            'GET',
+            '/api/v1/broker/nd/rebase/download',
+            req,
+            new GetRebaseResp(),
             false,
         );
     }

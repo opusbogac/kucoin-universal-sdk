@@ -5,72 +5,112 @@ describe('Auto Test', ()=> {
     beforeAll(()=> {
         api = ??
     });
-    test('getPrivateToken request test', ()=> {
+    test('getAnnouncements request test', ()=> {
     /**
-    * getPrivateToken
-    * Get Private Token - Spot/Margin
-    * /api/v1/bullet-private
+    * getAnnouncements
+    * Get Announcements
+    * /api/v3/announcements
     */
-    let resp = api.getPrivateToken();
-    return resp.then(result => {
-        expect(result.token).toEqual(expect.anything());
-        expect(result.instanceServers).toEqual(expect.anything());
-    });
-    })
-
-    test('getPublicToken request test', ()=> {
-    /**
-    * getPublicToken
-    * Get Public Token - Spot/Margin
-    * /api/v1/bullet-public
-    */
-    let resp = api.getPublicToken();
-    return resp.then(result => {
-        expect(result.token).toEqual(expect.anything());
-        expect(result.instanceServers).toEqual(expect.anything());
-    });
-    })
-
-    test('getAllTickers request test', ()=> {
-    /**
-    * getAllTickers
-    * Get All Tickers
-    * /api/v1/market/allTickers
-    */
-    let resp = api.getAllTickers();
-    return resp.then(result => {
-        expect(result.time).toEqual(expect.anything());
-        expect(result.ticker).toEqual(expect.anything());
-    });
-    })
-
-    test('getKlines request test', ()=> {
-    /**
-    * getKlines
-    * Get Klines
-    * /api/v1/market/candles
-    */
-    let builder = GetKlinesReq.builder();
-    builder.setSymbol(?).setType(?).setStartAt(?).setEndAt(?);
+    let builder = GetAnnouncementsReq.builder();
+    builder.setCurrentPage(?).setPageSize(?).setAnnType(?).setLang(?).setStartTime(?).setEndTime(?);
     let req = builder.build();
-    let resp = api.getKlines(req);
+    let resp = api.getAnnouncements(req);
+    return resp.then(result => {
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getCurrency request test', ()=> {
+    /**
+    * getCurrency
+    * Get Currency
+    * /api/v3/currencies/{currency}
+    */
+    let builder = GetCurrencyReq.builder();
+    builder.setCurrency(?).setChain(?);
+    let req = builder.build();
+    let resp = api.getCurrency(req);
+    return resp.then(result => {
+        expect(result.currency).toEqual(expect.anything());
+        expect(result.name).toEqual(expect.anything());
+        expect(result.fullName).toEqual(expect.anything());
+        expect(result.precision).toEqual(expect.anything());
+        expect(result.confirms).toEqual(expect.anything());
+        expect(result.contractAddress).toEqual(expect.anything());
+        expect(result.isMarginEnabled).toEqual(expect.anything());
+        expect(result.isDebitEnabled).toEqual(expect.anything());
+        expect(result.chains).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getAllCurrencies request test', ()=> {
+    /**
+    * getAllCurrencies
+    * Get All Currencies
+    * /api/v3/currencies
+    */
+    let resp = api.getAllCurrencies();
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getTradeHistory request test', ()=> {
+    test('getSymbol request test', ()=> {
     /**
-    * getTradeHistory
-    * Get Trade History
-    * /api/v1/market/histories
+    * getSymbol
+    * Get Symbol 
+    * /api/v2/symbols/{symbol}
     */
-    let builder = GetTradeHistoryReq.builder();
+    let builder = GetSymbolReq.builder();
     builder.setSymbol(?);
     let req = builder.build();
-    let resp = api.getTradeHistory(req);
+    let resp = api.getSymbol(req);
+    return resp.then(result => {
+        expect(result.symbol).toEqual(expect.anything());
+        expect(result.name).toEqual(expect.anything());
+        expect(result.baseCurrency).toEqual(expect.anything());
+        expect(result.quoteCurrency).toEqual(expect.anything());
+        expect(result.feeCurrency).toEqual(expect.anything());
+        expect(result.market).toEqual(expect.anything());
+        expect(result.baseMinSize).toEqual(expect.anything());
+        expect(result.quoteMinSize).toEqual(expect.anything());
+        expect(result.baseMaxSize).toEqual(expect.anything());
+        expect(result.quoteMaxSize).toEqual(expect.anything());
+        expect(result.baseIncrement).toEqual(expect.anything());
+        expect(result.quoteIncrement).toEqual(expect.anything());
+        expect(result.priceIncrement).toEqual(expect.anything());
+        expect(result.priceLimitRate).toEqual(expect.anything());
+        expect(result.minFunds).toEqual(expect.anything());
+        expect(result.isMarginEnabled).toEqual(expect.anything());
+        expect(result.enableTrading).toEqual(expect.anything());
+        expect(result.feeCategory).toEqual(expect.anything());
+        expect(result.makerFeeCoefficient).toEqual(expect.anything());
+        expect(result.takerFeeCoefficient).toEqual(expect.anything());
+        expect(result.st).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getAllSymbols request test', ()=> {
+    /**
+    * getAllSymbols
+    * Get All Symbols
+    * /api/v2/symbols
+    */
+    let builder = GetAllSymbolsReq.builder();
+    builder.setMarket(?);
+    let req = builder.build();
+    let resp = api.getAllSymbols(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -93,6 +133,53 @@ describe('Auto Test', ()=> {
         expect(result.bestBidSize).toEqual(expect.anything());
         expect(result.bestAsk).toEqual(expect.anything());
         expect(result.bestAskSize).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getAllTickers request test', ()=> {
+    /**
+    * getAllTickers
+    * Get All Tickers
+    * /api/v1/market/allTickers
+    */
+    let resp = api.getAllTickers();
+    return resp.then(result => {
+        expect(result.time).toEqual(expect.anything());
+        expect(result.ticker).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getTradeHistory request test', ()=> {
+    /**
+    * getTradeHistory
+    * Get Trade History
+    * /api/v1/market/histories
+    */
+    let builder = GetTradeHistoryReq.builder();
+    builder.setSymbol(?);
+    let req = builder.build();
+    let resp = api.getTradeHistory(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getKlines request test', ()=> {
+    /**
+    * getKlines
+    * Get Klines
+    * /api/v1/market/candles
+    */
+    let builder = GetKlinesReq.builder();
+    builder.setSymbol(?).setType(?).setStartAt(?).setEndAt(?);
+    let req = builder.build();
+    let resp = api.getKlines(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -111,48 +198,26 @@ describe('Auto Test', ()=> {
         expect(result.sequence).toEqual(expect.anything());
         expect(result.bids).toEqual(expect.anything());
         expect(result.asks).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('get24hrStats request test', ()=> {
+    test('getFullOrderBook request test', ()=> {
     /**
-    * get24hrStats
-    * Get 24hr Stats
-    * /api/v1/market/stats
+    * getFullOrderBook
+    * Get Full OrderBook
+    * /api/v3/market/orderbook/level2
     */
-    let builder = Get24hrStatsReq.builder();
+    let builder = GetFullOrderBookReq.builder();
     builder.setSymbol(?);
     let req = builder.build();
-    let resp = api.get24hrStats(req);
+    let resp = api.getFullOrderBook(req);
     return resp.then(result => {
         expect(result.time).toEqual(expect.anything());
-        expect(result.symbol).toEqual(expect.anything());
-        expect(result.buy).toEqual(expect.anything());
-        expect(result.sell).toEqual(expect.anything());
-        expect(result.changeRate).toEqual(expect.anything());
-        expect(result.changePrice).toEqual(expect.anything());
-        expect(result.high).toEqual(expect.anything());
-        expect(result.low).toEqual(expect.anything());
-        expect(result.vol).toEqual(expect.anything());
-        expect(result.volValue).toEqual(expect.anything());
-        expect(result.last).toEqual(expect.anything());
-        expect(result.averagePrice).toEqual(expect.anything());
-        expect(result.takerFeeRate).toEqual(expect.anything());
-        expect(result.makerFeeRate).toEqual(expect.anything());
-        expect(result.takerCoefficient).toEqual(expect.anything());
-        expect(result.makerCoefficient).toEqual(expect.anything());
-    });
-    })
-
-    test('getMarketList request test', ()=> {
-    /**
-    * getMarketList
-    * Get Market List
-    * /api/v1/markets
-    */
-    let resp = api.getMarketList();
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
+        expect(result.sequence).toEqual(expect.anything());
+        expect(result.bids).toEqual(expect.anything());
+        expect(result.asks).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -1063,6 +1128,64 @@ describe('Auto Test', ()=> {
         expect(result.BAX).toEqual(expect.anything());
         expect(result.FTM3S).toEqual(expect.anything());
         expect(result.COTI).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('get24hrStats request test', ()=> {
+    /**
+    * get24hrStats
+    * Get 24hr Stats
+    * /api/v1/market/stats
+    */
+    let builder = Get24hrStatsReq.builder();
+    builder.setSymbol(?);
+    let req = builder.build();
+    let resp = api.get24hrStats(req);
+    return resp.then(result => {
+        expect(result.time).toEqual(expect.anything());
+        expect(result.symbol).toEqual(expect.anything());
+        expect(result.buy).toEqual(expect.anything());
+        expect(result.sell).toEqual(expect.anything());
+        expect(result.changeRate).toEqual(expect.anything());
+        expect(result.changePrice).toEqual(expect.anything());
+        expect(result.high).toEqual(expect.anything());
+        expect(result.low).toEqual(expect.anything());
+        expect(result.vol).toEqual(expect.anything());
+        expect(result.volValue).toEqual(expect.anything());
+        expect(result.last).toEqual(expect.anything());
+        expect(result.averagePrice).toEqual(expect.anything());
+        expect(result.takerFeeRate).toEqual(expect.anything());
+        expect(result.makerFeeRate).toEqual(expect.anything());
+        expect(result.takerCoefficient).toEqual(expect.anything());
+        expect(result.makerCoefficient).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getMarketList request test', ()=> {
+    /**
+    * getMarketList
+    * Get Market List
+    * /api/v1/markets
+    */
+    let resp = api.getMarketList();
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getServerTime request test', ()=> {
+    /**
+    * getServerTime
+    * Get Server Time
+    * /api/v1/timestamp
+    */
+    let resp = api.getServerTime();
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -1076,140 +1199,35 @@ describe('Auto Test', ()=> {
     return resp.then(result => {
         expect(result.status).toEqual(expect.anything());
         expect(result.msg).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getServerTime request test', ()=> {
+    test('getPublicToken request test', ()=> {
     /**
-    * getServerTime
-    * Get Server Time
-    * /api/v1/timestamp
+    * getPublicToken
+    * Get Public Token - Spot/Margin
+    * /api/v1/bullet-public
     */
-    let resp = api.getServerTime();
+    let resp = api.getPublicToken();
     return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
+        expect(result.token).toEqual(expect.anything());
+        expect(result.instanceServers).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getAllSymbols request test', ()=> {
+    test('getPrivateToken request test', ()=> {
     /**
-    * getAllSymbols
-    * Get All Symbols
-    * /api/v2/symbols
+    * getPrivateToken
+    * Get Private Token - Spot/Margin
+    * /api/v1/bullet-private
     */
-    let builder = GetAllSymbolsReq.builder();
-    builder.setMarket(?);
-    let req = builder.build();
-    let resp = api.getAllSymbols(req);
+    let resp = api.getPrivateToken();
     return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('getSymbol request test', ()=> {
-    /**
-    * getSymbol
-    * Get Symbol 
-    * /api/v2/symbols/{symbol}
-    */
-    let builder = GetSymbolReq.builder();
-    builder.setSymbol(?);
-    let req = builder.build();
-    let resp = api.getSymbol(req);
-    return resp.then(result => {
-        expect(result.symbol).toEqual(expect.anything());
-        expect(result.name).toEqual(expect.anything());
-        expect(result.baseCurrency).toEqual(expect.anything());
-        expect(result.quoteCurrency).toEqual(expect.anything());
-        expect(result.feeCurrency).toEqual(expect.anything());
-        expect(result.market).toEqual(expect.anything());
-        expect(result.baseMinSize).toEqual(expect.anything());
-        expect(result.quoteMinSize).toEqual(expect.anything());
-        expect(result.baseMaxSize).toEqual(expect.anything());
-        expect(result.quoteMaxSize).toEqual(expect.anything());
-        expect(result.baseIncrement).toEqual(expect.anything());
-        expect(result.quoteIncrement).toEqual(expect.anything());
-        expect(result.priceIncrement).toEqual(expect.anything());
-        expect(result.priceLimitRate).toEqual(expect.anything());
-        expect(result.minFunds).toEqual(expect.anything());
-        expect(result.isMarginEnabled).toEqual(expect.anything());
-        expect(result.enableTrading).toEqual(expect.anything());
-        expect(result.feeCategory).toEqual(expect.anything());
-        expect(result.makerFeeCoefficient).toEqual(expect.anything());
-        expect(result.takerFeeCoefficient).toEqual(expect.anything());
-        expect(result.st).toEqual(expect.anything());
-    });
-    })
-
-    test('getAnnouncements request test', ()=> {
-    /**
-    * getAnnouncements
-    * Get Announcements
-    * /api/v3/announcements
-    */
-    let builder = GetAnnouncementsReq.builder();
-    builder.setCurrentPage(?).setPageSize(?).setAnnType(?).setLang(?).setStartTime(?).setEndTime(?);
-    let req = builder.build();
-    let resp = api.getAnnouncements(req);
-    return resp.then(result => {
-        expect(result.totalNum).toEqual(expect.anything());
-        expect(result.items).toEqual(expect.anything());
-        expect(result.currentPage).toEqual(expect.anything());
-        expect(result.pageSize).toEqual(expect.anything());
-        expect(result.totalPage).toEqual(expect.anything());
-    });
-    })
-
-    test('getCurrency request test', ()=> {
-    /**
-    * getCurrency
-    * Get Currency
-    * /api/v3/currencies/{currency}
-    */
-    let builder = GetCurrencyReq.builder();
-    builder.setCurrency(?).setChain(?);
-    let req = builder.build();
-    let resp = api.getCurrency(req);
-    return resp.then(result => {
-        expect(result.currency).toEqual(expect.anything());
-        expect(result.name).toEqual(expect.anything());
-        expect(result.fullName).toEqual(expect.anything());
-        expect(result.precision).toEqual(expect.anything());
-        expect(result.confirms).toEqual(expect.anything());
-        expect(result.contractAddress).toEqual(expect.anything());
-        expect(result.isMarginEnabled).toEqual(expect.anything());
-        expect(result.isDebitEnabled).toEqual(expect.anything());
-        expect(result.chains).toEqual(expect.anything());
-    });
-    })
-
-    test('getAllCurrencies request test', ()=> {
-    /**
-    * getAllCurrencies
-    * Get All Currencies
-    * /api/v3/currencies
-    */
-    let resp = api.getAllCurrencies();
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('getFullOrderBook request test', ()=> {
-    /**
-    * getFullOrderBook
-    * Get Full OrderBook
-    * /api/v3/market/orderbook/level2
-    */
-    let builder = GetFullOrderBookReq.builder();
-    builder.setSymbol(?);
-    let req = builder.build();
-    let resp = api.getFullOrderBook(req);
-    return resp.then(result => {
-        expect(result.time).toEqual(expect.anything());
-        expect(result.sequence).toEqual(expect.anything());
-        expect(result.bids).toEqual(expect.anything());
-        expect(result.asks).toEqual(expect.anything());
+        expect(result.token).toEqual(expect.anything());
+        expect(result.instanceServers).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

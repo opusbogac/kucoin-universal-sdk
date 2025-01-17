@@ -5,37 +5,6 @@ describe('Auto Test', ()=> {
     beforeAll(()=> {
         api = ??
     });
-    test('getPublicFundingHistory request test', ()=> {
-    /**
-    * getPublicFundingHistory
-    * Get Public Funding History
-    * /api/v1/contract/funding-rates
-    */
-    let builder = GetPublicFundingHistoryReq.builder();
-    builder.setSymbol(?).setFrom(?).setTo(?);
-    let req = builder.build();
-    let resp = api.getPublicFundingHistory(req);
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('getPrivateFundingHistory request test', ()=> {
-    /**
-    * getPrivateFundingHistory
-    * Get Private Funding History
-    * /api/v1/funding-history
-    */
-    let builder = GetPrivateFundingHistoryReq.builder();
-    builder.setSymbol(?).setFrom(?).setTo(?).setReverse(?).setOffset(?).setForward(?).setMaxCount(?);
-    let req = builder.build();
-    let resp = api.getPrivateFundingHistory(req);
-    return resp.then(result => {
-        expect(result.dataList).toEqual(expect.anything());
-        expect(result.hasMore).toEqual(expect.anything());
-    });
-    })
-
     test('getCurrentFundingRate request test', ()=> {
     /**
     * getCurrentFundingRate
@@ -54,6 +23,40 @@ describe('Auto Test', ()=> {
         expect(result.predictedValue).toEqual(expect.anything());
         expect(result.fundingRateCap).toEqual(expect.anything());
         expect(result.fundingRateFloor).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getPublicFundingHistory request test', ()=> {
+    /**
+    * getPublicFundingHistory
+    * Get Public Funding History
+    * /api/v1/contract/funding-rates
+    */
+    let builder = GetPublicFundingHistoryReq.builder();
+    builder.setSymbol(?).setFrom(?).setTo(?);
+    let req = builder.build();
+    let resp = api.getPublicFundingHistory(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getPrivateFundingHistory request test', ()=> {
+    /**
+    * getPrivateFundingHistory
+    * Get Private Funding History
+    * /api/v1/funding-history
+    */
+    let builder = GetPrivateFundingHistoryReq.builder();
+    builder.setSymbol(?).setFrom(?).setTo(?).setReverse(?).setOffset(?).setForward(?).setMaxCount(?);
+    let req = builder.build();
+    let resp = api.getPrivateFundingHistory(req);
+    return resp.then(result => {
+        expect(result.dataList).toEqual(expect.anything());
+        expect(result.hasMore).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

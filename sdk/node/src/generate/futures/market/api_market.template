@@ -5,56 +5,6 @@ describe('Auto Test', ()=> {
     beforeAll(()=> {
         api = ??
     });
-    test('getAllTickers request test', ()=> {
-    /**
-    * getAllTickers
-    * Get All Tickers
-    * /api/v1/allTickers
-    */
-    let resp = api.getAllTickers();
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('getPrivateToken request test', ()=> {
-    /**
-    * getPrivateToken
-    * Get Private Token - Futures
-    * /api/v1/bullet-private
-    */
-    let resp = api.getPrivateToken();
-    return resp.then(result => {
-        expect(result.token).toEqual(expect.anything());
-        expect(result.instanceServers).toEqual(expect.anything());
-    });
-    })
-
-    test('getPublicToken request test', ()=> {
-    /**
-    * getPublicToken
-    * Get Public Token - Futures
-    * /api/v1/bullet-public
-    */
-    let resp = api.getPublicToken();
-    return resp.then(result => {
-        expect(result.token).toEqual(expect.anything());
-        expect(result.instanceServers).toEqual(expect.anything());
-    });
-    })
-
-    test('getAllSymbols request test', ()=> {
-    /**
-    * getAllSymbols
-    * Get All Symbols
-    * /api/v1/contracts/active
-    */
-    let resp = api.getAllSymbols();
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
     test('getSymbol request test', ()=> {
     /**
     * getSymbol
@@ -128,139 +78,20 @@ describe('Auto Test', ()=> {
         expect(result.mmrLimit).toEqual(expect.anything());
         expect(result.mmrLevConstant).toEqual(expect.anything());
         expect(result.supportCross).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getSpotIndexPrice request test', ()=> {
+    test('getAllSymbols request test', ()=> {
     /**
-    * getSpotIndexPrice
-    * Get Spot Index Price
-    * /api/v1/index/query
+    * getAllSymbols
+    * Get All Symbols
+    * /api/v1/contracts/active
     */
-    let builder = GetSpotIndexPriceReq.builder();
-    builder.setSymbol(?).setStartAt(?).setEndAt(?).setReverse(?).setOffset(?).setForward(?).setMaxCount(?);
-    let req = builder.build();
-    let resp = api.getSpotIndexPrice(req);
-    return resp.then(result => {
-        expect(result.dataList).toEqual(expect.anything());
-        expect(result.hasMore).toEqual(expect.anything());
-    });
-    })
-
-    test('getInterestRateIndex request test', ()=> {
-    /**
-    * getInterestRateIndex
-    * Get Interest Rate Index
-    * /api/v1/interest/query
-    */
-    let builder = GetInterestRateIndexReq.builder();
-    builder.setSymbol(?).setStartAt(?).setEndAt(?).setReverse(?).setOffset(?).setForward(?).setMaxCount(?);
-    let req = builder.build();
-    let resp = api.getInterestRateIndex(req);
-    return resp.then(result => {
-        expect(result.dataList).toEqual(expect.anything());
-        expect(result.hasMore).toEqual(expect.anything());
-    });
-    })
-
-    test('getKlines request test', ()=> {
-    /**
-    * getKlines
-    * Get Klines
-    * /api/v1/kline/query
-    */
-    let builder = GetKlinesReq.builder();
-    builder.setSymbol(?).setGranularity(?).setFrom(?).setTo(?);
-    let req = builder.build();
-    let resp = api.getKlines(req);
+    let resp = api.getAllSymbols();
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('getPartOrderBook request test', ()=> {
-    /**
-    * getPartOrderBook
-    * Get Part OrderBook
-    * /api/v1/level2/depth{size}
-    */
-    let builder = GetPartOrderBookReq.builder();
-    builder.setSymbol(?).setSize(?);
-    let req = builder.build();
-    let resp = api.getPartOrderBook(req);
-    return resp.then(result => {
-        expect(result.sequence).toEqual(expect.anything());
-        expect(result.symbol).toEqual(expect.anything());
-        expect(result.bids).toEqual(expect.anything());
-        expect(result.asks).toEqual(expect.anything());
-        expect(result.ts).toEqual(expect.anything());
-    });
-    })
-
-    test('getFullOrderBook request test', ()=> {
-    /**
-    * getFullOrderBook
-    * Get Full OrderBook
-    * /api/v1/level2/snapshot
-    */
-    let builder = GetFullOrderBookReq.builder();
-    builder.setSymbol(?);
-    let req = builder.build();
-    let resp = api.getFullOrderBook(req);
-    return resp.then(result => {
-        expect(result.sequence).toEqual(expect.anything());
-        expect(result.symbol).toEqual(expect.anything());
-        expect(result.bids).toEqual(expect.anything());
-        expect(result.asks).toEqual(expect.anything());
-        expect(result.ts).toEqual(expect.anything());
-    });
-    })
-
-    test('getMarkPrice request test', ()=> {
-    /**
-    * getMarkPrice
-    * Get Mark Price
-    * /api/v1/mark-price/{symbol}/current
-    */
-    let builder = GetMarkPriceReq.builder();
-    builder.setSymbol(?);
-    let req = builder.build();
-    let resp = api.getMarkPrice(req);
-    return resp.then(result => {
-        expect(result.symbol).toEqual(expect.anything());
-        expect(result.granularity).toEqual(expect.anything());
-        expect(result.timePoint).toEqual(expect.anything());
-        expect(result.value).toEqual(expect.anything());
-        expect(result.indexPrice).toEqual(expect.anything());
-    });
-    })
-
-    test('getPremiumIndex request test', ()=> {
-    /**
-    * getPremiumIndex
-    * Get Premium Index
-    * /api/v1/premium/query
-    */
-    let builder = GetPremiumIndexReq.builder();
-    builder.setSymbol(?).setStartAt(?).setEndAt(?).setReverse(?).setOffset(?).setForward(?).setMaxCount(?);
-    let req = builder.build();
-    let resp = api.getPremiumIndex(req);
-    return resp.then(result => {
-        expect(result.dataList).toEqual(expect.anything());
-        expect(result.hasMore).toEqual(expect.anything());
-    });
-    })
-
-    test('getServiceStatus request test', ()=> {
-    /**
-    * getServiceStatus
-    * Get Service Status
-    * /api/v1/status
-    */
-    let resp = api.getServiceStatus();
-    return resp.then(result => {
-        expect(result.msg).toEqual(expect.anything());
-        expect(result.status).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -286,18 +117,60 @@ describe('Auto Test', ()=> {
         expect(result.bestAskPrice).toEqual(expect.anything());
         expect(result.bestAskSize).toEqual(expect.anything());
         expect(result.ts).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getServerTime request test', ()=> {
+    test('getAllTickers request test', ()=> {
     /**
-    * getServerTime
-    * Get Server Time
-    * /api/v1/timestamp
+    * getAllTickers
+    * Get All Tickers
+    * /api/v1/allTickers
     */
-    let resp = api.getServerTime();
+    let resp = api.getAllTickers();
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getFullOrderBook request test', ()=> {
+    /**
+    * getFullOrderBook
+    * Get Full OrderBook
+    * /api/v1/level2/snapshot
+    */
+    let builder = GetFullOrderBookReq.builder();
+    builder.setSymbol(?);
+    let req = builder.build();
+    let resp = api.getFullOrderBook(req);
+    return resp.then(result => {
+        expect(result.sequence).toEqual(expect.anything());
+        expect(result.symbol).toEqual(expect.anything());
+        expect(result.bids).toEqual(expect.anything());
+        expect(result.asks).toEqual(expect.anything());
+        expect(result.ts).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getPartOrderBook request test', ()=> {
+    /**
+    * getPartOrderBook
+    * Get Part OrderBook
+    * /api/v1/level2/depth{size}
+    */
+    let builder = GetPartOrderBookReq.builder();
+    builder.setSymbol(?).setSize(?);
+    let req = builder.build();
+    let resp = api.getPartOrderBook(req);
+    return resp.then(result => {
+        expect(result.sequence).toEqual(expect.anything());
+        expect(result.symbol).toEqual(expect.anything());
+        expect(result.bids).toEqual(expect.anything());
+        expect(result.asks).toEqual(expect.anything());
+        expect(result.ts).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -313,6 +186,94 @@ describe('Auto Test', ()=> {
     let resp = api.getTradeHistory(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getKlines request test', ()=> {
+    /**
+    * getKlines
+    * Get Klines
+    * /api/v1/kline/query
+    */
+    let builder = GetKlinesReq.builder();
+    builder.setSymbol(?).setGranularity(?).setFrom(?).setTo(?);
+    let req = builder.build();
+    let resp = api.getKlines(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getMarkPrice request test', ()=> {
+    /**
+    * getMarkPrice
+    * Get Mark Price
+    * /api/v1/mark-price/{symbol}/current
+    */
+    let builder = GetMarkPriceReq.builder();
+    builder.setSymbol(?);
+    let req = builder.build();
+    let resp = api.getMarkPrice(req);
+    return resp.then(result => {
+        expect(result.symbol).toEqual(expect.anything());
+        expect(result.granularity).toEqual(expect.anything());
+        expect(result.timePoint).toEqual(expect.anything());
+        expect(result.value).toEqual(expect.anything());
+        expect(result.indexPrice).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getSpotIndexPrice request test', ()=> {
+    /**
+    * getSpotIndexPrice
+    * Get Spot Index Price
+    * /api/v1/index/query
+    */
+    let builder = GetSpotIndexPriceReq.builder();
+    builder.setSymbol(?).setStartAt(?).setEndAt(?).setReverse(?).setOffset(?).setForward(?).setMaxCount(?);
+    let req = builder.build();
+    let resp = api.getSpotIndexPrice(req);
+    return resp.then(result => {
+        expect(result.dataList).toEqual(expect.anything());
+        expect(result.hasMore).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getInterestRateIndex request test', ()=> {
+    /**
+    * getInterestRateIndex
+    * Get Interest Rate Index
+    * /api/v1/interest/query
+    */
+    let builder = GetInterestRateIndexReq.builder();
+    builder.setSymbol(?).setStartAt(?).setEndAt(?).setReverse(?).setOffset(?).setForward(?).setMaxCount(?);
+    let req = builder.build();
+    let resp = api.getInterestRateIndex(req);
+    return resp.then(result => {
+        expect(result.dataList).toEqual(expect.anything());
+        expect(result.hasMore).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getPremiumIndex request test', ()=> {
+    /**
+    * getPremiumIndex
+    * Get Premium Index
+    * /api/v1/premium/query
+    */
+    let builder = GetPremiumIndexReq.builder();
+    builder.setSymbol(?).setStartAt(?).setEndAt(?).setReverse(?).setOffset(?).setForward(?).setMaxCount(?);
+    let req = builder.build();
+    let resp = api.getPremiumIndex(req);
+    return resp.then(result => {
+        expect(result.dataList).toEqual(expect.anything());
+        expect(result.hasMore).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -325,6 +286,62 @@ describe('Auto Test', ()=> {
     let resp = api.get24hrStats();
     return resp.then(result => {
         expect(result.turnoverOf24h).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getServerTime request test', ()=> {
+    /**
+    * getServerTime
+    * Get Server Time
+    * /api/v1/timestamp
+    */
+    let resp = api.getServerTime();
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getServiceStatus request test', ()=> {
+    /**
+    * getServiceStatus
+    * Get Service Status
+    * /api/v1/status
+    */
+    let resp = api.getServiceStatus();
+    return resp.then(result => {
+        expect(result.msg).toEqual(expect.anything());
+        expect(result.status).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getPublicToken request test', ()=> {
+    /**
+    * getPublicToken
+    * Get Public Token - Futures
+    * /api/v1/bullet-public
+    */
+    let resp = api.getPublicToken();
+    return resp.then(result => {
+        expect(result.token).toEqual(expect.anything());
+        expect(result.instanceServers).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getPrivateToken request test', ()=> {
+    /**
+    * getPrivateToken
+    * Get Private Token - Futures
+    * /api/v1/bullet-private
+    */
+    let resp = api.getPrivateToken();
+    return resp.then(result => {
+        expect(result.token).toEqual(expect.anything());
+        expect(result.instanceServers).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

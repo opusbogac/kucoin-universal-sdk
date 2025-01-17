@@ -2,8 +2,8 @@
 
 import { Transport } from '@internal/interfaces/transport';
 import { GetStakingProductsReq } from './model_get_staking_products_req';
-import { GetSavingsProductsReq } from './model_get_savings_products_req';
 import { GetPromotionProductsReq } from './model_get_promotion_products_req';
+import { GetSavingsProductsReq } from './model_get_savings_products_req';
 import { GetPromotionProductsResp } from './model_get_promotion_products_resp';
 import { PurchaseReq } from './model_purchase_req';
 import { GetAccountHoldingResp } from './model_get_account_holding_resp';
@@ -22,70 +22,6 @@ import { GetKcsStakingProductsResp } from './model_get_kcs_staking_products_resp
 
 export interface EarnAPI {
     /**
-     * getETHStakingProducts Get ETH Staking Products
-     * Description: This endpoint can get available ETH staking products. If no products are available, an empty list is returned.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470276
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | SPOT    |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | EARN    |
-     * | API-RATE-LIMIT      | 5       |
-     * +---------------------+---------+
-     */
-    getETHStakingProducts(req: GetETHStakingProductsReq): Promise<GetETHStakingProductsResp>;
-
-    /**
-     * getAccountHolding Get Account Holding
-     * Description: This endpoint can get current holding assets information. If no current holding assets are available, an empty list is returned.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470273
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | SPOT    |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | EARN    |
-     * | API-RATE-LIMIT      | 5       |
-     * +---------------------+---------+
-     */
-    getAccountHolding(req: GetAccountHoldingReq): Promise<GetAccountHoldingResp>;
-
-    /**
-     * getKcsStakingProducts Get KCS Staking Products
-     * Description: This endpoint can get available KCS staking products. If no products are available, an empty list is returned.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470275
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | SPOT    |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | EARN    |
-     * | API-RATE-LIMIT      | 5       |
-     * +---------------------+---------+
-     */
-    getKcsStakingProducts(req: GetKcsStakingProductsReq): Promise<GetKcsStakingProductsResp>;
-
-    /**
-     * redeem Redeem
-     * Description: This endpoint allows initiating redemption by holding ID. If the current holding is fully redeemed or in the process of being redeemed, it indicates that the holding does not exist.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470270
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | SPOT    |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | EARN    |
-     * | API-RATE-LIMIT-POOL | EARN    |
-     * | API-RATE-LIMIT      | 5       |
-     * +---------------------+---------+
-     */
-    redeem(req: RedeemReq): Promise<RedeemResp>;
-
-    /**
      * purchase purchase
      * Description: This endpoint allows subscribing earn product
      * Documentation: https://www.kucoin.com/docs-new/api-3470268
@@ -100,22 +36,6 @@ export interface EarnAPI {
      * +---------------------+---------+
      */
     purchase(req: PurchaseReq): Promise<PurchaseResp>;
-
-    /**
-     * getPromotionProducts Get Promotion Products
-     * Description: This endpoint can get available limited-time promotion products. If no products are available, an empty list is returned.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470272
-     * +---------------------+---------+
-     * | Extra API Info      | Value   |
-     * +---------------------+---------+
-     * | API-DOMAIN          | SPOT    |
-     * | API-CHANNEL         | PRIVATE |
-     * | API-PERMISSION      | GENERAL |
-     * | API-RATE-LIMIT-POOL | EARN    |
-     * | API-RATE-LIMIT      | 5       |
-     * +---------------------+---------+
-     */
-    getPromotionProducts(req: GetPromotionProductsReq): Promise<GetPromotionProductsResp>;
 
     /**
      * getRedeemPreview Get Redeem Preview
@@ -134,6 +54,22 @@ export interface EarnAPI {
     getRedeemPreview(req: GetRedeemPreviewReq): Promise<GetRedeemPreviewResp>;
 
     /**
+     * redeem Redeem
+     * Description: This endpoint allows initiating redemption by holding ID. If the current holding is fully redeemed or in the process of being redeemed, it indicates that the holding does not exist.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470270
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | SPOT    |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | EARN    |
+     * | API-RATE-LIMIT-POOL | EARN    |
+     * | API-RATE-LIMIT      | 5       |
+     * +---------------------+---------+
+     */
+    redeem(req: RedeemReq): Promise<RedeemResp>;
+
+    /**
      * getSavingsProducts Get Savings Products
      * Description: This endpoint can get available savings products. If no products are available, an empty list is returned.
      * Documentation: https://www.kucoin.com/docs-new/api-3470271
@@ -150,6 +86,38 @@ export interface EarnAPI {
     getSavingsProducts(req: GetSavingsProductsReq): Promise<GetSavingsProductsResp>;
 
     /**
+     * getPromotionProducts Get Promotion Products
+     * Description: This endpoint can get available limited-time promotion products. If no products are available, an empty list is returned.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470272
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | SPOT    |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | EARN    |
+     * | API-RATE-LIMIT      | 5       |
+     * +---------------------+---------+
+     */
+    getPromotionProducts(req: GetPromotionProductsReq): Promise<GetPromotionProductsResp>;
+
+    /**
+     * getAccountHolding Get Account Holding
+     * Description: This endpoint can get current holding assets information. If no current holding assets are available, an empty list is returned.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470273
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | SPOT    |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | EARN    |
+     * | API-RATE-LIMIT      | 5       |
+     * +---------------------+---------+
+     */
+    getAccountHolding(req: GetAccountHoldingReq): Promise<GetAccountHoldingResp>;
+
+    /**
      * getStakingProducts Get Staking Products
      * Description: This endpoint can get available staking products. If no products are available, an empty list is returned.
      * Documentation: https://www.kucoin.com/docs-new/api-3470274
@@ -164,58 +132,42 @@ export interface EarnAPI {
      * +---------------------+---------+
      */
     getStakingProducts(req: GetStakingProductsReq): Promise<GetStakingProductsResp>;
+
+    /**
+     * getKcsStakingProducts Get KCS Staking Products
+     * Description: This endpoint can get available KCS staking products. If no products are available, an empty list is returned.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470275
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | SPOT    |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | EARN    |
+     * | API-RATE-LIMIT      | 5       |
+     * +---------------------+---------+
+     */
+    getKcsStakingProducts(req: GetKcsStakingProductsReq): Promise<GetKcsStakingProductsResp>;
+
+    /**
+     * getETHStakingProducts Get ETH Staking Products
+     * Description: This endpoint can get available ETH staking products. If no products are available, an empty list is returned.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470276
+     * +---------------------+---------+
+     * | Extra API Info      | Value   |
+     * +---------------------+---------+
+     * | API-DOMAIN          | SPOT    |
+     * | API-CHANNEL         | PRIVATE |
+     * | API-PERMISSION      | GENERAL |
+     * | API-RATE-LIMIT-POOL | EARN    |
+     * | API-RATE-LIMIT      | 5       |
+     * +---------------------+---------+
+     */
+    getETHStakingProducts(req: GetETHStakingProductsReq): Promise<GetETHStakingProductsResp>;
 }
 
 export class EarnAPIImpl implements EarnAPI {
     constructor(private transport: Transport) {}
-
-    getETHStakingProducts(req: GetETHStakingProductsReq): Promise<GetETHStakingProductsResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'GET',
-            '/api/v1/earn/eth-staking/products',
-            req,
-            new GetETHStakingProductsResp(),
-            false,
-        );
-    }
-
-    getAccountHolding(req: GetAccountHoldingReq): Promise<GetAccountHoldingResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'GET',
-            '/api/v1/earn/hold-assets',
-            req,
-            new GetAccountHoldingResp(),
-            false,
-        );
-    }
-
-    getKcsStakingProducts(req: GetKcsStakingProductsReq): Promise<GetKcsStakingProductsResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'GET',
-            '/api/v1/earn/kcs-staking/products',
-            req,
-            new GetKcsStakingProductsResp(),
-            false,
-        );
-    }
-
-    redeem(req: RedeemReq): Promise<RedeemResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'DELETE',
-            '/api/v1/earn/orders',
-            req,
-            new RedeemResp(),
-            false,
-        );
-    }
 
     purchase(req: PurchaseReq): Promise<PurchaseResp> {
         return this.transport.call(
@@ -225,18 +177,6 @@ export class EarnAPIImpl implements EarnAPI {
             '/api/v1/earn/orders',
             req,
             new PurchaseResp(),
-            false,
-        );
-    }
-
-    getPromotionProducts(req: GetPromotionProductsReq): Promise<GetPromotionProductsResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'GET',
-            '/api/v1/earn/promotion/products',
-            req,
-            new GetPromotionProductsResp(),
             false,
         );
     }
@@ -253,6 +193,18 @@ export class EarnAPIImpl implements EarnAPI {
         );
     }
 
+    redeem(req: RedeemReq): Promise<RedeemResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'DELETE',
+            '/api/v1/earn/orders',
+            req,
+            new RedeemResp(),
+            false,
+        );
+    }
+
     getSavingsProducts(req: GetSavingsProductsReq): Promise<GetSavingsProductsResp> {
         return this.transport.call(
             'spot',
@@ -265,6 +217,30 @@ export class EarnAPIImpl implements EarnAPI {
         );
     }
 
+    getPromotionProducts(req: GetPromotionProductsReq): Promise<GetPromotionProductsResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'GET',
+            '/api/v1/earn/promotion/products',
+            req,
+            new GetPromotionProductsResp(),
+            false,
+        );
+    }
+
+    getAccountHolding(req: GetAccountHoldingReq): Promise<GetAccountHoldingResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'GET',
+            '/api/v1/earn/hold-assets',
+            req,
+            new GetAccountHoldingResp(),
+            false,
+        );
+    }
+
     getStakingProducts(req: GetStakingProductsReq): Promise<GetStakingProductsResp> {
         return this.transport.call(
             'spot',
@@ -273,6 +249,30 @@ export class EarnAPIImpl implements EarnAPI {
             '/api/v1/earn/staking/products',
             req,
             new GetStakingProductsResp(),
+            false,
+        );
+    }
+
+    getKcsStakingProducts(req: GetKcsStakingProductsReq): Promise<GetKcsStakingProductsResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'GET',
+            '/api/v1/earn/kcs-staking/products',
+            req,
+            new GetKcsStakingProductsResp(),
+            false,
+        );
+    }
+
+    getETHStakingProducts(req: GetETHStakingProductsReq): Promise<GetETHStakingProductsResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'GET',
+            '/api/v1/earn/eth-staking/products',
+            req,
+            new GetETHStakingProductsResp(),
             false,
         );
     }

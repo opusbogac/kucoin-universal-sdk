@@ -6,22 +6,6 @@ import { GetAccountsResp } from './model_get_accounts_resp';
 
 export interface VIPLendingAPI {
     /**
-     * getAccounts Get Accounts
-     * Description: Accounts participating in OTC lending, This interface is only for querying accounts currently running OTC lending.
-     * Documentation: https://www.kucoin.com/docs-new/api-3470278
-     * +---------------------+------------+
-     * | Extra API Info      | Value      |
-     * +---------------------+------------+
-     * | API-DOMAIN          | SPOT       |
-     * | API-CHANNEL         | PRIVATE    |
-     * | API-PERMISSION      | GENERAL    |
-     * | API-RATE-LIMIT-POOL | MANAGEMENT |
-     * | API-RATE-LIMIT      | 1          |
-     * +---------------------+------------+
-     */
-    getAccounts(): Promise<GetAccountsResp>;
-
-    /**
      * getAccountDetail Get Account Detail
      * Description: The following information is only applicable to loans.  Get information on off-exchange funding and loans, This endpoint is only for querying accounts that are currently involved in loans.
      * Documentation: https://www.kucoin.com/docs-new/api-3470277
@@ -36,22 +20,26 @@ export interface VIPLendingAPI {
      * +---------------------+------------+
      */
     getAccountDetail(): Promise<GetAccountDetailResp>;
+
+    /**
+     * getAccounts Get Accounts
+     * Description: Accounts participating in OTC lending, This interface is only for querying accounts currently running OTC lending.
+     * Documentation: https://www.kucoin.com/docs-new/api-3470278
+     * +---------------------+------------+
+     * | Extra API Info      | Value      |
+     * +---------------------+------------+
+     * | API-DOMAIN          | SPOT       |
+     * | API-CHANNEL         | PRIVATE    |
+     * | API-PERMISSION      | GENERAL    |
+     * | API-RATE-LIMIT-POOL | MANAGEMENT |
+     * | API-RATE-LIMIT      | 1          |
+     * +---------------------+------------+
+     */
+    getAccounts(): Promise<GetAccountsResp>;
 }
 
 export class VIPLendingAPIImpl implements VIPLendingAPI {
     constructor(private transport: Transport) {}
-
-    getAccounts(): Promise<GetAccountsResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'GET',
-            '/api/v1/otc-loan/accounts',
-            null,
-            new GetAccountsResp(),
-            false,
-        );
-    }
 
     getAccountDetail(): Promise<GetAccountDetailResp> {
         return this.transport.call(
@@ -61,6 +49,18 @@ export class VIPLendingAPIImpl implements VIPLendingAPI {
             '/api/v1/otc-loan/loan',
             null,
             new GetAccountDetailResp(),
+            false,
+        );
+    }
+
+    getAccounts(): Promise<GetAccountsResp> {
+        return this.transport.call(
+            'spot',
+            false,
+            'GET',
+            '/api/v1/otc-loan/accounts',
+            null,
+            new GetAccountsResp(),
             false,
         );
     }

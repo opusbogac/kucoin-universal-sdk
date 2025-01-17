@@ -11,6 +11,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
+      "@src/*": ["src/*"],
       "@model/*": ["src/model/*"],
       "@internal/*": ["src/internal/*"],
       "@generate/*": ["src/generate/*"],

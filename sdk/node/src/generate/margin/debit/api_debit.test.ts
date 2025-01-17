@@ -13,40 +13,6 @@ import { GetBorrowHistoryResp } from './model_get_borrow_history_resp';
 import { RestResponse } from '@model/common';
 
 describe('Auto Test', () => {
-    test('getBorrowHistory request test', () => {
-        /**
-         * getBorrowHistory
-         * Get Borrow History
-         * /api/v3/margin/borrow
-         */
-        let data =
-            '{"currency": "BTC", "isIsolated": true, "symbol": "BTC-USDT", "orderNo": "example_string_default_value", "startTime": 123456, "endTime": 123456, "currentPage": 1, "pageSize": 50}';
-        let req = new GetBorrowHistoryReq();
-        req = req.fromJson(data);
-        expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(req);
-    });
-
-    test('getBorrowHistory response test', () => {
-        /**
-         * getBorrowHistory
-         * Get Borrow History
-         * /api/v3/margin/borrow
-         */
-        let data =
-            '{\n    "code": "200000",\n    "data": {\n        "timestamp": 1729657580449,\n        "currentPage": 1,\n        "pageSize": 50,\n        "totalNum": 2,\n        "totalPage": 1,\n        "items": [\n            {\n                "orderNo": "67187162c0d6990007717b15",\n                "symbol": null,\n                "currency": "USDT",\n                "size": "10",\n                "actualSize": "10",\n                "status": "SUCCESS",\n                "createdTime": 1729655138000\n            },\n            {\n                "orderNo": "67187155b088e70007149585",\n                "symbol": null,\n                "currency": "USDT",\n                "size": "0.1",\n                "actualSize": "0",\n                "status": "FAILED",\n                "createdTime": 1729655125000\n            }\n        ]\n    }\n}';
-        let commonResp = RestResponse.fromJson(data);
-        let resp = new GetBorrowHistoryResp();
-        resp = resp.fromObject(commonResp.data);
-        if (commonResp.data !== null) {
-            expect(
-                Object.values(resp).every((value) => value === null || value === undefined),
-            ).toBe(false);
-            console.log(resp);
-        }
-    });
     test('borrow request test', () => {
         /**
          * borrow
@@ -81,15 +47,15 @@ describe('Auto Test', () => {
             console.log(resp);
         }
     });
-    test('getInterestHistory request test', () => {
+    test('getBorrowHistory request test', () => {
         /**
-         * getInterestHistory
-         * Get Interest History
-         * /api/v3/margin/interest
+         * getBorrowHistory
+         * Get Borrow History
+         * /api/v3/margin/borrow
          */
         let data =
-            '{"currency": "BTC", "isIsolated": true, "symbol": "BTC-USDT", "startTime": 123456, "endTime": 123456, "currentPage": 1, "pageSize": 50}';
-        let req = new GetInterestHistoryReq();
+            '{"currency": "BTC", "isIsolated": true, "symbol": "BTC-USDT", "orderNo": "example_string_default_value", "startTime": 123456, "endTime": 123456, "currentPage": 1, "pageSize": 50}';
+        let req = new GetBorrowHistoryReq();
         req = req.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
@@ -97,16 +63,49 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('getInterestHistory response test', () => {
+    test('getBorrowHistory response test', () => {
         /**
-         * getInterestHistory
-         * Get Interest History
-         * /api/v3/margin/interest
+         * getBorrowHistory
+         * Get Borrow History
+         * /api/v3/margin/borrow
          */
         let data =
-            '{"code":"200000","data":{"timestamp":1729665170701,"currentPage":1,"pageSize":50,"totalNum":3,"totalPage":1,"items":[{"currency":"USDT","dayRatio":"0.000296","interestAmount":"0.00000001","createdTime":1729663213375},{"currency":"USDT","dayRatio":"0.000296","interestAmount":"0.00000001","createdTime":1729659618802},{"currency":"USDT","dayRatio":"0.000296","interestAmount":"0.00000001","createdTime":1729656028077}]}}';
+            '{\n    "code": "200000",\n    "data": {\n        "timestamp": 1729657580449,\n        "currentPage": 1,\n        "pageSize": 50,\n        "totalNum": 2,\n        "totalPage": 1,\n        "items": [\n            {\n                "orderNo": "67187162c0d6990007717b15",\n                "symbol": null,\n                "currency": "USDT",\n                "size": "10",\n                "actualSize": "10",\n                "status": "SUCCESS",\n                "createdTime": 1729655138000\n            },\n            {\n                "orderNo": "67187155b088e70007149585",\n                "symbol": null,\n                "currency": "USDT",\n                "size": "0.1",\n                "actualSize": "0",\n                "status": "FAILED",\n                "createdTime": 1729655125000\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetInterestHistoryResp();
+        let resp = new GetBorrowHistoryResp();
+        resp = resp.fromObject(commonResp.data);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
+    });
+    test('repay request test', () => {
+        /**
+         * repay
+         * Repay
+         * /api/v3/margin/repay
+         */
+        let data = '{"currency": "USDT", "size": 10}';
+        let req = new RepayReq();
+        req = req.fromJson(data);
+        expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
+            false,
+        );
+        console.log(req);
+    });
+
+    test('repay response test', () => {
+        /**
+         * repay
+         * Repay
+         * /api/v3/margin/repay
+         */
+        let data =
+            '{"code":"200000","data":{"timestamp":1729655606816,"orderNo":"671873361d5bd400075096ad","actualSize":"10"}}';
+        let commonResp = RestResponse.fromJson(data);
+        let resp = new RepayResp();
         resp = resp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
@@ -149,14 +148,15 @@ describe('Auto Test', () => {
             console.log(resp);
         }
     });
-    test('repay request test', () => {
+    test('getInterestHistory request test', () => {
         /**
-         * repay
-         * Repay
-         * /api/v3/margin/repay
+         * getInterestHistory
+         * Get Interest History
+         * /api/v3/margin/interest
          */
-        let data = '{"currency": "USDT", "size": 10}';
-        let req = new RepayReq();
+        let data =
+            '{"currency": "BTC", "isIsolated": true, "symbol": "BTC-USDT", "startTime": 123456, "endTime": 123456, "currentPage": 1, "pageSize": 50}';
+        let req = new GetInterestHistoryReq();
         req = req.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
@@ -164,16 +164,16 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('repay response test', () => {
+    test('getInterestHistory response test', () => {
         /**
-         * repay
-         * Repay
-         * /api/v3/margin/repay
+         * getInterestHistory
+         * Get Interest History
+         * /api/v3/margin/interest
          */
         let data =
-            '{"code":"200000","data":{"timestamp":1729655606816,"orderNo":"671873361d5bd400075096ad","actualSize":"10"}}';
+            '{"code":"200000","data":{"timestamp":1729665170701,"currentPage":1,"pageSize":50,"totalNum":3,"totalPage":1,"items":[{"currency":"USDT","dayRatio":"0.000296","interestAmount":"0.00000001","createdTime":1729663213375},{"currency":"USDT","dayRatio":"0.000296","interestAmount":"0.00000001","createdTime":1729659618802},{"currency":"USDT","dayRatio":"0.000296","interestAmount":"0.00000001","createdTime":1729656028077}]}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new RepayResp();
+        let resp = new GetInterestHistoryResp();
         resp = resp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(

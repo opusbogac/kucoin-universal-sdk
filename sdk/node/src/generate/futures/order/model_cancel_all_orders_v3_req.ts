@@ -5,7 +5,7 @@ import { Serializable } from '@internal/interfaces/serializable';
 
 export class CancelAllOrdersV3Req implements Serializable<CancelAllOrdersV3Req> {
     /**
-     * Cancel all limit orders for a specific contract only,  If not specified, all the limit orders will be deleted, Please refer to [Get Symbol endpoint: symbol](https://www.kucoin.com/docs-new/api-3470220)
+     * Cancel all limit orders for a specific symbol only,  Please refer to [Get Symbol endpoint: symbol](https://www.kucoin.com/docs-new/api-3470220)
      */
     symbol?: string;
 
@@ -22,7 +22,7 @@ export class CancelAllOrdersV3Req implements Serializable<CancelAllOrdersV3Req> 
      */
     static create(data: {
         /**
-         * Cancel all limit orders for a specific contract only,  If not specified, all the limit orders will be deleted, Please refer to [Get Symbol endpoint: symbol](https://www.kucoin.com/docs-new/api-3470220)
+         * Cancel all limit orders for a specific symbol only,  Please refer to [Get Symbol endpoint: symbol](https://www.kucoin.com/docs-new/api-3470220)
          */
         symbol?: string;
     }): CancelAllOrdersV3Req {
@@ -48,7 +48,7 @@ export class CancelAllOrdersV3Req implements Serializable<CancelAllOrdersV3Req> 
 export class CancelAllOrdersV3ReqBuilder {
     obj: CancelAllOrdersV3Req = new CancelAllOrdersV3Req();
     /**
-     * Cancel all limit orders for a specific contract only,  If not specified, all the limit orders will be deleted, Please refer to [Get Symbol endpoint: symbol](https://www.kucoin.com/docs-new/api-3470220)
+     * Cancel all limit orders for a specific symbol only,  Please refer to [Get Symbol endpoint: symbol](https://www.kucoin.com/docs-new/api-3470220)
      */
     setSymbol(value: string): CancelAllOrdersV3ReqBuilder {
         this.obj.symbol = value;

@@ -5,48 +5,60 @@ describe('Auto Test', ()=> {
     beforeAll(()=> {
         api = ??
     });
-    test('getDepositList request test', ()=> {
+    test('getBrokerInfo request test', ()=> {
     /**
-    * getDepositList
-    * Get Deposit List
-    * /api/v1/asset/ndbroker/deposit/list
+    * getBrokerInfo
+    * Get Broker Info
+    * /api/v1/broker/nd/info
     */
-    let builder = GetDepositListReq.builder();
-    builder.setCurrency(?).setStatus(?).setHash(?).setStartTimestamp(?).setEndTimestamp(?).setLimit(?);
+    let builder = GetBrokerInfoReq.builder();
+    builder.setBegin(?).setEnd(?).setTradeType(?);
     let req = builder.build();
-    let resp = api.getDepositList(req);
+    let resp = api.getBrokerInfo(req);
     return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
+        expect(result.accountSize).toEqual(expect.anything());
+        expect(result.maxAccountSize).toEqual(expect.anything());
+        expect(result.level).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('deleteSubAccountAPI request test', ()=> {
+    test('addSubAccount request test', ()=> {
     /**
-    * deleteSubAccountAPI
-    * Delete SubAccount API
-    * /api/v1/broker/nd/account/apikey
+    * addSubAccount
+    * Add SubAccount
+    * /api/v1/broker/nd/account
     */
-    let builder = DeleteSubAccountAPIReq.builder();
-    builder.setUid(?).setApiKey(?);
+    let builder = AddSubAccountReq.builder();
+    builder.setAccountName(?);
     let req = builder.build();
-    let resp = api.deleteSubAccountAPI(req);
+    let resp = api.addSubAccount(req);
     return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
+        expect(result.accountName).toEqual(expect.anything());
+        expect(result.uid).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+        expect(result.level).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getSubAccountAPI request test', ()=> {
+    test('getSubAccount request test', ()=> {
     /**
-    * getSubAccountAPI
-    * Get SubAccount API
-    * /api/v1/broker/nd/account/apikey
+    * getSubAccount
+    * Get SubAccount
+    * /api/v1/broker/nd/account
     */
-    let builder = GetSubAccountAPIReq.builder();
-    builder.setUid(?).setApiKey(?);
+    let builder = GetSubAccountReq.builder();
+    builder.setUid(?).setCurrentPage(?).setPageSize(?);
     let req = builder.build();
-    let resp = api.getSubAccountAPI(req);
+    let resp = api.getSubAccount(req);
     return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -69,43 +81,23 @@ describe('Auto Test', ()=> {
         expect(result.permissions).toEqual(expect.anything());
         expect(result.ipWhitelist).toEqual(expect.anything());
         expect(result.createdAt).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getSubAccount request test', ()=> {
+    test('getSubAccountAPI request test', ()=> {
     /**
-    * getSubAccount
-    * Get SubAccount
-    * /api/v1/broker/nd/account
+    * getSubAccountAPI
+    * Get SubAccount API
+    * /api/v1/broker/nd/account/apikey
     */
-    let builder = GetSubAccountReq.builder();
-    builder.setUid(?).setCurrentPage(?).setPageSize(?);
+    let builder = GetSubAccountAPIReq.builder();
+    builder.setUid(?).setApiKey(?);
     let req = builder.build();
-    let resp = api.getSubAccount(req);
+    let resp = api.getSubAccountAPI(req);
     return resp.then(result => {
-        expect(result.currentPage).toEqual(expect.anything());
-        expect(result.pageSize).toEqual(expect.anything());
-        expect(result.totalNum).toEqual(expect.anything());
-        expect(result.totalPage).toEqual(expect.anything());
-        expect(result.items).toEqual(expect.anything());
-    });
-    })
-
-    test('addSubAccount request test', ()=> {
-    /**
-    * addSubAccount
-    * Add SubAccount
-    * /api/v1/broker/nd/account
-    */
-    let builder = AddSubAccountReq.builder();
-    builder.setAccountName(?);
-    let req = builder.build();
-    let resp = api.addSubAccount(req);
-    return resp.then(result => {
-        expect(result.accountName).toEqual(expect.anything());
-        expect(result.uid).toEqual(expect.anything());
-        expect(result.createdAt).toEqual(expect.anything());
-        expect(result.level).toEqual(expect.anything());
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -127,38 +119,23 @@ describe('Auto Test', ()=> {
         expect(result.permissions).toEqual(expect.anything());
         expect(result.ipWhitelist).toEqual(expect.anything());
         expect(result.createdAt).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getBrokerInfo request test', ()=> {
+    test('deleteSubAccountAPI request test', ()=> {
     /**
-    * getBrokerInfo
-    * Get Broker Info
-    * /api/v1/broker/nd/info
+    * deleteSubAccountAPI
+    * Delete SubAccount API
+    * /api/v1/broker/nd/account/apikey
     */
-    let builder = GetBrokerInfoReq.builder();
-    builder.setBegin(?).setEnd(?).setTradeType(?);
+    let builder = DeleteSubAccountAPIReq.builder();
+    builder.setUid(?).setApiKey(?);
     let req = builder.build();
-    let resp = api.getBrokerInfo(req);
+    let resp = api.deleteSubAccountAPI(req);
     return resp.then(result => {
-        expect(result.accountSize).toEqual(expect.anything());
-        expect(result.maxAccountSize).toEqual(expect.anything());
-        expect(result.level).toEqual(expect.anything());
-    });
-    })
-
-    test('getRebase request test', ()=> {
-    /**
-    * getRebase
-    * Get Broker Rebate
-    * /api/v1/broker/nd/rebase/download
-    */
-    let builder = GetRebaseReq.builder();
-    builder.setBegin(?).setEnd(?).setTradeType(?);
-    let req = builder.build();
-    let resp = api.getRebase(req);
-    return resp.then(result => {
-        expect(result.url).toEqual(expect.anything());
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -174,6 +151,50 @@ describe('Auto Test', ()=> {
     let resp = api.transfer(req);
     return resp.then(result => {
         expect(result.orderId).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getTransferHistory request test', ()=> {
+    /**
+    * getTransferHistory
+    * Get Transfer History
+    * /api/v3/broker/nd/transfer/detail
+    */
+    let builder = GetTransferHistoryReq.builder();
+    builder.setOrderId(?);
+    let req = builder.build();
+    let resp = api.getTransferHistory(req);
+    return resp.then(result => {
+        expect(result.orderId).toEqual(expect.anything());
+        expect(result.currency).toEqual(expect.anything());
+        expect(result.amount).toEqual(expect.anything());
+        expect(result.fromUid).toEqual(expect.anything());
+        expect(result.fromAccountType).toEqual(expect.anything());
+        expect(result.fromAccountTag).toEqual(expect.anything());
+        expect(result.toUid).toEqual(expect.anything());
+        expect(result.toAccountType).toEqual(expect.anything());
+        expect(result.toAccountTag).toEqual(expect.anything());
+        expect(result.status).toEqual(expect.anything());
+        expect(result.reason).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getDepositList request test', ()=> {
+    /**
+    * getDepositList
+    * Get Deposit List
+    * /api/v1/asset/ndbroker/deposit/list
+    */
+    let builder = GetDepositListReq.builder();
+    builder.setCurrency(?).setStatus(?).setHash(?).setStartTimestamp(?).setEndTimestamp(?).setLimit(?);
+    let req = builder.build();
+    let resp = api.getDepositList(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -202,32 +223,7 @@ describe('Auto Test', ()=> {
         expect(result.currency).toEqual(expect.anything());
         expect(result.status).toEqual(expect.anything());
         expect(result.createdAt).toEqual(expect.anything());
-    });
-    })
-
-    test('getTransferHistory request test', ()=> {
-    /**
-    * getTransferHistory
-    * Get Transfer History
-    * /api/v3/broker/nd/transfer/detail
-    */
-    let builder = GetTransferHistoryReq.builder();
-    builder.setOrderId(?);
-    let req = builder.build();
-    let resp = api.getTransferHistory(req);
-    return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
-        expect(result.currency).toEqual(expect.anything());
-        expect(result.amount).toEqual(expect.anything());
-        expect(result.fromUid).toEqual(expect.anything());
-        expect(result.fromAccountType).toEqual(expect.anything());
-        expect(result.fromAccountTag).toEqual(expect.anything());
-        expect(result.toUid).toEqual(expect.anything());
-        expect(result.toAccountType).toEqual(expect.anything());
-        expect(result.toAccountTag).toEqual(expect.anything());
-        expect(result.status).toEqual(expect.anything());
-        expect(result.reason).toEqual(expect.anything());
-        expect(result.createdAt).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -256,6 +252,23 @@ describe('Auto Test', ()=> {
         expect(result.currency).toEqual(expect.anything());
         expect(result.status).toEqual(expect.anything());
         expect(result.createdAt).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getRebase request test', ()=> {
+    /**
+    * getRebase
+    * Get Broker Rebate
+    * /api/v1/broker/nd/rebase/download
+    */
+    let builder = GetRebaseReq.builder();
+    builder.setBegin(?).setEnd(?).setTradeType(?);
+    let req = builder.build();
+    let resp = api.getRebase(req);
+    return resp.then(result => {
+        expect(result.url).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

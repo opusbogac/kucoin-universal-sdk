@@ -1,6 +1,7 @@
 export * from './account';
 export * from './affiliate';
 export * from './broker';
+export * from './copytrading';
 export * from './earn';
 export * from './futures';
 export * from './margin';

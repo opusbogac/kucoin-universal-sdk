@@ -17,6 +17,7 @@ describe('Auto Test', ()=> {
     let resp = api.getMarginRiskLimit(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

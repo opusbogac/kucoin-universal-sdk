@@ -15,39 +15,6 @@ import { GetLoanMarketReq } from './model_get_loan_market_req';
 import { RestResponse } from '@model/common';
 
 describe('Auto Test', () => {
-    test('modifyPurchase request test', () => {
-        /**
-         * modifyPurchase
-         * Modify Purchase
-         * /api/v3/lend/purchase/update
-         */
-        let data =
-            '{"currency": "BTC", "purchaseOrderNo": "671bafa804c26d000773c533", "interestRate": "0.09"}';
-        let req = new ModifyPurchaseReq();
-        req = req.fromJson(data);
-        expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(req);
-    });
-
-    test('modifyPurchase response test', () => {
-        /**
-         * modifyPurchase
-         * Modify Purchase
-         * /api/v3/lend/purchase/update
-         */
-        let data = '{\n    "code": "200000",\n    "data": null\n}';
-        let commonResp = RestResponse.fromJson(data);
-        let resp = new ModifyPurchaseResp();
-        resp = resp.fromObject(commonResp.data);
-        if (commonResp.data !== null) {
-            expect(
-                Object.values(resp).every((value) => value === null || value === undefined),
-            ).toBe(false);
-            console.log(resp);
-        }
-    });
     test('getLoanMarket request test', () => {
         /**
          * getLoanMarket
@@ -114,6 +81,72 @@ describe('Auto Test', () => {
             console.log(resp);
         }
     });
+    test('purchase request test', () => {
+        /**
+         * purchase
+         * Purchase
+         * /api/v3/purchase
+         */
+        let data = '{"currency": "BTC", "size": "0.001", "interestRate": "0.1"}';
+        let req = new PurchaseReq();
+        req = req.fromJson(data);
+        expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
+            false,
+        );
+        console.log(req);
+    });
+
+    test('purchase response test', () => {
+        /**
+         * purchase
+         * Purchase
+         * /api/v3/purchase
+         */
+        let data =
+            '{\n    "code": "200000",\n    "data": {\n        "orderNo": "671bafa804c26d000773c533"\n    }\n}';
+        let commonResp = RestResponse.fromJson(data);
+        let resp = new PurchaseResp();
+        resp = resp.fromObject(commonResp.data);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
+    });
+    test('modifyPurchase request test', () => {
+        /**
+         * modifyPurchase
+         * Modify Purchase
+         * /api/v3/lend/purchase/update
+         */
+        let data =
+            '{"currency": "BTC", "purchaseOrderNo": "671bafa804c26d000773c533", "interestRate": "0.09"}';
+        let req = new ModifyPurchaseReq();
+        req = req.fromJson(data);
+        expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
+            false,
+        );
+        console.log(req);
+    });
+
+    test('modifyPurchase response test', () => {
+        /**
+         * modifyPurchase
+         * Modify Purchase
+         * /api/v3/lend/purchase/update
+         */
+        let data = '{\n    "code": "200000",\n    "data": null\n}';
+        let commonResp = RestResponse.fromJson(data);
+        let resp = new ModifyPurchaseResp();
+        resp = resp.fromObject(commonResp.data);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
+    });
     test('getPurchaseOrders request test', () => {
         /**
          * getPurchaseOrders
@@ -148,14 +181,15 @@ describe('Auto Test', () => {
             console.log(resp);
         }
     });
-    test('purchase request test', () => {
+    test('redeem request test', () => {
         /**
-         * purchase
-         * Purchase
-         * /api/v3/purchase
+         * redeem
+         * Redeem
+         * /api/v3/redeem
          */
-        let data = '{"currency": "BTC", "size": "0.001", "interestRate": "0.1"}';
-        let req = new PurchaseReq();
+        let data =
+            '{"currency": "BTC", "size": "0.001", "purchaseOrderNo": "671bafa804c26d000773c533"}';
+        let req = new RedeemReq();
         req = req.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
@@ -163,16 +197,16 @@ describe('Auto Test', () => {
         console.log(req);
     });
 
-    test('purchase response test', () => {
+    test('redeem response test', () => {
         /**
-         * purchase
-         * Purchase
-         * /api/v3/purchase
+         * redeem
+         * Redeem
+         * /api/v3/redeem
          */
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderNo": "671bafa804c26d000773c533"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new PurchaseResp();
+        let resp = new RedeemResp();
         resp = resp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
@@ -207,40 +241,6 @@ describe('Auto Test', () => {
             '{\n    "code": "200000",\n    "data": {\n        "currentPage": 1,\n        "pageSize": 10,\n        "totalNum": 1,\n        "totalPage": 1,\n        "items": [\n            {\n                "currency": "BTC",\n                "purchaseOrderNo": "671bafa804c26d000773c533",\n                "redeemOrderNo": "671bb01004c26d000773c55c",\n                "redeemSize": "0.001",\n                "receiptSize": "0.001",\n                "applyTime": null,\n                "status": "DONE"\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetRedeemOrdersResp();
-        resp = resp.fromObject(commonResp.data);
-        if (commonResp.data !== null) {
-            expect(
-                Object.values(resp).every((value) => value === null || value === undefined),
-            ).toBe(false);
-            console.log(resp);
-        }
-    });
-    test('redeem request test', () => {
-        /**
-         * redeem
-         * Redeem
-         * /api/v3/redeem
-         */
-        let data =
-            '{"currency": "BTC", "size": "0.001", "purchaseOrderNo": "671bafa804c26d000773c533"}';
-        let req = new RedeemReq();
-        req = req.fromJson(data);
-        expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(req);
-    });
-
-    test('redeem response test', () => {
-        /**
-         * redeem
-         * Redeem
-         * /api/v3/redeem
-         */
-        let data =
-            '{\n    "code": "200000",\n    "data": {\n        "orderNo": "671bafa804c26d000773c533"\n    }\n}';
-        let commonResp = RestResponse.fromJson(data);
-        let resp = new RedeemResp();
         resp = resp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(

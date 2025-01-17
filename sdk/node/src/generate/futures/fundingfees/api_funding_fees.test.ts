@@ -7,6 +7,39 @@ import { GetCurrentFundingRateReq } from './model_get_current_funding_rate_req';
 import { RestResponse } from '@model/common';
 
 describe('Auto Test', () => {
+    test('getCurrentFundingRate request test', () => {
+        /**
+         * getCurrentFundingRate
+         * Get Current Funding Rate
+         * /api/v1/funding-rate/{symbol}/current
+         */
+        let data = '{"symbol": "XBTUSDTM"}';
+        let req = new GetCurrentFundingRateReq();
+        req = req.fromJson(data);
+        expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
+            false,
+        );
+        console.log(req);
+    });
+
+    test('getCurrentFundingRate response test', () => {
+        /**
+         * getCurrentFundingRate
+         * Get Current Funding Rate
+         * /api/v1/funding-rate/{symbol}/current
+         */
+        let data =
+            '{\n    "code": "200000",\n    "data": {\n        "symbol": ".XBTUSDTMFPI8H",\n        "granularity": 28800000,\n        "timePoint": 1731441600000,\n        "value": 6.41E-4,\n        "predictedValue": 5.2E-5,\n        "fundingRateCap": 0.003,\n        "fundingRateFloor": -0.003\n    }\n}';
+        let commonResp = RestResponse.fromJson(data);
+        let resp = new GetCurrentFundingRateResp();
+        resp = resp.fromObject(commonResp.data);
+        if (commonResp.data !== null) {
+            expect(
+                Object.values(resp).every((value) => value === null || value === undefined),
+            ).toBe(false);
+            console.log(resp);
+        }
+    });
     test('getPublicFundingHistory request test', () => {
         /**
          * getPublicFundingHistory
@@ -66,39 +99,6 @@ describe('Auto Test', () => {
             '{\n    "code": "200000",\n    "data": {\n        "dataList": [\n            {\n                "id": 1472387374042586,\n                "symbol": "XBTUSDTM",\n                "timePoint": 1731470400000,\n                "fundingRate": 6.41E-4,\n                "markPrice": 87139.92,\n                "positionQty": 1,\n                "positionCost": 87.13992,\n                "funding": -0.05585669,\n                "settleCurrency": "USDT",\n                "context": "{\\"marginMode\\": \\"ISOLATED\\", \\"positionSide\\": \\"BOTH\\"}",\n                "marginMode": "ISOLATED"\n            }\n        ],\n        "hasMore": true\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
         let resp = new GetPrivateFundingHistoryResp();
-        resp = resp.fromObject(commonResp.data);
-        if (commonResp.data !== null) {
-            expect(
-                Object.values(resp).every((value) => value === null || value === undefined),
-            ).toBe(false);
-            console.log(resp);
-        }
-    });
-    test('getCurrentFundingRate request test', () => {
-        /**
-         * getCurrentFundingRate
-         * Get Current Funding Rate
-         * /api/v1/funding-rate/{symbol}/current
-         */
-        let data = '{"symbol": "XBTUSDTM"}';
-        let req = new GetCurrentFundingRateReq();
-        req = req.fromJson(data);
-        expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
-            false,
-        );
-        console.log(req);
-    });
-
-    test('getCurrentFundingRate response test', () => {
-        /**
-         * getCurrentFundingRate
-         * Get Current Funding Rate
-         * /api/v1/funding-rate/{symbol}/current
-         */
-        let data =
-            '{\n    "code": "200000",\n    "data": {\n        "symbol": ".XBTUSDTMFPI8H",\n        "granularity": 28800000,\n        "timePoint": 1731441600000,\n        "value": 6.41E-4,\n        "predictedValue": 5.2E-5,\n        "fundingRateCap": 0.003,\n        "fundingRateFloor": -0.003\n    }\n}';
-        let commonResp = RestResponse.fromJson(data);
-        let resp = new GetCurrentFundingRateResp();
         resp = resp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(

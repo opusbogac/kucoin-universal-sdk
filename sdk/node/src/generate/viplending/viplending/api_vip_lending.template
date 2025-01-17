@@ -5,18 +5,6 @@ describe('Auto Test', ()=> {
     beforeAll(()=> {
         api = ??
     });
-    test('getAccounts request test', ()=> {
-    /**
-    * getAccounts
-    * Get Accounts
-    * /api/v1/otc-loan/accounts
-    */
-    let resp = api.getAccounts();
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
     test('getAccountDetail request test', ()=> {
     /**
     * getAccountDetail
@@ -31,6 +19,20 @@ describe('Auto Test', ()=> {
         expect(result.totalMarginAmount).toEqual(expect.anything());
         expect(result.transferMarginAmount).toEqual(expect.anything());
         expect(result.margins).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getAccounts request test', ()=> {
+    /**
+    * getAccounts
+    * Get Accounts
+    * /api/v1/otc-loan/accounts
+    */
+    let resp = api.getAccounts();
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

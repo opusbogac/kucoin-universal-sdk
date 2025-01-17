@@ -5,94 +5,167 @@ describe('Auto Test', ()=> {
     beforeAll(()=> {
         api = ??
     });
-    test('getTradeHistoryOld request test', ()=> {
+    test('addOrder request test', ()=> {
     /**
-    * getTradeHistoryOld
-    * Get Trade History - Old
-    * /api/v1/fills
+    * addOrder
+    * Add Order
+    * /api/v1/hf/orders
     */
-    let builder = GetTradeHistoryOldReq.builder();
-    builder.setSymbol(?).setOrderId(?).setSide(?).setType(?).setTradeType(?).setStartAt(?).setEndAt(?).setCurrentPage(?).setPageSize(?);
+    let builder = AddOrderReq.builder();
+    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setRemark(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setTags(?).setCancelAfter(?).setFunds(?);
     let req = builder.build();
-    let resp = api.getTradeHistoryOld(req);
+    let resp = api.addOrder(req);
     return resp.then(result => {
-        expect(result.currentPage).toEqual(expect.anything());
-        expect(result.pageSize).toEqual(expect.anything());
-        expect(result.totalNum).toEqual(expect.anything());
-        expect(result.totalPage).toEqual(expect.anything());
-        expect(result.items).toEqual(expect.anything());
+        expect(result.orderId).toEqual(expect.anything());
+        expect(result.clientOid).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getTradeHistory request test', ()=> {
+    test('addOrderSync request test', ()=> {
     /**
-    * getTradeHistory
-    * Get Trade History
-    * /api/v1/hf/fills
+    * addOrderSync
+    * Add Order Sync
+    * /api/v1/hf/orders/sync
     */
-    let builder = GetTradeHistoryReq.builder();
-    builder.setSymbol(?).setOrderId(?).setSide(?).setType(?).setLastId(?).setLimit(?).setStartAt(?).setEndAt(?);
+    let builder = AddOrderSyncReq.builder();
+    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setRemark(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setTags(?).setCancelAfter(?).setFunds(?);
     let req = builder.build();
-    let resp = api.getTradeHistory(req);
+    let resp = api.addOrderSync(req);
     return resp.then(result => {
-        expect(result.items).toEqual(expect.anything());
-        expect(result.lastId).toEqual(expect.anything());
+        expect(result.orderId).toEqual(expect.anything());
+        expect(result.clientOid).toEqual(expect.anything());
+        expect(result.orderTime).toEqual(expect.anything());
+        expect(result.originSize).toEqual(expect.anything());
+        expect(result.dealSize).toEqual(expect.anything());
+        expect(result.remainSize).toEqual(expect.anything());
+        expect(result.canceledSize).toEqual(expect.anything());
+        expect(result.status).toEqual(expect.anything());
+        expect(result.matchTime).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getOpenOrders request test', ()=> {
+    test('addOrderTest request test', ()=> {
     /**
-    * getOpenOrders
-    * Get Open Orders
-    * /api/v1/hf/orders/active
+    * addOrderTest
+    * Add Order Test
+    * /api/v1/hf/orders/test
     */
-    let builder = GetOpenOrdersReq.builder();
-    builder.setSymbol(?);
+    let builder = AddOrderTestReq.builder();
+    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setRemark(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setTags(?).setCancelAfter(?).setFunds(?);
     let req = builder.build();
-    let resp = api.getOpenOrders(req);
+    let resp = api.addOrderTest(req);
+    return resp.then(result => {
+        expect(result.orderId).toEqual(expect.anything());
+        expect(result.clientOid).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('batchAddOrders request test', ()=> {
+    /**
+    * batchAddOrders
+    * Batch Add Orders
+    * /api/v1/hf/orders/multi
+    */
+    let builder = BatchAddOrdersReq.builder();
+    builder.setOrderList(?);
+    let req = builder.build();
+    let resp = api.batchAddOrders(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getSymbolsWithOpenOrder request test', ()=> {
+    test('batchAddOrdersSync request test', ()=> {
     /**
-    * getSymbolsWithOpenOrder
-    * Get Symbols With Open Order
-    * /api/v1/hf/orders/active/symbols
+    * batchAddOrdersSync
+    * Batch Add Orders Sync
+    * /api/v1/hf/orders/multi/sync
     */
-    let resp = api.getSymbolsWithOpenOrder();
-    return resp.then(result => {
-        expect(result.symbols).toEqual(expect.anything());
-    });
-    })
-
-    test('modifyOrder request test', ()=> {
-    /**
-    * modifyOrder
-    * Modify Order
-    * /api/v1/hf/orders/alter
-    */
-    let builder = ModifyOrderReq.builder();
-    builder.setClientOid(?).setSymbol(?).setOrderId(?).setNewPrice(?).setNewSize(?);
+    let builder = BatchAddOrdersSyncReq.builder();
+    builder.setOrderList(?);
     let req = builder.build();
-    let resp = api.modifyOrder(req);
+    let resp = api.batchAddOrdersSync(req);
     return resp.then(result => {
-        expect(result.newOrderId).toEqual(expect.anything());
-        expect(result.clientOid).toEqual(expect.anything());
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('cancelAllOrders request test', ()=> {
+    test('cancelOrderByOrderId request test', ()=> {
     /**
-    * cancelAllOrders
-    * Cancel All Orders
-    * /api/v1/hf/orders/cancelAll
+    * cancelOrderByOrderId
+    * Cancel Order By OrderId
+    * /api/v1/hf/orders/{orderId}
     */
-    let resp = api.cancelAllOrders();
+    let builder = CancelOrderByOrderIdReq.builder();
+    builder.setOrderId(?).setSymbol(?);
+    let req = builder.build();
+    let resp = api.cancelOrderByOrderId(req);
     return resp.then(result => {
-        expect(result.succeedSymbols).toEqual(expect.anything());
-        expect(result.failedSymbols).toEqual(expect.anything());
+        expect(result.orderId).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('cancelOrderByOrderIdSync request test', ()=> {
+    /**
+    * cancelOrderByOrderIdSync
+    * Cancel Order By OrderId Sync
+    * /api/v1/hf/orders/sync/{orderId}
+    */
+    let builder = CancelOrderByOrderIdSyncReq.builder();
+    builder.setOrderId(?).setSymbol(?);
+    let req = builder.build();
+    let resp = api.cancelOrderByOrderIdSync(req);
+    return resp.then(result => {
+        expect(result.orderId).toEqual(expect.anything());
+        expect(result.originSize).toEqual(expect.anything());
+        expect(result.dealSize).toEqual(expect.anything());
+        expect(result.remainSize).toEqual(expect.anything());
+        expect(result.canceledSize).toEqual(expect.anything());
+        expect(result.status).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('cancelOrderByClientOid request test', ()=> {
+    /**
+    * cancelOrderByClientOid
+    * Cancel Order By ClientOid
+    * /api/v1/hf/orders/client-order/{clientOid}
+    */
+    let builder = CancelOrderByClientOidReq.builder();
+    builder.setClientOid(?).setSymbol(?);
+    let req = builder.build();
+    let resp = api.cancelOrderByClientOid(req);
+    return resp.then(result => {
+        expect(result.clientOid).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('cancelOrderByClientOidSync request test', ()=> {
+    /**
+    * cancelOrderByClientOidSync
+    * Cancel Order By ClientOid Sync
+    * /api/v1/hf/orders/sync/client-order/{clientOid}
+    */
+    let builder = CancelOrderByClientOidSyncReq.builder();
+    builder.setClientOid(?).setSymbol(?);
+    let req = builder.build();
+    let resp = api.cancelOrderByClientOidSync(req);
+    return resp.then(result => {
+        expect(result.clientOid).toEqual(expect.anything());
+        expect(result.originSize).toEqual(expect.anything());
+        expect(result.dealSize).toEqual(expect.anything());
+        expect(result.remainSize).toEqual(expect.anything());
+        expect(result.canceledSize).toEqual(expect.anything());
+        expect(result.status).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -109,100 +182,7 @@ describe('Auto Test', ()=> {
     return resp.then(result => {
         expect(result.orderId).toEqual(expect.anything());
         expect(result.cancelSize).toEqual(expect.anything());
-    });
-    })
-
-    test('cancelOrderByClientOid request test', ()=> {
-    /**
-    * cancelOrderByClientOid
-    * Cancel Order By ClientOid
-    * /api/v1/hf/orders/client-order/{clientOid}
-    */
-    let builder = CancelOrderByClientOidReq.builder();
-    builder.setClientOid(?).setSymbol(?);
-    let req = builder.build();
-    let resp = api.cancelOrderByClientOid(req);
-    return resp.then(result => {
-        expect(result.clientOid).toEqual(expect.anything());
-    });
-    })
-
-    test('getOrderByClientOid request test', ()=> {
-    /**
-    * getOrderByClientOid
-    * Get Order By ClientOid
-    * /api/v1/hf/orders/client-order/{clientOid}
-    */
-    let builder = GetOrderByClientOidReq.builder();
-    builder.setSymbol(?).setClientOid(?);
-    let req = builder.build();
-    let resp = api.getOrderByClientOid(req);
-    return resp.then(result => {
-        expect(result.id).toEqual(expect.anything());
-        expect(result.symbol).toEqual(expect.anything());
-        expect(result.opType).toEqual(expect.anything());
-        expect(result.type).toEqual(expect.anything());
-        expect(result.side).toEqual(expect.anything());
-        expect(result.price).toEqual(expect.anything());
-        expect(result.size).toEqual(expect.anything());
-        expect(result.funds).toEqual(expect.anything());
-        expect(result.dealSize).toEqual(expect.anything());
-        expect(result.dealFunds).toEqual(expect.anything());
-        expect(result.fee).toEqual(expect.anything());
-        expect(result.feeCurrency).toEqual(expect.anything());
-        expect(result.stp).toEqual(expect.anything());
-        expect(result.timeInForce).toEqual(expect.anything());
-        expect(result.postOnly).toEqual(expect.anything());
-        expect(result.hidden).toEqual(expect.anything());
-        expect(result.iceberg).toEqual(expect.anything());
-        expect(result.visibleSize).toEqual(expect.anything());
-        expect(result.cancelAfter).toEqual(expect.anything());
-        expect(result.channel).toEqual(expect.anything());
-        expect(result.clientOid).toEqual(expect.anything());
-        expect(result.remark).toEqual(expect.anything());
-        expect(result.tags).toEqual(expect.anything());
-        expect(result.cancelExist).toEqual(expect.anything());
-        expect(result.createdAt).toEqual(expect.anything());
-        expect(result.lastUpdatedAt).toEqual(expect.anything());
-        expect(result.tradeType).toEqual(expect.anything());
-        expect(result.inOrderBook).toEqual(expect.anything());
-        expect(result.cancelledSize).toEqual(expect.anything());
-        expect(result.cancelledFunds).toEqual(expect.anything());
-        expect(result.remainSize).toEqual(expect.anything());
-        expect(result.remainFunds).toEqual(expect.anything());
-        expect(result.tax).toEqual(expect.anything());
-        expect(result.active).toEqual(expect.anything());
-    });
-    })
-
-    test('setDCP request test', ()=> {
-    /**
-    * setDCP
-    * Set DCP
-    * /api/v1/hf/orders/dead-cancel-all
-    */
-    let builder = SetDCPReq.builder();
-    builder.setTimeout(?).setSymbols(?);
-    let req = builder.build();
-    let resp = api.setDCP(req);
-    return resp.then(result => {
-        expect(result.currentTime).toEqual(expect.anything());
-        expect(result.triggerTime).toEqual(expect.anything());
-    });
-    })
-
-    test('getDCP request test', ()=> {
-    /**
-    * getDCP
-    * Get DCP
-    * /api/v1/hf/orders/dead-cancel-all/query
-    */
-    let resp = api.getDCP();
-    return resp.then(result => {
-        expect(result.timeout).toEqual(expect.anything());
-        expect(result.symbols).toEqual(expect.anything());
-        expect(result.currentTime).toEqual(expect.anything());
-        expect(result.triggerTime).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -218,67 +198,38 @@ describe('Auto Test', ()=> {
     let resp = api.cancelAllOrdersBySymbol(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getClosedOrders request test', ()=> {
+    test('cancelAllOrders request test', ()=> {
     /**
-    * getClosedOrders
-    * Get Closed Orders
-    * /api/v1/hf/orders/done
+    * cancelAllOrders
+    * Cancel All Orders
+    * /api/v1/hf/orders/cancelAll
     */
-    let builder = GetClosedOrdersReq.builder();
-    builder.setSymbol(?).setSide(?).setType(?).setLastId(?).setLimit(?).setStartAt(?).setEndAt(?);
-    let req = builder.build();
-    let resp = api.getClosedOrders(req);
+    let resp = api.cancelAllOrders();
     return resp.then(result => {
-        expect(result.lastId).toEqual(expect.anything());
-        expect(result.items).toEqual(expect.anything());
+        expect(result.succeedSymbols).toEqual(expect.anything());
+        expect(result.failedSymbols).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('batchAddOrders request test', ()=> {
+    test('modifyOrder request test', ()=> {
     /**
-    * batchAddOrders
-    * Batch Add Orders
-    * /api/v1/hf/orders/multi
+    * modifyOrder
+    * Modify Order
+    * /api/v1/hf/orders/alter
     */
-    let builder = BatchAddOrdersReq.builder();
-    builder.setOrderList(?);
+    let builder = ModifyOrderReq.builder();
+    builder.setClientOid(?).setSymbol(?).setOrderId(?).setNewPrice(?).setNewSize(?);
     let req = builder.build();
-    let resp = api.batchAddOrders(req);
+    let resp = api.modifyOrder(req);
     return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('batchAddOrdersSync request test', ()=> {
-    /**
-    * batchAddOrdersSync
-    * Batch Add Orders Sync
-    * /api/v1/hf/orders/multi/sync
-    */
-    let builder = BatchAddOrdersSyncReq.builder();
-    builder.setOrderList(?);
-    let req = builder.build();
-    let resp = api.batchAddOrdersSync(req);
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('cancelOrderByOrderId request test', ()=> {
-    /**
-    * cancelOrderByOrderId
-    * Cancel Order By OrderId
-    * /api/v1/hf/orders/{orderId}
-    */
-    let builder = CancelOrderByOrderIdReq.builder();
-    builder.setOrderId(?).setSymbol(?);
-    let req = builder.build();
-    let resp = api.cancelOrderByOrderId(req);
-    return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
+        expect(result.newOrderId).toEqual(expect.anything());
+        expect(result.clientOid).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -327,161 +278,20 @@ describe('Auto Test', ()=> {
         expect(result.remainFunds).toEqual(expect.anything());
         expect(result.tax).toEqual(expect.anything());
         expect(result.active).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('addOrder request test', ()=> {
+    test('getOrderByClientOid request test', ()=> {
     /**
-    * addOrder
-    * Add Order
-    * /api/v1/hf/orders
+    * getOrderByClientOid
+    * Get Order By ClientOid
+    * /api/v1/hf/orders/client-order/{clientOid}
     */
-    let builder = AddOrderReq.builder();
-    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setRemark(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setTags(?).setCancelAfter(?).setFunds(?);
-    let req = builder.build();
-    let resp = api.addOrder(req);
-    return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
-        expect(result.clientOid).toEqual(expect.anything());
-    });
-    })
-
-    test('cancelOrderByClientOidSync request test', ()=> {
-    /**
-    * cancelOrderByClientOidSync
-    * Cancel Order By ClientOid Sync
-    * /api/v1/hf/orders/sync/client-order/{clientOid}
-    */
-    let builder = CancelOrderByClientOidSyncReq.builder();
-    builder.setClientOid(?).setSymbol(?);
-    let req = builder.build();
-    let resp = api.cancelOrderByClientOidSync(req);
-    return resp.then(result => {
-        expect(result.clientOid).toEqual(expect.anything());
-        expect(result.originSize).toEqual(expect.anything());
-        expect(result.dealSize).toEqual(expect.anything());
-        expect(result.remainSize).toEqual(expect.anything());
-        expect(result.canceledSize).toEqual(expect.anything());
-        expect(result.status).toEqual(expect.anything());
-    });
-    })
-
-    test('cancelOrderByOrderIdSync request test', ()=> {
-    /**
-    * cancelOrderByOrderIdSync
-    * Cancel Order By OrderId Sync
-    * /api/v1/hf/orders/sync/{orderId}
-    */
-    let builder = CancelOrderByOrderIdSyncReq.builder();
-    builder.setOrderId(?).setSymbol(?);
-    let req = builder.build();
-    let resp = api.cancelOrderByOrderIdSync(req);
-    return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
-        expect(result.originSize).toEqual(expect.anything());
-        expect(result.dealSize).toEqual(expect.anything());
-        expect(result.remainSize).toEqual(expect.anything());
-        expect(result.canceledSize).toEqual(expect.anything());
-        expect(result.status).toEqual(expect.anything());
-    });
-    })
-
-    test('addOrderSync request test', ()=> {
-    /**
-    * addOrderSync
-    * Add Order Sync
-    * /api/v1/hf/orders/sync
-    */
-    let builder = AddOrderSyncReq.builder();
-    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setRemark(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setTags(?).setCancelAfter(?).setFunds(?);
-    let req = builder.build();
-    let resp = api.addOrderSync(req);
-    return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
-        expect(result.clientOid).toEqual(expect.anything());
-        expect(result.orderTime).toEqual(expect.anything());
-        expect(result.originSize).toEqual(expect.anything());
-        expect(result.dealSize).toEqual(expect.anything());
-        expect(result.remainSize).toEqual(expect.anything());
-        expect(result.canceledSize).toEqual(expect.anything());
-        expect(result.status).toEqual(expect.anything());
-        expect(result.matchTime).toEqual(expect.anything());
-    });
-    })
-
-    test('addOrderTest request test', ()=> {
-    /**
-    * addOrderTest
-    * Add Order Test
-    * /api/v1/hf/orders/test
-    */
-    let builder = AddOrderTestReq.builder();
-    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setRemark(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setTags(?).setCancelAfter(?).setFunds(?);
-    let req = builder.build();
-    let resp = api.addOrderTest(req);
-    return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
-        expect(result.clientOid).toEqual(expect.anything());
-    });
-    })
-
-    test('getRecentTradeHistoryOld request test', ()=> {
-    /**
-    * getRecentTradeHistoryOld
-    * Get Recent Trade History - Old
-    * /api/v1/limit/fills
-    */
-    let builder = GetRecentTradeHistoryOldReq.builder();
-    builder.setCurrentPage(?).setPageSize(?);
-    let req = builder.build();
-    let resp = api.getRecentTradeHistoryOld(req);
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('getRecentOrdersListOld request test', ()=> {
-    /**
-    * getRecentOrdersListOld
-    * Get Recent Orders List - Old
-    * /api/v1/limit/orders
-    */
-    let builder = GetRecentOrdersListOldReq.builder();
-    builder.setCurrentPage(?).setPageSize(?);
-    let req = builder.build();
-    let resp = api.getRecentOrdersListOld(req);
-    return resp.then(result => {
-        expect(result.data).toEqual(expect.anything());
-    });
-    })
-
-    test('cancelOrderByClientOidOld request test', ()=> {
-    /**
-    * cancelOrderByClientOidOld
-    * Cancel Order By ClientOid - Old
-    * /api/v1/order/client-order/{clientOid}
-    */
-    let builder = CancelOrderByClientOidOldReq.builder();
+    let builder = GetOrderByClientOidReq.builder();
     builder.setSymbol(?).setClientOid(?);
     let req = builder.build();
-    let resp = api.cancelOrderByClientOidOld(req);
-    return resp.then(result => {
-        expect(result.clientOid).toEqual(expect.anything());
-        expect(result.cancelledOrderId).toEqual(expect.anything());
-        expect(result.cancelledOcoOrderIds).toEqual(expect.anything());
-    });
-    })
-
-    test('getOrderByClientOidOld request test', ()=> {
-    /**
-    * getOrderByClientOidOld
-    * Get Order By ClientOid - Old
-    * /api/v1/order/client-order/{clientOid}
-    */
-    let builder = GetOrderByClientOidOldReq.builder();
-    builder.setClientOid(?);
-    let req = builder.build();
-    let resp = api.getOrderByClientOidOld(req);
+    let resp = api.getOrderByClientOid(req);
     return resp.then(result => {
         expect(result.id).toEqual(expect.anything());
         expect(result.symbol).toEqual(expect.anything());
@@ -491,14 +301,11 @@ describe('Auto Test', ()=> {
         expect(result.price).toEqual(expect.anything());
         expect(result.size).toEqual(expect.anything());
         expect(result.funds).toEqual(expect.anything());
-        expect(result.dealFunds).toEqual(expect.anything());
         expect(result.dealSize).toEqual(expect.anything());
+        expect(result.dealFunds).toEqual(expect.anything());
         expect(result.fee).toEqual(expect.anything());
         expect(result.feeCurrency).toEqual(expect.anything());
         expect(result.stp).toEqual(expect.anything());
-        expect(result.stop).toEqual(expect.anything());
-        expect(result.stopTriggered).toEqual(expect.anything());
-        expect(result.stopPrice).toEqual(expect.anything());
         expect(result.timeInForce).toEqual(expect.anything());
         expect(result.postOnly).toEqual(expect.anything());
         expect(result.hidden).toEqual(expect.anything());
@@ -509,163 +316,131 @@ describe('Auto Test', ()=> {
         expect(result.clientOid).toEqual(expect.anything());
         expect(result.remark).toEqual(expect.anything());
         expect(result.tags).toEqual(expect.anything());
-        expect(result.isActive).toEqual(expect.anything());
         expect(result.cancelExist).toEqual(expect.anything());
         expect(result.createdAt).toEqual(expect.anything());
+        expect(result.lastUpdatedAt).toEqual(expect.anything());
         expect(result.tradeType).toEqual(expect.anything());
+        expect(result.inOrderBook).toEqual(expect.anything());
+        expect(result.cancelledSize).toEqual(expect.anything());
+        expect(result.cancelledFunds).toEqual(expect.anything());
+        expect(result.remainSize).toEqual(expect.anything());
+        expect(result.remainFunds).toEqual(expect.anything());
+        expect(result.tax).toEqual(expect.anything());
+        expect(result.active).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('batchCancelOrderOld request test', ()=> {
+    test('getSymbolsWithOpenOrder request test', ()=> {
     /**
-    * batchCancelOrderOld
-    * Batch Cancel Order - Old
-    * /api/v1/orders
+    * getSymbolsWithOpenOrder
+    * Get Symbols With Open Order
+    * /api/v1/hf/orders/active/symbols
     */
-    let builder = BatchCancelOrderOldReq.builder();
-    builder.setSymbol(?).setTradeType(?);
-    let req = builder.build();
-    let resp = api.batchCancelOrderOld(req);
+    let resp = api.getSymbolsWithOpenOrder();
     return resp.then(result => {
-        expect(result.cancelledOrderIds).toEqual(expect.anything());
+        expect(result.symbols).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getOrdersListOld request test', ()=> {
+    test('getOpenOrders request test', ()=> {
     /**
-    * getOrdersListOld
-    * Get Orders List - Old
-    * /api/v1/orders
+    * getOpenOrders
+    * Get Open Orders
+    * /api/v1/hf/orders/active
     */
-    let builder = GetOrdersListOldReq.builder();
-    builder.setSymbol(?).setStatus(?).setSide(?).setType(?).setTradeType(?).setStartAt(?).setEndAt(?).setCurrentPage(?).setPageSize(?);
+    let builder = GetOpenOrdersReq.builder();
+    builder.setSymbol(?);
     let req = builder.build();
-    let resp = api.getOrdersListOld(req);
-    return resp.then(result => {
-        expect(result.currentPage).toEqual(expect.anything());
-        expect(result.pageSize).toEqual(expect.anything());
-        expect(result.totalNum).toEqual(expect.anything());
-        expect(result.totalPage).toEqual(expect.anything());
-        expect(result.items).toEqual(expect.anything());
-    });
-    })
-
-    test('batchAddOrdersOld request test', ()=> {
-    /**
-    * batchAddOrdersOld
-    * Batch Add Orders - Old
-    * /api/v1/orders/multi
-    */
-    let builder = BatchAddOrdersOldReq.builder();
-    builder.setOrderList(?).setSymbol(?);
-    let req = builder.build();
-    let resp = api.batchAddOrdersOld(req);
+    let resp = api.getOpenOrders(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('cancelOrderByOrderIdOld request test', ()=> {
+    test('getClosedOrders request test', ()=> {
     /**
-    * cancelOrderByOrderIdOld
-    * Cancel Order By OrderId - Old
-    * /api/v1/orders/{orderId}
+    * getClosedOrders
+    * Get Closed Orders
+    * /api/v1/hf/orders/done
     */
-    let builder = CancelOrderByOrderIdOldReq.builder();
-    builder.setSymbol(?).setOrderId(?);
+    let builder = GetClosedOrdersReq.builder();
+    builder.setSymbol(?).setSide(?).setType(?).setLastId(?).setLimit(?).setStartAt(?).setEndAt(?);
     let req = builder.build();
-    let resp = api.cancelOrderByOrderIdOld(req);
+    let resp = api.getClosedOrders(req);
     return resp.then(result => {
-        expect(result.cancelledOrderIds).toEqual(expect.anything());
+        expect(result.lastId).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('getOrderByOrderIdOld request test', ()=> {
+    test('getTradeHistory request test', ()=> {
     /**
-    * getOrderByOrderIdOld
-    * Get Order By OrderId - Old
-    * /api/v1/orders/{orderId}
+    * getTradeHistory
+    * Get Trade History
+    * /api/v1/hf/fills
     */
-    let builder = GetOrderByOrderIdOldReq.builder();
-    builder.setOrderId(?);
+    let builder = GetTradeHistoryReq.builder();
+    builder.setSymbol(?).setOrderId(?).setSide(?).setType(?).setLastId(?).setLimit(?).setStartAt(?).setEndAt(?);
     let req = builder.build();
-    let resp = api.getOrderByOrderIdOld(req);
+    let resp = api.getTradeHistory(req);
     return resp.then(result => {
-        expect(result.id).toEqual(expect.anything());
-        expect(result.symbol).toEqual(expect.anything());
-        expect(result.opType).toEqual(expect.anything());
-        expect(result.type).toEqual(expect.anything());
-        expect(result.side).toEqual(expect.anything());
-        expect(result.price).toEqual(expect.anything());
-        expect(result.size).toEqual(expect.anything());
-        expect(result.funds).toEqual(expect.anything());
-        expect(result.dealFunds).toEqual(expect.anything());
-        expect(result.dealSize).toEqual(expect.anything());
-        expect(result.fee).toEqual(expect.anything());
-        expect(result.feeCurrency).toEqual(expect.anything());
-        expect(result.stp).toEqual(expect.anything());
-        expect(result.stop).toEqual(expect.anything());
-        expect(result.stopTriggered).toEqual(expect.anything());
-        expect(result.stopPrice).toEqual(expect.anything());
-        expect(result.timeInForce).toEqual(expect.anything());
-        expect(result.postOnly).toEqual(expect.anything());
-        expect(result.hidden).toEqual(expect.anything());
-        expect(result.iceberg).toEqual(expect.anything());
-        expect(result.visibleSize).toEqual(expect.anything());
-        expect(result.cancelAfter).toEqual(expect.anything());
-        expect(result.channel).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+        expect(result.lastId).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getDCP request test', ()=> {
+    /**
+    * getDCP
+    * Get DCP
+    * /api/v1/hf/orders/dead-cancel-all/query
+    */
+    let resp = api.getDCP();
+    return resp.then(result => {
+        expect(result.timeout).toEqual(expect.anything());
+        expect(result.symbols).toEqual(expect.anything());
+        expect(result.currentTime).toEqual(expect.anything());
+        expect(result.triggerTime).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('setDCP request test', ()=> {
+    /**
+    * setDCP
+    * Set DCP
+    * /api/v1/hf/orders/dead-cancel-all
+    */
+    let builder = SetDCPReq.builder();
+    builder.setTimeout(?).setSymbols(?);
+    let req = builder.build();
+    let resp = api.setDCP(req);
+    return resp.then(result => {
+        expect(result.currentTime).toEqual(expect.anything());
+        expect(result.triggerTime).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('addStopOrder request test', ()=> {
+    /**
+    * addStopOrder
+    * Add Stop Order
+    * /api/v1/stop-order
+    */
+    let builder = AddStopOrderReq.builder();
+    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setRemark(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setCancelAfter(?).setFunds(?).setStopPrice(?).setTradeType(?);
+    let req = builder.build();
+    let resp = api.addStopOrder(req);
+    return resp.then(result => {
+        expect(result.orderId).toEqual(expect.anything());
         expect(result.clientOid).toEqual(expect.anything());
-        expect(result.remark).toEqual(expect.anything());
-        expect(result.tags).toEqual(expect.anything());
-        expect(result.isActive).toEqual(expect.anything());
-        expect(result.cancelExist).toEqual(expect.anything());
-        expect(result.createdAt).toEqual(expect.anything());
-        expect(result.tradeType).toEqual(expect.anything());
-    });
-    })
-
-    test('addOrderOld request test', ()=> {
-    /**
-    * addOrderOld
-    * Add Order - Old
-    * /api/v1/orders
-    */
-    let builder = AddOrderOldReq.builder();
-    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setRemark(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setCancelAfter(?).setFunds(?).setTradeType(?);
-    let req = builder.build();
-    let resp = api.addOrderOld(req);
-    return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
-    });
-    })
-
-    test('addOrderTestOld request test', ()=> {
-    /**
-    * addOrderTestOld
-    * Add Order Test - Old
-    * /api/v1/orders/test
-    */
-    let builder = AddOrderTestOldReq.builder();
-    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setRemark(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setCancelAfter(?).setFunds(?).setTradeType(?);
-    let req = builder.build();
-    let resp = api.addOrderTestOld(req);
-    return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
-    });
-    })
-
-    test('batchCancelStopOrder request test', ()=> {
-    /**
-    * batchCancelStopOrder
-    * Batch Cancel Stop Orders
-    * /api/v1/stop-order/cancel
-    */
-    let builder = BatchCancelStopOrderReq.builder();
-    builder.setSymbol(?).setTradeType(?).setOrderIds(?);
-    let req = builder.build();
-    let resp = api.batchCancelStopOrder(req);
-    return resp.then(result => {
-        expect(result.cancelledOrderIds).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -682,6 +457,39 @@ describe('Auto Test', ()=> {
     return resp.then(result => {
         expect(result.clientOid).toEqual(expect.anything());
         expect(result.cancelledOrderId).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('cancelStopOrderByOrderId request test', ()=> {
+    /**
+    * cancelStopOrderByOrderId
+    * Cancel Stop Order By OrderId
+    * /api/v1/stop-order/{orderId}
+    */
+    let builder = CancelStopOrderByOrderIdReq.builder();
+    builder.setOrderId(?);
+    let req = builder.build();
+    let resp = api.cancelStopOrderByOrderId(req);
+    return resp.then(result => {
+        expect(result.cancelledOrderIds).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('batchCancelStopOrder request test', ()=> {
+    /**
+    * batchCancelStopOrder
+    * Batch Cancel Stop Orders
+    * /api/v1/stop-order/cancel
+    */
+    let builder = BatchCancelStopOrderReq.builder();
+    builder.setSymbol(?).setTradeType(?).setOrderIds(?);
+    let req = builder.build();
+    let resp = api.batchCancelStopOrder(req);
+    return resp.then(result => {
+        expect(result.cancelledOrderIds).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -701,21 +509,7 @@ describe('Auto Test', ()=> {
         expect(result.totalNum).toEqual(expect.anything());
         expect(result.totalPage).toEqual(expect.anything());
         expect(result.items).toEqual(expect.anything());
-    });
-    })
-
-    test('cancelStopOrderByOrderId request test', ()=> {
-    /**
-    * cancelStopOrderByOrderId
-    * Cancel Stop Order By OrderId
-    * /api/v1/stop-order/{orderId}
-    */
-    let builder = CancelStopOrderByOrderIdReq.builder();
-    builder.setOrderId(?);
-    let req = builder.build();
-    let resp = api.cancelStopOrderByOrderId(req);
-    return resp.then(result => {
-        expect(result.cancelledOrderIds).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -761,22 +555,7 @@ describe('Auto Test', ()=> {
         expect(result.stopTriggerTime).toEqual(expect.anything());
         expect(result.stopPrice).toEqual(expect.anything());
         expect(result.orderTime).toEqual(expect.anything());
-    });
-    })
-
-    test('addStopOrder request test', ()=> {
-    /**
-    * addStopOrder
-    * Add Stop Order
-    * /api/v1/stop-order
-    */
-    let builder = AddStopOrderReq.builder();
-    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setRemark(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setCancelAfter(?).setFunds(?).setStopPrice(?).setTradeType(?);
-    let req = builder.build();
-    let resp = api.addStopOrder(req);
-    return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
-        expect(result.clientOid).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -792,6 +571,39 @@ describe('Auto Test', ()=> {
     let resp = api.getStopOrderByClientOid(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('addOcoOrder request test', ()=> {
+    /**
+    * addOcoOrder
+    * Add OCO Order
+    * /api/v3/oco/order
+    */
+    let builder = AddOcoOrderReq.builder();
+    builder.setClientOid(?).setSide(?).setSymbol(?).setRemark(?).setPrice(?).setSize(?).setStopPrice(?).setLimitPrice(?).setTradeType(?);
+    let req = builder.build();
+    let resp = api.addOcoOrder(req);
+    return resp.then(result => {
+        expect(result.orderId).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('cancelOcoOrderByOrderId request test', ()=> {
+    /**
+    * cancelOcoOrderByOrderId
+    * Cancel OCO Order By OrderId
+    * /api/v3/oco/order/{orderId}
+    */
+    let builder = CancelOcoOrderByOrderIdReq.builder();
+    builder.setOrderId(?);
+    let req = builder.build();
+    let resp = api.cancelOcoOrderByOrderId(req);
+    return resp.then(result => {
+        expect(result.cancelledOrderIds).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -807,6 +619,43 @@ describe('Auto Test', ()=> {
     let resp = api.cancelOcoOrderByClientOid(req);
     return resp.then(result => {
         expect(result.cancelledOrderIds).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('batchCancelOcoOrders request test', ()=> {
+    /**
+    * batchCancelOcoOrders
+    * Batch Cancel OCO Order
+    * /api/v3/oco/orders
+    */
+    let builder = BatchCancelOcoOrdersReq.builder();
+    builder.setOrderIds(?).setSymbol(?);
+    let req = builder.build();
+    let resp = api.batchCancelOcoOrders(req);
+    return resp.then(result => {
+        expect(result.cancelledOrderIds).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getOcoOrderByOrderId request test', ()=> {
+    /**
+    * getOcoOrderByOrderId
+    * Get OCO Order By OrderId
+    * /api/v3/oco/order/{orderId}
+    */
+    let builder = GetOcoOrderByOrderIdReq.builder();
+    builder.setOrderId(?);
+    let req = builder.build();
+    let resp = api.getOcoOrderByOrderId(req);
+    return resp.then(result => {
+        expect(result.symbol).toEqual(expect.anything());
+        expect(result.clientOid).toEqual(expect.anything());
+        expect(result.orderId).toEqual(expect.anything());
+        expect(result.orderTime).toEqual(expect.anything());
+        expect(result.status).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -826,6 +675,7 @@ describe('Auto Test', ()=> {
         expect(result.orderId).toEqual(expect.anything());
         expect(result.orderTime).toEqual(expect.anything());
         expect(result.status).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -846,70 +696,7 @@ describe('Auto Test', ()=> {
         expect(result.orderTime).toEqual(expect.anything());
         expect(result.status).toEqual(expect.anything());
         expect(result.orders).toEqual(expect.anything());
-    });
-    })
-
-    test('cancelOcoOrderByOrderId request test', ()=> {
-    /**
-    * cancelOcoOrderByOrderId
-    * Cancel OCO Order By OrderId
-    * /api/v3/oco/order/{orderId}
-    */
-    let builder = CancelOcoOrderByOrderIdReq.builder();
-    builder.setOrderId(?);
-    let req = builder.build();
-    let resp = api.cancelOcoOrderByOrderId(req);
-    return resp.then(result => {
-        expect(result.cancelledOrderIds).toEqual(expect.anything());
-    });
-    })
-
-    test('getOcoOrderByOrderId request test', ()=> {
-    /**
-    * getOcoOrderByOrderId
-    * Get OCO Order By OrderId
-    * /api/v3/oco/order/{orderId}
-    */
-    let builder = GetOcoOrderByOrderIdReq.builder();
-    builder.setOrderId(?);
-    let req = builder.build();
-    let resp = api.getOcoOrderByOrderId(req);
-    return resp.then(result => {
-        expect(result.symbol).toEqual(expect.anything());
-        expect(result.clientOid).toEqual(expect.anything());
-        expect(result.orderId).toEqual(expect.anything());
-        expect(result.orderTime).toEqual(expect.anything());
-        expect(result.status).toEqual(expect.anything());
-    });
-    })
-
-    test('addOcoOrder request test', ()=> {
-    /**
-    * addOcoOrder
-    * Add OCO Order
-    * /api/v3/oco/order
-    */
-    let builder = AddOcoOrderReq.builder();
-    builder.setClientOid(?).setSide(?).setSymbol(?).setRemark(?).setPrice(?).setSize(?).setStopPrice(?).setLimitPrice(?).setTradeType(?);
-    let req = builder.build();
-    let resp = api.addOcoOrder(req);
-    return resp.then(result => {
-        expect(result.orderId).toEqual(expect.anything());
-    });
-    })
-
-    test('batchCancelOcoOrders request test', ()=> {
-    /**
-    * batchCancelOcoOrders
-    * Batch Cancel OCO Order
-    * /api/v3/oco/orders
-    */
-    let builder = BatchCancelOcoOrdersReq.builder();
-    builder.setOrderIds(?).setSymbol(?);
-    let req = builder.build();
-    let resp = api.batchCancelOcoOrders(req);
-    return resp.then(result => {
-        expect(result.cancelledOrderIds).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -929,6 +716,267 @@ describe('Auto Test', ()=> {
         expect(result.totalNum).toEqual(expect.anything());
         expect(result.totalPage).toEqual(expect.anything());
         expect(result.items).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('addOrderOld request test', ()=> {
+    /**
+    * addOrderOld
+    * Add Order - Old
+    * /api/v1/orders
+    */
+    let builder = AddOrderOldReq.builder();
+    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setRemark(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setCancelAfter(?).setFunds(?).setTradeType(?);
+    let req = builder.build();
+    let resp = api.addOrderOld(req);
+    return resp.then(result => {
+        expect(result.orderId).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('addOrderTestOld request test', ()=> {
+    /**
+    * addOrderTestOld
+    * Add Order Test - Old
+    * /api/v1/orders/test
+    */
+    let builder = AddOrderTestOldReq.builder();
+    builder.setClientOid(?).setSide(?).setSymbol(?).setType(?).setRemark(?).setStp(?).setPrice(?).setSize(?).setTimeInForce(?).setPostOnly(?).setHidden(?).setIceberg(?).setVisibleSize(?).setCancelAfter(?).setFunds(?).setTradeType(?);
+    let req = builder.build();
+    let resp = api.addOrderTestOld(req);
+    return resp.then(result => {
+        expect(result.orderId).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('batchAddOrdersOld request test', ()=> {
+    /**
+    * batchAddOrdersOld
+    * Batch Add Orders - Old
+    * /api/v1/orders/multi
+    */
+    let builder = BatchAddOrdersOldReq.builder();
+    builder.setOrderList(?).setSymbol(?);
+    let req = builder.build();
+    let resp = api.batchAddOrdersOld(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('cancelOrderByOrderIdOld request test', ()=> {
+    /**
+    * cancelOrderByOrderIdOld
+    * Cancel Order By OrderId - Old
+    * /api/v1/orders/{orderId}
+    */
+    let builder = CancelOrderByOrderIdOldReq.builder();
+    builder.setSymbol(?).setOrderId(?);
+    let req = builder.build();
+    let resp = api.cancelOrderByOrderIdOld(req);
+    return resp.then(result => {
+        expect(result.cancelledOrderIds).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('cancelOrderByClientOidOld request test', ()=> {
+    /**
+    * cancelOrderByClientOidOld
+    * Cancel Order By ClientOid - Old
+    * /api/v1/order/client-order/{clientOid}
+    */
+    let builder = CancelOrderByClientOidOldReq.builder();
+    builder.setSymbol(?).setClientOid(?);
+    let req = builder.build();
+    let resp = api.cancelOrderByClientOidOld(req);
+    return resp.then(result => {
+        expect(result.clientOid).toEqual(expect.anything());
+        expect(result.cancelledOrderId).toEqual(expect.anything());
+        expect(result.cancelledOcoOrderIds).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('batchCancelOrderOld request test', ()=> {
+    /**
+    * batchCancelOrderOld
+    * Batch Cancel Order - Old
+    * /api/v1/orders
+    */
+    let builder = BatchCancelOrderOldReq.builder();
+    builder.setSymbol(?).setTradeType(?);
+    let req = builder.build();
+    let resp = api.batchCancelOrderOld(req);
+    return resp.then(result => {
+        expect(result.cancelledOrderIds).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getOrdersListOld request test', ()=> {
+    /**
+    * getOrdersListOld
+    * Get Orders List - Old
+    * /api/v1/orders
+    */
+    let builder = GetOrdersListOldReq.builder();
+    builder.setSymbol(?).setStatus(?).setSide(?).setType(?).setTradeType(?).setStartAt(?).setEndAt(?).setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getOrdersListOld(req);
+    return resp.then(result => {
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getRecentOrdersListOld request test', ()=> {
+    /**
+    * getRecentOrdersListOld
+    * Get Recent Orders List - Old
+    * /api/v1/limit/orders
+    */
+    let builder = GetRecentOrdersListOldReq.builder();
+    builder.setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getRecentOrdersListOld(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getOrderByOrderIdOld request test', ()=> {
+    /**
+    * getOrderByOrderIdOld
+    * Get Order By OrderId - Old
+    * /api/v1/orders/{orderId}
+    */
+    let builder = GetOrderByOrderIdOldReq.builder();
+    builder.setOrderId(?);
+    let req = builder.build();
+    let resp = api.getOrderByOrderIdOld(req);
+    return resp.then(result => {
+        expect(result.id).toEqual(expect.anything());
+        expect(result.symbol).toEqual(expect.anything());
+        expect(result.opType).toEqual(expect.anything());
+        expect(result.type).toEqual(expect.anything());
+        expect(result.side).toEqual(expect.anything());
+        expect(result.price).toEqual(expect.anything());
+        expect(result.size).toEqual(expect.anything());
+        expect(result.funds).toEqual(expect.anything());
+        expect(result.dealFunds).toEqual(expect.anything());
+        expect(result.dealSize).toEqual(expect.anything());
+        expect(result.fee).toEqual(expect.anything());
+        expect(result.feeCurrency).toEqual(expect.anything());
+        expect(result.stp).toEqual(expect.anything());
+        expect(result.stop).toEqual(expect.anything());
+        expect(result.stopTriggered).toEqual(expect.anything());
+        expect(result.stopPrice).toEqual(expect.anything());
+        expect(result.timeInForce).toEqual(expect.anything());
+        expect(result.postOnly).toEqual(expect.anything());
+        expect(result.hidden).toEqual(expect.anything());
+        expect(result.iceberg).toEqual(expect.anything());
+        expect(result.visibleSize).toEqual(expect.anything());
+        expect(result.cancelAfter).toEqual(expect.anything());
+        expect(result.channel).toEqual(expect.anything());
+        expect(result.clientOid).toEqual(expect.anything());
+        expect(result.remark).toEqual(expect.anything());
+        expect(result.tags).toEqual(expect.anything());
+        expect(result.isActive).toEqual(expect.anything());
+        expect(result.cancelExist).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+        expect(result.tradeType).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getOrderByClientOidOld request test', ()=> {
+    /**
+    * getOrderByClientOidOld
+    * Get Order By ClientOid - Old
+    * /api/v1/order/client-order/{clientOid}
+    */
+    let builder = GetOrderByClientOidOldReq.builder();
+    builder.setClientOid(?);
+    let req = builder.build();
+    let resp = api.getOrderByClientOidOld(req);
+    return resp.then(result => {
+        expect(result.id).toEqual(expect.anything());
+        expect(result.symbol).toEqual(expect.anything());
+        expect(result.opType).toEqual(expect.anything());
+        expect(result.type).toEqual(expect.anything());
+        expect(result.side).toEqual(expect.anything());
+        expect(result.price).toEqual(expect.anything());
+        expect(result.size).toEqual(expect.anything());
+        expect(result.funds).toEqual(expect.anything());
+        expect(result.dealFunds).toEqual(expect.anything());
+        expect(result.dealSize).toEqual(expect.anything());
+        expect(result.fee).toEqual(expect.anything());
+        expect(result.feeCurrency).toEqual(expect.anything());
+        expect(result.stp).toEqual(expect.anything());
+        expect(result.stop).toEqual(expect.anything());
+        expect(result.stopTriggered).toEqual(expect.anything());
+        expect(result.stopPrice).toEqual(expect.anything());
+        expect(result.timeInForce).toEqual(expect.anything());
+        expect(result.postOnly).toEqual(expect.anything());
+        expect(result.hidden).toEqual(expect.anything());
+        expect(result.iceberg).toEqual(expect.anything());
+        expect(result.visibleSize).toEqual(expect.anything());
+        expect(result.cancelAfter).toEqual(expect.anything());
+        expect(result.channel).toEqual(expect.anything());
+        expect(result.clientOid).toEqual(expect.anything());
+        expect(result.remark).toEqual(expect.anything());
+        expect(result.tags).toEqual(expect.anything());
+        expect(result.isActive).toEqual(expect.anything());
+        expect(result.cancelExist).toEqual(expect.anything());
+        expect(result.createdAt).toEqual(expect.anything());
+        expect(result.tradeType).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getTradeHistoryOld request test', ()=> {
+    /**
+    * getTradeHistoryOld
+    * Get Trade History - Old
+    * /api/v1/fills
+    */
+    let builder = GetTradeHistoryOldReq.builder();
+    builder.setSymbol(?).setOrderId(?).setSide(?).setType(?).setTradeType(?).setStartAt(?).setEndAt(?).setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getTradeHistoryOld(req);
+    return resp.then(result => {
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getRecentTradeHistoryOld request test', ()=> {
+    /**
+    * getRecentTradeHistoryOld
+    * Get Recent Trade History - Old
+    * /api/v1/limit/fills
+    */
+    let builder = GetRecentTradeHistoryOldReq.builder();
+    builder.setCurrentPage(?).setPageSize(?);
+    let req = builder.build();
+    let resp = api.getRecentTradeHistoryOld(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 

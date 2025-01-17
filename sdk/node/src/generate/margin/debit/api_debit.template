@@ -5,6 +5,23 @@ describe('Auto Test', ()=> {
     beforeAll(()=> {
         api = ??
     });
+    test('borrow request test', ()=> {
+    /**
+    * borrow
+    * Borrow
+    * /api/v3/margin/borrow
+    */
+    let builder = BorrowReq.builder();
+    builder.setCurrency(?).setSize(?).setTimeInForce(?).setSymbol(?).setIsIsolated(?).setIsHf(?);
+    let req = builder.build();
+    let resp = api.borrow(req);
+    return resp.then(result => {
+        expect(result.orderNo).toEqual(expect.anything());
+        expect(result.actualSize).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
     test('getBorrowHistory request test', ()=> {
     /**
     * getBorrowHistory
@@ -22,42 +39,25 @@ describe('Auto Test', ()=> {
         expect(result.totalNum).toEqual(expect.anything());
         expect(result.totalPage).toEqual(expect.anything());
         expect(result.items).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('borrow request test', ()=> {
+    test('repay request test', ()=> {
     /**
-    * borrow
-    * Borrow
-    * /api/v3/margin/borrow
+    * repay
+    * Repay
+    * /api/v3/margin/repay
     */
-    let builder = BorrowReq.builder();
-    builder.setCurrency(?).setSize(?).setTimeInForce(?).setSymbol(?).setIsIsolated(?).setIsHf(?);
+    let builder = RepayReq.builder();
+    builder.setCurrency(?).setSize(?).setSymbol(?).setIsIsolated(?).setIsHf(?);
     let req = builder.build();
-    let resp = api.borrow(req);
-    return resp.then(result => {
-        expect(result.orderNo).toEqual(expect.anything());
-        expect(result.actualSize).toEqual(expect.anything());
-    });
-    })
-
-    test('getInterestHistory request test', ()=> {
-    /**
-    * getInterestHistory
-    * Get Interest History
-    * /api/v3/margin/interest
-    */
-    let builder = GetInterestHistoryReq.builder();
-    builder.setCurrency(?).setIsIsolated(?).setSymbol(?).setStartTime(?).setEndTime(?).setCurrentPage(?).setPageSize(?);
-    let req = builder.build();
-    let resp = api.getInterestHistory(req);
+    let resp = api.repay(req);
     return resp.then(result => {
         expect(result.timestamp).toEqual(expect.anything());
-        expect(result.currentPage).toEqual(expect.anything());
-        expect(result.pageSize).toEqual(expect.anything());
-        expect(result.totalNum).toEqual(expect.anything());
-        expect(result.totalPage).toEqual(expect.anything());
-        expect(result.items).toEqual(expect.anything());
+        expect(result.orderNo).toEqual(expect.anything());
+        expect(result.actualSize).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -78,23 +78,28 @@ describe('Auto Test', ()=> {
         expect(result.totalNum).toEqual(expect.anything());
         expect(result.totalPage).toEqual(expect.anything());
         expect(result.items).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
-    test('repay request test', ()=> {
+    test('getInterestHistory request test', ()=> {
     /**
-    * repay
-    * Repay
-    * /api/v3/margin/repay
+    * getInterestHistory
+    * Get Interest History
+    * /api/v3/margin/interest
     */
-    let builder = RepayReq.builder();
-    builder.setCurrency(?).setSize(?).setSymbol(?).setIsIsolated(?).setIsHf(?);
+    let builder = GetInterestHistoryReq.builder();
+    builder.setCurrency(?).setIsIsolated(?).setSymbol(?).setStartTime(?).setEndTime(?).setCurrentPage(?).setPageSize(?);
     let req = builder.build();
-    let resp = api.repay(req);
+    let resp = api.getInterestHistory(req);
     return resp.then(result => {
         expect(result.timestamp).toEqual(expect.anything());
-        expect(result.orderNo).toEqual(expect.anything());
-        expect(result.actualSize).toEqual(expect.anything());
+        expect(result.currentPage).toEqual(expect.anything());
+        expect(result.pageSize).toEqual(expect.anything());
+        expect(result.totalNum).toEqual(expect.anything());
+        expect(result.totalPage).toEqual(expect.anything());
+        expect(result.items).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
@@ -110,6 +115,7 @@ describe('Auto Test', ()=> {
     let resp = api.modifyLeverage(req);
     return resp.then(result => {
         expect(result.data).toEqual(expect.anything());
+        console.log(resp);
     });
     })
 
