@@ -45,7 +45,9 @@
     "node": ">=18"
   },
   "dependencies": {
+    "agentkeepalive": "^4.6.0",
     "axios": "^1.7.9",
+    "axios-retry": "^4.5.0",
     "class-transformer": "^0.5.1",
     "reflect-metadata": "^0.2.2"
   }

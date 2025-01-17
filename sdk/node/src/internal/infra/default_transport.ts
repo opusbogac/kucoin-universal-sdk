@@ -6,14 +6,18 @@ import { RestRateLimit, RestResponse } from '@model/common';
 import { DomainType } from '@model/constant';
 import { TransportOption } from '@model/transport_option';
 import { KcSigner } from './default_signer';
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import "reflect-metadata";
+import axios, {
+    AxiosInstance,
+    AxiosRequestConfig,
+    AxiosResponse,
+    AxiosResponseHeaders,
+    RawAxiosResponseHeaders,
+} from 'axios';
+import 'reflect-metadata';
 import axiosRetry from 'axios-retry';
-import { HttpAgent, HttpsAgent } from "agentkeepalive";
-
+import { HttpAgent, HttpsAgent } from 'agentkeepalive';
 
 export class DefaultTransport implements Transport {
-
     private readonly option: ClientOption;
     private readonly version: String;
     private transportOption: TransportOption = {} as TransportOption;
@@ -24,14 +28,16 @@ export class DefaultTransport implements Transport {
         this.option = option;
         this.version = version;
 
-        this.transportOption = option.transportOption || {} as TransportOption;
-        
-        this.signer = new KcSigner(option.key,
+        this.transportOption = option.transportOption || ({} as TransportOption);
+
+        this.signer = new KcSigner(
+            option.key,
             option.secret,
             option.passphrase,
             option.brokerName,
             option.brokerPartner,
-            option.brokerKey);
+            option.brokerKey,
+        );
 
         this.httpClient = this.createHttpClient(this.transportOption);
     }
@@ -40,7 +46,7 @@ export class DefaultTransport implements Transport {
         const instance = axios.create({
             timeout: trans_option.timeout,
             headers: {
-                'Connection': trans_option.keepAlive ? 'keep-alive' : 'close',
+                Connection: trans_option.keepAlive ? 'keep-alive' : 'close',
             },
         });
 
@@ -54,18 +60,17 @@ export class DefaultTransport implements Transport {
             },
             retryCondition: (error) => {
                 // acquire request config
-                const currentRetry = ((error.config as any)?._retry || 0);
+                const currentRetry = (error.config as any)?._retry || 0;
                 const maxRetries = trans_option.maxRetries || 3;
-                
+
                 // change retry condition here
-                const shouldRetry = (
-                    axiosRetry.isNetworkOrIdempotentRequestError(error) || 
+                const shouldRetry =
+                    axiosRetry.isNetworkOrIdempotentRequestError(error) ||
                     error.message.includes('timeout') ||
                     (error.response && error.response.status >= 500) ||
-                    error.code === 'ECONNABORTED'
-                );
+                    error.code === 'ECONNABORTED';
                 return shouldRetry && currentRetry < maxRetries;
-            }
+            },
         });
 
         instance.defaults.httpAgent = new HttpAgent({
@@ -73,7 +78,7 @@ export class DefaultTransport implements Transport {
             maxFreeSockets: trans_option.maxIdleConnsPerHost || 10,
             timeout: trans_option.timeout || 60000,
             freeSocketTimeout: trans_option.idleConnTimeout || 30000,
-            keepAlive: trans_option.keepAlive !== undefined ? trans_option.keepAlive : true
+            keepAlive: trans_option.keepAlive !== undefined ? trans_option.keepAlive : true,
         });
 
         instance.defaults.httpsAgent = new HttpsAgent({
@@ -81,47 +86,53 @@ export class DefaultTransport implements Transport {
             maxFreeSockets: trans_option.maxIdleConnsPerHost || 10,
             timeout: trans_option.timeout || 60000,
             freeSocketTimeout: trans_option.idleConnTimeout || 30000,
-            keepAlive: trans_option.keepAlive !== undefined ? trans_option.keepAlive : true
+            keepAlive: trans_option.keepAlive !== undefined ? trans_option.keepAlive : true,
         });
-        
+
         instance.interceptors.request.use(
-            config => {
+            (config) => {
                 console.log('[REQUEST]', {
                     method: config.method?.toUpperCase(),
-                    url: config.url
+                    url: config.url,
                 });
                 return config;
             },
-            error => {
+            (error) => {
                 console.error('[REQUEST ERROR]', error.message);
                 return Promise.reject(error);
-            }
+            },
         );
 
         instance.interceptors.response.use(
-            response => {
+            (response) => {
                 if (response.status >= 400) {
                     console.error('[RESPONSE ERROR]', {
                         status: response.status,
-                        data: response.data
+                        data: response.data,
                     });
                 }
                 return response;
             },
-            error => {
+            (error) => {
                 console.error('[RESPONSE ERROR]', {
-                        message: error.message,
-                        status: error.response?.status,
-                    data: error.response?.data
-                    });
-                    return Promise.reject(error);
-            }
+                    message: error.message,
+                    status: error.response?.status,
+                    data: error.response?.data,
+                });
+                return Promise.reject(error);
+            },
         );
 
         return instance;
     }
 
-    private processHeaders(body: string, rawUrl: string, config: AxiosRequestConfig, method: string, broker: boolean): void {
+    private processHeaders(
+        body: string,
+        rawUrl: string,
+        config: AxiosRequestConfig,
+        method: string,
+        broker: boolean,
+    ): void {
         const payload = `${method}${rawUrl}${body || ''}`;
         const headers = broker ? this.signer.brokerHeaders(payload) : this.signer.headers(payload);
 
@@ -137,22 +148,24 @@ export class DefaultTransport implements Transport {
         }
 
         const pathVariables: { [key: string]: any } = {};
-        
+
         for (const key of Object.keys(requestObj)) {
-            const metadata = Reflect.getMetadata("path", requestObj, key);
+            const metadata = Reflect.getMetadata('path', requestObj, key);
             if (metadata) {
                 pathVariables[metadata] = requestObj[key];
             }
         }
-        
+
         const missingPlaceholders = Object.entries(pathVariables)
             .filter(([_, value]) => value == null)
             .map(([key]) => key);
-        
+
         if (missingPlaceholders.length > 0) {
-            throw new Error(`Missing path variable value(s) for: ${missingPlaceholders.join(", ")}`);
+            throw new Error(
+                `Missing path variable value(s) for: ${missingPlaceholders.join(', ')}`,
+            );
         }
-        
+
         return path.replace(/{(.*?)}/g, (_, key) => {
             if (key in pathVariables) {
                 return String(pathVariables[key]);
@@ -162,12 +175,14 @@ export class DefaultTransport implements Transport {
     }
 
     private rawQuery(queryDict: Record<string, any>): string {
-        return Object.entries(queryDict).map(([key, value]) => {
-            if (Array.isArray(value)) {
-                return value.map(val => `${key}=${encodeURIComponent(val)}`).join('&');
-            }
-            return `${key}=${encodeURIComponent(value)}`;
-        }).join('&');
+        return Object.entries(queryDict)
+            .map(([key, value]) => {
+                if (Array.isArray(value)) {
+                    return value.map((val) => `${key}=${encodeURIComponent(val)}`).join('&');
+                }
+                return `${key}=${encodeURIComponent(value)}`;
+            })
+            .join('&');
     }
 
     private processRequest(
@@ -177,7 +192,7 @@ export class DefaultTransport implements Transport {
         endpoint: string,
         method: string,
         requestAsJson: boolean,
-        args?: any
+        args?: any,
     ): AxiosRequestConfig {
         const fullPath = endpoint + path;
         const rawUrl = path;
@@ -191,7 +206,7 @@ export class DefaultTransport implements Transport {
             if (queryParams) {
                 queryPath = `${path}?${queryParams}`;
             }
-        } else if(requestObj){
+        } else if (requestObj) {
             reqBody = JSON.stringify(requestObj);
         } else if (method === 'POST') {
             // For POST requests, if no request body is provided, use an empty object
@@ -203,15 +218,15 @@ export class DefaultTransport implements Transport {
             url: endpoint + queryPath,
             data: reqBody,
             headers: {
-                'User-Agent': `Kucoin-Universal-Node-SDK/${this.version}`
-            }
+                'User-Agent': `Kucoin-Universal-Node-SDK/${this.version}`,
+            },
         };
 
         // Add Content-Type only for POST and PUT requests
         if (method === 'POST' || method === 'PUT') {
             config.headers = {
                 ...config.headers,
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             };
         }
 
@@ -220,30 +235,7 @@ export class DefaultTransport implements Transport {
         return config;
     }
 
-    private doWithRetry(req_config: AxiosRequestConfig): Promise<AxiosResponse> {
-        try {
-            if(this.transportOption.interceptors){
-                for (const interceptor of this.transportOption.interceptors) {
-                    req_config = interceptor.before(req_config) || req_config;
-                }
-            }
-
-            return this.httpClient.request(req_config).then(response => {
-                if(this.transportOption.interceptors){
-                    for (const interceptor of this.transportOption.interceptors) {
-                        response = interceptor.after(req_config, response, null);
-                    }
-                }
-                return response;
-            }).catch(err => {
-                throw err;
-            });
-        } catch (err) {
-            return Promise.reject(err);
-        }
-    }
-
-    private processLimit(headers: Record<string, string>): RestRateLimit {
+    private processLimit(headers: RawAxiosResponseHeaders | AxiosResponseHeaders): RestRateLimit {
         const limit = parseInt(headers['gw-ratelimit-limit'] || '-1', 10);
         const remaining = parseInt(headers['gw-ratelimit-remaining'] || '-1', 10);
         const reset = parseInt(headers['gw-ratelimit-reset'] || '-1', 10);
@@ -251,22 +243,25 @@ export class DefaultTransport implements Transport {
         const rateLimit = {
             limit,
             remaining,
-            reset
+            reset,
         };
-    
+
         if (remaining <= Math.ceil(limit * 0.1)) {
             console.warn('[RATE LIMIT WARNING]', rateLimit);
         }
-    
+
         return rateLimit;
     }
 
-    private processResponse(response: AxiosResponse, responseObj: Response<any, any>): Response<any, any> {
+    private processResponse(
+        response: AxiosResponse,
+        responseObj: Response<any, any>,
+    ): Response<any, any> {
         if (response.status >= 400) {
             console.error('[RESPONSE ERROR]', {
                 status: response.status,
                 statusText: response.statusText,
-                data: response.data
+                data: response.data,
             });
         }
 
@@ -289,21 +284,31 @@ export class DefaultTransport implements Transport {
         requestObj: Serializable<any> | null,
         responseObj: Response<any, any>,
         requestJson: boolean,
-        args?: any
+        args?: any,
     ): Promise<Response<any, any>> {
-        domain = domain.toLowerCase();
-        method = method.toUpperCase();
-
-        const endpoint = this.getEndpoint(domain);
-        const processedPath = this.processPathVariable(path, requestObj);
-        const config = this.processRequest(requestObj, isBroker, processedPath, endpoint, method, requestJson, args);
-        
-        return this.doWithRetry(config).then(response => {
-            return this.processResponse(response, responseObj);
-        }).catch(error => {
-            console.error('[CALL ERROR]', error);
-            throw error;
-        });
+        return Promise.resolve()
+            .then((): AxiosRequestConfig<any> => {
+                const endpoint = this.getEndpoint(domain);
+                const processedPath = this.processPathVariable(path, requestObj);
+                return this.processRequest(
+                    requestObj,
+                    isBroker,
+                    processedPath,
+                    endpoint,
+                    method,
+                    requestJson,
+                    args,
+                );
+            })
+            .then((config: AxiosRequestConfig<any>) => {
+                return this.httpClient.request(config);
+            })
+            .then((response: AxiosResponse) => {
+                return this.processResponse(response, responseObj);
+            })
+            .catch((err: any) => {
+                throw err;
+            });
     }
 
     private getEndpoint(domain: string): string {
