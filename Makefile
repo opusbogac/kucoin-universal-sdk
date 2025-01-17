@@ -64,9 +64,12 @@ define generate-code
 
 	@echo "$(GREEN)lang: $(lang), clean...$(NC)"
 	docker run --rm -v "${PWD}:/local" $(IMAGE_NAME):$(IMAGE_TAG) rm -rf $(outdir)
+	
+	@echo "$(GREEN)lang: ${lang}, copy changelog...$(NC)"
+	docker run --rm -v "${PWD}:/local" $(IMAGE_NAME):$(IMAGE_TAG) cp /local/CHANGELOG.md /local/sdk/$(lang)
 
 	@make -f generate.mk generate lang=$(1) subdir=$(2) USER_VERSION=$(3)
-	
+
 	@echo "$(GREEN)lang: $(lang), clean...$(NC)"
 	docker run --rm -v "${PWD}:/local" $(IMAGE_NAME):$(IMAGE_TAG) rm -rf $(outdir)/.openapi-generator
 	docker run --rm -v "${PWD}:/local" $(IMAGE_NAME):$(IMAGE_TAG) rm -rf $(outdir)/.openapi-generator-ignore
@@ -75,6 +78,7 @@ define generate-code
 endef
 
 define generate-postman
+	docker run --rm -v "${PWD}:/local" $(IMAGE_NAME):$(IMAGE_TAG) cp /local/CHANGELOG.md /local/sdk/postman
 	@make -f generate.mk generate-postman
 endef
 
