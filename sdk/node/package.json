@@ -42,7 +42,7 @@
   },
   "peerDependencies": {},
   "engines": {
-    "node": ">=18"
+    "node": ">=14"
   },
   "dependencies": {
     "agentkeepalive": "^4.6.0",

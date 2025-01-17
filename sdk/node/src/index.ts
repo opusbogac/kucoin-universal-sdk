@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 // Exporting from api
 export * from './api';
 export * from './model';

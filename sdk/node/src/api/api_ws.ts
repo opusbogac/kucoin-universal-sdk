@@ -1,10 +1,9 @@
-import { SpotPublicWS } from '@generate/spot/spotpublic/ws_spot_public';
-import { SpotPrivateWS } from '@generate/spot/spotprivate/ws_spot_private';
-import { MarginPublicWS } from '@generate/margin/marginpublic/ws_margin_public';
-import { MarginPrivateWS } from '@generate/margin/marginprivate/ws_margin_private';
-import { FuturesPublicWS } from '@generate/futures/futurespublic/ws_futures_public';
-import { FuturesPrivateWS } from '@generate/futures/futuresprivate/ws_futures_private';
-
+import { SpotPublicWS } from '@generate/spot/spotpublic';
+import { SpotPrivateWS } from '@generate/spot/spotprivate';
+import { MarginPublicWS } from '@generate/margin/marginpublic';
+import { MarginPrivateWS } from '@generate/margin/marginprivate';
+import { FuturesPublicWS } from '@generate/futures/futurespublic';
+import { FuturesPrivateWS } from '@generate/futures/futuresprivate';
 
 export interface KucoinWSService {
     /**
