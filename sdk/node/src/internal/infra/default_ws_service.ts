@@ -11,8 +11,8 @@ import { WebSocketClientOption, WebSocketEvent } from '../../model/websocket_opt
 import { SubInfo } from '@internal/util/sub';
 import { WsMessage } from '@model/common';
 import { MessageType } from '@model/constant';
+import { randomUUID } from 'crypto';
 
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * DefaultWsService implements the WebSocket service interface for handling real-time data communication.
@@ -266,7 +266,7 @@ export class DefaultWsService implements WebSocketService {
 
                 const subEvent = new WsMessage();
 
-                subEvent.id = uuidv4().toString();
+                subEvent.id = randomUUID().toString();
                 subEvent.type = MessageType.UnsubscribeMessage;
                 subEvent.topic = subInfo.subTopic();
                 subEvent.privateChannel = this.privateChannel;
