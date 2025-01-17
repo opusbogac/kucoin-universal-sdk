@@ -4,7 +4,7 @@ import { Response } from '@internal/interfaces/response';
 import { ClientOption } from '@model/client_option';
 import { RestRateLimit, RestResponse } from '@model/common';
 import { DomainType } from '@model/constant';
-import { TransportOption } from '@model/transport_option';
+import { DEFAULT_TRANSPORT_OPTION, TransportOption } from '@model/transport_option';
 import { KcSigner } from './default_signer';
 import axios, {
     AxiosInstance,
@@ -52,7 +52,7 @@ export class DefaultTransport implements Transport {
 
         // Add retry logic
         axiosRetry(instance, {
-            retries: trans_option.maxRetries || 3,
+            retries: trans_option.maxRetries || DEFAULT_TRANSPORT_OPTION.maxRetries,
             shouldResetTimeout: true,
             retryDelay: (retryCount, error) => {
                 const delay = trans_option.retryDelay;
@@ -61,7 +61,7 @@ export class DefaultTransport implements Transport {
             retryCondition: (error) => {
                 // acquire request config
                 const currentRetry = (error.config as any)?._retry || 0;
-                const maxRetries = trans_option.maxRetries || 3;
+                const maxRetries = trans_option.maxRetries || DEFAULT_TRANSPORT_OPTION.maxRetries;
 
                 // change retry condition here
                 const shouldRetry =
@@ -74,21 +74,26 @@ export class DefaultTransport implements Transport {
         });
 
         instance.defaults.httpAgent = new HttpAgent({
-            maxSockets: trans_option.maxConnsPerHost || 100,
-            maxFreeSockets: trans_option.maxIdleConnsPerHost || 10,
-            timeout: trans_option.timeout || 60000,
-            freeSocketTimeout: trans_option.idleConnTimeout || 30000,
+            maxSockets: trans_option.maxConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxConnsPerHost,
+            maxFreeSockets:
+                trans_option.maxIdleConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxIdleConnsPerHost,
+            timeout: trans_option.timeout || DEFAULT_TRANSPORT_OPTION.timeout,
+            freeSocketTimeout:
+                trans_option.idleConnTimeout || DEFAULT_TRANSPORT_OPTION.idleConnTimeout,
             keepAlive: trans_option.keepAlive !== undefined ? trans_option.keepAlive : true,
         });
 
         instance.defaults.httpsAgent = new HttpsAgent({
-            maxSockets: trans_option.maxConnsPerHost || 100,
-            maxFreeSockets: trans_option.maxIdleConnsPerHost || 10,
-            timeout: trans_option.timeout || 60000,
-            freeSocketTimeout: trans_option.idleConnTimeout || 30000,
+            maxSockets: trans_option.maxConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxConnsPerHost,
+            maxFreeSockets:
+                trans_option.maxIdleConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxIdleConnsPerHost,
+            timeout: trans_option.timeout || DEFAULT_TRANSPORT_OPTION.timeout,
+            freeSocketTimeout:
+                trans_option.idleConnTimeout || DEFAULT_TRANSPORT_OPTION.idleConnTimeout,
             keepAlive: trans_option.keepAlive !== undefined ? trans_option.keepAlive : true,
         });
 
+        // todo: Use user interceptors, avoid defaults.
         instance.interceptors.request.use(
             (config) => {
                 console.log('[REQUEST]', {
@@ -199,6 +204,7 @@ export class DefaultTransport implements Transport {
         let reqBody = '';
         let queryPath = path;
 
+        // TODO wrong logic
         if (requestAsJson && requestObj) {
             reqBody = JSON.stringify(requestObj);
         } else if (method === 'GET' || method === 'DELETE') {
@@ -246,6 +252,7 @@ export class DefaultTransport implements Transport {
             reset,
         };
 
+        // todo delete
         if (remaining <= Math.ceil(limit * 0.1)) {
             console.warn('[RATE LIMIT WARNING]', rateLimit);
         }
@@ -257,6 +264,7 @@ export class DefaultTransport implements Transport {
         response: AxiosResponse,
         responseObj: Response<any, any>,
     ): Response<any, any> {
+        // todo missing logic
         if (response.status >= 400) {
             console.error('[RESPONSE ERROR]', {
                 status: response.status,
@@ -334,6 +342,7 @@ export class DefaultTransport implements Transport {
     }
 
     close(): Promise<void> {
+        // TODO release resource
         return Promise.resolve(undefined);
     }
 }

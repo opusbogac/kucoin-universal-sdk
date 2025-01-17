@@ -70,7 +70,7 @@ export interface TransportOption {
 /**
  * Default values for TransportOption
  */
-const DEFAULT_TRANSPORT_OPTION: TransportOption = {
+export const DEFAULT_TRANSPORT_OPTION: TransportOption = {
     timeout: 30000, // 30 seconds
     keepAlive: true,
     maxIdleConns: 100,
