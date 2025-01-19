@@ -188,6 +188,7 @@ export class DefaultTransport implements Transport {
         requestObj: Serializable<any> | null,
         broker: boolean,
         path: string,
+        rawpath: string,
         endpoint: string,
         method: string,
         requestAsJson: boolean,
@@ -204,11 +205,24 @@ export class DefaultTransport implements Transport {
             }
         }else{
             if (method === 'GET' || method === 'DELETE') {
-                const queryParams = this.rawQuery(requestObj || {});
-                if (queryParams) {
-                    queryPath = `${path}?${queryParams}`;
+                if (requestObj) {
+                    // create a new object for query parameters
+                    const queryObj = { ...requestObj };
+                    
+                    // check path variables and remove from query
+                    const pathVarPattern = /{([^}]+)}/g;
+                    let match;
+                    while ((match = pathVarPattern.exec(rawpath)) !== null) {
+                        const pathVarName = match[1];
+                        delete queryObj[pathVarName];
+                    }
+                    
+                    const queryParams = this.rawQuery(queryObj);
+                    if (queryParams) {
+                        queryPath = `${path}?${queryParams}`;
+                    }
                 }
-            } else if (method == "POST") {
+            } else if (method === "POST") {
                 if (requestObj){
                     reqBody = JSON.stringify(requestObj);
                 }
@@ -295,6 +309,7 @@ export class DefaultTransport implements Transport {
                     requestObj,
                     isBroker,
                     processedPath,
+                    path,
                     endpoint,
                     method,
                     requestJson,
