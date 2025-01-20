@@ -91,6 +91,7 @@ export class WebSocketClient {
         this.eventEmitter = externalEventEmitter || new EventEmitter();
 
         this.lastPingTime = null;
+        this.reconnect();
     }
 
     // # Start the WebSocket client
@@ -105,7 +106,6 @@ export class WebSocketClient {
                 this.connected = true;
                 this.notifyEvent(WebSocketEvent.EventConnected, '');
                 this.run();
-                this.reconnect();
             })
             .catch((err) => {
                 console.error('Failed to start WebSocket client:', err);
@@ -393,7 +393,12 @@ export class WebSocketClient {
         console.debug('[KeepAlive] Start checking...');
 
         if (!this.tokenInfo || this.shutdown || this.closed) {
-            console.debug('[KeepAlive] Skip - tokenInfo/shutdown/closed check failed');
+            console.debug('[KeepAlive] Skip - basic check failed');
+            return;
+        }
+
+        if (this.disconnected || !this.connected) {
+            console.debug('[KeepAlive] Skip - connection is not active');
             return;
         }
 
@@ -410,13 +415,15 @@ export class WebSocketClient {
             console.debug('[KeepAlive] Sending ping message...');
             const pingMsg = this.newPingMessage();
             try {
-                this.write(pingMsg, timeout).catch((e) =>
-                    console.error('[KeepAlive] Heartbeat ping error:', e),
-                );
+                this.write(pingMsg, timeout).catch((e) => {
+                    console.error('[KeepAlive] Heartbeat ping error:', e);
+                    this.disconnected = true;
+                });
                 console.debug('[KeepAlive] Ping sent');
             } catch (e) {
                 console.error('[KeepAlive] Heartbeat ping error:', e);
                 this.metric.pingErr++;
+                this.disconnected = true;
             }
             this.lastPingTime = currentTime;
         } else {
@@ -424,12 +431,17 @@ export class WebSocketClient {
         }
     }
 
-    private reconnect(): void {
+    private async reconnect(): void {
         const reconnectLoop = async () => {
             while (!this.reconnectClosed) {
                 if (this.disconnected && !this.shutdown) {
                     console.log('Broken WebSocket connection, starting reconnection');
-                    await this.close();
+                    try {
+                        await this.close();
+                    } catch (err) {
+                        console.error('Error closing connection:', err);
+                    }
+                    
                     this.notifyEvent(WebSocketEvent.EventTryReconnect, '');
                     this.disconnected = false;
 
@@ -443,27 +455,29 @@ export class WebSocketClient {
                             attempt < this.options.reconnectAttempts)
                     ) {
                         console.log(
-                            `Reconnecting in ${this.options.reconnectInterval} seconds... (attempt ${attempt})`,
+                            `Reconnecting in ${this.options.reconnectInterval/1000} seconds... (attempt ${attempt + 1}/${this.options.reconnectAttempts})`,
                         );
                         await new Promise((resolve) =>
-                            setTimeout(resolve, this.options.reconnectInterval * 1000),
+                            setTimeout(resolve, this.options.reconnectInterval),
                         );
 
                         try {
                             await this.dial();
                             this.notifyEvent(WebSocketEvent.EventConnected, '');
                             this.connected = true;
+                            this.closed = false;
                             this.run();
                             reconnected = true;
                             this.reconnected = true;
+                            console.log('Successfully reconnected to WebSocket server');
                         } catch (err) {
-                            console.error(`Reconnect attempt ${attempt} failed:`, err);
+                            console.error(`Reconnect attempt ${attempt + 1} failed:`, err);
                             attempt++;
                         }
                     }
 
                     if (!reconnected) {
-                        this.notifyEvent(WebSocketEvent.EventClientFail, '');
+                        this.notifyEvent(WebSocketEvent.EventClientFail, 'Failed to reconnect after all attempts');
                         console.error('Failed to reconnect after all attempts.');
                     }
                 }
@@ -472,7 +486,8 @@ export class WebSocketClient {
         };
 
         reconnectLoop().catch((err) => {
-            console.error('Error in reconnect loop:', err);
+            console.error('Critical error in reconnect loop:', err);
+            this.notifyEvent(WebSocketEvent.EventClientFail, `Critical error: ${err.message}`);
         });
     }
 
@@ -518,16 +533,34 @@ export class WebSocketClient {
 
             // Close WebSocket connection
             if (this.conn) {
+                const closeTimeout = setTimeout(() => {
+                    console.log('WebSocket close timeout, forcing close');
+                    this.conn = null;
+                    this.connected = false;
+                    this.closed = true;
+                    resolve();
+                }, 3000);
+
                 // Listen for close event before closing
                 this.conn.once('close', () => {
+                    clearTimeout(closeTimeout);
                     this.conn = null;
                     this.connected = false;
                     this.closed = true;
                     resolve();
                 });
 
-                // Close the connection
-                this.conn.close();
+                try {
+                    // Close the connection
+                    this.conn.close();
+                } catch (err) {
+                    console.error('Error during WebSocket close:', err);
+                    clearTimeout(closeTimeout);
+                    this.conn = null;
+                    this.connected = false;
+                    this.closed = true;
+                    resolve();
+                }
             } else {
                 // If no connection exists, resolve immediately
                 this.connected = false;

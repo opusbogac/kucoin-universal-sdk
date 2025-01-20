@@ -182,15 +182,25 @@ export class DefaultWsService implements WebSocketService {
                 const oldTopicManager = this.topicManager;
                 this.topicManager = new TopicManager();
 
-                // Create an array of promises for all resubscribe operations
-                const resubscribePromises: Promise<void>[] = [];
-                oldTopicManager.range((key, value) => {
-                    resubscribePromises.push(this.resubscribe(value));
-                    return true;
-                });
+                try {
+                    const resubscribePromises: Promise<void>[] = [];
+                    oldTopicManager.range((key, value) => {
+                        if (!value.isEmpty()) {
+                            resubscribePromises.push(this.resubscribe(value));
+                        }
+                        return true;
+                    });
 
-                // Wait for all resubscribe operations to complete
-                await Promise.all(resubscribePromises);
+                    await Promise.all(resubscribePromises);
+                    console.log('All topics resubscribed successfully');
+                } catch (err) {
+                    console.error('Error during resubscribe:', err);
+                    this.notifyEvent(
+                        WebSocketEvent.EventReSubscribeError,
+                        `Failed to resubscribe: ${err}`,
+                    );
+                    this.topicManager = oldTopicManager;
+                }
 
                 this.client.clearReconnectedFlag();
             }
