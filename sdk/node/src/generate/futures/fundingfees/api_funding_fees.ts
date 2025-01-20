@@ -70,7 +70,7 @@ export class FundingFeesAPIImpl implements FundingFeesAPI {
             'GET',
             '/api/v1/funding-rate/{symbol}/current',
             req,
-            new GetCurrentFundingRateResp(),
+            GetCurrentFundingRateResp,
             false,
         );
     }
@@ -82,7 +82,7 @@ export class FundingFeesAPIImpl implements FundingFeesAPI {
             'GET',
             '/api/v1/contract/funding-rates',
             req,
-            new GetPublicFundingHistoryResp(),
+            GetPublicFundingHistoryResp,
             false,
         );
     }
@@ -96,7 +96,7 @@ export class FundingFeesAPIImpl implements FundingFeesAPI {
             'GET',
             '/api/v1/funding-history',
             req,
-            new GetPrivateFundingHistoryResp(),
+            GetPrivateFundingHistoryResp,
             false,
         );
     }

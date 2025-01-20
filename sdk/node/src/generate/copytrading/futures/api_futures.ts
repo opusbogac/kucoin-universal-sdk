@@ -214,7 +214,7 @@ export class FuturesAPIImpl implements FuturesAPI {
             'POST',
             '/api/v1/copy-trade/futures/orders',
             req,
-            new AddOrderResp(),
+            AddOrderResp,
             false,
         );
     }
@@ -226,7 +226,7 @@ export class FuturesAPIImpl implements FuturesAPI {
             'POST',
             '/api/v1/copy-trade/futures/orders/test',
             req,
-            new AddOrderTestResp(),
+            AddOrderTestResp,
             false,
         );
     }
@@ -238,7 +238,7 @@ export class FuturesAPIImpl implements FuturesAPI {
             'POST',
             '/api/v1/copy-trade/futures/st-orders',
             req,
-            new AddTPSLOrderResp(),
+            AddTPSLOrderResp,
             false,
         );
     }
@@ -250,7 +250,7 @@ export class FuturesAPIImpl implements FuturesAPI {
             'DELETE',
             '/api/v1/copy-trade/futures/orders',
             req,
-            new CancelOrderByIdResp(),
+            CancelOrderByIdResp,
             false,
         );
     }
@@ -262,7 +262,7 @@ export class FuturesAPIImpl implements FuturesAPI {
             'DELETE',
             '/api/v1/copy-trade/futures/orders/client-order',
             req,
-            new CancelOrderByClientOidResp(),
+            CancelOrderByClientOidResp,
             false,
         );
     }
@@ -274,7 +274,7 @@ export class FuturesAPIImpl implements FuturesAPI {
             'GET',
             '/api/v1/copy-trade/futures/get-max-open-size',
             req,
-            new GetMaxOpenSizeResp(),
+            GetMaxOpenSizeResp,
             false,
         );
     }
@@ -286,7 +286,7 @@ export class FuturesAPIImpl implements FuturesAPI {
             'GET',
             '/api/v1/copy-trade/futures/position/margin/max-withdraw-margin',
             req,
-            new GetMaxWithdrawMarginResp(),
+            GetMaxWithdrawMarginResp,
             false,
         );
     }
@@ -298,7 +298,7 @@ export class FuturesAPIImpl implements FuturesAPI {
             'POST',
             '/api/v1/copy-trade/futures/position/margin/deposit-margin',
             req,
-            new AddIsolatedMarginResp(),
+            AddIsolatedMarginResp,
             false,
         );
     }
@@ -310,7 +310,7 @@ export class FuturesAPIImpl implements FuturesAPI {
             'POST',
             '/api/v1/copy-trade/futures/position/margin/withdraw-margin',
             req,
-            new RemoveIsolatedMarginResp(),
+            RemoveIsolatedMarginResp,
             false,
         );
     }
@@ -324,7 +324,7 @@ export class FuturesAPIImpl implements FuturesAPI {
             'POST',
             '/api/v1/copy-trade/futures/position/risk-limit-level/change',
             req,
-            new ModifyIsolatedMarginRiskLimtResp(),
+            ModifyIsolatedMarginRiskLimtResp,
             false,
         );
     }
@@ -336,7 +336,7 @@ export class FuturesAPIImpl implements FuturesAPI {
             'POST',
             '/api/v1/copy-trade/futures/position/margin/auto-deposit-status',
             req,
-            new ModifyAutoDepositStatusResp(),
+            ModifyAutoDepositStatusResp,
             false,
         );
     }

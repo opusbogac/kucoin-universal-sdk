@@ -339,7 +339,7 @@ export class OrderAPIImpl implements OrderAPI {
             'POST',
             '/api/v1/orders',
             req,
-            new AddOrderResp(),
+            AddOrderResp,
             false,
         );
     }
@@ -351,7 +351,7 @@ export class OrderAPIImpl implements OrderAPI {
             'POST',
             '/api/v1/orders/test',
             req,
-            new AddOrderTestResp(),
+            AddOrderTestResp,
             false,
         );
     }
@@ -363,7 +363,7 @@ export class OrderAPIImpl implements OrderAPI {
             'POST',
             '/api/v1/orders/multi',
             req,
-            new BatchAddOrdersResp(),
+            BatchAddOrdersResp,
             false,
         );
     }
@@ -375,7 +375,7 @@ export class OrderAPIImpl implements OrderAPI {
             'POST',
             '/api/v1/st-orders',
             req,
-            new AddTPSLOrderResp(),
+            AddTPSLOrderResp,
             false,
         );
     }
@@ -387,7 +387,7 @@ export class OrderAPIImpl implements OrderAPI {
             'DELETE',
             '/api/v1/orders/{orderId}',
             req,
-            new CancelOrderByIdResp(),
+            CancelOrderByIdResp,
             false,
         );
     }
@@ -399,7 +399,7 @@ export class OrderAPIImpl implements OrderAPI {
             'DELETE',
             '/api/v1/orders/client-order/{clientOid}',
             req,
-            new CancelOrderByClientOidResp(),
+            CancelOrderByClientOidResp,
             false,
         );
     }
@@ -411,7 +411,7 @@ export class OrderAPIImpl implements OrderAPI {
             'DELETE',
             '/api/v1/orders/multi-cancel',
             req,
-            new BatchCancelOrdersResp(),
+            BatchCancelOrdersResp,
             true,
         );
     }
@@ -423,7 +423,7 @@ export class OrderAPIImpl implements OrderAPI {
             'DELETE',
             '/api/v3/orders',
             req,
-            new CancelAllOrdersV3Resp(),
+            CancelAllOrdersV3Resp,
             false,
         );
     }
@@ -435,7 +435,7 @@ export class OrderAPIImpl implements OrderAPI {
             'DELETE',
             '/api/v1/stopOrders',
             req,
-            new CancelAllStopOrdersResp(),
+            CancelAllStopOrdersResp,
             false,
         );
     }
@@ -447,7 +447,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v1/orders/{order-id}',
             req,
-            new GetOrderByOrderIdResp(),
+            GetOrderByOrderIdResp,
             false,
         );
     }
@@ -459,7 +459,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v1/orders/byClientOid',
             req,
-            new GetOrderByClientOidResp(),
+            GetOrderByClientOidResp,
             false,
         );
     }
@@ -471,7 +471,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v1/orders',
             req,
-            new GetOrderListResp(),
+            GetOrderListResp,
             false,
         );
     }
@@ -483,7 +483,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v1/recentDoneOrders',
             req,
-            new GetRecentClosedOrdersResp(),
+            GetRecentClosedOrdersResp,
             false,
         );
     }
@@ -495,7 +495,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v1/stopOrders',
             req,
-            new GetStopOrderListResp(),
+            GetStopOrderListResp,
             false,
         );
     }
@@ -507,7 +507,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v1/openOrderStatistics',
             req,
-            new GetOpenOrderValueResp(),
+            GetOpenOrderValueResp,
             false,
         );
     }
@@ -519,7 +519,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v1/recentFills',
             req,
-            new GetRecentTradeHistoryResp(),
+            GetRecentTradeHistoryResp,
             false,
         );
     }
@@ -531,7 +531,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v1/fills',
             req,
-            new GetTradeHistoryResp(),
+            GetTradeHistoryResp,
             false,
         );
     }
@@ -543,7 +543,7 @@ export class OrderAPIImpl implements OrderAPI {
             'DELETE',
             '/api/v1/orders',
             req,
-            new CancelAllOrdersV1Resp(),
+            CancelAllOrdersV1Resp,
             false,
         );
     }

@@ -31,7 +31,7 @@ export class AffiliateAPIImpl implements AffiliateAPI {
             'GET',
             '/api/v2/affiliate/inviter/statistics',
             null,
-            new GetAccountResp(),
+            GetAccountResp,
             false,
         );
     }

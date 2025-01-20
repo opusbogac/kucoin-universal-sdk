@@ -271,7 +271,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'GET',
             '/api/v2/position/getMarginMode',
             req,
-            new GetMarginModeResp(),
+            GetMarginModeResp,
             false,
         );
     }
@@ -283,7 +283,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'POST',
             '/api/v2/position/changeMarginMode',
             req,
-            new SwitchMarginModeResp(),
+            SwitchMarginModeResp,
             false,
         );
     }
@@ -295,7 +295,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'GET',
             '/api/v2/getMaxOpenSize',
             req,
-            new GetMaxOpenSizeResp(),
+            GetMaxOpenSizeResp,
             false,
         );
     }
@@ -307,7 +307,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'GET',
             '/api/v1/position',
             req,
-            new GetPositionDetailsResp(),
+            GetPositionDetailsResp,
             false,
         );
     }
@@ -319,7 +319,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'GET',
             '/api/v1/positions',
             req,
-            new GetPositionListResp(),
+            GetPositionListResp,
             false,
         );
     }
@@ -331,7 +331,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'GET',
             '/api/v1/history-positions',
             req,
-            new GetPositionsHistoryResp(),
+            GetPositionsHistoryResp,
             false,
         );
     }
@@ -343,7 +343,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'GET',
             '/api/v1/margin/maxWithdrawMargin',
             req,
-            new GetMaxWithdrawMarginResp(),
+            GetMaxWithdrawMarginResp,
             false,
         );
     }
@@ -355,7 +355,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'GET',
             '/api/v2/getCrossUserLeverage',
             req,
-            new GetCrossMarginLeverageResp(),
+            GetCrossMarginLeverageResp,
             false,
         );
     }
@@ -367,7 +367,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'POST',
             '/api/v2/changeCrossUserLeverage',
             req,
-            new ModifyMarginLeverageResp(),
+            ModifyMarginLeverageResp,
             false,
         );
     }
@@ -379,7 +379,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'POST',
             '/api/v1/position/margin/deposit-margin',
             req,
-            new AddIsolatedMarginResp(),
+            AddIsolatedMarginResp,
             false,
         );
     }
@@ -391,7 +391,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'POST',
             '/api/v1/margin/withdrawMargin',
             req,
-            new RemoveIsolatedMarginResp(),
+            RemoveIsolatedMarginResp,
             false,
         );
     }
@@ -405,7 +405,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'GET',
             '/api/v1/contracts/risk-limit/{symbol}',
             req,
-            new GetIsolatedMarginRiskLimitResp(),
+            GetIsolatedMarginRiskLimitResp,
             false,
         );
     }
@@ -419,7 +419,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'POST',
             '/api/v1/position/risk-limit-level/change',
             req,
-            new ModifyIsolatedMarginRiskLimtResp(),
+            ModifyIsolatedMarginRiskLimtResp,
             false,
         );
     }
@@ -431,7 +431,7 @@ export class PositionsAPIImpl implements PositionsAPI {
             'POST',
             '/api/v1/position/margin/auto-deposit-status',
             req,
-            new ModifyAutoDepositStatusResp(),
+            ModifyAutoDepositStatusResp,
             false,
         );
     }

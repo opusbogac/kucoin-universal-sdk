@@ -1,19 +1,34 @@
 /**
- * The interface for serializable objects.
+ * The interface for objects with static deserialization methods.
  */
-export interface Serializable<T> {
+export interface StaticDeserializable<T> {
     /**
-     * Parses a JSON string and populates the object's properties.
+     * Parses a JSON string and returns an instance of the object.
      */
     fromJson(input: string): T;
 
     /**
+     * Populates an instance of the object based on a plain object.
+     */
+    fromObject(jsonObject: Object): T;
+}
+
+/**
+ * The interface for serializable objects.
+ */
+export interface Serializable {
+    /**
      * Converts the current object into a JSON string.
      */
     toJson(): string;
+}
 
+/**
+ * Represents a response handler with a method to set common response data.
+ */
+export interface Response<R> extends Serializable {
     /**
-     * Populates the object's properties.
+     * Set common response data.
      */
-    fromObject(jsonObject: Object): T;
+    setCommonResponse(response: R): void;
 }

@@ -144,7 +144,7 @@ export class DepositAPIImpl implements DepositAPI {
             'POST',
             '/api/v3/deposit-address/create',
             req,
-            new AddDepositAddressV3Resp(),
+            AddDepositAddressV3Resp,
             false,
         );
     }
@@ -156,7 +156,7 @@ export class DepositAPIImpl implements DepositAPI {
             'GET',
             '/api/v3/deposit-addresses',
             req,
-            new GetDepositAddressV3Resp(),
+            GetDepositAddressV3Resp,
             false,
         );
     }
@@ -168,7 +168,7 @@ export class DepositAPIImpl implements DepositAPI {
             'GET',
             '/api/v1/deposits',
             req,
-            new GetDepositHistoryResp(),
+            GetDepositHistoryResp,
             false,
         );
     }
@@ -180,7 +180,7 @@ export class DepositAPIImpl implements DepositAPI {
             'GET',
             '/api/v2/deposit-addresses',
             req,
-            new GetDepositAddressV2Resp(),
+            GetDepositAddressV2Resp,
             false,
         );
     }
@@ -192,7 +192,7 @@ export class DepositAPIImpl implements DepositAPI {
             'GET',
             '/api/v1/deposit-addresses',
             req,
-            new GetDepositAddressV1Resp(),
+            GetDepositAddressV1Resp,
             false,
         );
     }
@@ -204,7 +204,7 @@ export class DepositAPIImpl implements DepositAPI {
             'GET',
             '/api/v1/hist-deposits',
             req,
-            new GetDepositHistoryOldResp(),
+            GetDepositHistoryOldResp,
             false,
         );
     }
@@ -216,7 +216,7 @@ export class DepositAPIImpl implements DepositAPI {
             'POST',
             '/api/v1/deposit-addresses',
             req,
-            new AddDepositAddressV1Resp(),
+            AddDepositAddressV1Resp,
             false,
         );
     }

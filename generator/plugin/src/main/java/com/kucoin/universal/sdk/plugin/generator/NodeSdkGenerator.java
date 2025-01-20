@@ -535,7 +535,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                 if (codegenModel != null) {
 
                     imports.computeIfAbsent("class-transformer", ImportModel::new).
-                            component.addAll(Arrays.asList("plainToInstance", "instanceToPlain"));
+                            component.addAll(Arrays.asList("plainToClassFromExist", "instanceToPlain"));
 
                     if (codegenModel.getVendorExtensions().containsKey("x-response-model")) {
                         imports.computeIfAbsent("class-transformer", ImportModel::new).component.add("Exclude");

@@ -1,5 +1,5 @@
-import { Response } from './response';
-import { Serializable } from '@internal/interfaces/serializable';
+import { Response, Serializable, StaticDeserializable } from '@internal/interfaces/serializable';
+import { RestResponse } from '@src/model';
 
 /**
  * Transport interface represents a generic transport layer.
@@ -18,16 +18,16 @@ export interface Transport {
      * @returns A Promise that resolves to a `Response` object containing the result of the remote
      * call, or rejects with an error if the all fails.
      */
-    call(
+    call<T extends Response<RestResponse>>(
         domain: string,
         isBroker: boolean,
         method: string,
         path: string,
-        requestObj: Serializable<any> | null,
-        responseObj: Response<any, any>,
+        requestObj: Serializable | null,
+        responseObj: StaticDeserializable<T>,
         requestJson: boolean,
         args?: any,
-    ): Promise<Response<any, any>>;
+    ): Promise<any>;
 
     /**
      * Closes the transport and releases any resources.

@@ -289,7 +289,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v2/user-info',
             null,
-            new GetAccountInfoResp(),
+            GetAccountInfoResp,
             false,
         );
     }
@@ -301,7 +301,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v1/user/api-key',
             null,
-            new GetApikeyInfoResp(),
+            GetApikeyInfoResp,
             false,
         );
     }
@@ -313,7 +313,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v1/hf/accounts/opened',
             null,
-            new GetSpotAccountTypeResp(),
+            GetSpotAccountTypeResp,
             false,
         );
     }
@@ -325,7 +325,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v1/accounts',
             req,
-            new GetSpotAccountListResp(),
+            GetSpotAccountListResp,
             false,
         );
     }
@@ -337,7 +337,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v1/accounts/{accountId}',
             req,
-            new GetSpotAccountDetailResp(),
+            GetSpotAccountDetailResp,
             false,
         );
     }
@@ -349,7 +349,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v3/margin/accounts',
             req,
-            new GetCrossMarginAccountResp(),
+            GetCrossMarginAccountResp,
             false,
         );
     }
@@ -363,7 +363,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v3/isolated/accounts',
             req,
-            new GetIsolatedMarginAccountResp(),
+            GetIsolatedMarginAccountResp,
             false,
         );
     }
@@ -375,7 +375,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v1/account-overview',
             req,
-            new GetFuturesAccountResp(),
+            GetFuturesAccountResp,
             false,
         );
     }
@@ -387,7 +387,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v1/accounts/ledgers',
             req,
-            new GetSpotLedgerResp(),
+            GetSpotLedgerResp,
             false,
         );
     }
@@ -399,7 +399,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v1/hf/accounts/ledgers',
             req,
-            new GetSpotHFLedgerResp(),
+            GetSpotHFLedgerResp,
             false,
         );
     }
@@ -411,7 +411,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v3/hf/margin/account/ledgers',
             req,
-            new GetMarginHFLedgerResp(),
+            GetMarginHFLedgerResp,
             false,
         );
     }
@@ -423,7 +423,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v1/transaction-history',
             req,
-            new GetFuturesLedgerResp(),
+            GetFuturesLedgerResp,
             false,
         );
     }
@@ -435,7 +435,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v1/margin/account',
             null,
-            new GetMarginAccountDetailResp(),
+            GetMarginAccountDetailResp,
             false,
         );
     }
@@ -449,7 +449,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v1/isolated/accounts',
             req,
-            new GetIsolatedMarginAccountListV1Resp(),
+            GetIsolatedMarginAccountListV1Resp,
             false,
         );
     }
@@ -463,7 +463,7 @@ export class AccountAPIImpl implements AccountAPI {
             'GET',
             '/api/v1/isolated/account/{symbol}',
             req,
-            new GetIsolatedMarginAccountDetailV1Resp(),
+            GetIsolatedMarginAccountDetailV1Resp,
             false,
         );
     }

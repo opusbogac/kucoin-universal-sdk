@@ -248,7 +248,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'GET',
             '/api/v1/broker/nd/info',
             req,
-            new GetBrokerInfoResp(),
+            GetBrokerInfoResp,
             false,
         );
     }
@@ -260,7 +260,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'POST',
             '/api/v1/broker/nd/account',
             req,
-            new AddSubAccountResp(),
+            AddSubAccountResp,
             false,
         );
     }
@@ -272,7 +272,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'GET',
             '/api/v1/broker/nd/account',
             req,
-            new GetSubAccountResp(),
+            GetSubAccountResp,
             false,
         );
     }
@@ -284,7 +284,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'POST',
             '/api/v1/broker/nd/account/apikey',
             req,
-            new AddSubAccountApiResp(),
+            AddSubAccountApiResp,
             false,
         );
     }
@@ -296,7 +296,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'GET',
             '/api/v1/broker/nd/account/apikey',
             req,
-            new GetSubAccountAPIResp(),
+            GetSubAccountAPIResp,
             false,
         );
     }
@@ -308,7 +308,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'POST',
             '/api/v1/broker/nd/account/update-apikey',
             req,
-            new ModifySubAccountApiResp(),
+            ModifySubAccountApiResp,
             false,
         );
     }
@@ -320,7 +320,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'DELETE',
             '/api/v1/broker/nd/account/apikey',
             req,
-            new DeleteSubAccountAPIResp(),
+            DeleteSubAccountAPIResp,
             false,
         );
     }
@@ -332,7 +332,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'POST',
             '/api/v1/broker/nd/transfer',
             req,
-            new TransferResp(),
+            TransferResp,
             false,
         );
     }
@@ -344,7 +344,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'GET',
             '/api/v3/broker/nd/transfer/detail',
             req,
-            new GetTransferHistoryResp(),
+            GetTransferHistoryResp,
             false,
         );
     }
@@ -356,7 +356,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'GET',
             '/api/v1/asset/ndbroker/deposit/list',
             req,
-            new GetDepositListResp(),
+            GetDepositListResp,
             false,
         );
     }
@@ -368,7 +368,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'GET',
             '/api/v3/broker/nd/deposit/detail',
             req,
-            new GetDepositDetailResp(),
+            GetDepositDetailResp,
             false,
         );
     }
@@ -380,7 +380,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'GET',
             '/api/v3/broker/nd/withdraw/detail',
             req,
-            new GetWithdrawDetailResp(),
+            GetWithdrawDetailResp,
             false,
         );
     }
@@ -392,7 +392,7 @@ export class NDBrokerAPIImpl implements NDBrokerAPI {
             'GET',
             '/api/v1/broker/nd/rebase/download',
             req,
-            new GetRebaseResp(),
+            GetRebaseResp,
             false,
         );
     }

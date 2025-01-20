@@ -250,7 +250,7 @@ export class OrderAPIImpl implements OrderAPI {
             'POST',
             '/api/v3/hf/margin/order',
             req,
-            new AddOrderResp(),
+            AddOrderResp,
             false,
         );
     }
@@ -262,7 +262,7 @@ export class OrderAPIImpl implements OrderAPI {
             'POST',
             '/api/v3/hf/margin/order/test',
             req,
-            new AddOrderTestResp(),
+            AddOrderTestResp,
             false,
         );
     }
@@ -274,7 +274,7 @@ export class OrderAPIImpl implements OrderAPI {
             'DELETE',
             '/api/v3/hf/margin/orders/{orderId}',
             req,
-            new CancelOrderByOrderIdResp(),
+            CancelOrderByOrderIdResp,
             false,
         );
     }
@@ -286,7 +286,7 @@ export class OrderAPIImpl implements OrderAPI {
             'DELETE',
             '/api/v3/hf/margin/orders/client-order/{clientOid}',
             req,
-            new CancelOrderByClientOidResp(),
+            CancelOrderByClientOidResp,
             false,
         );
     }
@@ -298,7 +298,7 @@ export class OrderAPIImpl implements OrderAPI {
             'DELETE',
             '/api/v3/hf/margin/orders',
             req,
-            new CancelAllOrdersBySymbolResp(),
+            CancelAllOrdersBySymbolResp,
             false,
         );
     }
@@ -310,7 +310,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v3/hf/margin/order/active/symbols',
             req,
-            new GetSymbolsWithOpenOrderResp(),
+            GetSymbolsWithOpenOrderResp,
             false,
         );
     }
@@ -322,7 +322,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v3/hf/margin/orders/active',
             req,
-            new GetOpenOrdersResp(),
+            GetOpenOrdersResp,
             false,
         );
     }
@@ -334,7 +334,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v3/hf/margin/orders/done',
             req,
-            new GetClosedOrdersResp(),
+            GetClosedOrdersResp,
             false,
         );
     }
@@ -346,7 +346,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v3/hf/margin/fills',
             req,
-            new GetTradeHistoryResp(),
+            GetTradeHistoryResp,
             false,
         );
     }
@@ -358,7 +358,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v3/hf/margin/orders/{orderId}',
             req,
-            new GetOrderByOrderIdResp(),
+            GetOrderByOrderIdResp,
             false,
         );
     }
@@ -370,7 +370,7 @@ export class OrderAPIImpl implements OrderAPI {
             'GET',
             '/api/v3/hf/margin/orders/client-order/{clientOid}',
             req,
-            new GetOrderByClientOidResp(),
+            GetOrderByClientOidResp,
             false,
         );
     }
@@ -382,7 +382,7 @@ export class OrderAPIImpl implements OrderAPI {
             'POST',
             '/api/v1/margin/order',
             req,
-            new AddOrderV1Resp(),
+            AddOrderV1Resp,
             false,
         );
     }
@@ -394,7 +394,7 @@ export class OrderAPIImpl implements OrderAPI {
             'POST',
             '/api/v1/margin/order/test',
             req,
-            new AddOrderTestV1Resp(),
+            AddOrderTestV1Resp,
             false,
         );
     }

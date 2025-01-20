@@ -7,14 +7,14 @@
 {{#vendorExtensions.x-response-model}}
 import { WsMessage } from '@model/common';
 import { WebSocketMessageCallback } from '@internal/interfaces/websocket';
-import { Response } from '@internal/interfaces/response';
+import { Response } from '@internal/interfaces/serializable';
 
-export class {{classname}} implements  Response<{{classname}}, WsMessage>{
+export class {{classname}} implements Response<WsMessage>{
 {{/vendorExtensions.x-response-model}}
 {{^vendorExtensions.x-response-model}}
 import { Serializable } from '@internal/interfaces/serializable';
 
-export class {{classname}} implements Serializable<{{classname}}>{
+export class {{classname}} implements Serializable{
 {{/vendorExtensions.x-response-model}}
 
 {{#vars}}
@@ -40,32 +40,30 @@ export class {{classname}} implements Serializable<{{classname}}>{
 
 {{/vendorExtensions.x-response-model}}
 {{#vendorExtensions.x-original-response}}
-    fromJson(input: string): {{classname}} {
-        const jsonObject = JSON.parse(input)
-        return plainToInstance( {{classname}}, {data : jsonObject});
-    }
-
     toJson(): string {
         return JSON.stringify(instanceToPlain(this.data));
     }
 
-    fromObject(jsonObject: Object): {{classname}} {
-        return plainToInstance( {{classname}}, {data : jsonObject});
+    static fromJson(input: string): {{classname}} {
+        return this.fromObject(JSON.parse(input));
+    }
+
+    static fromObject(jsonObject: Object): {{classname}} {
+        return plainToClassFromExist(new {{classname}}(), {data : jsonObject});
     }
 
 {{/vendorExtensions.x-original-response}}
 {{^vendorExtensions.x-original-response}}
-    fromJson(input: string): {{classname}} {
-        const jsonObject = JSON.parse(input)
-        return plainToInstance( {{classname}}, jsonObject);
-    }
-
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
 
-    fromObject(jsonObject: Object): {{classname}} {
-        return plainToInstance( {{classname}}, jsonObject);
+    static fromJson(input: string): {{classname}} {
+        return this.fromObject(JSON.parse(input));
+    }
+
+    static fromObject(jsonObject: Object): {{classname}} {
+        return plainToClassFromExist(new {{classname}}(), jsonObject);
     }
 
 {{/vendorExtensions.x-original-response}}
@@ -97,7 +95,7 @@ export class  {{classname}}CallbackWrapper implements WebSocketMessageCallback {
     }
 
     onMessage(msg: WsMessage): void {
-        let event = (new {{classname}}()).fromObject(msg.data)
+        let event = {{classname}}.fromObject(msg.data)
         event.setCommonResponse(msg)
         this.callback(msg.topic, msg.subject, event)
     }

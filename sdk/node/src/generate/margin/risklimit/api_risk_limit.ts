@@ -32,7 +32,7 @@ export class RiskLimitAPIImpl implements RiskLimitAPI {
             'GET',
             '/api/v3/margin/currencies',
             req,
-            new GetMarginRiskLimitResp(),
+            GetMarginRiskLimitResp,
             false,
         );
     }

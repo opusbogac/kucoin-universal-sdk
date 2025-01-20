@@ -176,7 +176,7 @@ export class EarnAPIImpl implements EarnAPI {
             'POST',
             '/api/v1/earn/orders',
             req,
-            new PurchaseResp(),
+            PurchaseResp,
             false,
         );
     }
@@ -188,7 +188,7 @@ export class EarnAPIImpl implements EarnAPI {
             'GET',
             '/api/v1/earn/redeem-preview',
             req,
-            new GetRedeemPreviewResp(),
+            GetRedeemPreviewResp,
             false,
         );
     }
@@ -200,7 +200,7 @@ export class EarnAPIImpl implements EarnAPI {
             'DELETE',
             '/api/v1/earn/orders',
             req,
-            new RedeemResp(),
+            RedeemResp,
             false,
         );
     }
@@ -212,7 +212,7 @@ export class EarnAPIImpl implements EarnAPI {
             'GET',
             '/api/v1/earn/saving/products',
             req,
-            new GetSavingsProductsResp(),
+            GetSavingsProductsResp,
             false,
         );
     }
@@ -224,7 +224,7 @@ export class EarnAPIImpl implements EarnAPI {
             'GET',
             '/api/v1/earn/promotion/products',
             req,
-            new GetPromotionProductsResp(),
+            GetPromotionProductsResp,
             false,
         );
     }
@@ -236,7 +236,7 @@ export class EarnAPIImpl implements EarnAPI {
             'GET',
             '/api/v1/earn/hold-assets',
             req,
-            new GetAccountHoldingResp(),
+            GetAccountHoldingResp,
             false,
         );
     }
@@ -248,7 +248,7 @@ export class EarnAPIImpl implements EarnAPI {
             'GET',
             '/api/v1/earn/staking/products',
             req,
-            new GetStakingProductsResp(),
+            GetStakingProductsResp,
             false,
         );
     }
@@ -260,7 +260,7 @@ export class EarnAPIImpl implements EarnAPI {
             'GET',
             '/api/v1/earn/kcs-staking/products',
             req,
-            new GetKcsStakingProductsResp(),
+            GetKcsStakingProductsResp,
             false,
         );
     }
@@ -272,7 +272,7 @@ export class EarnAPIImpl implements EarnAPI {
             'GET',
             '/api/v1/earn/eth-staking/products',
             req,
-            new GetETHStakingProductsResp(),
+            GetETHStakingProductsResp,
             false,
         );
     }

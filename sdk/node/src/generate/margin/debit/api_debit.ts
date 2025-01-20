@@ -122,7 +122,7 @@ export class DebitAPIImpl implements DebitAPI {
             'POST',
             '/api/v3/margin/borrow',
             req,
-            new BorrowResp(),
+            BorrowResp,
             false,
         );
     }
@@ -134,7 +134,7 @@ export class DebitAPIImpl implements DebitAPI {
             'GET',
             '/api/v3/margin/borrow',
             req,
-            new GetBorrowHistoryResp(),
+            GetBorrowHistoryResp,
             false,
         );
     }
@@ -146,7 +146,7 @@ export class DebitAPIImpl implements DebitAPI {
             'POST',
             '/api/v3/margin/repay',
             req,
-            new RepayResp(),
+            RepayResp,
             false,
         );
     }
@@ -158,7 +158,7 @@ export class DebitAPIImpl implements DebitAPI {
             'GET',
             '/api/v3/margin/repay',
             req,
-            new GetRepayHistoryResp(),
+            GetRepayHistoryResp,
             false,
         );
     }
@@ -170,7 +170,7 @@ export class DebitAPIImpl implements DebitAPI {
             'GET',
             '/api/v3/margin/interest',
             req,
-            new GetInterestHistoryResp(),
+            GetInterestHistoryResp,
             false,
         );
     }
@@ -182,7 +182,7 @@ export class DebitAPIImpl implements DebitAPI {
             'POST',
             '/api/v3/position/update-user-leverage',
             req,
-            new ModifyLeverageResp(),
+            ModifyLeverageResp,
             false,
         );
     }

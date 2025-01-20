@@ -124,7 +124,7 @@ export class WithdrawalAPIImpl implements WithdrawalAPI {
             'GET',
             '/api/v1/withdrawals/quotas',
             req,
-            new GetWithdrawalQuotasResp(),
+            GetWithdrawalQuotasResp,
             false,
         );
     }
@@ -136,7 +136,7 @@ export class WithdrawalAPIImpl implements WithdrawalAPI {
             'POST',
             '/api/v3/withdrawals',
             req,
-            new WithdrawalV3Resp(),
+            WithdrawalV3Resp,
             false,
         );
     }
@@ -148,7 +148,7 @@ export class WithdrawalAPIImpl implements WithdrawalAPI {
             'DELETE',
             '/api/v1/withdrawals/{withdrawalId}',
             req,
-            new CancelWithdrawalResp(),
+            CancelWithdrawalResp,
             false,
         );
     }
@@ -160,7 +160,7 @@ export class WithdrawalAPIImpl implements WithdrawalAPI {
             'GET',
             '/api/v1/withdrawals',
             req,
-            new GetWithdrawalHistoryResp(),
+            GetWithdrawalHistoryResp,
             false,
         );
     }
@@ -172,7 +172,7 @@ export class WithdrawalAPIImpl implements WithdrawalAPI {
             'GET',
             '/api/v1/hist-withdrawals',
             req,
-            new GetWithdrawalHistoryOldResp(),
+            GetWithdrawalHistoryOldResp,
             false,
         );
     }
@@ -184,7 +184,7 @@ export class WithdrawalAPIImpl implements WithdrawalAPI {
             'POST',
             '/api/v1/withdrawals',
             req,
-            new WithdrawalV1Resp(),
+            WithdrawalV1Resp,
             false,
         );
     }

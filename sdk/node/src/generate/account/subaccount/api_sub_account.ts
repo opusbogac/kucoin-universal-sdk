@@ -256,7 +256,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'POST',
             '/api/v2/sub/user/created',
             req,
-            new AddSubAccountResp(),
+            AddSubAccountResp,
             false,
         );
     }
@@ -270,7 +270,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'POST',
             '/api/v3/sub/user/margin/enable',
             req,
-            new AddSubAccountMarginPermissionResp(),
+            AddSubAccountMarginPermissionResp,
             false,
         );
     }
@@ -284,7 +284,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'POST',
             '/api/v3/sub/user/futures/enable',
             req,
-            new AddSubAccountFuturesPermissionResp(),
+            AddSubAccountFuturesPermissionResp,
             false,
         );
     }
@@ -298,7 +298,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'GET',
             '/api/v2/sub/user',
             req,
-            new GetSpotSubAccountsSummaryV2Resp(),
+            GetSpotSubAccountsSummaryV2Resp,
             false,
         );
     }
@@ -310,7 +310,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'GET',
             '/api/v1/sub-accounts/{subUserId}',
             req,
-            new GetSpotSubAccountDetailResp(),
+            GetSpotSubAccountDetailResp,
             false,
         );
     }
@@ -322,7 +322,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'GET',
             '/api/v2/sub-accounts',
             req,
-            new GetSpotSubAccountListV2Resp(),
+            GetSpotSubAccountListV2Resp,
             false,
         );
     }
@@ -336,7 +336,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'GET',
             '/api/v1/account-overview-all',
             req,
-            new GetFuturesSubAccountListV2Resp(),
+            GetFuturesSubAccountListV2Resp,
             false,
         );
     }
@@ -348,7 +348,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'POST',
             '/api/v1/sub/api-key',
             req,
-            new AddSubAccountApiResp(),
+            AddSubAccountApiResp,
             false,
         );
     }
@@ -360,7 +360,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'POST',
             '/api/v1/sub/api-key/update',
             req,
-            new ModifySubAccountApiResp(),
+            ModifySubAccountApiResp,
             false,
         );
     }
@@ -372,7 +372,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'GET',
             '/api/v1/sub/api-key',
             req,
-            new GetSubAccountApiListResp(),
+            GetSubAccountApiListResp,
             false,
         );
     }
@@ -384,7 +384,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'DELETE',
             '/api/v1/sub/api-key',
             req,
-            new DeleteSubAccountApiResp(),
+            DeleteSubAccountApiResp,
             false,
         );
     }
@@ -396,7 +396,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'GET',
             '/api/v1/sub/user',
             null,
-            new GetSpotSubAccountsSummaryV1Resp(),
+            GetSpotSubAccountsSummaryV1Resp,
             false,
         );
     }
@@ -408,7 +408,7 @@ export class SubAccountAPIImpl implements SubAccountAPI {
             'GET',
             '/api/v1/sub-accounts',
             null,
-            new GetSpotSubAccountListV1Resp(),
+            GetSpotSubAccountListV1Resp,
             false,
         );
     }

@@ -1,13 +1,12 @@
 import { Transport } from '@internal/interfaces/transport';
-import { Serializable } from '@internal/interfaces/serializable';
-import { Response } from '@internal/interfaces/response';
+import { Response, Serializable, StaticDeserializable } from '@internal/interfaces/serializable';
 import { ClientOption } from '@model/client_option';
 import { RestRateLimit, RestResponse } from '@model/common';
 import { DomainType } from '@model/constant';
 import { DEFAULT_TRANSPORT_OPTION, TransportOption } from '@model/transport_option';
 import { KcSigner } from './default_signer';
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios';
 import axios from 'axios';
-import type { CreateAxiosDefaults, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import 'reflect-metadata';
 import axiosRetry from 'axios-retry';
 import { Agent as HttpAgent } from 'http';
@@ -185,7 +184,7 @@ export class DefaultTransport implements Transport {
     }
 
     private processRequest(
-        requestObj: Serializable<any> | null,
+        requestObj: Serializable | null,
         broker: boolean,
         path: string,
         rawpath: string,
@@ -200,15 +199,15 @@ export class DefaultTransport implements Transport {
         let queryPath = path;
 
         if (requestAsJson) {
-            if (requestObj){
-                reqBody = JSON.stringify(requestObj);
+            if (requestObj) {
+                reqBody = requestObj.toJson();
             }
-        }else{
+        } else {
             if (method === 'GET' || method === 'DELETE') {
                 if (requestObj) {
                     // create a new object for query parameters
                     const queryObj = { ...requestObj };
-                    
+
                     // check path variables and remove from query
                     const pathVarPattern = /{([^}]+)}/g;
                     let match;
@@ -216,17 +215,17 @@ export class DefaultTransport implements Transport {
                         const pathVarName = match[1];
                         delete queryObj[pathVarName];
                     }
-                    
+
                     const queryParams = this.rawQuery(queryObj);
                     if (queryParams) {
                         queryPath = `${path}?${queryParams}`;
                     }
                 }
-            } else if (method === "POST") {
-                if (requestObj){
-                    reqBody = JSON.stringify(requestObj);
+            } else if (method === 'POST') {
+                if (requestObj) {
+                    reqBody = requestObj.toJson();
                 }
-            }else{
+            } else {
                 throw new Error(`Invalid method: ${method}`);
             }
         }
@@ -267,10 +266,10 @@ export class DefaultTransport implements Transport {
         return rateLimit;
     }
 
-    private processResponse(
+    private processResponse<T extends Response<RestResponse>>(
         response: AxiosResponse,
-        responseObj: Response<any, any>,
-    ): Response<any, any> {
+        responseCls: StaticDeserializable<T>,
+    ): Response<any> {
         // todo missing logic
         if (response.status >= 400) {
             console.error('[RESPONSE ERROR]', {
@@ -282,25 +281,23 @@ export class DefaultTransport implements Transport {
 
         const commonResponse = RestResponse.fromJson(JSON.stringify(response.data));
         commonResponse.rateLimit = this.processLimit(response.headers);
-        responseObj.setCommonResponse(commonResponse);
 
-        if (commonResponse.data) {
-            responseObj = responseObj.fromObject(commonResponse.data);
-        }
+        let responseObj = responseCls.fromObject(commonResponse.data);
+        responseObj.setCommonResponse(commonResponse);
 
         return responseObj;
     }
 
-    call(
+    call<T extends Response<RestResponse>>(
         domain: string,
         isBroker: boolean,
         method: string,
         path: string,
-        requestObj: Serializable<any> | null,
-        responseObj: Response<any, any>,
+        requestObj: Serializable | null,
+        responseCls: StaticDeserializable<T>,
         requestJson: boolean,
         args?: any,
-    ): Promise<Response<any, any>> {
+    ): Promise<any> {
         return Promise.resolve()
             .then((): AxiosRequestConfig<any> => {
                 const endpoint = this.getEndpoint(domain);
@@ -320,7 +317,7 @@ export class DefaultTransport implements Transport {
                 return this.httpClient.request(config);
             })
             .then((response: AxiosResponse) => {
-                return this.processResponse(response, responseObj);
+                return this.processResponse(response, responseCls);
             })
             .catch((err: any) => {
                 throw err;
@@ -359,11 +356,11 @@ export class DefaultTransport implements Transport {
             if (this.httpClient.defaults.httpsAgent) {
                 this.httpClient.defaults.httpsAgent.destroy();
             }
-            
+
             // Remove reference to the client
             (this.httpClient as any) = null;
         }
-        
+
         return Promise.resolve(undefined);
     }
 }

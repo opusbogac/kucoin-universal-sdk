@@ -32,7 +32,7 @@ export class APIBrokerAPIImpl implements APIBrokerAPI {
             'GET',
             '/api/v1/broker/api/rebase/download',
             req,
-            new GetRebaseResp(),
+            GetRebaseResp,
             false,
         );
     }

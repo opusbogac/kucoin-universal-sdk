@@ -2,49 +2,67 @@
 
 import { GetSpotSubAccountListV1DataMarginAccounts } from './model_get_spot_sub_account_list_v1_data_margin_accounts';
 import { GetSpotSubAccountListV1DataMainAccounts } from './model_get_spot_sub_account_list_v1_data_main_accounts';
-import { Type, instanceToPlain, plainToInstance } from 'class-transformer';
+import { Type, instanceToPlain, plainToClassFromExist } from 'class-transformer';
 import { GetSpotSubAccountListV1DataTradeAccounts } from './model_get_spot_sub_account_list_v1_data_trade_accounts';
 import { Serializable } from '@internal/interfaces/serializable';
 
-export class GetSpotSubAccountListV1Data implements Serializable<GetSpotSubAccountListV1Data> {
+export class GetSpotSubAccountListV1Data implements Serializable {
     /**
      * The user ID of the sub-user.
      */
-    subUserId?: string;
+    subUserId: string;
+
     /**
      * The username of the sub-user.
      */
-    subName?: string;
+    subName: string;
+
     /**
      * Funding Account
      */
     @Type(() => GetSpotSubAccountListV1DataMainAccounts)
-    mainAccounts?: Array<GetSpotSubAccountListV1DataMainAccounts>;
+    mainAccounts: Array<GetSpotSubAccountListV1DataMainAccounts>;
+
     /**
      * Spot Account
      */
     @Type(() => GetSpotSubAccountListV1DataTradeAccounts)
-    tradeAccounts?: Array<GetSpotSubAccountListV1DataTradeAccounts>;
+    tradeAccounts: Array<GetSpotSubAccountListV1DataTradeAccounts>;
+
     /**
      * Margin Account
      */
     @Type(() => GetSpotSubAccountListV1DataMarginAccounts)
-    marginAccounts?: Array<GetSpotSubAccountListV1DataMarginAccounts>;
+    marginAccounts: Array<GetSpotSubAccountListV1DataMarginAccounts>;
+
     /**
      * This param is deprecated and only valid for some old users
      */
-    tradeHFAccounts?: Array<string>;
+    tradeHFAccounts: Array<string>;
 
-    fromJson(input: string): GetSpotSubAccountListV1Data {
-        const jsonObject = JSON.parse(input);
-        return plainToInstance(GetSpotSubAccountListV1Data, jsonObject);
+    private constructor() {
+        // @ts-ignore
+        this.subUserId = null;
+        // @ts-ignore
+        this.subName = null;
+        // @ts-ignore
+        this.mainAccounts = null;
+        // @ts-ignore
+        this.tradeAccounts = null;
+        // @ts-ignore
+        this.marginAccounts = null;
+        // @ts-ignore
+        this.tradeHFAccounts = null;
     }
-
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
 
-    fromObject(jsonObject: Object): GetSpotSubAccountListV1Data {
-        return plainToInstance(GetSpotSubAccountListV1Data, jsonObject);
+    static fromJson(input: string): GetSpotSubAccountListV1Data {
+        return this.fromObject(JSON.parse(input));
+    }
+
+    static fromObject(jsonObject: Object): GetSpotSubAccountListV1Data {
+        return plainToClassFromExist(new GetSpotSubAccountListV1Data(), jsonObject);
     }
 }

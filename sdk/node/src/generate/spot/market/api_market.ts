@@ -331,7 +331,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v3/announcements',
             req,
-            new GetAnnouncementsResp(),
+            GetAnnouncementsResp,
             false,
         );
     }
@@ -343,7 +343,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v3/currencies/{currency}',
             req,
-            new GetCurrencyResp(),
+            GetCurrencyResp,
             false,
         );
     }
@@ -355,7 +355,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v3/currencies',
             null,
-            new GetAllCurrenciesResp(),
+            GetAllCurrenciesResp,
             false,
         );
     }
@@ -367,7 +367,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v2/symbols/{symbol}',
             req,
-            new GetSymbolResp(),
+            GetSymbolResp,
             false,
         );
     }
@@ -379,7 +379,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v2/symbols',
             req,
-            new GetAllSymbolsResp(),
+            GetAllSymbolsResp,
             false,
         );
     }
@@ -391,7 +391,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/market/orderbook/level1',
             req,
-            new GetTickerResp(),
+            GetTickerResp,
             false,
         );
     }
@@ -403,7 +403,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/market/allTickers',
             null,
-            new GetAllTickersResp(),
+            GetAllTickersResp,
             false,
         );
     }
@@ -415,7 +415,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/market/histories',
             req,
-            new GetTradeHistoryResp(),
+            GetTradeHistoryResp,
             false,
         );
     }
@@ -427,7 +427,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/market/candles',
             req,
-            new GetKlinesResp(),
+            GetKlinesResp,
             false,
         );
     }
@@ -439,7 +439,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/market/orderbook/level2_{size}',
             req,
-            new GetPartOrderBookResp(),
+            GetPartOrderBookResp,
             false,
         );
     }
@@ -451,7 +451,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v3/market/orderbook/level2',
             req,
-            new GetFullOrderBookResp(),
+            GetFullOrderBookResp,
             false,
         );
     }
@@ -463,7 +463,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/prices',
             req,
-            new GetFiatPriceResp(),
+            GetFiatPriceResp,
             false,
         );
     }
@@ -475,7 +475,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/market/stats',
             req,
-            new Get24hrStatsResp(),
+            Get24hrStatsResp,
             false,
         );
     }
@@ -487,7 +487,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/markets',
             null,
-            new GetMarketListResp(),
+            GetMarketListResp,
             false,
         );
     }
@@ -499,7 +499,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/timestamp',
             null,
-            new GetServerTimeResp(),
+            GetServerTimeResp,
             false,
         );
     }
@@ -511,7 +511,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/status',
             null,
-            new GetServiceStatusResp(),
+            GetServiceStatusResp,
             false,
         );
     }
@@ -523,7 +523,7 @@ export class MarketAPIImpl implements MarketAPI {
             'POST',
             '/api/v1/bullet-public',
             null,
-            new GetPublicTokenResp(),
+            GetPublicTokenResp,
             false,
         );
     }
@@ -535,7 +535,7 @@ export class MarketAPIImpl implements MarketAPI {
             'POST',
             '/api/v1/bullet-private',
             null,
-            new GetPrivateTokenResp(),
+            GetPrivateTokenResp,
             false,
         );
     }

@@ -68,7 +68,7 @@ export class FeeAPIImpl implements FeeAPI {
             'GET',
             '/api/v1/base-fee',
             req,
-            new GetBasicFeeResp(),
+            GetBasicFeeResp,
             false,
         );
     }
@@ -80,7 +80,7 @@ export class FeeAPIImpl implements FeeAPI {
             'GET',
             '/api/v1/trade-fees',
             req,
-            new GetSpotActualFeeResp(),
+            GetSpotActualFeeResp,
             false,
         );
     }
@@ -92,7 +92,7 @@ export class FeeAPIImpl implements FeeAPI {
             'get',
             '/api/v1/trade-fees',
             req,
-            new GetFuturesActualFeeResp(),
+            GetFuturesActualFeeResp,
             false,
         );
     }

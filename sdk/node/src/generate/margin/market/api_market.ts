@@ -119,7 +119,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v3/margin/symbols',
             req,
-            new GetCrossMarginSymbolsResp(),
+            GetCrossMarginSymbolsResp,
             false,
         );
     }
@@ -131,7 +131,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/margin/config',
             null,
-            new GetMarginConfigResp(),
+            GetMarginConfigResp,
             false,
         );
     }
@@ -143,7 +143,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v3/etf/info',
             req,
-            new GetETFInfoResp(),
+            GetETFInfoResp,
             false,
         );
     }
@@ -155,7 +155,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v3/mark-price/all-symbols',
             null,
-            new GetMarkPriceListResp(),
+            GetMarkPriceListResp,
             false,
         );
     }
@@ -167,7 +167,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/mark-price/{symbol}/current',
             req,
-            new GetMarkPriceDetailResp(),
+            GetMarkPriceDetailResp,
             false,
         );
     }
@@ -179,7 +179,7 @@ export class MarketAPIImpl implements MarketAPI {
             'GET',
             '/api/v1/isolated/symbols',
             null,
-            new GetIsolatedMarginSymbolsResp(),
+            GetIsolatedMarginSymbolsResp,
             false,
         );
     }

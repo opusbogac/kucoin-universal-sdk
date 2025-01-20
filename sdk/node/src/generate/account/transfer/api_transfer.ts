@@ -151,7 +151,7 @@ export class TransferAPIImpl implements TransferAPI {
             'GET',
             '/api/v1/accounts/transferable',
             req,
-            new GetTransferQuotasResp(),
+            GetTransferQuotasResp,
             false,
         );
     }
@@ -163,7 +163,7 @@ export class TransferAPIImpl implements TransferAPI {
             'POST',
             '/api/v3/accounts/universal-transfer',
             req,
-            new FlexTransferResp(),
+            FlexTransferResp,
             false,
         );
     }
@@ -175,7 +175,7 @@ export class TransferAPIImpl implements TransferAPI {
             'POST',
             '/api/v2/accounts/sub-transfer',
             req,
-            new SubAccountTransferResp(),
+            SubAccountTransferResp,
             false,
         );
     }
@@ -187,7 +187,7 @@ export class TransferAPIImpl implements TransferAPI {
             'POST',
             '/api/v2/accounts/inner-transfer',
             req,
-            new InnerTransferResp(),
+            InnerTransferResp,
             false,
         );
     }
@@ -201,7 +201,7 @@ export class TransferAPIImpl implements TransferAPI {
             'POST',
             '/api/v3/transfer-out',
             req,
-            new FuturesAccountTransferOutResp(),
+            FuturesAccountTransferOutResp,
             false,
         );
     }
@@ -215,7 +215,7 @@ export class TransferAPIImpl implements TransferAPI {
             'POST',
             '/api/v1/transfer-in',
             req,
-            new FuturesAccountTransferInResp(),
+            FuturesAccountTransferInResp,
             false,
         );
     }
@@ -229,7 +229,7 @@ export class TransferAPIImpl implements TransferAPI {
             'GET',
             '/api/v1/transfer-list',
             req,
-            new GetFuturesAccountTransferOutLedgerResp(),
+            GetFuturesAccountTransferOutLedgerResp,
             false,
         );
     }

@@ -142,7 +142,7 @@ export class CreditAPIImpl implements CreditAPI {
             'GET',
             '/api/v3/project/list',
             req,
-            new GetLoanMarketResp(),
+            GetLoanMarketResp,
             false,
         );
     }
@@ -156,7 +156,7 @@ export class CreditAPIImpl implements CreditAPI {
             'GET',
             '/api/v3/project/marketInterestRate',
             req,
-            new GetLoanMarketInterestRateResp(),
+            GetLoanMarketInterestRateResp,
             false,
         );
     }
@@ -168,7 +168,7 @@ export class CreditAPIImpl implements CreditAPI {
             'POST',
             '/api/v3/purchase',
             req,
-            new PurchaseResp(),
+            PurchaseResp,
             false,
         );
     }
@@ -180,7 +180,7 @@ export class CreditAPIImpl implements CreditAPI {
             'POST',
             '/api/v3/lend/purchase/update',
             req,
-            new ModifyPurchaseResp(),
+            ModifyPurchaseResp,
             false,
         );
     }
@@ -192,21 +192,13 @@ export class CreditAPIImpl implements CreditAPI {
             'GET',
             '/api/v3/purchase/orders',
             req,
-            new GetPurchaseOrdersResp(),
+            GetPurchaseOrdersResp,
             false,
         );
     }
 
     redeem(req: RedeemReq): Promise<RedeemResp> {
-        return this.transport.call(
-            'spot',
-            false,
-            'POST',
-            '/api/v3/redeem',
-            req,
-            new RedeemResp(),
-            false,
-        );
+        return this.transport.call('spot', false, 'POST', '/api/v3/redeem', req, RedeemResp, false);
     }
 
     getRedeemOrders(req: GetRedeemOrdersReq): Promise<GetRedeemOrdersResp> {
@@ -216,7 +208,7 @@ export class CreditAPIImpl implements CreditAPI {
             'GET',
             '/api/v3/redeem/orders',
             req,
-            new GetRedeemOrdersResp(),
+            GetRedeemOrdersResp,
             false,
         );
     }

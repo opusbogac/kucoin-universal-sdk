@@ -48,7 +48,7 @@ export class VIPLendingAPIImpl implements VIPLendingAPI {
             'GET',
             '/api/v1/otc-loan/loan',
             null,
-            new GetAccountDetailResp(),
+            GetAccountDetailResp,
             false,
         );
     }
@@ -60,7 +60,7 @@ export class VIPLendingAPIImpl implements VIPLendingAPI {
             'GET',
             '/api/v1/otc-loan/accounts',
             null,
-            new GetAccountsResp(),
+            GetAccountsResp,
             false,
         );
     }
