@@ -11,11 +11,13 @@ import { ClientOption } from '@model/client_option';
 import { SdkVersion } from '@generate/version';
 import { DefaultTransport } from '@internal/infra/default_transport';
 import { DEFAULT_TRANSPORT_OPTION } from '@src/model';
+import { CopyTradingService, CopyTradingServiceImpl } from '@src/generate';
 
 export class DefaultKucoinRestAPIImpl implements KucoinRestService {
     private readonly accountService: AccountService;
     private readonly affiliateService: AffiliateService;
     private readonly brokerService: BrokerService;
+    private readonly copyTradingService: CopyTradingService;
     private readonly earnService: EarnService;
     private readonly futuresService: FuturesService;
     private readonly marginService: MarginService;
@@ -38,6 +40,7 @@ export class DefaultKucoinRestAPIImpl implements KucoinRestService {
         this.accountService = new AccountServiceImpl(transport);
         this.affiliateService = new AffiliateServiceImpl(transport);
         this.brokerService = new BrokerServiceImpl(transport);
+        this.copyTradingService = new CopyTradingServiceImpl(transport);
         this.earnService = new EarnServiceImpl(transport);
         this.futuresService = new FuturesServiceImpl(transport);
         this.marginService = new MarginServiceImpl(transport);
@@ -55,6 +58,10 @@ export class DefaultKucoinRestAPIImpl implements KucoinRestService {
 
     getBrokerService(): BrokerService {
         return this.brokerService;
+    }
+
+    getCopyTradingService(): CopyTradingService {
+        return this.copyTradingService;
     }
 
     getEarnService(): EarnService {

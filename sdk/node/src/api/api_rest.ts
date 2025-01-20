@@ -6,6 +6,7 @@ import { FuturesService } from '@generate/service/futures_api';
 import { MarginService } from '@generate/service/margin_api';
 import { SpotService } from '@generate/service/spot_api';
 import { VIPLendingService } from '@generate/service/viplending_api';
+import { CopyTradingService } from '@src/generate';
 
 export interface KucoinRestService {
     /**
@@ -22,6 +23,11 @@ export interface KucoinRestService {
      * BrokerService provides functions to access and manage broker-related data.
      */
     getBrokerService(): BrokerService;
+
+    /**
+     * CopyTradingService provides functions to access and manage copy trading-related data
+     */
+    getCopyTradingService(): CopyTradingService;
 
     /**
      * EarnService provides functions to access and manage earn-related data.
