@@ -40,26 +40,26 @@ export class DefaultTransport implements Transport {
 
     private createHttpClient(trans_option: TransportOption): AxiosInstance {
         const instance = axios.create({
-            timeout: trans_option.timeout,
+            timeout: trans_option.timeout || DEFAULT_TRANSPORT_OPTION.timeout,
             headers: {
                 Connection: trans_option.keepAlive ? 'keep-alive' : 'close',
             },
             httpAgent: trans_option.keepAlive
                 ? new HttpAgent({
-                      maxSockets: trans_option.maxConnsPerHost || 100,
-                      maxFreeSockets: trans_option.maxIdleConnsPerHost || 10,
-                      timeout: trans_option.timeout || 60000,
+                      maxSockets: trans_option.maxConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxConnsPerHost,
+                      maxFreeSockets: trans_option.maxIdleConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxIdleConnsPerHost,
+                      timeout: trans_option.timeout || DEFAULT_TRANSPORT_OPTION.timeout,
                       keepAlive: true,
-                      keepAliveMsecs: trans_option.idleConnTimeout || 30000,
+                      keepAliveMsecs: trans_option.idleConnTimeout || DEFAULT_TRANSPORT_OPTION.idleConnTimeout,
                   })
                 : undefined,
             httpsAgent: trans_option.keepAlive
                 ? new HttpsAgent({
-                      maxSockets: trans_option.maxConnsPerHost || 100,
-                      maxFreeSockets: trans_option.maxIdleConnsPerHost || 10,
-                      timeout: trans_option.timeout || 60000,
+                      maxSockets: trans_option.maxConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxConnsPerHost,
+                      maxFreeSockets: trans_option.maxIdleConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxIdleConnsPerHost,
+                      timeout: trans_option.timeout || DEFAULT_TRANSPORT_OPTION.timeout,
                       keepAlive: true,
-                      keepAliveMsecs: trans_option.idleConnTimeout || 30000,
+                      keepAliveMsecs: trans_option.idleConnTimeout || DEFAULT_TRANSPORT_OPTION.idleConnTimeout,
                   })
                 : undefined,
         } as CreateAxiosDefaults);
