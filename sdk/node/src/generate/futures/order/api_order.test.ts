@@ -45,8 +45,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"clientOid": "5c52e11203aa677f33e493fb", "side": "buy", "symbol": "XBTUSDTM", "leverage": 3, "type": "limit", "remark": "order remarks", "reduceOnly": false, "marginMode": "ISOLATED", "price": "0.1", "size": 1, "timeInForce": "GTC"}';
-        let req = new AddOrderReq();
-        req = req.fromJson(data);
+        let req = AddOrderReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -62,8 +61,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderId": "234125150956625920",\n        "clientOid": "5c52e11203aa677f33e493fb"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new AddOrderResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = AddOrderResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -79,8 +77,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"clientOid": "5c52e11203aa677f33e493fb", "side": "buy", "symbol": "XBTUSDTM", "leverage": 3, "type": "limit", "remark": "order remarks", "reduceOnly": false, "marginMode": "ISOLATED", "price": "0.1", "size": 1, "timeInForce": "GTC"}';
-        let req = new AddOrderTestReq();
-        req = req.fromJson(data);
+        let req = AddOrderTestReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -96,8 +93,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderId": "234125150956625920",\n        "clientOid": "5c52e11203aa677f33e493fb"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new AddOrderTestResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = AddOrderTestResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -113,8 +109,7 @@ describe('Auto Test', () => {
          */
         let data =
             '[{"clientOid": "5c52e11203aa677f33e493fb", "side": "buy", "symbol": "XBTUSDTM", "leverage": 3, "type": "limit", "remark": "order remarks", "reduceOnly": false, "marginMode": "ISOLATED", "price": "0.1", "size": 1, "timeInForce": "GTC"}, {"clientOid": "5c52e11203aa677f33e493fc", "side": "buy", "symbol": "XBTUSDTM", "leverage": 3, "type": "limit", "remark": "order remarks", "reduceOnly": false, "marginMode": "ISOLATED", "price": "0.1", "size": 1, "timeInForce": "GTC"}]';
-        let req = new BatchAddOrdersReq();
-        req = req.fromJson(data);
+        let req = BatchAddOrdersReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -130,8 +125,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": [\n        {\n            "orderId": "235919387779985408",\n            "clientOid": "5c52e11203aa677f33e493fb",\n            "symbol": "XBTUSDTM",\n            "code": "200000",\n            "msg": "success"\n        },\n        {\n            "orderId": "235919387855482880",\n            "clientOid": "5c52e11203aa677f33e493fc",\n            "symbol": "XBTUSDTM",\n            "code": "200000",\n            "msg": "success"\n        }\n    ]\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new BatchAddOrdersResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = BatchAddOrdersResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -147,8 +141,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"clientOid": "5c52e11203aa677f33e493fb", "side": "buy", "symbol": "XBTUSDTM", "leverage": 3, "type": "limit", "remark": "order remarks", "reduceOnly": false, "marginMode": "ISOLATED", "price": "0.2", "size": 1, "timeInForce": "GTC", "triggerStopUpPrice": "0.3", "triggerStopDownPrice": "0.1", "stopPriceType": "TP"}';
-        let req = new AddTPSLOrderReq();
-        req = req.fromJson(data);
+        let req = AddTPSLOrderReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -164,8 +157,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderId": "234125150956625920",\n        "clientOid": "5c52e11203aa677f33e493fb"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new AddTPSLOrderResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = AddTPSLOrderResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -180,8 +172,7 @@ describe('Auto Test', () => {
          * /api/v1/orders/{orderId}
          */
         let data = '{"orderId": "example_string_default_value"}';
-        let req = new CancelOrderByIdReq();
-        req = req.fromJson(data);
+        let req = CancelOrderByIdReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -197,8 +188,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderIds": [\n            "235303670076489728"\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelOrderByIdResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelOrderByIdResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -213,8 +203,7 @@ describe('Auto Test', () => {
          * /api/v1/orders/client-order/{clientOid}
          */
         let data = '{"symbol": "XBTUSDTM", "clientOid": "example_string_default_value"}';
-        let req = new CancelOrderByClientOidReq();
-        req = req.fromJson(data);
+        let req = CancelOrderByClientOidReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -230,8 +219,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "clientOid": "017485b0-2957-4681-8a14-5d46b35aee0d"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelOrderByClientOidResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelOrderByClientOidResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -246,8 +234,7 @@ describe('Auto Test', () => {
          * /api/v1/orders/multi-cancel
          */
         let data = '{"orderIdsList": ["250445104152670209", "250445181751463936"]}';
-        let req = new BatchCancelOrdersReq();
-        req = req.fromJson(data);
+        let req = BatchCancelOrdersReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -263,8 +250,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": [\n        {\n            "orderId": "250445104152670209",\n            "clientOid": null,\n            "code": "200",\n            "msg": "success"\n        },\n        {\n            "orderId": "250445181751463936",\n            "clientOid": null,\n            "code": "200",\n            "msg": "success"\n        }\n    ]\n}\n';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new BatchCancelOrdersResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = BatchCancelOrdersResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -279,8 +265,7 @@ describe('Auto Test', () => {
          * /api/v3/orders
          */
         let data = '{"symbol": "XBTUSDTM"}';
-        let req = new CancelAllOrdersV3Req();
-        req = req.fromJson(data);
+        let req = CancelAllOrdersV3Req.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -296,8 +281,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderIds": [\n            "235919172150824960",\n            "235919172150824961"\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelAllOrdersV3Resp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelAllOrdersV3Resp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -312,8 +296,7 @@ describe('Auto Test', () => {
          * /api/v1/stopOrders
          */
         let data = '{"symbol": "XBTUSDTM"}';
-        let req = new CancelAllStopOrdersReq();
-        req = req.fromJson(data);
+        let req = CancelAllStopOrdersReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -329,8 +312,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderIds": [\n            "235919172150824960",\n            "235919172150824961"\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelAllStopOrdersResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelAllStopOrdersResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -345,8 +327,7 @@ describe('Auto Test', () => {
          * /api/v1/orders/{order-id}
          */
         let data = '{"order-id": "236655147005071361"}';
-        let req = new GetOrderByOrderIdReq();
-        req = req.fromJson(data);
+        let req = GetOrderByOrderIdReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -362,8 +343,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "id": "236655147005071361",\n        "symbol": "XBTUSDTM",\n        "type": "limit",\n        "side": "buy",\n        "price": "0.1",\n        "size": 1,\n        "value": "0.0001",\n        "dealValue": "0",\n        "dealSize": 0,\n        "stp": "",\n        "stop": "",\n        "stopPriceType": "",\n        "stopTriggered": false,\n        "stopPrice": null,\n        "timeInForce": "GTC",\n        "postOnly": false,\n        "hidden": false,\n        "iceberg": false,\n        "leverage": "3",\n        "forceHold": false,\n        "closeOrder": false,\n        "visibleSize": 0,\n        "clientOid": "5c52e11203aa677f33e493fb",\n        "remark": null,\n        "tags": "",\n        "isActive": true,\n        "cancelExist": false,\n        "createdAt": 1729236185949,\n        "updatedAt": 1729236185949,\n        "endAt": null,\n        "orderTime": 1729236185885647952,\n        "settleCurrency": "USDT",\n        "marginMode": "ISOLATED",\n        "avgDealPrice": "0",\n        "filledSize": 0,\n        "filledValue": "0",\n        "status": "open",\n        "reduceOnly": false\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOrderByOrderIdResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOrderByOrderIdResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -378,8 +358,7 @@ describe('Auto Test', () => {
          * /api/v1/orders/byClientOid
          */
         let data = '{"clientOid": "5c52e11203aa677f33e493fb"}';
-        let req = new GetOrderByClientOidReq();
-        req = req.fromJson(data);
+        let req = GetOrderByClientOidReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -395,8 +374,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "id": "250444645610336256",\n        "symbol": "XRPUSDTM",\n        "type": "limit",\n        "side": "buy",\n        "price": "0.1",\n        "size": 1,\n        "value": "1",\n        "dealValue": "0",\n        "dealSize": 0,\n        "stp": "",\n        "stop": "",\n        "stopPriceType": "",\n        "stopTriggered": false,\n        "stopPrice": null,\n        "timeInForce": "GTC",\n        "postOnly": false,\n        "hidden": false,\n        "iceberg": false,\n        "leverage": "3",\n        "forceHold": false,\n        "closeOrder": false,\n        "visibleSize": 0,\n        "clientOid": "5c52e11203aa677f33e493fb",\n        "remark": null,\n        "tags": "",\n        "isActive": true,\n        "cancelExist": false,\n        "createdAt": 1732523858568,\n        "updatedAt": 1732523858568,\n        "endAt": null,\n        "orderTime": 1732523858550892322,\n        "settleCurrency": "USDT",\n        "marginMode": "ISOLATED",\n        "avgDealPrice": "0",\n        "filledSize": 0,\n        "filledValue": "0",\n        "status": "open",\n        "reduceOnly": false\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOrderByClientOidResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOrderByClientOidResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -412,8 +390,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"status": "done", "symbol": "example_string_default_value", "side": "buy", "type": "limit", "startAt": 123456, "endAt": 123456, "currentPage": 123456, "pageSize": 123456}';
-        let req = new GetOrderListReq();
-        req = req.fromJson(data);
+        let req = GetOrderListReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -429,8 +406,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "currentPage": 1,\n        "pageSize": 50,\n        "totalNum": 1,\n        "totalPage": 1,\n        "items": [\n            {\n                "id": "230181737576050688",\n                "symbol": "PEOPLEUSDTM",\n                "type": "limit",\n                "side": "buy",\n                "price": "0.05",\n                "size": 10,\n                "value": "5",\n                "dealValue": "0",\n                "dealSize": 0,\n                "stp": "",\n                "stop": "",\n                "stopPriceType": "",\n                "stopTriggered": false,\n                "stopPrice": null,\n                "timeInForce": "GTC",\n                "postOnly": false,\n                "hidden": false,\n                "iceberg": false,\n                "leverage": "1",\n                "forceHold": false,\n                "closeOrder": false,\n                "visibleSize": 0,\n                "clientOid": "5a80bd847f1811ef8a7faa665a37b3d7",\n                "remark": null,\n                "tags": "",\n                "isActive": true,\n                "cancelExist": false,\n                "createdAt": 1727692804813,\n                "updatedAt": 1727692804813,\n                "endAt": null,\n                "orderTime": 1727692804808418000,\n                "settleCurrency": "USDT",\n                "marginMode": "ISOLATED",\n                "avgDealPrice": "0",\n                "filledSize": 0,\n                "filledValue": "0",\n                "status": "open",\n                "reduceOnly": false\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOrderListResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOrderListResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -445,8 +421,7 @@ describe('Auto Test', () => {
          * /api/v1/recentDoneOrders
          */
         let data = '{"symbol": "XBTUSDTM"}';
-        let req = new GetRecentClosedOrdersReq();
-        req = req.fromJson(data);
+        let req = GetRecentClosedOrdersReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -462,8 +437,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": [\n        {\n            "id": "236387137732231168",\n            "symbol": "XRPUSDTM",\n            "type": "market",\n            "side": "buy",\n            "price": "0",\n            "size": 1,\n            "value": "5.51",\n            "dealValue": "5.511",\n            "dealSize": 1,\n            "stp": "",\n            "stop": "",\n            "stopPriceType": "",\n            "stopTriggered": false,\n            "stopPrice": null,\n            "timeInForce": "GTC",\n            "postOnly": false,\n            "hidden": false,\n            "iceberg": false,\n            "leverage": "10.0",\n            "forceHold": false,\n            "closeOrder": false,\n            "visibleSize": 0,\n            "clientOid": "16698fe6-2746-4aeb-a7fa-61f633ab6090",\n            "remark": null,\n            "tags": "",\n            "isActive": false,\n            "cancelExist": false,\n            "createdAt": 1729172287496,\n            "updatedAt": 1729172287568,\n            "endAt": 1729172287568,\n            "orderTime": 1729172287496950800,\n            "settleCurrency": "USDT",\n            "marginMode": "ISOLATED",\n            "avgDealPrice": "0.5511",\n            "filledSize": 1,\n            "filledValue": "5.511",\n            "status": "done",\n            "reduceOnly": false\n        },\n        {\n            "id": "236317213710184449",\n            "symbol": "XBTUSDTM",\n            "type": "market",\n            "side": "buy",\n            "price": "0",\n            "size": 1,\n            "value": "67.4309",\n            "dealValue": "67.4309",\n            "dealSize": 1,\n            "stp": "",\n            "stop": "",\n            "stopPriceType": "",\n            "stopTriggered": false,\n            "stopPrice": null,\n            "timeInForce": "GTC",\n            "postOnly": false,\n            "hidden": false,\n            "iceberg": false,\n            "leverage": "3",\n            "forceHold": false,\n            "closeOrder": false,\n            "visibleSize": 0,\n            "clientOid": "5c52e11203aa677f33e493fb",\n            "remark": null,\n            "tags": "",\n            "isActive": false,\n            "cancelExist": false,\n            "createdAt": 1729155616310,\n            "updatedAt": 1729155616324,\n            "endAt": 1729155616324,\n            "orderTime": 1729155616310180400,\n            "settleCurrency": "USDT",\n            "marginMode": "ISOLATED",\n            "avgDealPrice": "67430.9",\n            "filledSize": 1,\n            "filledValue": "67.4309",\n            "status": "done",\n            "reduceOnly": false\n        },\n        {\n            "id": "236317094436728832",\n            "symbol": "XBTUSDTM",\n            "type": "market",\n            "side": "buy",\n            "price": "0",\n            "size": 1,\n            "value": "67.445",\n            "dealValue": "67.445",\n            "dealSize": 1,\n            "stp": "",\n            "stop": "",\n            "stopPriceType": "",\n            "stopTriggered": false,\n            "stopPrice": null,\n            "timeInForce": "GTC",\n            "postOnly": false,\n            "hidden": false,\n            "iceberg": false,\n            "leverage": "3",\n            "forceHold": false,\n            "closeOrder": false,\n            "visibleSize": 0,\n            "clientOid": "5c52e11203aa677f33e493fb",\n            "remark": null,\n            "tags": "",\n            "isActive": false,\n            "cancelExist": false,\n            "createdAt": 1729155587873,\n            "updatedAt": 1729155587946,\n            "endAt": 1729155587946,\n            "orderTime": 1729155587873332000,\n            "settleCurrency": "USDT",\n            "marginMode": "ISOLATED",\n            "avgDealPrice": "67445.0",\n            "filledSize": 1,\n            "filledValue": "67.445",\n            "status": "done",\n            "reduceOnly": false\n        }\n    ]\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetRecentClosedOrdersResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetRecentClosedOrdersResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -479,8 +453,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"symbol": "XBTUSDTM", "side": "buy", "type": "limit", "startAt": 123456, "endAt": 123456, "currentPage": 123456, "pageSize": 50}';
-        let req = new GetStopOrderListReq();
-        req = req.fromJson(data);
+        let req = GetStopOrderListReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -496,8 +469,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "currentPage": 1,\n        "pageSize": 50,\n        "totalNum": 1,\n        "totalPage": 1,\n        "items": [\n            {\n                "id": "230181737576050688",\n                "symbol": "PEOPLEUSDTM",\n                "type": "limit",\n                "side": "buy",\n                "price": "0.05",\n                "size": 10,\n                "value": "5",\n                "dealValue": "0",\n                "dealSize": 0,\n                "stp": "",\n                "stop": "",\n                "stopPriceType": "",\n                "stopTriggered": false,\n                "stopPrice": null,\n                "timeInForce": "GTC",\n                "postOnly": false,\n                "hidden": false,\n                "iceberg": false,\n                "leverage": "1",\n                "forceHold": false,\n                "closeOrder": false,\n                "visibleSize": 0,\n                "clientOid": "5a80bd847f1811ef8a7faa665a37b3d7",\n                "remark": null,\n                "tags": "",\n                "isActive": true,\n                "cancelExist": false,\n                "createdAt": 1727692804813,\n                "updatedAt": 1727692804813,\n                "endAt": null,\n                "orderTime": 1727692804808418000,\n                "settleCurrency": "USDT",\n                "marginMode": "ISOLATED",\n                "avgDealPrice": "0",\n                "filledSize": 0,\n                "filledValue": "0",\n                "status": "open",\n                "reduceOnly": false\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetStopOrderListResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetStopOrderListResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -512,8 +484,7 @@ describe('Auto Test', () => {
          * /api/v1/openOrderStatistics
          */
         let data = '{"symbol": "XBTUSDTM"}';
-        let req = new GetOpenOrderValueReq();
-        req = req.fromJson(data);
+        let req = GetOpenOrderValueReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -529,8 +500,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "openOrderBuySize": 1,\n        "openOrderSellSize": 0,\n        "openOrderBuyCost": "0.0001",\n        "openOrderSellCost": "0",\n        "settleCurrency": "USDT"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOpenOrderValueResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOpenOrderValueResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -545,8 +515,7 @@ describe('Auto Test', () => {
          * /api/v1/recentFills
          */
         let data = '{"symbol": "XBTUSDTM"}';
-        let req = new GetRecentTradeHistoryReq();
-        req = req.fromJson(data);
+        let req = GetRecentTradeHistoryReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -562,8 +531,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": [\n        {\n            "symbol": "XBTUSDTM",\n            "tradeId": "1784277229880",\n            "orderId": "236317213710184449",\n            "side": "buy",\n            "liquidity": "taker",\n            "forceTaker": false,\n            "price": "67430.9",\n            "size": 1,\n            "value": "67.4309",\n            "openFeePay": "0.04045854",\n            "closeFeePay": "0",\n            "stop": "",\n            "feeRate": "0.00060",\n            "fixFee": "0",\n            "feeCurrency": "USDT",\n            "marginMode": "ISOLATED",\n            "fee": "0.04045854",\n            "settleCurrency": "USDT",\n            "orderType": "market",\n            "displayType": "market",\n            "tradeType": "trade",\n            "subTradeType": null,\n            "tradeTime": 1729155616320000000,\n            "createdAt": 1729155616493\n        },\n        {\n            "symbol": "XBTUSDTM",\n            "tradeId": "1784277132002",\n            "orderId": "236317094436728832",\n            "side": "buy",\n            "liquidity": "taker",\n            "forceTaker": false,\n            "price": "67445",\n            "size": 1,\n            "value": "67.445",\n            "openFeePay": "0",\n            "closeFeePay": "0.040467",\n            "stop": "",\n            "feeRate": "0.00060",\n            "fixFee": "0",\n            "feeCurrency": "USDT",\n            "marginMode": "ISOLATED",\n            "fee": "0.040467",\n            "settleCurrency": "USDT",\n            "orderType": "market",\n            "displayType": "market",\n            "tradeType": "trade",\n            "subTradeType": null,\n            "tradeTime": 1729155587944000000,\n            "createdAt": 1729155588104\n        }\n    ]\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetRecentTradeHistoryResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetRecentTradeHistoryResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -579,8 +547,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"orderId": "236655147005071361", "symbol": "example_string_default_value", "side": "buy", "type": "limit", "tradeTypes": "trade", "startAt": 123456, "endAt": 123456, "currentPage": 1, "pageSize": 50}';
-        let req = new GetTradeHistoryReq();
-        req = req.fromJson(data);
+        let req = GetTradeHistoryReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -596,8 +563,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "currentPage": 1,\n        "pageSize": 50,\n        "totalNum": 2,\n        "totalPage": 1,\n        "items": [\n            {\n                "symbol": "XBTUSDTM",\n                "tradeId": "1784277229880",\n                "orderId": "236317213710184449",\n                "side": "buy",\n                "liquidity": "taker",\n                "forceTaker": false,\n                "price": "67430.9",\n                "size": 1,\n                "value": "67.4309",\n                "openFeePay": "0.04045854",\n                "closeFeePay": "0",\n                "stop": "",\n                "feeRate": "0.00060",\n                "fixFee": "0",\n                "feeCurrency": "USDT",\n                "marginMode": "ISOLATED",\n                "settleCurrency": "USDT",\n                "fee": "0.04045854",\n                "orderType": "market",\n                "displayType": "market",\n                "tradeType": "trade",\n                "subTradeType": null,\n                "tradeTime": 1729155616320000000,\n                "createdAt": 1729155616493\n            },\n            {\n                "symbol": "XBTUSDTM",\n                "tradeId": "1784277132002",\n                "orderId": "236317094436728832",\n                "side": "buy",\n                "liquidity": "taker",\n                "forceTaker": false,\n                "price": "67445",\n                "size": 1,\n                "value": "67.445",\n                "openFeePay": "0",\n                "closeFeePay": "0.040467",\n                "stop": "",\n                "feeRate": "0.00060",\n                "fixFee": "0",\n                "feeCurrency": "USDT",\n                "marginMode": "ISOLATED",\n                "settleCurrency": "USDT",\n                "fee": "0.040467",\n                "orderType": "market",\n                "displayType": "market",\n                "tradeType": "trade",\n                "subTradeType": null,\n                "tradeTime": 1729155587944000000,\n                "createdAt": 1729155588104\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetTradeHistoryResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetTradeHistoryResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -612,8 +578,7 @@ describe('Auto Test', () => {
          * /api/v1/orders
          */
         let data = '{"symbol": "XBTUSDTM"}';
-        let req = new CancelAllOrdersV1Req();
-        req = req.fromJson(data);
+        let req = CancelAllOrdersV1Req.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -629,8 +594,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderIds": [\n            "235919172150824960",\n            "235919172150824961"\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelAllOrdersV1Resp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelAllOrdersV1Resp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),

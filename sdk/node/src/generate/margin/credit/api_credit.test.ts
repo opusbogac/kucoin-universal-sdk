@@ -22,8 +22,7 @@ describe('Auto Test', () => {
          * /api/v3/project/list
          */
         let data = '{"currency": "BTC"}';
-        let req = new GetLoanMarketReq();
-        req = req.fromJson(data);
+        let req = GetLoanMarketReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -39,8 +38,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": [\n        {\n            "currency": "BTC",\n            "purchaseEnable": true,\n            "redeemEnable": true,\n            "increment": "0.00000001",\n            "minPurchaseSize": "0.001",\n            "maxPurchaseSize": "40",\n            "interestIncrement": "0.0001",\n            "minInterestRate": "0.005",\n            "marketInterestRate": "0.005",\n            "maxInterestRate": "0.32",\n            "autoPurchaseEnable": false\n        }\n    ]\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetLoanMarketResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetLoanMarketResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -55,8 +53,7 @@ describe('Auto Test', () => {
          * /api/v3/project/marketInterestRate
          */
         let data = '{"currency": "BTC"}';
-        let req = new GetLoanMarketInterestRateReq();
-        req = req.fromJson(data);
+        let req = GetLoanMarketInterestRateReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -72,8 +69,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": [\n        {\n            "time": "202410170000",\n            "marketInterestRate": "0.005"\n        },\n        {\n            "time": "202410170100",\n            "marketInterestRate": "0.005"\n        }\n    ]\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetLoanMarketInterestRateResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetLoanMarketInterestRateResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -88,8 +84,7 @@ describe('Auto Test', () => {
          * /api/v3/purchase
          */
         let data = '{"currency": "BTC", "size": "0.001", "interestRate": "0.1"}';
-        let req = new PurchaseReq();
-        req = req.fromJson(data);
+        let req = PurchaseReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -105,8 +100,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderNo": "671bafa804c26d000773c533"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new PurchaseResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = PurchaseResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -122,8 +116,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"currency": "BTC", "purchaseOrderNo": "671bafa804c26d000773c533", "interestRate": "0.09"}';
-        let req = new ModifyPurchaseReq();
-        req = req.fromJson(data);
+        let req = ModifyPurchaseReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -138,8 +131,7 @@ describe('Auto Test', () => {
          */
         let data = '{\n    "code": "200000",\n    "data": null\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new ModifyPurchaseResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = ModifyPurchaseResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -155,8 +147,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"currency": "BTC", "status": "DONE", "purchaseOrderNo": "example_string_default_value", "currentPage": 1, "pageSize": 50}';
-        let req = new GetPurchaseOrdersReq();
-        req = req.fromJson(data);
+        let req = GetPurchaseOrdersReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -172,8 +163,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "currentPage": 1,\n        "pageSize": 10,\n        "totalNum": 1,\n        "totalPage": 1,\n        "items": [\n            {\n                "currency": "BTC",\n                "purchaseOrderNo": "671bb15a3b3f930007880bae",\n                "purchaseSize": "0.001",\n                "matchSize": "0",\n                "interestRate": "0.1",\n                "incomeSize": "0",\n                "applyTime": 1729868122172,\n                "status": "PENDING"\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetPurchaseOrdersResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetPurchaseOrdersResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -189,8 +179,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"currency": "BTC", "size": "0.001", "purchaseOrderNo": "671bafa804c26d000773c533"}';
-        let req = new RedeemReq();
-        req = req.fromJson(data);
+        let req = RedeemReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -206,8 +195,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderNo": "671bafa804c26d000773c533"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new RedeemResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = RedeemResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -223,8 +211,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"currency": "BTC", "status": "DONE", "redeemOrderNo": "example_string_default_value", "currentPage": 1, "pageSize": 50}';
-        let req = new GetRedeemOrdersReq();
-        req = req.fromJson(data);
+        let req = GetRedeemOrdersReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -240,8 +227,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "currentPage": 1,\n        "pageSize": 10,\n        "totalNum": 1,\n        "totalPage": 1,\n        "items": [\n            {\n                "currency": "BTC",\n                "purchaseOrderNo": "671bafa804c26d000773c533",\n                "redeemOrderNo": "671bb01004c26d000773c55c",\n                "redeemSize": "0.001",\n                "receiptSize": "0.001",\n                "applyTime": null,\n                "status": "DONE"\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetRedeemOrdersResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetRedeemOrdersResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),

@@ -12,8 +12,7 @@ describe('Auto Test', () => {
         let data =
             '{"id":"5c24c5da03aa673885cd67a0","type":"message","topic":"/indicator/index:USDT-BTC","subject":"tick","data":{"symbol":"USDT-BTC","granularity":5000,"timestamp":1551770400000,"value":0.0001092}}';
         let commonResp = WsMessage.fromJson(data);
-        let resp = new IndexPriceEvent();
-        resp = resp.fromObject(commonResp.data);
+        let resp = IndexPriceEvent.fromObject(commonResp.data);
         expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -28,8 +27,7 @@ describe('Auto Test', () => {
         let data =
             '{"id":"5c24c5da03aa673885cd67aa","type":"message","topic":"/indicator/markPrice:USDT-BTC","subject":"tick","data":{"symbol":"USDT-BTC","granularity":5000,"timestamp":1551770400000,"value":0.0001093}}';
         let commonResp = WsMessage.fromJson(data);
-        let resp = new MarkPriceEvent();
-        resp = resp.fromObject(commonResp.data);
+        let resp = MarkPriceEvent.fromObject(commonResp.data);
         expect(Object.values(resp).every((value) => value === null || value === undefined)).toBe(
             false,
         );

@@ -20,8 +20,7 @@ describe('Auto Test', () => {
          * /api/v1/withdrawals/quotas
          */
         let data = '{"currency": "BTC", "chain": "eth"}';
-        let req = new GetWithdrawalQuotasReq();
-        req = req.fromJson(data);
+        let req = GetWithdrawalQuotasReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -37,8 +36,7 @@ describe('Auto Test', () => {
         let data =
             '{"code":"200000","data":{"currency":"BTC","limitBTCAmount":"15.79590095","usedBTCAmount":"0.00000000","quotaCurrency":"USDT","limitQuotaCurrencyAmount":"999999.00000000","usedQuotaCurrencyAmount":"0","remainAmount":"15.79590095","availableAmount":"0","withdrawMinFee":"0.0005","innerWithdrawMinFee":"0","withdrawMinSize":"0.001","isWithdrawEnabled":true,"precision":8,"chain":"BTC","reason":null,"lockedAmount":"0"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetWithdrawalQuotasResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetWithdrawalQuotasResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -54,8 +52,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"currency": "USDT", "toAddress": "TKFRQXSDcY****GmLrjJggwX8", "amount": 3, "withdrawType": "ADDRESS", "chain": "trx", "isInner": true, "remark": "this is Remark"}';
-        let req = new WithdrawalV3Req();
-        req = req.fromJson(data);
+        let req = WithdrawalV3Req.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -70,8 +67,7 @@ describe('Auto Test', () => {
          */
         let data = '{"code":"200000","data":{"withdrawalId":"670deec84d64da0007d7c946"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new WithdrawalV3Resp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = WithdrawalV3Resp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -86,8 +82,7 @@ describe('Auto Test', () => {
          * /api/v1/withdrawals/{withdrawalId}
          */
         let data = '{"withdrawalId": "670b891f7e0f440007730692"}';
-        let req = new CancelWithdrawalReq();
-        req = req.fromJson(data);
+        let req = CancelWithdrawalReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -102,8 +97,7 @@ describe('Auto Test', () => {
          */
         let data = '{"code":"200000","data":null}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelWithdrawalResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelWithdrawalResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -119,8 +113,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"currency": "BTC", "status": "SUCCESS", "startAt": 1728663338000, "endAt": 1728692138000, "currentPage": 1, "pageSize": 50}';
-        let req = new GetWithdrawalHistoryReq();
-        req = req.fromJson(data);
+        let req = GetWithdrawalHistoryReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -136,8 +129,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "currentPage": 1,\n        "pageSize": 50,\n        "totalNum": 5,\n        "totalPage": 1,\n        "items": [\n            {\n                "currency": "USDT",\n                "chain": "",\n                "status": "SUCCESS",\n                "address": "a435*****@gmail.com",\n                "memo": "",\n                "isInner": true,\n                "amount": "1.00000000",\n                "fee": "0.00000000",\n                "walletTxId": null,\n                "createdAt": 1728555875000,\n                "updatedAt": 1728555875000,\n                "remark": "",\n                "arrears": false\n            },\n            {\n                "currency": "USDT",\n                "chain": "trx",\n                "status": "SUCCESS",\n                "address": "TSv3L1fS7******X4nLP6rqNxYz",\n                "memo": "",\n                "isInner": true,\n                "amount": "6.00000000",\n                "fee": "0.00000000",\n                "walletTxId": null,\n                "createdAt": 1721730920000,\n                "updatedAt": 1721730920000,\n                "remark": "",\n                "arrears": false\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetWithdrawalHistoryResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetWithdrawalHistoryResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -153,8 +145,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"currency": "BTC", "status": "SUCCESS", "startAt": 1728663338000, "endAt": 1728692138000, "currentPage": 1, "pageSize": 50}';
-        let req = new GetWithdrawalHistoryOldReq();
-        req = req.fromJson(data);
+        let req = GetWithdrawalHistoryOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -170,8 +161,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "currentPage": 1,\n        "pageSize": 50,\n        "totalNum": 1,\n        "totalPage": 1,\n        "items": [\n            {\n                "currency": "BTC",\n                "createAt": 1526723468,\n                "amount": "0.534",\n                "address": "33xW37ZSW4tQvg443Pc7NLCAs167Yc2XUV",\n                "walletTxId": "aeacea864c020acf58e51606169240e96774838dcd4f7ce48acf38e3651323f4",\n                "isInner": false,\n                "status": "SUCCESS"\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetWithdrawalHistoryOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetWithdrawalHistoryOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -187,8 +177,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"currency": "USDT", "address": "TKFRQXSDc****16GmLrjJggwX8", "amount": 3, "chain": "trx", "isInner": true}';
-        let req = new WithdrawalV1Req();
-        req = req.fromJson(data);
+        let req = WithdrawalV1Req.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -203,8 +192,7 @@ describe('Auto Test', () => {
          */
         let data = '{"code":"200000","data":{"withdrawalId":"670a973cf07b3800070e216c"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new WithdrawalV1Resp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = WithdrawalV1Resp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),

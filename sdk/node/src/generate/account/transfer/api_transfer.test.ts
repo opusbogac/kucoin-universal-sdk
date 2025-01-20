@@ -22,8 +22,7 @@ describe('Auto Test', () => {
          * /api/v1/accounts/transferable
          */
         let data = '{"currency": "BTC", "type": "MAIN", "tag": "ETH-USDT"}';
-        let req = new GetTransferQuotasReq();
-        req = req.fromJson(data);
+        let req = GetTransferQuotasReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -39,8 +38,7 @@ describe('Auto Test', () => {
         let data =
             '{"code":"200000","data":{"currency":"USDT","balance":"10.5","available":"10.5","holds":"0","transferable":"10.5"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetTransferQuotasResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetTransferQuotasResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -56,8 +54,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"clientOid": "64ccc0f164781800010d8c09", "type": "PARENT_TO_SUB", "currency": "USDT", "amount": "0.01", "fromAccountType": "TRADE", "toUserId": "63743f07e0c5230001761d08", "toAccountType": "TRADE"}';
-        let req = new FlexTransferReq();
-        req = req.fromJson(data);
+        let req = FlexTransferReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -73,8 +70,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderId": "6705f7248c6954000733ecac"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new FlexTransferResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = FlexTransferResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -90,8 +86,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"clientOid": "64ccc0f164781800010d8c09", "currency": "USDT", "amount": "0.01", "direction": "OUT", "accountType": "MAIN", "subAccountType": "MAIN", "subUserId": "63743f07e0c5230001761d08"}';
-        let req = new SubAccountTransferReq();
-        req = req.fromJson(data);
+        let req = SubAccountTransferReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -106,8 +101,7 @@ describe('Auto Test', () => {
          */
         let data = '{"code":"200000","data":{"orderId":"670be6b0b1b9080007040a9b"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new SubAccountTransferResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = SubAccountTransferResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -123,8 +117,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"clientOid": "64ccc0f164781800010d8c09", "currency": "USDT", "amount": "0.01", "from": "main", "to": "trade"}';
-        let req = new InnerTransferReq();
-        req = req.fromJson(data);
+        let req = InnerTransferReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -139,8 +132,7 @@ describe('Auto Test', () => {
          */
         let data = '{"code":"200000","data":{"orderId":"670beb3482a1bb0007dec644"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new InnerTransferResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = InnerTransferResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -155,8 +147,7 @@ describe('Auto Test', () => {
          * /api/v3/transfer-out
          */
         let data = '{"currency": "USDT", "amount": 0.01, "recAccountType": "MAIN"}';
-        let req = new FuturesAccountTransferOutReq();
-        req = req.fromJson(data);
+        let req = FuturesAccountTransferOutReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -172,8 +163,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "applyId": "670bf84c577f6c00017a1c48",\n        "bizNo": "670bf84c577f6c00017a1c47",\n        "payAccountType": "CONTRACT",\n        "payTag": "DEFAULT",\n        "remark": "",\n        "recAccountType": "MAIN",\n        "recTag": "DEFAULT",\n        "recRemark": "",\n        "recSystem": "KUCOIN",\n        "status": "PROCESSING",\n        "currency": "USDT",\n        "amount": "0.01",\n        "fee": "0",\n        "sn": 1519769124134806,\n        "reason": "",\n        "createdAt": 1728837708000,\n        "updatedAt": 1728837708000\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new FuturesAccountTransferOutResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = FuturesAccountTransferOutResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -188,8 +178,7 @@ describe('Auto Test', () => {
          * /api/v1/transfer-in
          */
         let data = '{"currency": "USDT", "amount": 0.01, "payAccountType": "MAIN"}';
-        let req = new FuturesAccountTransferInReq();
-        req = req.fromJson(data);
+        let req = FuturesAccountTransferInReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -204,8 +193,7 @@ describe('Auto Test', () => {
          */
         let data = '{"code":"200000","data":null}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new FuturesAccountTransferInResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = FuturesAccountTransferInResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -221,8 +209,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"currency": "XBT", "type": "MAIN", "tag": ["mock_a", "mock_b"], "startAt": 1728663338000, "endAt": 1728692138000, "currentPage": 1, "pageSize": 50}';
-        let req = new GetFuturesAccountTransferOutLedgerReq();
-        req = req.fromJson(data);
+        let req = GetFuturesAccountTransferOutLedgerReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -238,8 +225,7 @@ describe('Auto Test', () => {
         let data =
             '{"code":"200000","data":{"currentPage":1,"pageSize":50,"totalNum":1,"totalPage":1,"items":[{"applyId":"670bf84c577f6c00017a1c48","currency":"USDT","recRemark":"","recSystem":"KUCOIN","status":"SUCCESS","amount":"0.01","reason":"","offset":1519769124134806,"createdAt":1728837708000,"remark":""}]}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetFuturesAccountTransferOutLedgerResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetFuturesAccountTransferOutLedgerResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),

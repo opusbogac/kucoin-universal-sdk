@@ -102,8 +102,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"type": "limit", "symbol": "BTC-USDT", "side": "buy", "price": "50000", "size": "0.00001", "clientOid": "5c52e11203aa677f33e493fb", "remark": "order remarks"}';
-        let req = new AddOrderReq();
-        req = req.fromJson(data);
+        let req = AddOrderReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -119,8 +118,7 @@ describe('Auto Test', () => {
         let data =
             '{"code":"200000","data":{"orderId":"670fd33bf9406e0007ab3945","clientOid":"5c52e11203aa677f33e493fb"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new AddOrderResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = AddOrderResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -136,8 +134,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"type": "limit", "symbol": "BTC-USDT", "side": "buy", "price": "50000", "size": "0.00001", "clientOid": "5c52e11203aa677f33e493f", "remark": "order remarks"}';
-        let req = new AddOrderSyncReq();
-        req = req.fromJson(data);
+        let req = AddOrderSyncReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -153,8 +150,7 @@ describe('Auto Test', () => {
         let data =
             '{"code":"200000","data":{"orderId":"67111a7cb7cbdf000703e1f6","clientOid":"5c52e11203aa677f33e493f","orderTime":1729174140586,"originSize":"0.00001","dealSize":"0","remainSize":"0.00001","canceledSize":"0","status":"open","matchTime":1729174140588}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new AddOrderSyncResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = AddOrderSyncResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -170,8 +166,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"type": "limit", "symbol": "BTC-USDT", "side": "buy", "price": "50000", "size": "0.00001", "clientOid": "5c52e11203aa677f33e493f", "remark": "order remarks"}';
-        let req = new AddOrderTestReq();
-        req = req.fromJson(data);
+        let req = AddOrderTestReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -187,8 +182,7 @@ describe('Auto Test', () => {
         let data =
             '{"code":"200000","data":{"orderId":"670fd33bf9406e0007ab3945","clientOid":"5c52e11203aa677f33e493fb"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new AddOrderTestResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = AddOrderTestResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -204,8 +198,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"orderList": [{"clientOid": "client order id 12", "symbol": "BTC-USDT", "type": "limit", "side": "buy", "price": "30000", "size": "0.00001"}, {"clientOid": "client order id 13", "symbol": "ETH-USDT", "type": "limit", "side": "sell", "price": "2000", "size": "0.00001"}]}';
-        let req = new BatchAddOrdersReq();
-        req = req.fromJson(data);
+        let req = BatchAddOrdersReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -221,8 +214,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": [\n        {\n            "orderId": "6710d8336afcdb0007319c27",\n            "clientOid": "client order id 12",\n            "success": true\n        },\n        {\n            "success": false,\n            "failMsg": "The order funds should more then 0.1 USDT."\n        }\n    ]\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new BatchAddOrdersResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = BatchAddOrdersResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -238,8 +230,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"orderList": [{"clientOid": "client order id 13", "symbol": "BTC-USDT", "type": "limit", "side": "buy", "price": "30000", "size": "0.00001"}, {"clientOid": "client order id 14", "symbol": "ETH-USDT", "type": "limit", "side": "sell", "price": "2000", "size": "0.00001"}]}';
-        let req = new BatchAddOrdersSyncReq();
-        req = req.fromJson(data);
+        let req = BatchAddOrdersSyncReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -255,8 +246,7 @@ describe('Auto Test', () => {
         let data =
             '{"code":"200000","data":[{"orderId":"6711195e5584bc0007bd5aef","clientOid":"client order id 13","orderTime":1729173854299,"originSize":"0.00001","dealSize":"0","remainSize":"0.00001","canceledSize":"0","status":"open","matchTime":1729173854326,"success":true},{"success":false,"failMsg":"The order funds should more then 0.1 USDT."}]}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new BatchAddOrdersSyncResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = BatchAddOrdersSyncResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -271,8 +261,7 @@ describe('Auto Test', () => {
          * /api/v1/hf/orders/{orderId}
          */
         let data = '{"orderId": "671124f9365ccb00073debd4", "symbol": "BTC-USDT"}';
-        let req = new CancelOrderByOrderIdReq();
-        req = req.fromJson(data);
+        let req = CancelOrderByOrderIdReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -288,8 +277,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderId": "671124f9365ccb00073debd4"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelOrderByOrderIdResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelOrderByOrderIdResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -304,8 +292,7 @@ describe('Auto Test', () => {
          * /api/v1/hf/orders/sync/{orderId}
          */
         let data = '{"orderId": "671128ee365ccb0007534d45", "symbol": "BTC-USDT"}';
-        let req = new CancelOrderByOrderIdSyncReq();
-        req = req.fromJson(data);
+        let req = CancelOrderByOrderIdSyncReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -321,8 +308,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderId": "671128ee365ccb0007534d45",\n        "originSize": "0.00001",\n        "dealSize": "0",\n        "remainSize": "0",\n        "canceledSize": "0.00001",\n        "status": "done"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelOrderByOrderIdSyncResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelOrderByOrderIdSyncResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -337,8 +323,7 @@ describe('Auto Test', () => {
          * /api/v1/hf/orders/client-order/{clientOid}
          */
         let data = '{"clientOid": "5c52e11203aa677f33e493fb", "symbol": "BTC-USDT"}';
-        let req = new CancelOrderByClientOidReq();
-        req = req.fromJson(data);
+        let req = CancelOrderByClientOidReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -353,8 +338,7 @@ describe('Auto Test', () => {
          */
         let data = '{"code":"200000","data":{"clientOid":"5c52e11203aa677f33e493fb"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelOrderByClientOidResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelOrderByClientOidResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -369,8 +353,7 @@ describe('Auto Test', () => {
          * /api/v1/hf/orders/sync/client-order/{clientOid}
          */
         let data = '{"clientOid": "5c52e11203aa677f33e493fb", "symbol": "BTC-USDT"}';
-        let req = new CancelOrderByClientOidSyncReq();
-        req = req.fromJson(data);
+        let req = CancelOrderByClientOidSyncReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -386,8 +369,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "clientOid": "5c52e11203aa677f33e493fb",\n        "originSize": "0.00001",\n        "dealSize": "0",\n        "remainSize": "0",\n        "canceledSize": "0.00001",\n        "status": "done"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelOrderByClientOidSyncResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelOrderByClientOidSyncResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -403,8 +385,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"orderId": "6711f73c1ef16c000717bb31", "symbol": "BTC-USDT", "cancelSize": "0.00001"}';
-        let req = new CancelPartialOrderReq();
-        req = req.fromJson(data);
+        let req = CancelPartialOrderReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -420,8 +401,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderId": "6711f73c1ef16c000717bb31",\n        "cancelSize": "0.00001"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelPartialOrderResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelPartialOrderResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -436,8 +416,7 @@ describe('Auto Test', () => {
          * /api/v1/hf/orders
          */
         let data = '{"symbol": "BTC-USDT"}';
-        let req = new CancelAllOrdersBySymbolReq();
-        req = req.fromJson(data);
+        let req = CancelAllOrdersBySymbolReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -452,8 +431,7 @@ describe('Auto Test', () => {
          */
         let data = '{"code":"200000","data":"success"}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelAllOrdersBySymbolResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelAllOrdersBySymbolResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -484,8 +462,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"symbol": "BTC-USDT", "orderId": "670fd33bf9406e0007ab3945", "newPrice": "30000", "newSize": "0.0001"}';
-        let req = new ModifyOrderReq();
-        req = req.fromJson(data);
+        let req = ModifyOrderReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -501,8 +478,7 @@ describe('Auto Test', () => {
         let data =
             '{"code":"200000","data":{"newOrderId":"67112258f9406e0007408827","clientOid":"client order id 12"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new ModifyOrderResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = ModifyOrderResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -517,8 +493,7 @@ describe('Auto Test', () => {
          * /api/v1/hf/orders/{orderId}
          */
         let data = '{"symbol": "BTC-USDT", "orderId": "6717422bd51c29000775ea03"}';
-        let req = new GetOrderByOrderIdReq();
-        req = req.fromJson(data);
+        let req = GetOrderByOrderIdReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -534,8 +509,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "id": "6717422bd51c29000775ea03",\n        "clientOid": "5c52e11203aa677f33e493fb",\n        "symbol": "BTC-USDT",\n        "opType": "DEAL",\n        "type": "limit",\n        "side": "buy",\n        "price": "70000",\n        "size": "0.00001",\n        "funds": "0.7",\n        "dealSize": "0.00001",\n        "dealFunds": "0.677176",\n        "remainSize": "0",\n        "remainFunds": "0.022824",\n        "cancelledSize": "0",\n        "cancelledFunds": "0",\n        "fee": "0.000677176",\n        "feeCurrency": "USDT",\n        "stp": null,\n        "timeInForce": "GTC",\n        "postOnly": false,\n        "hidden": false,\n        "iceberg": false,\n        "visibleSize": "0",\n        "cancelAfter": 0,\n        "channel": "API",\n        "remark": "order remarks",\n        "tags": null,\n        "cancelExist": false,\n        "tradeType": "TRADE",\n        "inOrderBook": false,\n        "active": false,\n        "tax": "0",\n        "createdAt": 1729577515444,\n        "lastUpdatedAt": 1729577515481\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOrderByOrderIdResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOrderByOrderIdResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -550,8 +524,7 @@ describe('Auto Test', () => {
          * /api/v1/hf/orders/client-order/{clientOid}
          */
         let data = '{"symbol": "BTC-USDT", "clientOid": "5c52e11203aa677f33e493fb"}';
-        let req = new GetOrderByClientOidReq();
-        req = req.fromJson(data);
+        let req = GetOrderByClientOidReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -567,8 +540,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "id": "6717422bd51c29000775ea03",\n        "clientOid": "5c52e11203aa677f33e493fb",\n        "symbol": "BTC-USDT",\n        "opType": "DEAL",\n        "type": "limit",\n        "side": "buy",\n        "price": "70000",\n        "size": "0.00001",\n        "funds": "0.7",\n        "dealSize": "0.00001",\n        "dealFunds": "0.677176",\n        "remainSize": "0",\n        "remainFunds": "0.022824",\n        "cancelledSize": "0",\n        "cancelledFunds": "0",\n        "fee": "0.000677176",\n        "feeCurrency": "USDT",\n        "stp": null,\n        "timeInForce": "GTC",\n        "postOnly": false,\n        "hidden": false,\n        "iceberg": false,\n        "visibleSize": "0",\n        "cancelAfter": 0,\n        "channel": "API",\n        "remark": "order remarks",\n        "tags": null,\n        "cancelExist": false,\n        "tradeType": "TRADE",\n        "inOrderBook": false,\n        "active": false,\n        "tax": "0",\n        "createdAt": 1729577515444,\n        "lastUpdatedAt": 1729577515481\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOrderByClientOidResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOrderByClientOidResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -598,8 +570,7 @@ describe('Auto Test', () => {
          * /api/v1/hf/orders/active
          */
         let data = '{"symbol": "BTC-USDT"}';
-        let req = new GetOpenOrdersReq();
-        req = req.fromJson(data);
+        let req = GetOpenOrdersReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -615,8 +586,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": [\n        {\n            "id": "67120bbef094e200070976f6",\n            "clientOid": "5c52e11203aa677f33e493fb",\n            "symbol": "BTC-USDT",\n            "opType": "DEAL",\n            "type": "limit",\n            "side": "buy",\n            "price": "50000",\n            "size": "0.00001",\n            "funds": "0.5",\n            "dealSize": "0",\n            "dealFunds": "0",\n            "fee": "0",\n            "feeCurrency": "USDT",\n            "stp": null,\n            "timeInForce": "GTC",\n            "postOnly": false,\n            "hidden": false,\n            "iceberg": false,\n            "visibleSize": "0",\n            "cancelAfter": 0,\n            "channel": "API",\n            "remark": "order remarks",\n            "tags": "order tags",\n            "cancelExist": false,\n            "tradeType": "TRADE",\n            "inOrderBook": true,\n            "cancelledSize": "0",\n            "cancelledFunds": "0",\n            "remainSize": "0.00001",\n            "remainFunds": "0.5",\n            "tax": "0",\n            "active": true,\n            "createdAt": 1729235902748,\n            "lastUpdatedAt": 1729235909862\n        }\n    ]\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOpenOrdersResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOpenOrdersResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -632,8 +602,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"symbol": "BTC-USDT", "side": "buy", "type": "limit", "lastId": 254062248624417, "limit": 20, "startAt": 1728663338000, "endAt": 1728692138000}';
-        let req = new GetClosedOrdersReq();
-        req = req.fromJson(data);
+        let req = GetClosedOrdersReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -649,8 +618,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "lastId": 19814995255305,\n        "items": [\n            {\n                "id": "6717422bd51c29000775ea03",\n                "clientOid": "5c52e11203aa677f33e493fb",\n                "symbol": "BTC-USDT",\n                "opType": "DEAL",\n                "type": "limit",\n                "side": "buy",\n                "price": "70000",\n                "size": "0.00001",\n                "funds": "0.7",\n                "dealSize": "0.00001",\n                "dealFunds": "0.677176",\n                "remainSize": "0",\n                "remainFunds": "0.022824",\n                "cancelledSize": "0",\n                "cancelledFunds": "0",\n                "fee": "0.000677176",\n                "feeCurrency": "USDT",\n                "stp": null,\n                "timeInForce": "GTC",\n                "postOnly": false,\n                "hidden": false,\n                "iceberg": false,\n                "visibleSize": "0",\n                "cancelAfter": 0,\n                "channel": "API",\n                "remark": "order remarks",\n                "tags": null,\n                "cancelExist": false,\n                "tradeType": "TRADE",\n                "inOrderBook": false,\n                "active": false,\n                "tax": "0",\n                "createdAt": 1729577515444,\n                "lastUpdatedAt": 1729577515481\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetClosedOrdersResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetClosedOrdersResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -666,8 +634,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"symbol": "BTC-USDT", "orderId": "example_string_default_value", "side": "buy", "type": "limit", "lastId": 254062248624417, "limit": 100, "startAt": 1728663338000, "endAt": 1728692138000}';
-        let req = new GetTradeHistoryReq();
-        req = req.fromJson(data);
+        let req = GetTradeHistoryReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -683,8 +650,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "items": [\n            {\n                "id": 19814995255305,\n                "orderId": "6717422bd51c29000775ea03",\n                "counterOrderId": "67174228135f9e000709da8c",\n                "tradeId": 11029373945659392,\n                "symbol": "BTC-USDT",\n                "side": "buy",\n                "liquidity": "taker",\n                "type": "limit",\n                "forceTaker": false,\n                "price": "67717.6",\n                "size": "0.00001",\n                "funds": "0.677176",\n                "fee": "0.000677176",\n                "feeRate": "0.001",\n                "feeCurrency": "USDT",\n                "stop": "",\n                "tradeType": "TRADE",\n                "taxRate": "0",\n                "tax": "0",\n                "createdAt": 1729577515473\n            }\n        ],\n        "lastId": 19814995255305\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetTradeHistoryResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetTradeHistoryResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -714,8 +680,7 @@ describe('Auto Test', () => {
          * /api/v1/hf/orders/dead-cancel-all
          */
         let data = '{"timeout": 5, "symbols": "BTC-USDT,ETH-USDT"}';
-        let req = new SetDCPReq();
-        req = req.fromJson(data);
+        let req = SetDCPReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -730,8 +695,7 @@ describe('Auto Test', () => {
          */
         let data = '{"code":"200000","data":{"currentTime":1729656588,"triggerTime":1729656593}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new SetDCPResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = SetDCPResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -747,8 +711,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"type": "limit", "symbol": "BTC-USDT", "side": "buy", "price": "50000", "size": "0.00001", "clientOid": "5c52e11203aa677f33e493fb", "remark": "order remarks"}';
-        let req = new AddStopOrderReq();
-        req = req.fromJson(data);
+        let req = AddStopOrderReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -764,8 +727,7 @@ describe('Auto Test', () => {
         let data =
             '{"code":"200000","data":{"orderId":"670fd33bf9406e0007ab3945","clientOid":"5c52e11203aa677f33e493fb"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new AddStopOrderResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = AddStopOrderResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -780,8 +742,7 @@ describe('Auto Test', () => {
          * /api/v1/stop-order/cancelOrderByClientOid
          */
         let data = '{"symbol": "BTC-USDT", "clientOid": "689ff597f4414061aa819cc414836abd"}';
-        let req = new CancelStopOrderByClientOidReq();
-        req = req.fromJson(data);
+        let req = CancelStopOrderByClientOidReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -797,8 +758,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderId": "vs8hoo8ksc8mario0035a74n",\n        "clientOid": "689ff597f4414061aa819cc414836abd"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelStopOrderByClientOidResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelStopOrderByClientOidResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -813,8 +773,7 @@ describe('Auto Test', () => {
          * /api/v1/stop-order/{orderId}
          */
         let data = '{"orderId": "671124f9365ccb00073debd4"}';
-        let req = new CancelStopOrderByOrderIdReq();
-        req = req.fromJson(data);
+        let req = CancelStopOrderByOrderIdReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -830,8 +789,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderIds": [\n            "671124f9365ccb00073debd4"\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelStopOrderByOrderIdResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelStopOrderByOrderIdResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -847,8 +805,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"symbol": "example_string_default_value", "tradeType": "example_string_default_value", "orderIds": "example_string_default_value"}';
-        let req = new BatchCancelStopOrderReq();
-        req = req.fromJson(data);
+        let req = BatchCancelStopOrderReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -864,8 +821,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderIds": [\n            "671124f9365ccb00073debd4"\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new BatchCancelStopOrderResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = BatchCancelStopOrderResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -881,8 +837,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"symbol": "BTC-USDT", "orderId": "670fd33bf9406e0007ab3945", "newPrice": "30000", "newSize": "0.0001"}';
-        let req = new GetStopOrdersListReq();
-        req = req.fromJson(data);
+        let req = GetStopOrdersListReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -898,8 +853,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "currentPage": 1,\n        "pageSize": 50,\n        "totalNum": 1,\n        "totalPage": 1,\n        "items": [\n            {\n                "id": "vs8hoo8kqjnklv4m0038lrfq",\n                "symbol": "KCS-USDT",\n                "userId": "60fe4956c43cbc0006562c2c",\n                "status": "NEW",\n                "type": "limit",\n                "side": "buy",\n                "price": "0.01000000000000000000",\n                "size": "0.01000000000000000000",\n                "funds": null,\n                "stp": null,\n                "timeInForce": "GTC",\n                "cancelAfter": -1,\n                "postOnly": false,\n                "hidden": false,\n                "iceberg": false,\n                "visibleSize": null,\n                "channel": "API",\n                "clientOid": "404814a0fb4311eb9098acde48001122",\n                "remark": null,\n                "tags": null,\n                "orderTime": 1628755183702150100,\n                "domainId": "kucoin",\n                "tradeSource": "USER",\n                "tradeType": "TRADE",\n                "feeCurrency": "USDT",\n                "takerFeeRate": "0.00200000000000000000",\n                "makerFeeRate": "0.00200000000000000000",\n                "createdAt": 1628755183704,\n                "stop": "loss",\n                "stopTriggerTime": null,\n                "stopPrice": "10.00000000000000000000"\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetStopOrdersListResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetStopOrdersListResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -914,8 +868,7 @@ describe('Auto Test', () => {
          * /api/v1/stop-order/{orderId}
          */
         let data = '{"orderId": "example_string_default_value"}';
-        let req = new GetStopOrderByOrderIdReq();
-        req = req.fromJson(data);
+        let req = GetStopOrderByOrderIdReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -931,8 +884,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "id": "vs8hoo8q2ceshiue003b67c0",\n        "symbol": "KCS-USDT",\n        "userId": "60fe4956c43cbc0006562c2c",\n        "status": "NEW",\n        "type": "limit",\n        "side": "buy",\n        "price": "0.01000000000000000000",\n        "size": "0.01000000000000000000",\n        "funds": null,\n        "stp": null,\n        "timeInForce": "GTC",\n        "cancelAfter": -1,\n        "postOnly": false,\n        "hidden": false,\n        "iceberg": false,\n        "visibleSize": null,\n        "channel": "API",\n        "clientOid": "40e0eb9efe6311eb8e58acde48001122",\n        "remark": null,\n        "tags": null,\n        "orderTime": 1629098781127530200,\n        "domainId": "kucoin",\n        "tradeSource": "USER",\n        "tradeType": "TRADE",\n        "feeCurrency": "USDT",\n        "takerFeeRate": "0.00200000000000000000",\n        "makerFeeRate": "0.00200000000000000000",\n        "createdAt": 1629098781128,\n        "stop": "loss",\n        "stopTriggerTime": null,\n        "stopPrice": "10.00000000000000000000"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetStopOrderByOrderIdResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetStopOrderByOrderIdResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -948,8 +900,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"clientOid": "example_string_default_value", "symbol": "example_string_default_value"}';
-        let req = new GetStopOrderByClientOidReq();
-        req = req.fromJson(data);
+        let req = GetStopOrderByClientOidReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -965,8 +916,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": [\n        {\n            "id": "vs8hoo8os561f5np0032vngj",\n            "symbol": "KCS-USDT",\n            "userId": "60fe4956c43cbc0006562c2c",\n            "status": "NEW",\n            "type": "limit",\n            "side": "buy",\n            "price": "0.01000000000000000000",\n            "size": "0.01000000000000000000",\n            "funds": null,\n            "stp": null,\n            "timeInForce": "GTC",\n            "cancelAfter": -1,\n            "postOnly": false,\n            "hidden": false,\n            "iceberg": false,\n            "visibleSize": null,\n            "channel": "API",\n            "clientOid": "2b700942b5db41cebe578cff48960e09",\n            "remark": null,\n            "tags": null,\n            "orderTime": 1629020492834532600,\n            "domainId": "kucoin",\n            "tradeSource": "USER",\n            "tradeType": "TRADE",\n            "feeCurrency": "USDT",\n            "takerFeeRate": "0.00200000000000000000",\n            "makerFeeRate": "0.00200000000000000000",\n            "createdAt": 1629020492837,\n            "stop": "loss",\n            "stopTriggerTime": null,\n            "stopPrice": "1.00000000000000000000"\n        }\n    ]\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetStopOrderByClientOidResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetStopOrderByClientOidResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -982,8 +932,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"symbol": "BTC-USDT", "side": "buy", "price": "94000", "size": "0.1", "clientOid": "5c52e11203aa67f1e493fb", "stopPrice": "98000", "limitPrice": "96000", "remark": "this is remark", "tradeType": "TRADE"}';
-        let req = new AddOcoOrderReq();
-        req = req.fromJson(data);
+        let req = AddOcoOrderReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -998,8 +947,7 @@ describe('Auto Test', () => {
          */
         let data = '{"code":"200000","data":{"orderId":"674c316e688dea0007c7b986"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new AddOcoOrderResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = AddOcoOrderResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1014,8 +962,7 @@ describe('Auto Test', () => {
          * /api/v3/oco/order/{orderId}
          */
         let data = '{"orderId": "674c316e688dea0007c7b986"}';
-        let req = new CancelOcoOrderByOrderIdReq();
-        req = req.fromJson(data);
+        let req = CancelOcoOrderByOrderIdReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1031,8 +978,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderIds": [\n            "vs93gpqc6kkmkk57003gok16",\n            "vs93gpqc6kkmkk57003gok17"\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelOcoOrderByOrderIdResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelOcoOrderByOrderIdResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1047,8 +993,7 @@ describe('Auto Test', () => {
          * /api/v3/oco/client-order/{clientOid}
          */
         let data = '{"clientOid": "5c52e11203aa67f1e493fb"}';
-        let req = new CancelOcoOrderByClientOidReq();
-        req = req.fromJson(data);
+        let req = CancelOcoOrderByClientOidReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1064,8 +1009,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderIds": [\n            "vs93gpqc6r0mkk57003gok3h",\n            "vs93gpqc6r0mkk57003gok3i"\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelOcoOrderByClientOidResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelOcoOrderByClientOidResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1081,8 +1025,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"orderIds": "674c388172cf2800072ee746,674c38bdfd8300000795167e", "symbol": "BTC-USDT"}';
-        let req = new BatchCancelOcoOrdersReq();
-        req = req.fromJson(data);
+        let req = BatchCancelOcoOrdersReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1098,8 +1041,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderIds": [\n            "vs93gpqc750mkk57003gok6i",\n            "vs93gpqc750mkk57003gok6j",\n            "vs93gpqc75c39p83003tnriu",\n            "vs93gpqc75c39p83003tnriv"\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new BatchCancelOcoOrdersResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = BatchCancelOcoOrdersResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1114,8 +1056,7 @@ describe('Auto Test', () => {
          * /api/v3/oco/order/{orderId}
          */
         let data = '{"orderId": "674c3b6e688dea0007c7bab2"}';
-        let req = new GetOcoOrderByOrderIdReq();
-        req = req.fromJson(data);
+        let req = GetOcoOrderByOrderIdReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1131,8 +1072,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderId": "674c3b6e688dea0007c7bab2",\n        "symbol": "BTC-USDT",\n        "clientOid": "5c52e1203aa6f37f1e493fb",\n        "orderTime": 1733049198863,\n        "status": "NEW"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOcoOrderByOrderIdResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOcoOrderByOrderIdResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1147,8 +1087,7 @@ describe('Auto Test', () => {
          * /api/v3/oco/client-order/{clientOid}
          */
         let data = '{"clientOid": "5c52e1203aa6f3g7f1e493fb"}';
-        let req = new GetOcoOrderByClientOidReq();
-        req = req.fromJson(data);
+        let req = GetOcoOrderByClientOidReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1164,8 +1103,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderId": "674c3cfa72cf2800072ee7ce",\n        "symbol": "BTC-USDT",\n        "clientOid": "5c52e1203aa6f3g7f1e493fb",\n        "orderTime": 1733049594803,\n        "status": "NEW"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOcoOrderByClientOidResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOcoOrderByClientOidResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1180,8 +1118,7 @@ describe('Auto Test', () => {
          * /api/v3/oco/order/details/{orderId}
          */
         let data = '{"orderId": "674c3b6e688dea0007c7bab2"}';
-        let req = new GetOcoOrderDetailByOrderIdReq();
-        req = req.fromJson(data);
+        let req = GetOcoOrderDetailByOrderIdReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1197,8 +1134,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderId": "674c3b6e688dea0007c7bab2",\n        "symbol": "BTC-USDT",\n        "clientOid": "5c52e1203aa6f37f1e493fb",\n        "orderTime": 1733049198863,\n        "status": "NEW",\n        "orders": [\n            {\n                "id": "vs93gpqc7dn6h3fa003sfelj",\n                "symbol": "BTC-USDT",\n                "side": "buy",\n                "price": "94000.00000000000000000000",\n                "stopPrice": "94000.00000000000000000000",\n                "size": "0.10000000000000000000",\n                "status": "NEW"\n            },\n            {\n                "id": "vs93gpqc7dn6h3fa003sfelk",\n                "symbol": "BTC-USDT",\n                "side": "buy",\n                "price": "96000.00000000000000000000",\n                "stopPrice": "98000.00000000000000000000",\n                "size": "0.10000000000000000000",\n                "status": "NEW"\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOcoOrderDetailByOrderIdResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOcoOrderDetailByOrderIdResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1214,8 +1150,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"symbol": "BTC-USDT", "startAt": 123456, "endAt": 123456, "orderIds": "example_string_default_value", "pageSize": 50, "currentPage": 1}';
-        let req = new GetOcoOrderListReq();
-        req = req.fromJson(data);
+        let req = GetOcoOrderListReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1231,8 +1166,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "currentPage": 1,\n        "pageSize": 50,\n        "totalNum": 1,\n        "totalPage": 1,\n        "items": [\n            {\n                "orderId": "674c3cfa72cf2800072ee7ce",\n                "symbol": "BTC-USDT",\n                "clientOid": "5c52e1203aa6f3g7f1e493fb",\n                "orderTime": 1733049594803,\n                "status": "NEW"\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOcoOrderListResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOcoOrderListResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1248,8 +1182,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"type": "limit", "symbol": "BTC-USDT", "side": "buy", "price": "50000", "size": "0.00001", "clientOid": "5c52e11203aa677f33e493fb", "remark": "order remarks"}';
-        let req = new AddOrderOldReq();
-        req = req.fromJson(data);
+        let req = AddOrderOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1265,8 +1198,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderId": "674a8635b38d120007709c0f"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new AddOrderOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = AddOrderOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1282,8 +1214,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"type": "limit", "symbol": "BTC-USDT", "side": "buy", "price": "50000", "size": "0.00001", "clientOid": "5c52e11203aa677f33e493fb", "remark": "order remarks"}';
-        let req = new AddOrderTestOldReq();
-        req = req.fromJson(data);
+        let req = AddOrderTestOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1299,8 +1230,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "orderId": "674a8776291d9e00074f1edf"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new AddOrderTestOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = AddOrderTestOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1316,8 +1246,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"symbol": "BTC-USDT", "orderList": [{"clientOid": "3d07008668054da6b3cb12e432c2b13a", "side": "buy", "type": "limit", "price": "50000", "size": "0.0001"}, {"clientOid": "37245dbe6e134b5c97732bfb36cd4a9d", "side": "buy", "type": "limit", "price": "49999", "size": "0.0001"}]}';
-        let req = new BatchAddOrdersOldReq();
-        req = req.fromJson(data);
+        let req = BatchAddOrdersOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1333,8 +1262,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "data": [\n            {\n                "symbol": "BTC-USDT",\n                "type": "limit",\n                "side": "buy",\n                "price": "50000",\n                "size": "0.0001",\n                "funds": null,\n                "stp": "",\n                "stop": "",\n                "stopPrice": null,\n                "timeInForce": "GTC",\n                "cancelAfter": 0,\n                "postOnly": false,\n                "hidden": false,\n                "iceberge": false,\n                "iceberg": false,\n                "visibleSize": null,\n                "channel": "API",\n                "id": "674a97dfef434f0007efc431",\n                "status": "success",\n                "failMsg": null,\n                "clientOid": "3d07008668054da6b3cb12e432c2b13a"\n            },\n            {\n                "symbol": "BTC-USDT",\n                "type": "limit",\n                "side": "buy",\n                "price": "49999",\n                "size": "0.0001",\n                "funds": null,\n                "stp": "",\n                "stop": "",\n                "stopPrice": null,\n                "timeInForce": "GTC",\n                "cancelAfter": 0,\n                "postOnly": false,\n                "hidden": false,\n                "iceberge": false,\n                "iceberg": false,\n                "visibleSize": null,\n                "channel": "API",\n                "id": "674a97dffb378b00077b9c20",\n                "status": "fail",\n                "failMsg": "Balance insufficient!",\n                "clientOid": "37245dbe6e134b5c97732bfb36cd4a9d"\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new BatchAddOrdersOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = BatchAddOrdersOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1349,8 +1277,7 @@ describe('Auto Test', () => {
          * /api/v1/orders/{orderId}
          */
         let data = '{"symbol": "BTC-USDT", "orderId": "674a97dfef434f0007efc431"}';
-        let req = new CancelOrderByOrderIdOldReq();
-        req = req.fromJson(data);
+        let req = CancelOrderByOrderIdOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1366,8 +1293,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderIds": [\n            "674a97dfef434f0007efc431"\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelOrderByOrderIdOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelOrderByOrderIdOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1382,8 +1308,7 @@ describe('Auto Test', () => {
          * /api/v1/order/client-order/{clientOid}
          */
         let data = '{"symbol": "BTC-USDT", "clientOid": "5c52e11203aa677f33e4923fb"}';
-        let req = new CancelOrderByClientOidOldReq();
-        req = req.fromJson(data);
+        let req = CancelOrderByClientOidOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1399,8 +1324,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderId": "674a9a872033a50007e2790d",\n        "clientOid": "5c52e11203aa677f33e4923fb",\n        "cancelledOcoOrderIds": null\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new CancelOrderByClientOidOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = CancelOrderByClientOidOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1415,8 +1339,7 @@ describe('Auto Test', () => {
          * /api/v1/orders
          */
         let data = '{"symbol": "BTC-USDT", "tradeType": "TRADE"}';
-        let req = new BatchCancelOrderOldReq();
-        req = req.fromJson(data);
+        let req = BatchCancelOrderOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1432,8 +1355,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "cancelledOrderIds": [\n            "674a8635b38d120007709c0f",\n            "674a8630439c100007d3bce1"\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new BatchCancelOrderOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = BatchCancelOrderOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1449,8 +1371,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"symbol": "BTC-USDT", "status": "active", "side": "buy", "type": "limit", "tradeType": "TRADE", "startAt": 123456, "endAt": 123456, "currentPage": 1, "pageSize": 50}';
-        let req = new GetOrdersListOldReq();
-        req = req.fromJson(data);
+        let req = GetOrdersListOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1466,8 +1387,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "currentPage": 1,\n        "pageSize": 50,\n        "totalNum": 1,\n        "totalPage": 1,\n        "items": [\n            {\n                "id": "674a9a872033a50007e2790d",\n                "symbol": "BTC-USDT",\n                "opType": "DEAL",\n                "type": "limit",\n                "side": "buy",\n                "price": "50000",\n                "size": "0.00001",\n                "funds": "0",\n                "dealFunds": "0",\n                "dealSize": "0",\n                "fee": "0",\n                "feeCurrency": "USDT",\n                "stp": "",\n                "stop": "",\n                "stopTriggered": false,\n                "stopPrice": "0",\n                "timeInForce": "GTC",\n                "postOnly": false,\n                "hidden": false,\n                "iceberg": false,\n                "visibleSize": "0",\n                "cancelAfter": 0,\n                "channel": "API",\n                "clientOid": "5c52e11203aa677f33e4923fb",\n                "remark": "order remarks",\n                "tags": null,\n                "isActive": false,\n                "cancelExist": true,\n                "createdAt": 1732942471752,\n                "tradeType": "TRADE"\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOrdersListOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOrdersListOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1482,8 +1402,7 @@ describe('Auto Test', () => {
          * /api/v1/limit/orders
          */
         let data = '{"currentPage": 1, "pageSize": 50}';
-        let req = new GetRecentOrdersListOldReq();
-        req = req.fromJson(data);
+        let req = GetRecentOrdersListOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1499,8 +1418,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": [\n        {\n            "id": "674a9a872033a50007e2790d",\n            "symbol": "BTC-USDT",\n            "opType": "DEAL",\n            "type": "limit",\n            "side": "buy",\n            "price": "50000",\n            "size": "0.00001",\n            "funds": "0",\n            "dealFunds": "0",\n            "dealSize": "0",\n            "fee": "0",\n            "feeCurrency": "USDT",\n            "stp": "",\n            "stop": "",\n            "stopTriggered": false,\n            "stopPrice": "0",\n            "timeInForce": "GTC",\n            "postOnly": false,\n            "hidden": false,\n            "iceberg": false,\n            "visibleSize": "0",\n            "cancelAfter": 0,\n            "channel": "API",\n            "clientOid": "5c52e11203aa677f33e4923fb",\n            "remark": "order remarks",\n            "tags": null,\n            "isActive": false,\n            "cancelExist": true,\n            "createdAt": 1732942471752,\n            "tradeType": "TRADE"\n        }\n    ]\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetRecentOrdersListOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetRecentOrdersListOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1515,8 +1433,7 @@ describe('Auto Test', () => {
          * /api/v1/orders/{orderId}
          */
         let data = '{"orderId": "674a97dfef434f0007efc431"}';
-        let req = new GetOrderByOrderIdOldReq();
-        req = req.fromJson(data);
+        let req = GetOrderByOrderIdOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1532,8 +1449,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "id": "674a97dfef434f0007efc431",\n        "symbol": "BTC-USDT",\n        "opType": "DEAL",\n        "type": "limit",\n        "side": "buy",\n        "price": "50000",\n        "size": "0.0001",\n        "funds": "0",\n        "dealFunds": "0",\n        "dealSize": "0",\n        "fee": "0",\n        "feeCurrency": "USDT",\n        "stp": "",\n        "stop": "",\n        "stopTriggered": false,\n        "stopPrice": "0",\n        "timeInForce": "GTC",\n        "postOnly": false,\n        "hidden": false,\n        "iceberg": false,\n        "visibleSize": "0",\n        "cancelAfter": 0,\n        "channel": "API",\n        "clientOid": "3d07008668054da6b3cb12e432c2b13a",\n        "remark": null,\n        "tags": null,\n        "isActive": false,\n        "cancelExist": true,\n        "createdAt": 1732941791518,\n        "tradeType": "TRADE"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOrderByOrderIdOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOrderByOrderIdOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1548,8 +1464,7 @@ describe('Auto Test', () => {
          * /api/v1/order/client-order/{clientOid}
          */
         let data = '{"clientOid": "3d07008668054da6b3cb12e432c2b13a"}';
-        let req = new GetOrderByClientOidOldReq();
-        req = req.fromJson(data);
+        let req = GetOrderByClientOidOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1565,8 +1480,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "id": "674a97dfef434f0007efc431",\n        "symbol": "BTC-USDT",\n        "opType": "DEAL",\n        "type": "limit",\n        "side": "buy",\n        "price": "50000",\n        "size": "0.0001",\n        "funds": "0",\n        "dealFunds": "0",\n        "dealSize": "0",\n        "fee": "0",\n        "feeCurrency": "USDT",\n        "stp": "",\n        "stop": "",\n        "stopTriggered": false,\n        "stopPrice": "0",\n        "timeInForce": "GTC",\n        "postOnly": false,\n        "hidden": false,\n        "iceberg": false,\n        "visibleSize": "0",\n        "cancelAfter": 0,\n        "channel": "API",\n        "clientOid": "3d07008668054da6b3cb12e432c2b13a",\n        "remark": null,\n        "tags": null,\n        "isActive": false,\n        "cancelExist": true,\n        "createdAt": 1732941791518,\n        "tradeType": "TRADE"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetOrderByClientOidOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetOrderByClientOidOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1582,8 +1496,7 @@ describe('Auto Test', () => {
          */
         let data =
             '{"symbol": "BTC-USDT", "orderId": "example_string_default_value", "side": "buy", "type": "limit", "tradeType": "TRADE", "startAt": 1728663338000, "endAt": 1728692138000, "currentPage": 1, "pageSize": 50}';
-        let req = new GetTradeHistoryOldReq();
-        req = req.fromJson(data);
+        let req = GetTradeHistoryOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1599,8 +1512,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "currentPage": 1,\n        "pageSize": 50,\n        "totalNum": 1,\n        "totalPage": 1,\n        "items": [\n            {\n                "symbol": "DOGE-USDT",\n                "tradeId": "10862827223795713",\n                "orderId": "6745698ef4f1200007c561a8",\n                "counterOrderId": "6745695ef15b270007ac5076",\n                "side": "buy",\n                "liquidity": "taker",\n                "forceTaker": false,\n                "price": "0.40739",\n                "size": "10",\n                "funds": "4.0739",\n                "fee": "0.0040739",\n                "feeRate": "0.001",\n                "feeCurrency": "USDT",\n                "stop": "",\n                "tradeType": "TRADE",\n                "type": "market",\n                "createdAt": 1732602254928\n            }\n        ]\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetTradeHistoryOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetTradeHistoryOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -1615,8 +1527,7 @@ describe('Auto Test', () => {
          * /api/v1/limit/fills
          */
         let data = '{"currentPage": 1, "pageSize": 50}';
-        let req = new GetRecentTradeHistoryOldReq();
-        req = req.fromJson(data);
+        let req = GetRecentTradeHistoryOldReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -1632,8 +1543,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": [\n        {\n            "symbol": "BTC-USDT",\n            "tradeId": "11732720444522497",\n            "orderId": "674aab24754b1e00077dbc69",\n            "counterOrderId": "674aab1fb26bfb0007a18b67",\n            "side": "buy",\n            "liquidity": "taker",\n            "forceTaker": false,\n            "price": "96999.6",\n            "size": "0.00001",\n            "funds": "0.969996",\n            "fee": "0.000969996",\n            "feeRate": "0.001",\n            "feeCurrency": "USDT",\n            "stop": "",\n            "tradeType": "TRADE",\n            "type": "limit",\n            "createdAt": 1732946724082\n        }\n    ]\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetRecentTradeHistoryOldResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetRecentTradeHistoryOldResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),

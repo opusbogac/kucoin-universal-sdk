@@ -14,8 +14,7 @@ describe('Auto Test', () => {
          * /api/v1/base-fee
          */
         let data = '{"currencyType": 1}';
-        let req = new GetBasicFeeReq();
-        req = req.fromJson(data);
+        let req = GetBasicFeeReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -31,8 +30,7 @@ describe('Auto Test', () => {
         let data =
             '{\n    "code": "200000",\n    "data": {\n        "takerFeeRate": "0.001",\n        "makerFeeRate": "0.001"\n    }\n}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetBasicFeeResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetBasicFeeResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -47,8 +45,7 @@ describe('Auto Test', () => {
          * /api/v1/trade-fees
          */
         let data = '{"symbols": "BTC-USDT,ETH-USDT"}';
-        let req = new GetSpotActualFeeReq();
-        req = req.fromJson(data);
+        let req = GetSpotActualFeeReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -64,8 +61,7 @@ describe('Auto Test', () => {
         let data =
             '{"code":"200000","data":[{"symbol":"BTC-USDT","takerFeeRate":"0.001","makerFeeRate":"0.001"},{"symbol":"ETH-USDT","takerFeeRate":"0.001","makerFeeRate":"0.001"}]}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetSpotActualFeeResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetSpotActualFeeResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
@@ -80,8 +76,7 @@ describe('Auto Test', () => {
          * /api/v1/trade-fees
          */
         let data = '{"symbol": "XBTUSDTM"}';
-        let req = new GetFuturesActualFeeReq();
-        req = req.fromJson(data);
+        let req = GetFuturesActualFeeReq.fromJson(data);
         expect(Object.values(req).every((value) => value === null || value === undefined)).toBe(
             false,
         );
@@ -97,8 +92,7 @@ describe('Auto Test', () => {
         let data =
             '{"code":"200000","data":{"symbol":"XBTUSDTM","takerFeeRate":"0.0006","makerFeeRate":"0.0002"}}';
         let commonResp = RestResponse.fromJson(data);
-        let resp = new GetFuturesActualFeeResp();
-        resp = resp.fromObject(commonResp.data);
+        let resp = GetFuturesActualFeeResp.fromObject(commonResp.data);
         if (commonResp.data !== null) {
             expect(
                 Object.values(resp).every((value) => value === null || value === undefined),
