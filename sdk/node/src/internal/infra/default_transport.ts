@@ -272,19 +272,24 @@ export class DefaultTransport implements Transport {
         response: AxiosResponse,
         responseCls: StaticDeserializable<T>,
     ): Response<any> {
-        // todo missing logic
-        if (response.status >= 400) {
-            console.error('[RESPONSE ERROR]', {
-                status: response.status,
-                statusText: response.statusText,
-                data: response.data,
-            });
-        }
+        // Initialize response object first
+        let responseObj = responseCls.fromObject({});
 
         const commonResponse = RestResponse.fromJson(JSON.stringify(response.data));
+
         commonResponse.rateLimit = this.processLimit(response.headers);
 
-        let responseObj = responseCls.fromObject(commonResponse.data);
+        if (commonResponse.data === null) {
+            responseObj.setCommonResponse(commonResponse);
+            return responseObj;
+        }
+
+        try{
+            responseObj = responseCls.fromObject(commonResponse.data);
+        }catch(e){
+            throw e;
+        }
+        
         responseObj.setCommonResponse(commonResponse);
 
         return responseObj;
