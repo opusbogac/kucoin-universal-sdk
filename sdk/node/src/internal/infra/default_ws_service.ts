@@ -12,7 +12,7 @@ import { SubInfo } from '@internal/util/sub';
 import { WsMessage } from '@model/common';
 import { MessageType } from '@model/constant';
 import { randomUUID } from 'crypto';
-
+import { EventEmitter } from 'events';
 
 /**
  * DefaultWsService implements the WebSocket service interface for handling real-time data communication.
@@ -30,6 +30,7 @@ export class DefaultWsService implements WebSocketService {
     private stopSignal: boolean = false;
     private messageLoop?: NodeJS.Timeout;
     private recoveryLoop?: NodeJS.Timeout;
+    private readonly eventEmitter: EventEmitter;
 
     /**
      * Creates a new instance of DefaultWsService
@@ -54,10 +55,27 @@ export class DefaultWsService implements WebSocketService {
         this.versionString = versionString;
         this.tokenTransport = new DefaultTransport(option, versionString);
         this.topicManager = new TopicManager();
+        
+        // init EventEmitter
+        this.eventEmitter = new EventEmitter();
+        
+        // if config eventCallback, register as event listener
+        if (this.wsOption.eventCallback) {
+            this.eventEmitter.on('ws_event', (event: WebSocketEvent, msg: string, msg2: string) => {
+                try {
+                    this.wsOption.eventCallback!(event, msg);
+                } catch (err) {
+                    console.error('Exception in eventCallback:', err);
+                }
+            });
+        }
+
         this.client = new WebSocketClient(
             new DefaultWsTokenProvider(this.tokenTransport, domain, privateChannel),
             this.wsOption,
+            this.eventEmitter
         );
+        
     }
 
     /**
@@ -68,9 +86,8 @@ export class DefaultWsService implements WebSocketService {
      */
     private notifyEvent(event: WebSocketEvent, msg: string, msg2: string = ''): void {
         try {
-            if (this.wsOption.eventCallback) {
-                this.wsOption.eventCallback(event, msg);
-            }
+            // use EventEmitter send event
+            this.eventEmitter.emit('ws_event', event, msg, msg2);
         } catch (err) {
             console.error('Exception in notify_event:', err);
         }

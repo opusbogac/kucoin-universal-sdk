@@ -61,7 +61,11 @@ export class WebSocketClient {
     private eventEmitter: EventEmitter;
     private lastPingTime: number | null;
 
-    constructor(tokenProvider: WsTokenProvider, options: WebSocketClientOption) {
+    constructor(
+        tokenProvider: WsTokenProvider, 
+        options: WebSocketClientOption,
+        externalEventEmitter?: EventEmitter
+    ) {
         this.options = options;
         this.conn = null;
         this.connected = false;
@@ -84,7 +88,7 @@ export class WebSocketClient {
         this.metric = { pingSuccess: 0, pingErr: 0 };
         this.keepAliveInterval = null;
         this.writeInterval = null;
-        this.eventEmitter = new EventEmitter();
+        this.eventEmitter = externalEventEmitter || new EventEmitter();
 
         this.lastPingTime = null;
     }
@@ -534,7 +538,11 @@ export class WebSocketClient {
     }
 
     private notifyEvent(event: WebSocketEvent, msg: string, msg2: string = ''): void {
-        this.eventEmitter.emit(event, msg, msg2);
+        try {
+            this.eventEmitter.emit('ws_event', event, msg);
+        } catch (err) {
+            console.error('Exception in notify_event:', err);
+        }
     }
 
     //
