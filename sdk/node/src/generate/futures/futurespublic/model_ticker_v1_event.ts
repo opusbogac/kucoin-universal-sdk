@@ -9,48 +9,72 @@ export class TickerV1Event implements Response<WsMessage> {
     /**
      *
      */
-    symbol?: string;
+    symbol: string;
     /**
      *
      */
-    sequence?: number;
+    sequence: number;
     /**
      *
      */
-    side?: string;
+    side: string;
     /**
      *
      */
-    size?: number;
+    size: number;
     /**
      *
      */
-    price?: string;
+    price: string;
     /**
      *
      */
-    bestBidSize?: number;
+    bestBidSize: number;
     /**
      *
      */
-    bestBidPrice?: string;
+    bestBidPrice: string;
     /**
      *
      */
-    bestAskPrice?: string;
+    bestAskPrice: string;
     /**
      *
      */
-    tradeId?: string;
+    tradeId: string;
     /**
      *
      */
-    bestAskSize?: number;
+    bestAskSize: number;
     /**
      *
      */
-    ts?: number;
+    ts: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.symbol = null;
+        // @ts-ignore
+        this.sequence = null;
+        // @ts-ignore
+        this.side = null;
+        // @ts-ignore
+        this.size = null;
+        // @ts-ignore
+        this.price = null;
+        // @ts-ignore
+        this.bestBidSize = null;
+        // @ts-ignore
+        this.bestBidPrice = null;
+        // @ts-ignore
+        this.bestAskPrice = null;
+        // @ts-ignore
+        this.tradeId = null;
+        // @ts-ignore
+        this.bestAskSize = null;
+        // @ts-ignore
+        this.ts = null;
+    }
     /**
      * common response
      */

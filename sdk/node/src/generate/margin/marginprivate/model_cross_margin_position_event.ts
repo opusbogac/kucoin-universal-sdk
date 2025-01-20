@@ -10,36 +10,54 @@ export class CrossMarginPositionEvent implements Response<WsMessage> {
     /**
      * Debt ratio
      */
-    debtRatio?: number;
+    debtRatio: number;
     /**
      * Total asset in BTC (interest included)
      */
-    totalAsset?: number;
+    totalAsset: number;
     /**
      *
      */
-    marginCoefficientTotalAsset?: string;
+    marginCoefficientTotalAsset: string;
     /**
      * Total debt in BTC (interest included)
      */
-    totalDebt?: string;
+    totalDebt: string;
     /**
      * Asset list (interest included)
      */
-    assetList?: { [key: string]: CrossMarginPositionAssetListValue };
+    assetList: { [key: string]: CrossMarginPositionAssetListValue };
     /**
      * Debt list (interest included)
      */
-    debtList?: { [key: string]: string };
+    debtList: { [key: string]: string };
     /**
      *
      */
-    timestamp?: number;
+    timestamp: number;
     /**
      * Event type, **Only applicable to \"debt.ratio\" subject**
      */
-    type?: CrossMarginPositionEvent.TypeEnum;
+    type: CrossMarginPositionEvent.TypeEnum;
 
+    private constructor() {
+        // @ts-ignore
+        this.debtRatio = null;
+        // @ts-ignore
+        this.totalAsset = null;
+        // @ts-ignore
+        this.marginCoefficientTotalAsset = null;
+        // @ts-ignore
+        this.totalDebt = null;
+        // @ts-ignore
+        this.assetList = null;
+        // @ts-ignore
+        this.debtList = null;
+        // @ts-ignore
+        this.timestamp = null;
+        // @ts-ignore
+        this.type = null;
+    }
     /**
      * common response
      */

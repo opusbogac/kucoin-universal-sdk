@@ -10,140 +10,210 @@ export class SymbolSnapshotData implements Serializable {
     /**
      *
      */
-    askSize?: number;
+    askSize: number;
     /**
      *
      */
-    averagePrice?: number;
+    averagePrice: number;
     /**
      *
      */
-    baseCurrency?: string;
+    baseCurrency: string;
     /**
      *
      */
-    bidSize?: number;
+    bidSize: number;
     /**
      * Trading pair partition： 0.primary partition 1.KuCoin Plus\", example = \"1\"
      */
-    board?: SymbolSnapshotData.BoardEnum;
+    board: SymbolSnapshotData.BoardEnum;
     /**
      *
      */
-    buy?: number;
+    buy: number;
     /**
      *
      */
-    changePrice?: number;
+    changePrice: number;
     /**
      *
      */
-    changeRate?: number;
+    changeRate: number;
     /**
      *
      */
-    close?: number;
+    close: number;
     /**
      *
      */
-    datetime?: number;
+    datetime: number;
     /**
      *
      */
-    high?: number;
+    high: number;
     /**
      *
      */
-    lastTradedPrice?: number;
+    lastTradedPrice: number;
     /**
      *
      */
-    low?: number;
+    low: number;
     /**
      *
      */
-    makerCoefficient?: number;
+    makerCoefficient: number;
     /**
      *
      */
-    makerFeeRate?: number;
+    makerFeeRate: number;
     /**
      *
      */
-    marginTrade?: boolean;
+    marginTrade: boolean;
     /**
      * Trading Pair Mark： 0.default 1.ST. 2.NEW\", example = \"1\"
      */
-    mark?: SymbolSnapshotData.MarkEnum;
+    mark: SymbolSnapshotData.MarkEnum;
     /**
      *
      */
-    market?: string;
+    market: string;
     /**
      *
      */
-    marketChange1h?: SymbolSnapshotDataMarketChange1h;
+    marketChange1h: SymbolSnapshotDataMarketChange1h;
     /**
      *
      */
-    marketChange24h?: SymbolSnapshotDataMarketChange24h;
+    marketChange24h: SymbolSnapshotDataMarketChange24h;
     /**
      *
      */
-    marketChange4h?: SymbolSnapshotDataMarketChange4h;
+    marketChange4h: SymbolSnapshotDataMarketChange4h;
     /**
      *
      */
-    markets?: Array<string>;
+    markets: Array<string>;
     /**
      *
      */
-    open?: number;
+    open: number;
     /**
      *
      */
-    quoteCurrency?: string;
+    quoteCurrency: string;
     /**
      *
      */
-    sell?: number;
+    sell: number;
     /**
      *
      */
-    siteTypes?: Array<string>;
+    siteTypes: Array<string>;
     /**
      * sorting number(Pointless)
      */
-    sort?: number;
+    sort: number;
     /**
      *
      */
-    symbol?: string;
+    symbol: string;
     /**
      *
      */
-    symbolCode?: string;
+    symbolCode: string;
     /**
      *
      */
-    takerCoefficient?: number;
+    takerCoefficient: number;
     /**
      *
      */
-    takerFeeRate?: number;
+    takerFeeRate: number;
     /**
      *
      */
-    trading?: boolean;
+    trading: boolean;
     /**
      *
      */
-    vol?: number;
+    vol: number;
     /**
      * 24-hour rolling transaction volume, refreshed every 2s
      */
-    volValue?: number;
+    volValue: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.askSize = null;
+        // @ts-ignore
+        this.averagePrice = null;
+        // @ts-ignore
+        this.baseCurrency = null;
+        // @ts-ignore
+        this.bidSize = null;
+        // @ts-ignore
+        this.board = null;
+        // @ts-ignore
+        this.buy = null;
+        // @ts-ignore
+        this.changePrice = null;
+        // @ts-ignore
+        this.changeRate = null;
+        // @ts-ignore
+        this.close = null;
+        // @ts-ignore
+        this.datetime = null;
+        // @ts-ignore
+        this.high = null;
+        // @ts-ignore
+        this.lastTradedPrice = null;
+        // @ts-ignore
+        this.low = null;
+        // @ts-ignore
+        this.makerCoefficient = null;
+        // @ts-ignore
+        this.makerFeeRate = null;
+        // @ts-ignore
+        this.marginTrade = null;
+        // @ts-ignore
+        this.mark = null;
+        // @ts-ignore
+        this.market = null;
+        // @ts-ignore
+        this.marketChange1h = null;
+        // @ts-ignore
+        this.marketChange24h = null;
+        // @ts-ignore
+        this.marketChange4h = null;
+        // @ts-ignore
+        this.markets = null;
+        // @ts-ignore
+        this.open = null;
+        // @ts-ignore
+        this.quoteCurrency = null;
+        // @ts-ignore
+        this.sell = null;
+        // @ts-ignore
+        this.siteTypes = null;
+        // @ts-ignore
+        this.sort = null;
+        // @ts-ignore
+        this.symbol = null;
+        // @ts-ignore
+        this.symbolCode = null;
+        // @ts-ignore
+        this.takerCoefficient = null;
+        // @ts-ignore
+        this.takerFeeRate = null;
+        // @ts-ignore
+        this.trading = null;
+        // @ts-ignore
+        this.vol = null;
+        // @ts-ignore
+        this.volValue = null;
+    }
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }

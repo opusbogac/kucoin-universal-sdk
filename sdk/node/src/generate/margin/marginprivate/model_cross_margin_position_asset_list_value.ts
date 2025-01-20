@@ -7,16 +7,24 @@ export class CrossMarginPositionAssetListValue implements Serializable {
     /**
      *
      */
-    total?: string;
+    total: string;
     /**
      *
      */
-    available?: string;
+    available: string;
     /**
      *
      */
-    hold?: string;
+    hold: string;
 
+    private constructor() {
+        // @ts-ignore
+        this.total = null;
+        // @ts-ignore
+        this.available = null;
+        // @ts-ignore
+        this.hold = null;
+    }
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }

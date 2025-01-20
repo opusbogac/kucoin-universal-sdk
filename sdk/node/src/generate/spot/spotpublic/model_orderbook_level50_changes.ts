@@ -7,12 +7,18 @@ export class OrderbookLevel50Changes implements Serializable {
     /**
      *
      */
-    asks?: Array<Array<string>>;
+    asks: Array<Array<string>>;
     /**
      *
      */
-    bids?: Array<Array<string>>;
+    bids: Array<Array<string>>;
 
+    private constructor() {
+        // @ts-ignore
+        this.asks = null;
+        // @ts-ignore
+        this.bids = null;
+    }
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }

@@ -9,44 +9,66 @@ export class TradeEvent implements Response<WsMessage> {
     /**
      *
      */
-    makerOrderId?: string;
+    makerOrderId: string;
     /**
      *
      */
-    price?: string;
+    price: string;
     /**
      *
      */
-    sequence?: string;
+    sequence: string;
     /**
      *
      */
-    side?: string;
+    side: string;
     /**
      *
      */
-    size?: string;
+    size: string;
     /**
      *
      */
-    symbol?: string;
+    symbol: string;
     /**
      *
      */
-    takerOrderId?: string;
+    takerOrderId: string;
     /**
      *
      */
-    time?: string;
+    time: string;
     /**
      *
      */
-    tradeId?: string;
+    tradeId: string;
     /**
      *
      */
-    type?: string;
+    type: string;
 
+    private constructor() {
+        // @ts-ignore
+        this.makerOrderId = null;
+        // @ts-ignore
+        this.price = null;
+        // @ts-ignore
+        this.sequence = null;
+        // @ts-ignore
+        this.side = null;
+        // @ts-ignore
+        this.size = null;
+        // @ts-ignore
+        this.symbol = null;
+        // @ts-ignore
+        this.takerOrderId = null;
+        // @ts-ignore
+        this.time = null;
+        // @ts-ignore
+        this.tradeId = null;
+        // @ts-ignore
+        this.type = null;
+    }
     /**
      * common response
      */

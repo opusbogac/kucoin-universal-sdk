@@ -10,24 +10,36 @@ export class OrderbookLevel50Event implements Response<WsMessage> {
     /**
      *
      */
-    changes?: OrderbookLevel50Changes;
+    changes: OrderbookLevel50Changes;
     /**
      *
      */
-    sequenceEnd?: number;
+    sequenceEnd: number;
     /**
      *
      */
-    sequenceStart?: number;
+    sequenceStart: number;
     /**
      *
      */
-    symbol?: string;
+    symbol: string;
     /**
      *
      */
-    time?: number;
+    time: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.changes = null;
+        // @ts-ignore
+        this.sequenceEnd = null;
+        // @ts-ignore
+        this.sequenceStart = null;
+        // @ts-ignore
+        this.symbol = null;
+        // @ts-ignore
+        this.time = null;
+    }
     /**
      * common response
      */

@@ -7,12 +7,18 @@ export class AccountRelationContext implements Serializable {
     /**
      *
      */
-    symbol?: string;
+    symbol: string;
     /**
      *
      */
-    orderId?: string;
+    orderId: string;
 
+    private constructor() {
+        // @ts-ignore
+        this.symbol = null;
+        // @ts-ignore
+        this.orderId = null;
+    }
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }

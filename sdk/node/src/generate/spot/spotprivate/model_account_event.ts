@@ -10,48 +10,72 @@ export class AccountEvent implements Response<WsMessage> {
     /**
      * Account ID
      */
-    accountId?: string;
+    accountId: string;
     /**
      * Funds available to withdraw or trade
      */
-    available?: string;
+    available: string;
     /**
      * The change of available Funds
      */
-    availableChange?: string;
+    availableChange: string;
     /**
      * currency
      */
-    currency?: string;
+    currency: string;
     /**
      * Funds on hold (not available for use)
      */
-    hold?: string;
+    hold: string;
     /**
      * The change of hold funds
      */
-    holdChange?: string;
+    holdChange: string;
     /**
      *
      */
-    relationContext?: AccountRelationContext;
+    relationContext: AccountRelationContext;
     /**
      * Relation event
      */
-    relationEvent?: string;
+    relationEvent: string;
     /**
      * Relation event Id
      */
-    relationEventId?: string;
+    relationEventId: string;
     /**
      *
      */
-    time?: string;
+    time: string;
     /**
      * Total balance = available + hold
      */
-    total?: string;
+    total: string;
 
+    private constructor() {
+        // @ts-ignore
+        this.accountId = null;
+        // @ts-ignore
+        this.available = null;
+        // @ts-ignore
+        this.availableChange = null;
+        // @ts-ignore
+        this.currency = null;
+        // @ts-ignore
+        this.hold = null;
+        // @ts-ignore
+        this.holdChange = null;
+        // @ts-ignore
+        this.relationContext = null;
+        // @ts-ignore
+        this.relationEvent = null;
+        // @ts-ignore
+        this.relationEventId = null;
+        // @ts-ignore
+        this.time = null;
+        // @ts-ignore
+        this.total = null;
+    }
     /**
      * common response
      */

@@ -9,20 +9,30 @@ export class IndexPriceEvent implements Response<WsMessage> {
     /**
      *
      */
-    symbol?: string;
+    symbol: string;
     /**
      *
      */
-    granularity?: number;
+    granularity: number;
     /**
      *
      */
-    timestamp?: number;
+    timestamp: number;
     /**
      *
      */
-    value?: number;
+    value: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.symbol = null;
+        // @ts-ignore
+        this.granularity = null;
+        // @ts-ignore
+        this.timestamp = null;
+        // @ts-ignore
+        this.value = null;
+    }
     /**
      * common response
      */

@@ -9,16 +9,24 @@ export class KlinesEvent implements Response<WsMessage> {
     /**
      * Symbol of the contract, Please refer to [Get Symbol endpoint: symbol](https://www.kucoin.com/docs-new/api-3470220)
      */
-    symbol?: string;
+    symbol: string;
     /**
      * Start time, open price, close price, high price, low price, Transaction volume(This value is incorrect, please do not use it, we will fix it in subsequent versions), Transaction amount
      */
-    candles?: Array<string>;
+    candles: Array<string>;
     /**
      * timestamp(ms)
      */
-    time?: number;
+    time: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.symbol = null;
+        // @ts-ignore
+        this.candles = null;
+        // @ts-ignore
+        this.time = null;
+    }
     /**
      * common response
      */

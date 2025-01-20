@@ -9,20 +9,30 @@ export class AnnouncementEvent implements Response<WsMessage> {
     /**
      * Symbol
      */
-    symbol?: string;
+    symbol: string;
     /**
      * Funding time
      */
-    fundingTime?: number;
+    fundingTime: number;
     /**
      * Funding rate
      */
-    fundingRate?: number;
+    fundingRate: number;
     /**
      *
      */
-    timestamp?: number;
+    timestamp: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.symbol = null;
+        // @ts-ignore
+        this.fundingTime = null;
+        // @ts-ignore
+        this.fundingRate = null;
+        // @ts-ignore
+        this.timestamp = null;
+    }
     /**
      * common response
      */

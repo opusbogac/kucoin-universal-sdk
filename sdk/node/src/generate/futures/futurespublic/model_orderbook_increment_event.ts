@@ -9,16 +9,24 @@ export class OrderbookIncrementEvent implements Response<WsMessage> {
     /**
      *
      */
-    sequence?: number;
+    sequence: number;
     /**
      *
      */
-    change?: string;
+    change: string;
     /**
      *
      */
-    timestamp?: number;
+    timestamp: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.sequence = null;
+        // @ts-ignore
+        this.change = null;
+        // @ts-ignore
+        this.timestamp = null;
+    }
     /**
      * common response
      */

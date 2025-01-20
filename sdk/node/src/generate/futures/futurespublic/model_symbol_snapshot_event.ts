@@ -9,44 +9,66 @@ export class SymbolSnapshotEvent implements Response<WsMessage> {
     /**
      *
      */
-    highPrice?: number;
+    highPrice: number;
     /**
      *
      */
-    lastPrice?: number;
+    lastPrice: number;
     /**
      *
      */
-    lowPrice?: number;
+    lowPrice: number;
     /**
      *
      */
-    price24HoursBefore?: number;
+    price24HoursBefore: number;
     /**
      *
      */
-    priceChg?: number;
+    priceChg: number;
     /**
      *
      */
-    priceChgPct?: number;
+    priceChgPct: number;
     /**
      *
      */
-    symbol?: string;
+    symbol: string;
     /**
      *
      */
-    ts?: number;
+    ts: number;
     /**
      *
      */
-    turnover?: number;
+    turnover: number;
     /**
      *
      */
-    volume?: number;
+    volume: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.highPrice = null;
+        // @ts-ignore
+        this.lastPrice = null;
+        // @ts-ignore
+        this.lowPrice = null;
+        // @ts-ignore
+        this.price24HoursBefore = null;
+        // @ts-ignore
+        this.priceChg = null;
+        // @ts-ignore
+        this.priceChgPct = null;
+        // @ts-ignore
+        this.symbol = null;
+        // @ts-ignore
+        this.ts = null;
+        // @ts-ignore
+        this.turnover = null;
+        // @ts-ignore
+        this.volume = null;
+    }
     /**
      * common response
      */

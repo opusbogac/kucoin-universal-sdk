@@ -9,7 +9,7 @@ export class InstrumentEvent implements Response<WsMessage> {
     /**
      * Granularity (predicted funding rate: 1-min granularity: 60000; Funding rate: 8-hours granularity: 28800000. )
      */
-    granularity?: number;
+    granularity: number;
     /**
      *
      */
@@ -17,7 +17,7 @@ export class InstrumentEvent implements Response<WsMessage> {
     /**
      *
      */
-    timestamp?: number;
+    timestamp: number;
     /**
      *
      */
@@ -27,6 +27,12 @@ export class InstrumentEvent implements Response<WsMessage> {
      */
     indexPrice?: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.granularity = null;
+        // @ts-ignore
+        this.timestamp = null;
+    }
     /**
      * common response
      */

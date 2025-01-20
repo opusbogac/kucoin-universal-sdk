@@ -9,119 +9,119 @@ export class AllPositionEvent implements Response<WsMessage> {
     /**
      * Symbol of the contract, Please refer to [Get Symbol endpoint: symbol](https://www.kucoin.com/docs-new/api-221752070)
      */
-    symbol?: string;
+    symbol: string;
     /**
      * Whether it is cross margin.
      */
-    crossMode?: boolean;
+    crossMode: boolean;
     /**
      * ADL ranking percentile
      */
-    delevPercentage?: number;
+    delevPercentage: number;
     /**
      * Open time
      */
-    openingTimestamp?: number;
+    openingTimestamp: number;
     /**
      * Current timestamp
      */
-    currentTimestamp?: number;
+    currentTimestamp: number;
     /**
      * Current postion quantity
      */
-    currentQty?: number;
+    currentQty: number;
     /**
      * Current postion value
      */
-    currentCost?: number;
+    currentCost: number;
     /**
      * Current commission
      */
-    currentComm?: number;
+    currentComm: number;
     /**
      * Unrealised value
      */
-    unrealisedCost?: number;
+    unrealisedCost: number;
     /**
      * Accumulated realised gross profit value
      */
-    realisedGrossCost?: number;
+    realisedGrossCost: number;
     /**
      * Current realised position value
      */
-    realisedCost?: number;
+    realisedCost: number;
     /**
      * Opened position or not
      */
-    isOpen?: boolean;
+    isOpen: boolean;
     /**
      * Mark price
      */
-    markPrice?: number;
+    markPrice: number;
     /**
      * Mark Value
      */
-    markValue?: number;
+    markValue: number;
     /**
      * Position value
      */
-    posCost?: number;
+    posCost: number;
     /**
      * Inital margin Cross = opening value/cross leverage; isolated = accumulation of initial margin for each transaction
      */
-    posInit?: number;
+    posInit: number;
     /**
      * Bankruptcy cost Cross = mark value * imr; Isolated = position margin (accumulation of initial margin, additional margin, generated funding fees, etc.)
      */
-    posMargin?: number;
+    posMargin: number;
     /**
      * Accumulated realised gross profit value
      */
-    realisedGrossPnl?: number;
+    realisedGrossPnl: number;
     /**
      * Realised profit and loss
      */
-    realisedPnl?: number;
+    realisedPnl: number;
     /**
      * Unrealised profit and loss
      */
-    unrealisedPnl?: number;
+    unrealisedPnl: number;
     /**
      * Profit-loss ratio of the position
      */
-    unrealisedPnlPcnt?: number;
+    unrealisedPnlPcnt: number;
     /**
      * Rate of return on investment
      */
-    unrealisedRoePcnt?: number;
+    unrealisedRoePcnt: number;
     /**
      * Average entry price
      */
-    avgEntryPrice?: number;
+    avgEntryPrice: number;
     /**
      * Liquidation price For Cross Margin, you can refer to the liquidationPrice, and the liquidation is based on the risk rate.
      */
-    liquidationPrice?: number;
+    liquidationPrice: number;
     /**
      * Bankruptcy price For Cross Margin, you can refer to the bankruptPrice, and the liquidation is based on the risk rate.
      */
-    bankruptPrice?: number;
+    bankruptPrice: number;
     /**
      * Currency used to clear and settle the trades
      */
-    settleCurrency?: string;
+    settleCurrency: string;
     /**
      * Margin Mode: CROSS，ISOLATED
      */
-    marginMode?: AllPositionEvent.MarginModeEnum;
+    marginMode: AllPositionEvent.MarginModeEnum;
     /**
      * Position Side
      */
-    positionSide?: AllPositionEvent.PositionSideEnum;
+    positionSide: AllPositionEvent.PositionSideEnum;
     /**
      * Leverage
      */
-    leverage?: number;
+    leverage: number;
     /**
      * Auto deposit margin or not **Only applicable to Isolated Margin**
      */
@@ -191,6 +191,66 @@ export class AllPositionEvent implements Response<WsMessage> {
      */
     msg?: string;
 
+    private constructor() {
+        // @ts-ignore
+        this.symbol = null;
+        // @ts-ignore
+        this.crossMode = null;
+        // @ts-ignore
+        this.delevPercentage = null;
+        // @ts-ignore
+        this.openingTimestamp = null;
+        // @ts-ignore
+        this.currentTimestamp = null;
+        // @ts-ignore
+        this.currentQty = null;
+        // @ts-ignore
+        this.currentCost = null;
+        // @ts-ignore
+        this.currentComm = null;
+        // @ts-ignore
+        this.unrealisedCost = null;
+        // @ts-ignore
+        this.realisedGrossCost = null;
+        // @ts-ignore
+        this.realisedCost = null;
+        // @ts-ignore
+        this.isOpen = null;
+        // @ts-ignore
+        this.markPrice = null;
+        // @ts-ignore
+        this.markValue = null;
+        // @ts-ignore
+        this.posCost = null;
+        // @ts-ignore
+        this.posInit = null;
+        // @ts-ignore
+        this.posMargin = null;
+        // @ts-ignore
+        this.realisedGrossPnl = null;
+        // @ts-ignore
+        this.realisedPnl = null;
+        // @ts-ignore
+        this.unrealisedPnl = null;
+        // @ts-ignore
+        this.unrealisedPnlPcnt = null;
+        // @ts-ignore
+        this.unrealisedRoePcnt = null;
+        // @ts-ignore
+        this.avgEntryPrice = null;
+        // @ts-ignore
+        this.liquidationPrice = null;
+        // @ts-ignore
+        this.bankruptPrice = null;
+        // @ts-ignore
+        this.settleCurrency = null;
+        // @ts-ignore
+        this.marginMode = null;
+        // @ts-ignore
+        this.positionSide = null;
+        // @ts-ignore
+        this.leverage = null;
+    }
     /**
      * common response
      */

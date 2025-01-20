@@ -9,36 +9,54 @@ export class TickerEvent implements Response<WsMessage> {
     /**
      * Sequence number
      */
-    sequence?: string;
+    sequence: string;
     /**
      * Last traded price
      */
-    price?: string;
+    price: string;
     /**
      * Last traded amount
      */
-    size?: string;
+    size: string;
     /**
      * Best ask price
      */
-    bestAsk?: string;
+    bestAsk: string;
     /**
      * Best ask size
      */
-    bestAskSize?: string;
+    bestAskSize: string;
     /**
      * Best bid price
      */
-    bestBid?: string;
+    bestBid: string;
     /**
      * Best bid size
      */
-    bestBidSize?: string;
+    bestBidSize: string;
     /**
      * The matching time of the latest transaction
      */
-    Time?: number;
+    Time: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.sequence = null;
+        // @ts-ignore
+        this.price = null;
+        // @ts-ignore
+        this.size = null;
+        // @ts-ignore
+        this.bestAsk = null;
+        // @ts-ignore
+        this.bestAskSize = null;
+        // @ts-ignore
+        this.bestBid = null;
+        // @ts-ignore
+        this.bestBidSize = null;
+        // @ts-ignore
+        this.Time = null;
+    }
     /**
      * common response
      */

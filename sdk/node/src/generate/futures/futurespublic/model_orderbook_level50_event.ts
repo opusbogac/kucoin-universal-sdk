@@ -9,24 +9,36 @@ export class OrderbookLevel50Event implements Response<WsMessage> {
     /**
      *
      */
-    bids?: Array<Array<any>>;
+    bids: Array<Array<any>>;
     /**
      *
      */
-    sequence?: number;
+    sequence: number;
     /**
      *
      */
-    timestamp?: number;
+    timestamp: number;
     /**
      *
      */
-    ts?: number;
+    ts: number;
     /**
      *
      */
-    asks?: Array<Array<any>>;
+    asks: Array<Array<any>>;
 
+    private constructor() {
+        // @ts-ignore
+        this.bids = null;
+        // @ts-ignore
+        this.sequence = null;
+        // @ts-ignore
+        this.timestamp = null;
+        // @ts-ignore
+        this.ts = null;
+        // @ts-ignore
+        this.asks = null;
+    }
     /**
      * common response
      */

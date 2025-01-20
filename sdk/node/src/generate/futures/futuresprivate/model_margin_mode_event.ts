@@ -9,8 +9,12 @@ export class MarginModeEvent implements Response<WsMessage> {
     /**
      * The SYMBOL is the key with value  \"CROSS\" or \"ISOLATED\"
      */
-    SYMBOL?: string;
+    SYMBOL: string;
 
+    private constructor() {
+        // @ts-ignore
+        this.SYMBOL = null;
+    }
     /**
      * common response
      */

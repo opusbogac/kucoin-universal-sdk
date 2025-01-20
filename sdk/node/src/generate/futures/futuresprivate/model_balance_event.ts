@@ -9,64 +9,96 @@ export class BalanceEvent implements Response<WsMessage> {
     /**
      * Margin of the cross margin position
      */
-    crossPosMargin?: string;
+    crossPosMargin: string;
     /**
      * Margin of the isolated margin order
      */
-    isolatedOrderMargin?: string;
+    isolatedOrderMargin: string;
     /**
      * Frozen Balance
      */
-    holdBalance?: string;
+    holdBalance: string;
     /**
      * Equity
      */
-    equity?: string;
+    equity: string;
     /**
      * Version. When holding a cross margin position, the available balance may change with fluctuations in the mark price, leading to discrepancies in the available balance for the same version number.
      */
-    version?: string;
+    version: string;
     /**
      * Available Balance
      */
-    availableBalance?: string;
+    availableBalance: string;
     /**
      * Margin of the isolated margin position, including isolated margin funding fees
      */
-    isolatedPosMargin?: string;
+    isolatedPosMargin: string;
     /**
      * Wallet Balance
      */
-    walletBalance?: string;
+    walletBalance: string;
     /**
      * Isolated margin funding fee
      */
-    isolatedFundingFeeMargin?: string;
+    isolatedFundingFeeMargin: string;
     /**
      * Unrealized PNL in cross margin mode
      */
-    crossUnPnl?: string;
+    crossUnPnl: string;
     /**
      * Total margin under cross margin mode
      */
-    totalCrossMargin?: string;
+    totalCrossMargin: string;
     /**
      * Currency Symbol
      */
-    currency?: string;
+    currency: string;
     /**
      *  Unrealized PNL in isolated margin mode
      */
-    isolatedUnPnl?: string;
+    isolatedUnPnl: string;
     /**
      * Margin of the cross margin order
      */
-    crossOrderMargin?: string;
+    crossOrderMargin: string;
     /**
      * Last modified time
      */
-    timestamp?: string;
+    timestamp: string;
 
+    private constructor() {
+        // @ts-ignore
+        this.crossPosMargin = null;
+        // @ts-ignore
+        this.isolatedOrderMargin = null;
+        // @ts-ignore
+        this.holdBalance = null;
+        // @ts-ignore
+        this.equity = null;
+        // @ts-ignore
+        this.version = null;
+        // @ts-ignore
+        this.availableBalance = null;
+        // @ts-ignore
+        this.isolatedPosMargin = null;
+        // @ts-ignore
+        this.walletBalance = null;
+        // @ts-ignore
+        this.isolatedFundingFeeMargin = null;
+        // @ts-ignore
+        this.crossUnPnl = null;
+        // @ts-ignore
+        this.totalCrossMargin = null;
+        // @ts-ignore
+        this.currency = null;
+        // @ts-ignore
+        this.isolatedUnPnl = null;
+        // @ts-ignore
+        this.crossOrderMargin = null;
+        // @ts-ignore
+        this.timestamp = null;
+    }
     /**
      * common response
      */

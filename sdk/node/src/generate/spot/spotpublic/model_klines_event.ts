@@ -9,16 +9,24 @@ export class KlinesEvent implements Response<WsMessage> {
     /**
      * symbol
      */
-    symbol?: string;
+    symbol: string;
     /**
      * Start time of the candle cycle,open price,close price, high price,low price,Transaction volume,Transaction amount
      */
-    candles?: Array<string>;
+    candles: Array<string>;
     /**
      * now（us）
      */
-    time?: number;
+    time: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.symbol = null;
+        // @ts-ignore
+        this.candles = null;
+        // @ts-ignore
+        this.time = null;
+    }
     /**
      * common response
      */

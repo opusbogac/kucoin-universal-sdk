@@ -7,32 +7,48 @@ export class MarketSnapshotDataMarketChange1h implements Serializable {
     /**
      *
      */
-    changePrice?: number;
+    changePrice: number;
     /**
      *
      */
-    changeRate?: number;
+    changeRate: number;
     /**
      *
      */
-    high?: number;
+    high: number;
     /**
      *
      */
-    low?: number;
+    low: number;
     /**
      *
      */
-    open?: number;
+    open: number;
     /**
      *
      */
-    vol?: number;
+    vol: number;
     /**
      *
      */
-    volValue?: number;
+    volValue: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.changePrice = null;
+        // @ts-ignore
+        this.changeRate = null;
+        // @ts-ignore
+        this.high = null;
+        // @ts-ignore
+        this.low = null;
+        // @ts-ignore
+        this.open = null;
+        // @ts-ignore
+        this.vol = null;
+        // @ts-ignore
+        this.volValue = null;
+    }
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }

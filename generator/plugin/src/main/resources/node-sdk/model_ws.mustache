@@ -24,9 +24,17 @@ export class {{classname}} implements Serializable{
     {{#vendorExtensions.x-use-base-name}}
     @Expose({ name: "{{baseName}}" })
     {{/vendorExtensions.x-use-base-name}}
-    {{name}}?: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{#defaultValue}} = {{#isEnum}}{{classname}}.{{/isEnum}}{{{.}}}{{/defaultValue}};
+    {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{#defaultValue}} = {{#isEnum}}{{classname}}.{{/isEnum}}{{{.}}}{{/defaultValue}};
 {{/vars}}
 
+    private constructor() {
+{{#vars}}
+    {{#required}}
+    // @ts-ignore
+    this.{{name}} = null;
+    {{/required}}
+{{/vars}}
+    }
 {{#vendorExtensions.x-response-model}}
     /**
     * common response

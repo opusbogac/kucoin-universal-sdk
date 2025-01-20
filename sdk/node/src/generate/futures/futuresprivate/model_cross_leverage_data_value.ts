@@ -7,8 +7,12 @@ export class CrossLeverageDataValue implements Serializable {
     /**
      *
      */
-    leverage?: string;
+    leverage: string;
 
+    private constructor() {
+        // @ts-ignore
+        this.leverage = null;
+    }
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }

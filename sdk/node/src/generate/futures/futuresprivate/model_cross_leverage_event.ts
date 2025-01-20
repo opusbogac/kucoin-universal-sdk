@@ -10,8 +10,12 @@ export class CrossLeverageEvent implements Response<WsMessage> {
     /**
      *
      */
-    data?: { [key: string]: CrossLeverageDataValue };
+    data: { [key: string]: CrossLeverageDataValue };
 
+    private constructor() {
+        // @ts-ignore
+        this.data = null;
+    }
     /**
      * common response
      */

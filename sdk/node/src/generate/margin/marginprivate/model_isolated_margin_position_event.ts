@@ -10,28 +10,42 @@ export class IsolatedMarginPositionEvent implements Response<WsMessage> {
     /**
      * Isolated margin symbol
      */
-    tag?: string;
+    tag: string;
     /**
      * Position status
      */
-    status?: IsolatedMarginPositionEvent.StatusEnum;
+    status: IsolatedMarginPositionEvent.StatusEnum;
     /**
      * Status type
      */
-    statusBizType?: IsolatedMarginPositionEvent.StatusBizTypeEnum;
+    statusBizType: IsolatedMarginPositionEvent.StatusBizTypeEnum;
     /**
      * Accumulated principal
      */
-    accumulatedPrincipal?: string;
+    accumulatedPrincipal: string;
     /**
      *
      */
-    changeAssets?: { [key: string]: IsolatedMarginPositionChangeAssetsValue };
+    changeAssets: { [key: string]: IsolatedMarginPositionChangeAssetsValue };
     /**
      *
      */
-    timestamp?: number;
+    timestamp: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.tag = null;
+        // @ts-ignore
+        this.status = null;
+        // @ts-ignore
+        this.statusBizType = null;
+        // @ts-ignore
+        this.accumulatedPrincipal = null;
+        // @ts-ignore
+        this.changeAssets = null;
+        // @ts-ignore
+        this.timestamp = null;
+    }
     /**
      * common response
      */

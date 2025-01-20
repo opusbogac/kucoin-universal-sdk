@@ -7,12 +7,18 @@ export class OrderbookIncrementChanges implements Serializable {
     /**
      * price,size,sequence
      */
-    asks?: Array<Array<string>>;
+    asks: Array<Array<string>>;
     /**
      *
      */
-    bids?: Array<Array<string>>;
+    bids: Array<Array<string>>;
 
+    private constructor() {
+        // @ts-ignore
+        this.asks = null;
+        // @ts-ignore
+        this.bids = null;
+    }
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }

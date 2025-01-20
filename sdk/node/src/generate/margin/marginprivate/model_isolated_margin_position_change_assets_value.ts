@@ -7,20 +7,30 @@ export class IsolatedMarginPositionChangeAssetsValue implements Serializable {
     /**
      *
      */
-    total?: string;
+    total: string;
     /**
      *
      */
-    hold?: string;
+    hold: string;
     /**
      *
      */
-    liabilityPrincipal?: string;
+    liabilityPrincipal: string;
     /**
      *
      */
-    liabilityInterest?: string;
+    liabilityInterest: string;
 
+    private constructor() {
+        // @ts-ignore
+        this.total = null;
+        // @ts-ignore
+        this.hold = null;
+        // @ts-ignore
+        this.liabilityPrincipal = null;
+        // @ts-ignore
+        this.liabilityInterest = null;
+    }
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }

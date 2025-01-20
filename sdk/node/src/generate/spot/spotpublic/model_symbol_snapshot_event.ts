@@ -10,12 +10,18 @@ export class SymbolSnapshotEvent implements Response<WsMessage> {
     /**
      *
      */
-    sequence?: string;
+    sequence: string;
     /**
      *
      */
-    data?: SymbolSnapshotData;
+    data: SymbolSnapshotData;
 
+    private constructor() {
+        // @ts-ignore
+        this.sequence = null;
+        // @ts-ignore
+        this.data = null;
+    }
     /**
      * common response
      */

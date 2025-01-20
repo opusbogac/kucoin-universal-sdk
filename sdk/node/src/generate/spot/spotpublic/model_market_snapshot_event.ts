@@ -10,12 +10,18 @@ export class MarketSnapshotEvent implements Response<WsMessage> {
     /**
      *
      */
-    sequence?: string;
+    sequence: string;
     /**
      *
      */
-    data?: MarketSnapshotData;
+    data: MarketSnapshotData;
 
+    private constructor() {
+        // @ts-ignore
+        this.sequence = null;
+        // @ts-ignore
+        this.data = null;
+    }
     /**
      * common response
      */

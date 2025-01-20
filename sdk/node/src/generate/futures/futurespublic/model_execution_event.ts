@@ -9,40 +9,60 @@ export class ExecutionEvent implements Response<WsMessage> {
     /**
      *
      */
-    symbol?: string;
+    symbol: string;
     /**
      *
      */
-    sequence?: number;
+    sequence: number;
     /**
      *
      */
-    side?: string;
+    side: string;
     /**
      *
      */
-    size?: number;
+    size: number;
     /**
      *
      */
-    price?: string;
+    price: string;
     /**
      *
      */
-    takerOrderId?: string;
+    takerOrderId: string;
     /**
      *
      */
-    makerOrderId?: string;
+    makerOrderId: string;
     /**
      *
      */
-    tradeId?: string;
+    tradeId: string;
     /**
      *
      */
-    ts?: number;
+    ts: number;
 
+    private constructor() {
+        // @ts-ignore
+        this.symbol = null;
+        // @ts-ignore
+        this.sequence = null;
+        // @ts-ignore
+        this.side = null;
+        // @ts-ignore
+        this.size = null;
+        // @ts-ignore
+        this.price = null;
+        // @ts-ignore
+        this.takerOrderId = null;
+        // @ts-ignore
+        this.makerOrderId = null;
+        // @ts-ignore
+        this.tradeId = null;
+        // @ts-ignore
+        this.ts = null;
+    }
     /**
      * common response
      */
