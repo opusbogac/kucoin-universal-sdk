@@ -534,13 +534,7 @@ export class WebSocketClient {
     }
 
     private notifyEvent(event: WebSocketEvent, msg: string, msg2: string = ''): void {
-        try {
-            if (this.options.eventCallback) {
-                this.options.eventCallback(event, msg);
-            }
-        } catch (e) {
-            console.error('Exception in notify_event:', e);
-        }
+        this.eventEmitter.emit(event, msg, msg2);
     }
 
     //
