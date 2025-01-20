@@ -206,14 +206,16 @@ export class DefaultTransport implements Transport {
             if (method === 'GET' || method === 'DELETE') {
                 if (requestObj) {
                     // create a new object for query parameters
-                    const queryObj = { ...requestObj };
-
+                    const queryObj: Record<string, any> = { ...requestObj };
+                    
                     // check path variables and remove from query
                     const pathVarPattern = /{([^}]+)}/g;
                     let match;
                     while ((match = pathVarPattern.exec(rawpath)) !== null) {
                         const pathVarName = match[1];
-                        delete queryObj[pathVarName];
+                        if (pathVarName in queryObj) {
+                            delete queryObj[pathVarName];
+                        }
                     }
 
                     const queryParams = this.rawQuery(queryObj);

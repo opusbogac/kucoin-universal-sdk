@@ -431,7 +431,7 @@ export class WebSocketClient {
         }
     }
 
-    private async reconnect(): void {
+    private async reconnect(): Promise<void> {
         const reconnectLoop = async () => {
             while (!this.reconnectClosed) {
                 if (this.disconnected && !this.shutdown) {
