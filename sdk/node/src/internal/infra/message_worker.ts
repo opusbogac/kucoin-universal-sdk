@@ -12,18 +12,12 @@ if (!parentPort) {
 
 // Handle messages from the main thread
 parentPort.on('message', (message: WsMessage) => {
-    console.log('[Worker] Received message:', {
-        type: message.type,
-        topic: message.topic,
-        timestamp: new Date().toISOString()
-    });
 
     try {
         // Process all message types
         switch (message.type) {
             case MessageType.Message:
-                // Market data message
-                console.log('[Worker] Processing market data message for topic:', message.topic);
+                // message
                 parentPort!.postMessage({
                     ...message,
                     processedAt: new Date().toISOString()
@@ -58,7 +52,6 @@ parentPort.on('message', (message: WsMessage) => {
                 parentPort!.postMessage(message);
         }
         
-        console.log('[Worker] Successfully processed message');
     } catch (error) {
         console.error('[Worker] Error processing message:', error);
     }

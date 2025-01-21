@@ -1,6 +1,6 @@
 import WebSocket, { Data as WebSocketData } from 'ws';
 import { EventEmitter } from 'events';
-import { Queue } from 'queue-typescript';
+import { Readable, Writable } from 'stream';
 
 import { WsMessage } from '../../model/common';
 import { MessageType } from '../../model/constant';
@@ -8,28 +8,77 @@ import { WebSocketClientOption } from '../../model/websocket_option';
 import { WebSocketEvent } from '../../model/websocket_option';
 import { WsToken, WsTokenProvider } from '../interfaces/websocket';
 
-export class WriteMsg {
-    public msg: WsMessage;
-    public ts: number;
-    public timeout: number;
-    public exception: Error | null;
-    public eventEmitter: EventEmitter;
+/**
+ * WriteMsg represents a message to be written to the WebSocket connection
+ */
+export interface WriteMsg {
+    msg: WsMessage;
+    resolve: (value: void | PromiseLike<void>) => void;
+    reject: (reason?: any) => void;
+}
 
-    constructor(msg: WsMessage, timeout: number) {
-        this.msg = msg;
-        this.ts = Date.now();
-        this.timeout = timeout;
-        this.exception = null;
-        this.eventEmitter = new EventEmitter();
+/**
+ * MessageQueue implements a message queue using Node.js streams
+ */
+class MessageQueue extends Readable {
+    private messages: WsMessage[] = [];
+    private maxSize: number;
+
+    constructor(maxSize: number = 1024) {
+        super({
+            objectMode: true,
+            highWaterMark: maxSize
+        });
+        this.maxSize = maxSize;
     }
 
-    setException(exception: Error): void {
-        this.exception = exception;
-        this.eventEmitter.emit('error', exception);
+    _read(size: number): void {
+        while (this.messages.length > 0 && size > 0) {
+            const message = this.messages.shift();
+            if (!this.push(message)) {
+                break;
+            }
+            size--;
+        }
     }
 
-    complete(): void {
-        this.eventEmitter.emit('complete');
+    enqueue(message: WsMessage): boolean {
+        if (this.messages.length >= this.maxSize) {
+            return false;
+        }
+        this.messages.push(message);
+        this._read(1);
+        return true;
+    }
+
+    clear(): void {
+        this.messages = [];
+    }
+}
+
+/**
+ * MessageWriter implements a message writer using Node.js streams
+ */
+class MessageWriter extends Writable {
+    constructor(private client: WebSocket) {
+        super({
+            objectMode: true,
+            highWaterMark: 256
+        });
+    }
+
+    _write(message: WsMessage, encoding: string, callback: (error?: Error | null) => void): void {
+        try {
+            this.client.send(JSON.stringify(message), (error) => {
+                if (error) {
+                    callback(error);
+                } else {
+                    callback();
+                }
+            });
+        } catch (error) {
+            callback(error as Error);
+        }
     }
 }
 
@@ -48,18 +97,17 @@ export class WebSocketClient {
     private closed: boolean;
     private reconnectClosed: boolean;
 
-    private readMsg: Queue<WsMessage>;
-    private writeMsg: Queue<WriteMsg>;
-    private readMsgMaxSize: number;
-    private writeMsgMaxSize: number;
+    private readMsgQueue: MessageQueue;
+    private writeMsgQueue: MessageQueue;
 
     private ackEvents: Map<string, WriteMsg>;
     private metric: { pingSuccess: number; pingErr: number };
     private keepAliveInterval: NodeJS.Timeout | null;
-    private writeInterval: NodeJS.Timeout | null;
     private welcomeReceived: boolean;
     private eventEmitter: EventEmitter;
     private lastPingTime: number | null;
+
+    private messageWriter: MessageWriter | null = null;
 
     constructor(
         tokenProvider: WsTokenProvider, 
@@ -79,15 +127,13 @@ export class WebSocketClient {
         this.welcomeReceived = false;
 
         // Message queues
-        this.readMsg = new Queue<WsMessage>();
-        this.writeMsg = new Queue<WriteMsg>();
-        this.readMsgMaxSize = options.readMessageBuffer;
-        this.writeMsgMaxSize = options.writeMessageBuffer;
+        this.readMsgQueue = new MessageQueue(options.readMessageBuffer);
+        this.writeMsgQueue = new MessageQueue(options.writeMessageBuffer);
+
 
         this.ackEvents = new Map();
         this.metric = { pingSuccess: 0, pingErr: 0 };
         this.keepAliveInterval = null;
-        this.writeInterval = null;
         this.eventEmitter = externalEventEmitter || new EventEmitter();
 
         this.lastPingTime = null;
@@ -120,38 +166,50 @@ export class WebSocketClient {
             this.keepAliveInterval = setInterval(() => this.keepAlive(), 1000);
         }
 
-        if (!this.writeInterval) {
-            this.writeInterval = setInterval(() => this.writeMessage(), 100);
-        }
+        this.messageWriter = new MessageWriter(this.conn as WebSocket);
+        this.writeMsgQueue.pipe(this.messageWriter);
     }
 
     // Stop the WebSocket client
-    public async stop(): Promise<void> {
-        // Set shutdown flag to prevent reconnection attempts
+    stop(): Promise<void> {
+        console.debug('Stopping WebSocket client...');
         this.shutdown = true;
         this.reconnectClosed = true;
 
+        // Clear intervals and resources first
+        this.clearResources();
+
+        return new Promise<void>((resolve) => {
+            // Close WebSocket connection if it exists
+            if (this.conn && this.conn.readyState === WebSocket.OPEN) {
+                this.conn.once('close', () => {
+                    console.debug('WebSocket client stopped');
+                    resolve();
+                });
+                this.conn.close();
+            } else {
+                console.debug('WebSocket client stopped');
+                resolve();
+            }
+        });
+    }
+
+    // Clear all resources
+    private clearResources(): void {
         // Clear intervals
         if (this.keepAliveInterval) {
             clearInterval(this.keepAliveInterval);
             this.keepAliveInterval = null;
         }
-        if (this.writeInterval) {
-            clearInterval(this.writeInterval);
-            this.writeInterval = null;
-        }
 
-        // Wait for any pending messages to be processed
-        await new Promise<void>((resolve) => {
-            setTimeout(async () => {
-                try {
-                    await this.close();
-                } catch (error) {
-                    console.error('Error during WebSocket close:', error);
-                }
-                resolve();
-            }, 100);
-        });
+        // Clear message queues
+        this.clearMessageQueues();
+
+        // Reset state
+        this.disconnected = true;
+        this.connected = false;
+        this.welcomeReceived = false;
+        this.lastPingTime = null;
     }
 
     // dial connects to the WebSocket server
@@ -214,23 +272,19 @@ export class WebSocketClient {
 
     // close callback
     private onClose(code: number, reason: string): void {
-        console.log(`WebSocket closed with status code ${code}, message: ${reason}`);
-        this.connected = false;
+        console.debug(`WebSocket closed with code ${code}: ${reason}`);
         this.disconnected = true;
 
-        // Clear any pending messages and intervals
-        this.clearMessageQueues();
-        if (this.keepAliveInterval) {
-            clearInterval(this.keepAliveInterval);
-            this.keepAliveInterval = null;
-        }
-        if (this.writeInterval) {
-            clearInterval(this.writeInterval);
-            this.writeInterval = null;
-        }
+        // Clear resources
+        this.clearResources();
 
         // Notify event
-        this.notifyEvent(WebSocketEvent.EventDisconnected, reason);
+        this.notifyEvent(WebSocketEvent.EventDisconnected, `${code}:${reason}`);
+
+        // Handle reconnection if needed
+        if (!this.shutdown && !this.reconnectClosed) {
+            this.reconnect();
+        }
     }
 
     // receive message callback
@@ -240,7 +294,6 @@ export class WebSocketClient {
             return;
         }
 
-        console.debug('onMessage Received type:message    message:' + message);
         let m: WsMessage;
         try {
             m = JSON.parse(message);
@@ -259,8 +312,8 @@ export class WebSocketClient {
                 if (!this.shutdown && !this.closed) {
                     this.notifyEvent(WebSocketEvent.EventMessageReceived, '');
                     // queue message
-                    if (this.readMsg.length < this.readMsgMaxSize) {
-                        this.readMsg.enqueue(m);
+                    if (this.readMsgQueue.enqueue(m)) {
+                        this.readMsgQueue._read(1);
                     } else {
                         this.notifyEvent(WebSocketEvent.EventReadBufferFull, '');
                         console.warn('Read buffer full');
@@ -296,17 +349,17 @@ export class WebSocketClient {
         if (m.type === MessageType.PongMessage) {
             console.debug('[HandleAckEvent] Handling pong message');
             this.metric.pingSuccess++;
-            data.complete();
+            data.resolve();
             return;
         }
 
         if (m.type === MessageType.ErrorMessage) {
             const error = m.data;
             this.notifyEvent(WebSocketEvent.EventErrorReceived, error);
-            data.setException(new Error(error));
+            data.reject(new Error(error));
             this.metric.pingErr++;
         } else {
-            data.complete();
+            data.resolve();
         }
     }
 
@@ -315,82 +368,36 @@ export class WebSocketClient {
      * @returns The first message in the queue, or undefined if queue is empty
      */
     read(): WsMessage | undefined {
-        if (this.readMsg.length === 0) {
-            return undefined;
-        }
-        return this.readMsg.dequeue();
+        return this.readMsgQueue.read();
     }
 
     // write message
     write(ms: WsMessage, timeout: number): Promise<void> {
         return new Promise((resolve, reject) => {
-            console.log('Write message:', ms);
+
             if (!this.connected) {
                 reject(new Error('Not connected'));
                 return;
             }
 
-            const msg = new WriteMsg(ms, timeout);
+            const msg: WriteMsg = { msg: ms, resolve, reject };
             if (!ms.id) {
                 reject(new Error('Message ID is undefined'));
                 return;
             }
 
             // write message to queue and check if it reaches the max size
-            if (this.writeMsg.length < this.writeMsgMaxSize) {
-                this.writeMsg.enqueue(msg);
+            if (this.writeMsgQueue.enqueue(ms)) {
                 this.ackEvents.set(ms.id, msg);
-
-                // Listen for message completion
-                msg.eventEmitter.once('complete', () => {
-                    resolve();
-                });
-
-                msg.eventEmitter.once('error', (error) => {
-                    reject(error);
-                });
-
-                // Trigger message sending
-                setImmediate(() => this.writeMessage());
+                this.writeMsgQueue._read(1);
             } else {
                 reject(new Error('Write buffer is full'));
             }
         });
     }
 
-    // send message
-    private writeMessage(): void {
-        if (this.closed || !this.conn) return;
-
-        // Process all messages in the queue
-        while (this.writeMsg.length > 0) {
-            const msg = this.writeMsg.dequeue();
-            if (!msg) break;
-
-            try {
-                // Send the complete message as JSON string
-                this.conn.send(JSON.stringify(msg.msg));
-                console.debug('Message sent:', msg.msg);
-                msg.ts = Date.now();
-
-                // Only complete non-ping messages immediately
-                // Ping messages will be completed when we receive the pong response
-                if (msg.msg.type !== MessageType.PingMessage) {
-                    msg.complete();
-                }
-            } catch (e) {
-                console.error('Failed to send message:', e);
-                if (msg.msg.id) {
-                    this.ackEvents.delete(msg.msg.id);
-                }
-                msg.setException(e as Error);
-            }
-        }
-    }
-
     // keep-alive
     private keepAlive(): void {
-        console.debug('[KeepAlive] Start checking...');
 
         if (!this.tokenInfo || this.shutdown || this.closed) {
             console.debug('[KeepAlive] Skip - basic check failed');
@@ -407,19 +414,14 @@ export class WebSocketClient {
         const currentTime = Date.now() / 1000;
         const timeSinceLastPing = currentTime - (this.lastPingTime || 0);
 
-        console.debug(
-            `[KeepAlive] Current: ${currentTime}, LastPing: ${this.lastPingTime}, Interval: ${interval}, TimeSince: ${timeSinceLastPing}`,
-        );
 
         if (timeSinceLastPing >= interval) {
-            console.debug('[KeepAlive] Sending ping message...');
             const pingMsg = this.newPingMessage();
             try {
                 this.write(pingMsg, timeout).catch((e) => {
                     console.error('[KeepAlive] Heartbeat ping error:', e);
                     this.disconnected = true;
                 });
-                console.debug('[KeepAlive] Ping sent');
             } catch (e) {
                 console.error('[KeepAlive] Heartbeat ping error:', e);
                 this.metric.pingErr++;
@@ -494,23 +496,12 @@ export class WebSocketClient {
     // Clear all message queues and cleanup resources
     private clearMessageQueues(): void {
         // Clear read message queue
-        while (this.readMsg.length > 0) {
-            this.readMsg.dequeue();
-        }
+        this.readMsgQueue.clear();
 
         // Clear write message queue and reject pending promises
-        while (this.writeMsg.length > 0) {
-            const writeMsg = this.writeMsg.dequeue();
-            if (writeMsg) {
-                writeMsg.setException(new Error('WebSocket connection closed'));
-                writeMsg.complete();
-            }
-        }
-
-        // Clear ack events
+        this.writeMsgQueue.clear();
         this.ackEvents.forEach((writeMsg) => {
-            writeMsg.setException(new Error('WebSocket connection closed'));
-            writeMsg.complete();
+            writeMsg.reject(new Error('WebSocket connection closed'));
         });
         this.ackEvents.clear();
     }
@@ -522,10 +513,6 @@ export class WebSocketClient {
             if (this.keepAliveInterval) {
                 clearInterval(this.keepAliveInterval);
                 this.keepAliveInterval = null;
-            }
-            if (this.writeInterval) {
-                clearInterval(this.writeInterval);
-                this.writeInterval = null;
             }
 
             // Clear message queues
