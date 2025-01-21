@@ -13,6 +13,9 @@ import { WsMessage } from '@model/common';
 import { MessageType } from '@model/constant';
 import { randomUUID } from 'crypto';
 import { EventEmitter } from 'events';
+import { Worker } from 'worker_threads';
+import path from 'path';
+import fs from 'fs';
 
 /**
  * DefaultWsService implements the WebSocket service interface for handling real-time data communication.
@@ -31,6 +34,7 @@ export class DefaultWsService implements WebSocketService {
     private messageLoop?: NodeJS.Timeout;
     private recoveryLoop?: NodeJS.Timeout;
     private readonly eventEmitter: EventEmitter;
+    private messageWorker?: Worker;
 
     /**
      * Creates a new instance of DefaultWsService
@@ -115,53 +119,117 @@ export class DefaultWsService implements WebSocketService {
     }
 
     /**
-     * Starts the message processing loop
-     * Continuously reads messages from the WebSocket connection and dispatches them to appropriate callbacks
-     * Messages are processed every 1ms
+     * Starts the message processing loop using a dedicated Worker Thread
+     * Creates a worker thread for message processing to handle WebSocket messages
      */
     private startMessageLoop(): void {
-        // Process all messages in queue every 1ms
-        this.messageLoop = setInterval(async () => {
-            if (this.stopSignal) {
-                if (this.messageLoop) clearInterval(this.messageLoop);
-                return;
+        try {
+            // Get the worker file path relative to the compiled js file
+            const workerPath = path.join(__dirname, '..', '..', '..', 'dist', 'internal', 'infra', 'message_worker.js');
+            console.log('[Main] Worker file path:', workerPath);
+            console.log('[Main] Current directory:', __dirname);
+            
+            if (!fs.existsSync(workerPath)) {
+                throw new Error(`Worker file not found at path: ${workerPath}. Please ensure the project is built.`);
             }
 
-            try {
-                // Process all messages in the queue
-                while (true) {
-                    const msg = await this.client.read();
-                    if (!msg) break; // Exit loop when queue is empty
+            // Create a new worker thread
+            this.messageWorker = new Worker(workerPath);
+            console.log('[Main] Worker created successfully');
 
-                    if (msg.type !== MessageType.Message) continue;
-
+            // Handle messages processed by the worker
+            this.messageWorker.on('message', async (msg: WsMessage) => {
+                console.log('[Main] Received processed message from worker:', {
+                    topic: msg.topic,
+                    type: msg.type
+                });
+                
+                try {
                     const callbackManager = this.topicManager.getCallbackManager(msg.topic);
                     if (!callbackManager) {
                         console.error(
-                            `Cannot find callback manager, id: ${msg.id}, topic: ${msg.topic}`,
+                            `[Main] Cannot find callback manager, id: ${msg.id}, topic: ${msg.topic}`,
                         );
-                        continue;
+                        return;
                     }
 
                     const cb = callbackManager.get(msg.topic);
                     if (!cb) {
                         console.error(
-                            `Cannot find callback for id: ${msg.id}, topic: ${msg.topic}`,
+                            `[Main] Cannot find callback for id: ${msg.id}, topic: ${msg.topic}`,
                         );
-                        continue;
+                        return;
                     }
 
                     try {
                         await cb.onMessage(msg);
+                        console.log('[Main] Message processed by callback successfully');
                     } catch (err) {
-                        console.error('Exception in callback:', err);
+                        console.error('[Main] Exception in callback:', err);
                         this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
                     }
+                } catch (err) {
+                    console.error('[Main] Error processing message in main thread:', err);
                 }
-            } catch (err) {
-                console.error('Error in message loop:', err);
+            });
+
+            // Handle worker errors
+            this.messageWorker.on('error', (error) => {
+                console.error('[Main] Worker thread error:', error);
+                this.notifyEvent(WebSocketEvent.EventCallbackError, String(error));
+            });
+
+            // Handle worker exit
+            this.messageWorker.on('exit', (code) => {
+                console.log(`[Main] Worker stopped with exit code ${code}`);
+                if (code !== 0) {
+                    console.error('[Main] Worker stopped with non-zero exit code');
+                }
+            });
+
+        } catch (error) {
+            console.error('[Main] Error creating worker:', error);
+            throw error;
+        }
+
+        // Start message reading loop
+        const readMessages = async () => {
+            while (!this.stopSignal) {
+                try {
+                    const msg = await this.client.read();
+                    if (!msg) {
+                        await new Promise(resolve => setTimeout(resolve, 10)); // Wait 1 second before next try
+                        continue;
+                    }
+
+                    // Send message to worker thread for processing
+                    if (this.messageWorker?.listenerCount('message') === 0) {
+                        console.warn('[Main] Worker has no message listeners, recreating worker...');
+                        this.messageWorker?.terminate();
+                        this.startMessageLoop();
+                        continue;
+                    }
+
+                    this.messageWorker?.postMessage(msg);
+                } catch (err) {
+                    console.error('[Main] Error reading message:', err);
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Wait 1 second before retry
+                    continue;
+                }
             }
-        }, 1);
+
+            // Only terminate worker if stop signal is received
+            if (this.stopSignal) {
+                console.log('[Main] Stop signal received, terminating worker...');
+                this.messageWorker?.terminate();
+            }
+        };
+
+        // Start the message reading loop
+        readMessages().catch(err => {
+            console.error('[Main] Fatal error in message reading loop:', err);
+            this.notifyEvent(WebSocketEvent.EventErrorReceived, String(err));
+        });
     }
 
     /**
@@ -227,14 +295,16 @@ export class DefaultWsService implements WebSocketService {
     }
 
     /**
-     * Stops the WebSocket service
-     * Clears all intervals and stops the client
+     * Stops the message processing and cleans up resources
      */
     stop(): Promise<void> {
-        this.stopSignal = true;
-        if (this.messageLoop) clearInterval(this.messageLoop);
-        if (this.recoveryLoop) clearInterval(this.recoveryLoop);
-        return this.client.stop();
+        return new Promise<void>((resolve) => {
+            this.stopSignal = true;
+            this.messageWorker?.terminate();
+            if (this.messageLoop) clearInterval(this.messageLoop);
+            if (this.recoveryLoop) clearInterval(this.recoveryLoop);
+            resolve();
+        });
     }
 
     /**
