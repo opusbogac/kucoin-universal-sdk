@@ -73,7 +73,7 @@ describe('Auto Test', () => {
             expect(result.maxMarginSubQuantity).toEqual(expect.anything());
             expect(result.maxFuturesSubQuantity).toEqual(expect.anything());
             expect(result.maxOptionSubQuantity).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -94,7 +94,7 @@ describe('Auto Test', () => {
             expect(result.uid).toEqual(expect.anything());
             expect(result.isMaster).toEqual(expect.anything());
             expect(result.subName).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -107,7 +107,7 @@ describe('Auto Test', () => {
         let resp = api.getSpotAccountType();
         return resp.then((result) => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -123,7 +123,7 @@ describe('Auto Test', () => {
         let resp = api.getSpotAccountList(req);
         return resp.then(result => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -142,7 +142,7 @@ describe('Auto Test', () => {
             expect(result.balance).toEqual(expect.anything());
             expect(result.available).toEqual(expect.anything());
             expect(result.holds).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -162,7 +162,7 @@ describe('Auto Test', () => {
             expect(result.debtRatio).toEqual(expect.anything());
             expect(result.status).toEqual(expect.anything());
             expect(result.accounts).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -181,7 +181,7 @@ describe('Auto Test', () => {
             expect(result.totalLiabilityOfQuoteCurrency).toEqual(expect.anything());
             expect(result.timestamp).toEqual(expect.anything());
             expect(result.assets).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -205,7 +205,7 @@ describe('Auto Test', () => {
             expect(result.availableBalance).toEqual(expect.anything());
             expect(result.currency).toEqual(expect.anything());
             expect(result.riskRatio).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -225,7 +225,7 @@ describe('Auto Test', () => {
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
             expect(result.items).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -241,7 +241,7 @@ describe('Auto Test', () => {
         let resp = api.getSpotHFLedger(req);
         return resp.then(result => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -257,7 +257,7 @@ describe('Auto Test', () => {
         let resp = api.getMarginHFLedger(req);
         return resp.then(result => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -274,7 +274,7 @@ describe('Auto Test', () => {
         return resp.then(result => {
             expect(result.dataList).toEqual(expect.anything());
             expect(result.hasMore).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -288,7 +288,7 @@ describe('Auto Test', () => {
         return resp.then(result => {
             expect(result.debtRatio).toEqual(expect.anything());
             expect(result.accounts).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -306,7 +306,7 @@ describe('Auto Test', () => {
             expect(result.totalConversionBalance).toEqual(expect.anything());
             expect(result.liabilityConversionBalance).toEqual(expect.anything());
             expect(result.assets).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -326,7 +326,7 @@ describe('Auto Test', () => {
             expect(result.debtRatio).toEqual(expect.anything());
             expect(result.baseAsset).toEqual(expect.anything());
             expect(result.quoteAsset).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 });

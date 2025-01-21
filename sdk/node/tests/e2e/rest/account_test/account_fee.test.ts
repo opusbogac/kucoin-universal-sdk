@@ -54,7 +54,7 @@ describe('Auto Test', () => {
         return resp.then(result => {
             expect(result.takerFeeRate).toEqual(expect.anything());
             expect(result.makerFeeRate).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -70,7 +70,7 @@ describe('Auto Test', () => {
         let resp = api.getSpotActualFee(req);
         return resp.then(result => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -88,7 +88,7 @@ describe('Auto Test', () => {
             expect(result.symbol).toEqual(expect.anything());
             expect(result.takerFeeRate).toEqual(expect.anything());
             expect(result.makerFeeRate).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 

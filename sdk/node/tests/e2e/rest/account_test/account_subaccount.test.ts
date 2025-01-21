@@ -73,7 +73,7 @@ describe('Auto Test', () => {
             expect(result.subName).toEqual(expect.anything());
             expect(result.remarks).toEqual(expect.anything());
             expect(result.access).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -89,7 +89,7 @@ describe('Auto Test', () => {
         let resp = api.addSubAccountMarginPermission(req);
         return resp.then((result) => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -105,7 +105,7 @@ describe('Auto Test', () => {
         let resp = api.addSubAccountFuturesPermission(req);
         return resp.then((result) => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -125,7 +125,7 @@ describe('Auto Test', () => {
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
             expect(result.items).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -146,7 +146,7 @@ describe('Auto Test', () => {
             expect(result.tradeAccounts).toEqual(expect.anything());
             expect(result.marginAccounts).toEqual(expect.anything());
             expect(result.tradeHFAccounts).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -166,7 +166,7 @@ describe('Auto Test', () => {
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
             expect(result.items).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -183,7 +183,7 @@ describe('Auto Test', () => {
         return resp.then((result) => {
             expect(result.summary).toEqual(expect.anything());
             expect(result.accounts).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -212,7 +212,7 @@ describe('Auto Test', () => {
             expect(result.permission).toEqual(expect.anything());
             expect(result.ipWhitelist).toEqual(expect.anything());
             expect(result.createdAt).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -237,7 +237,7 @@ describe('Auto Test', () => {
             expect(result.apiKey).toEqual(expect.anything());
             expect(result.permission).toEqual(expect.anything());
             expect(result.ipWhitelist).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -253,7 +253,7 @@ describe('Auto Test', () => {
         let resp = api.getSubAccountApiList(req);
         return resp.then((result) => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -270,7 +270,7 @@ describe('Auto Test', () => {
         return resp.then((result) => {
             expect(result.subName).toEqual(expect.anything());
             expect(result.apiKey).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -283,7 +283,7 @@ describe('Auto Test', () => {
         let resp = api.getSpotSubAccountsSummaryV1();
         return resp.then((result) => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -296,7 +296,7 @@ describe('Auto Test', () => {
         let resp = api.getSpotSubAccountListV1();
         return resp.then((result) => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 });

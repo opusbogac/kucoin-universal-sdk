@@ -64,7 +64,7 @@ describe('Auto Test', () => {
             expect(result.expirationDate).toEqual(expect.anything());
             expect(result.currency).toEqual(expect.anything());
             expect(result.chainName).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -80,7 +80,7 @@ describe('Auto Test', () => {
         let resp = api.getDepositAddressV3(req);
         return resp.then(result => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -100,7 +100,7 @@ describe('Auto Test', () => {
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
             expect(result.items).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -116,7 +116,7 @@ describe('Auto Test', () => {
         let resp = api.getDepositAddressV2(req);
         return resp.then(result => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -138,7 +138,7 @@ describe('Auto Test', () => {
             expect(result.to).toEqual(expect.anything());
             expect(result.currency).toEqual(expect.anything());
             expect(result.contractAddress).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -158,7 +158,7 @@ describe('Auto Test', () => {
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
             expect(result.items).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -179,7 +179,7 @@ describe('Auto Test', () => {
             expect(result.chainId).toEqual(expect.anything());
             expect(result.to).toEqual(expect.anything());
             expect(result.currency).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 });

@@ -76,7 +76,7 @@ describe('Auto Test', () => {
             expect(result.chain).toEqual(expect.anything());
             expect(result.reason).toEqual(expect.anything());
             expect(result.lockedAmount).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -92,7 +92,7 @@ describe('Auto Test', () => {
         let resp = api.withdrawalV3(req);
         return resp.then(result => {
             expect(result.withdrawalId).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -108,7 +108,7 @@ describe('Auto Test', () => {
         let resp = api.cancelWithdrawal(req);
         return resp.then(result => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -128,7 +128,7 @@ describe('Auto Test', () => {
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
             expect(result.items).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -148,7 +148,7 @@ describe('Auto Test', () => {
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
             expect(result.items).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -164,7 +164,7 @@ describe('Auto Test', () => {
         let resp = api.withdrawalV1(req);
         return resp.then(result => {
             expect(result.withdrawalId).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 

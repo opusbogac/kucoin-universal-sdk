@@ -67,7 +67,7 @@ describe('Auto Test', () => {
             expect(result.available).toEqual(expect.anything());
             expect(result.holds).toEqual(expect.anything());
             expect(result.transferable).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -83,7 +83,7 @@ describe('Auto Test', () => {
         let resp = api.flexTransfer(req);
         return resp.then(result => {
             expect(result.orderId).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -99,7 +99,7 @@ describe('Auto Test', () => {
         let resp = api.subAccountTransfer(req);
         return resp.then(result => {
             expect(result.orderId).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -115,7 +115,7 @@ describe('Auto Test', () => {
         let resp = api.innerTransfer(req);
         return resp.then(result => {
             expect(result.orderId).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -147,7 +147,7 @@ describe('Auto Test', () => {
             expect(result.reason).toEqual(expect.anything());
             expect(result.createdAt).toEqual(expect.anything());
             expect(result.updatedAt).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -163,7 +163,7 @@ describe('Auto Test', () => {
         let resp = api.futuresAccountTransferIn(req);
         return resp.then(result => {
             expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 
@@ -183,7 +183,7 @@ describe('Auto Test', () => {
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
             expect(result.items).toEqual(expect.anything());
-            console.log(resp);
+            console.log(result);
         });
     });
 

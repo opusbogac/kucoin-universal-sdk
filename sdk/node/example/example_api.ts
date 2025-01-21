@@ -3,15 +3,17 @@ import {
     AccountService,
     ClientOptionBuilder,
     DefaultClient,
-    DomainType,
     Futures,
     FuturesService,
+    GlobalApiEndpoint,
+    GlobalBrokerApiEndpoint,
+    GlobalFuturesApiEndpoint,
     Spot,
     SpotService,
     TransportOptionBuilder,
 } from 'kucoin-universal-sdk';
 
-import { randomUUID } from 'crypto';
+import {randomUUID} from 'crypto';
 
 async function restExample() {
     console.log('Starting REST example');
@@ -41,8 +43,9 @@ async function restExample() {
         .setBrokerName(brokerName)
         .setBrokerKey(brokerKey)
         .setBrokerPartner(brokerPartner)
-        .setSpotEndpoint(DomainType.Spot)
-        .setFuturesEndpoint(DomainType.Futures)
+        .setSpotEndpoint(GlobalApiEndpoint)
+        .setFuturesEndpoint(GlobalFuturesApiEndpoint)
+        .setBrokerEndpoint(GlobalBrokerApiEndpoint)
         .setTransportOption(httpTransportOption)
         .build();
 
@@ -67,8 +70,7 @@ async function accountServiceExample(accountService: AccountService) {
 
     // Get fee api
     const feeApi = accountService.getFeeApi();
-    const getActualFeeReq = new Account.GetSpotActualFeeReqBuilder()
-        .setSymbols('BTC-USDT,ETH-USDT')
+    const getActualFeeReq = Account.GetSpotActualFeeReq.builder().setSymbols('BTC-USDT,ETH-USDT')
         .build();
     const getActualFeeResp = feeApi.getSpotActualFee(getActualFeeReq).then((resp) => {
         if (resp.data) {
@@ -92,7 +94,7 @@ async function spotServiceExample(spotService: SpotService) {
     const orderApi = spotService.getOrderApi();
 
     // Add limit order
-    const addOrderReq = new Spot.AddOrderSyncReqBuilder()
+    const addOrderReq = Spot.AddOrderSyncReq.builder()
         .setClientOid(randomUUID().toString())
         .setSide(Spot.AddOrderSyncReq.SideEnum.BUY)
         .setSymbol('BTC-USDT')
@@ -106,8 +108,8 @@ async function spotServiceExample(spotService: SpotService) {
     console.log(`Add order success, id: ${addOrderResp.orderId}, oid: ${addOrderResp.clientOid}`);
 
     // Query order detail
-    const orderId = addOrderResp.orderId!;
-    const queryOrderDetailReq = new Spot.GetOrderByOrderIdReqBuilder()
+    const orderId = addOrderResp.orderId;
+    const queryOrderDetailReq = Spot.GetOrderByOrderIdReq.builder()
         .setOrderId(orderId)
         .setSymbol('BTC-USDT')
         .build();
@@ -115,7 +117,7 @@ async function spotServiceExample(spotService: SpotService) {
     console.log(`Order detail: ${orderDetailResp.toJson()}`);
 
     // Cancel order
-    const cancelOrderReq = new Spot.CancelOrderByOrderIdSyncReqBuilder()
+    const cancelOrderReq = Spot.CancelOrderByOrderIdSyncReq.builder()
         .setOrderId(orderId)
         .setSymbol('BTC-USDT')
         .build();
@@ -127,21 +129,21 @@ async function futuresServiceExample(futuresService: FuturesService) {
     const marketApi = futuresService.getMarketApi();
     const allSymbolResp = await marketApi.getAllSymbols();
 
-    const maxQuery = Math.min(allSymbolResp.data!.length, 10);
+    const maxQuery = Math.min(allSymbolResp.data.length, 10);
     for (let i = 0; i < maxQuery; i++) {
-        const symbol = allSymbolResp.data![i];
+        const symbol = allSymbolResp.data[i];
         const start = Date.now() - 10 * 60 * 1000;
         const end = Date.now();
 
-        const getKlineReq = new Futures.GetKlinesReqBuilder()
-            .setSymbol(symbol.symbol!)
+        const getKlineReq = Futures.GetKlinesReq.builder()
+            .setSymbol(symbol.symbol)
             .setGranularity(Futures.GetKlinesReq.GranularityEnum._1)
             .setFrom(start)
             .setTo(end)
             .build();
 
         const getKlineResp = await marketApi.getKlines(getKlineReq);
-        const rows = getKlineResp.data!.map((row: any) => {
+        const rows = getKlineResp.data.map((row: any) => {
             const timestamp = new Date(row[0]).toISOString();
             return `[Time: ${timestamp}, Open: ${row[1]}, High: ${row[2]}, Low: ${row[3]}, Close: ${row[4]}, Volume: ${row[5]}]`;
         });
