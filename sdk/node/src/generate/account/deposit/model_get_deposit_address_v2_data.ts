@@ -39,15 +39,25 @@ export class GetDepositAddressV2Data implements Serializable {
      */
     contractAddress?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetDepositAddressV2Data {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetDepositAddressV2Data {
         return plainToClassFromExist(new GetDepositAddressV2Data(), jsonObject);
     }

@@ -39,6 +39,9 @@ export class GetMarginHFLedgerReq implements Serializable {
      */
     endAt?: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetMarginHFLedgerReq` class.
@@ -96,14 +99,21 @@ export class GetMarginHFLedgerReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetMarginHFLedgerReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetMarginHFLedgerReq {
         return plainToClassFromExist(new GetMarginHFLedgerReq(), jsonObject);
     }
@@ -182,6 +192,9 @@ export class GetMarginHFLedgerReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetMarginHFLedgerReq {
         return this.obj;
     }

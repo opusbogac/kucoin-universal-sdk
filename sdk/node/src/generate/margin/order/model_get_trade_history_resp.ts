@@ -17,6 +17,9 @@ export class GetTradeHistoryResp implements Response<RestResponse> {
      */
     lastId: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.items = null;
@@ -33,14 +36,21 @@ export class GetTradeHistoryResp implements Response<RestResponse> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetTradeHistoryResp {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetTradeHistoryResp {
         return plainToClassFromExist(new GetTradeHistoryResp(), jsonObject);
     }

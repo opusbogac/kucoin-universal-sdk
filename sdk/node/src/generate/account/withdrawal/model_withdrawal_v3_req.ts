@@ -49,6 +49,9 @@ export class WithdrawalV3Req implements Serializable {
      */
     withdrawType: WithdrawalV3Req.WithdrawTypeEnum;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.currency = null;
@@ -129,14 +132,21 @@ export class WithdrawalV3Req implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): WithdrawalV3Req {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): WithdrawalV3Req {
         return plainToClassFromExist(new WithdrawalV3Req(), jsonObject);
     }
@@ -239,6 +249,9 @@ export class WithdrawalV3ReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): WithdrawalV3Req {
         return this.obj;
     }

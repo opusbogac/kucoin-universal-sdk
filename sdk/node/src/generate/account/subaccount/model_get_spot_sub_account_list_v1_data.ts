@@ -40,6 +40,9 @@ export class GetSpotSubAccountListV1Data implements Serializable {
      */
     tradeHFAccounts: Array<string>;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.subUserId = null;
@@ -54,14 +57,21 @@ export class GetSpotSubAccountListV1Data implements Serializable {
         // @ts-ignore
         this.tradeHFAccounts = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSpotSubAccountListV1Data {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSpotSubAccountListV1Data {
         return plainToClassFromExist(new GetSpotSubAccountListV1Data(), jsonObject);
     }

@@ -11,6 +11,9 @@ export class CancelOcoOrderByClientOidReq implements Serializable {
     @Reflect.metadata('path', 'clientOid')
     clientOid?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `CancelOcoOrderByClientOidReq` class.
@@ -34,14 +37,21 @@ export class CancelOcoOrderByClientOidReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): CancelOcoOrderByClientOidReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): CancelOcoOrderByClientOidReq {
         return plainToClassFromExist(new CancelOcoOrderByClientOidReq(), jsonObject);
     }
@@ -59,6 +69,9 @@ export class CancelOcoOrderByClientOidReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): CancelOcoOrderByClientOidReq {
         return this.obj;
     }

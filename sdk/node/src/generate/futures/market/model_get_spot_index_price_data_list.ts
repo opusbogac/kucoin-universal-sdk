@@ -31,6 +31,9 @@ export class GetSpotIndexPriceDataList implements Serializable {
     @Type(() => GetSpotIndexPriceDataListDecomposionList)
     decomposionList: Array<GetSpotIndexPriceDataListDecomposionList>;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.symbol = null;
@@ -43,14 +46,21 @@ export class GetSpotIndexPriceDataList implements Serializable {
         // @ts-ignore
         this.decomposionList = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSpotIndexPriceDataList {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSpotIndexPriceDataList {
         return plainToClassFromExist(new GetSpotIndexPriceDataList(), jsonObject);
     }

@@ -9,6 +9,9 @@ export class GetSavingsProductsReq implements Serializable {
      */
     currency?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetSavingsProductsReq` class.
@@ -32,14 +35,21 @@ export class GetSavingsProductsReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSavingsProductsReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSavingsProductsReq {
         return plainToClassFromExist(new GetSavingsProductsReq(), jsonObject);
     }
@@ -57,6 +67,9 @@ export class GetSavingsProductsReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetSavingsProductsReq {
         return this.obj;
     }

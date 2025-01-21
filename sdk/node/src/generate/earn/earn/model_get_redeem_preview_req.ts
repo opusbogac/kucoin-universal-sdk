@@ -14,6 +14,9 @@ export class GetRedeemPreviewReq implements Serializable {
      */
     fromAccountType?: GetRedeemPreviewReq.FromAccountTypeEnum;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetRedeemPreviewReq` class.
@@ -42,14 +45,21 @@ export class GetRedeemPreviewReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetRedeemPreviewReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetRedeemPreviewReq {
         return plainToClassFromExist(new GetRedeemPreviewReq(), jsonObject);
     }
@@ -88,6 +98,9 @@ export class GetRedeemPreviewReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetRedeemPreviewReq {
         return this.obj;
     }

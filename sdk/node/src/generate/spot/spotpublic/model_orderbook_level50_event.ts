@@ -50,14 +50,21 @@ export class OrderbookLevel50Event implements Response<WsMessage> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): OrderbookLevel50Event {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): OrderbookLevel50Event {
         return plainToClassFromExist(new OrderbookLevel50Event(), jsonObject);
     }

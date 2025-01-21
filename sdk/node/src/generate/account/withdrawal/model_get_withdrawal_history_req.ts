@@ -34,6 +34,9 @@ export class GetWithdrawalHistoryReq implements Serializable {
      */
     pageSize?: number = 50;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetWithdrawalHistoryReq` class.
@@ -90,14 +93,21 @@ export class GetWithdrawalHistoryReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetWithdrawalHistoryReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetWithdrawalHistoryReq {
         return plainToClassFromExist(new GetWithdrawalHistoryReq(), jsonObject);
     }
@@ -176,6 +186,9 @@ export class GetWithdrawalHistoryReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetWithdrawalHistoryReq {
         return this.obj;
     }

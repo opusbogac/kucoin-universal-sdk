@@ -24,6 +24,9 @@ export class GetDepositHistoryOldReq implements Serializable {
      */
     endAt?: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetDepositHistoryOldReq` class.
@@ -62,14 +65,21 @@ export class GetDepositHistoryOldReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetDepositHistoryOldReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetDepositHistoryOldReq {
         return plainToClassFromExist(new GetDepositHistoryOldReq(), jsonObject);
     }
@@ -128,6 +138,9 @@ export class GetDepositHistoryOldReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetDepositHistoryOldReq {
         return this.obj;
     }

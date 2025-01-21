@@ -39,6 +39,9 @@ export class GetIsolatedMarginAccountListV1AssetsBaseAsset implements Serializab
      */
     borrowableAmount: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.currency = null;
@@ -55,14 +58,21 @@ export class GetIsolatedMarginAccountListV1AssetsBaseAsset implements Serializab
         // @ts-ignore
         this.borrowableAmount = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetIsolatedMarginAccountListV1AssetsBaseAsset {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetIsolatedMarginAccountListV1AssetsBaseAsset {
         return plainToClassFromExist(
             new GetIsolatedMarginAccountListV1AssetsBaseAsset(),

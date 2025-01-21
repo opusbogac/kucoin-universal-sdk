@@ -67,14 +67,21 @@ export class AllTickersEvent implements Response<WsMessage> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): AllTickersEvent {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): AllTickersEvent {
         return plainToClassFromExist(new AllTickersEvent(), jsonObject);
     }

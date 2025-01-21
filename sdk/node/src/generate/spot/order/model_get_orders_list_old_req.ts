@@ -49,6 +49,9 @@ export class GetOrdersListOldReq implements Serializable {
      */
     pageSize?: number = 50;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetOrdersListOldReq` class.
@@ -128,14 +131,21 @@ export class GetOrdersListOldReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetOrdersListOldReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetOrdersListOldReq {
         return plainToClassFromExist(new GetOrdersListOldReq(), jsonObject);
     }
@@ -272,6 +282,9 @@ export class GetOrdersListOldReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetOrdersListOldReq {
         return this.obj;
     }

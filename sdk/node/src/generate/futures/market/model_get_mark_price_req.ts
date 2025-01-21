@@ -11,6 +11,9 @@ export class GetMarkPriceReq implements Serializable {
     @Reflect.metadata('path', 'symbol')
     symbol?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetMarkPriceReq` class.
@@ -34,14 +37,21 @@ export class GetMarkPriceReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetMarkPriceReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetMarkPriceReq {
         return plainToClassFromExist(new GetMarkPriceReq(), jsonObject);
     }
@@ -59,6 +69,9 @@ export class GetMarkPriceReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetMarkPriceReq {
         return this.obj;
     }

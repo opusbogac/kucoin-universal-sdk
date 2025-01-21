@@ -24,6 +24,9 @@ export class GetKlinesReq implements Serializable {
      */
     to?: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetKlinesReq` class.
@@ -62,14 +65,21 @@ export class GetKlinesReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetKlinesReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetKlinesReq {
         return plainToClassFromExist(new GetKlinesReq(), jsonObject);
     }
@@ -160,6 +170,9 @@ export class GetKlinesReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetKlinesReq {
         return this.obj;
     }

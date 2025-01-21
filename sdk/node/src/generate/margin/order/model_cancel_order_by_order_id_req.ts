@@ -16,6 +16,9 @@ export class CancelOrderByOrderIdReq implements Serializable {
      */
     symbol?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `CancelOrderByOrderIdReq` class.
@@ -44,14 +47,21 @@ export class CancelOrderByOrderIdReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): CancelOrderByOrderIdReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): CancelOrderByOrderIdReq {
         return plainToClassFromExist(new CancelOrderByOrderIdReq(), jsonObject);
     }
@@ -77,6 +87,9 @@ export class CancelOrderByOrderIdReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): CancelOrderByOrderIdReq {
         return this.obj;
     }

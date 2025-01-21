@@ -21,6 +21,9 @@ export class CancelPartialOrderReq implements Serializable {
      */
     cancelSize?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `CancelPartialOrderReq` class.
@@ -54,14 +57,21 @@ export class CancelPartialOrderReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): CancelPartialOrderReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): CancelPartialOrderReq {
         return plainToClassFromExist(new CancelPartialOrderReq(), jsonObject);
     }
@@ -95,6 +105,9 @@ export class CancelPartialOrderReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): CancelPartialOrderReq {
         return this.obj;
     }

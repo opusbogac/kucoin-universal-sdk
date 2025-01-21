@@ -14,6 +14,9 @@ export class GetOpenOrdersReq implements Serializable {
      */
     tradeType?: GetOpenOrdersReq.TradeTypeEnum;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetOpenOrdersReq` class.
@@ -42,14 +45,21 @@ export class GetOpenOrdersReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetOpenOrdersReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetOpenOrdersReq {
         return plainToClassFromExist(new GetOpenOrdersReq(), jsonObject);
     }
@@ -88,6 +98,9 @@ export class GetOpenOrdersReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetOpenOrdersReq {
         return this.obj;
     }

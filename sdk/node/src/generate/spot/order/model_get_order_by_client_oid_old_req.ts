@@ -11,6 +11,9 @@ export class GetOrderByClientOidOldReq implements Serializable {
     @Reflect.metadata('path', 'clientOid')
     clientOid?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetOrderByClientOidOldReq` class.
@@ -34,14 +37,21 @@ export class GetOrderByClientOidOldReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetOrderByClientOidOldReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetOrderByClientOidOldReq {
         return plainToClassFromExist(new GetOrderByClientOidOldReq(), jsonObject);
     }
@@ -59,6 +69,9 @@ export class GetOrderByClientOidOldReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetOrderByClientOidOldReq {
         return this.obj;
     }

@@ -34,6 +34,9 @@ export class GetSpotSubAccountsSummaryV1Data implements Serializable {
      */
     access: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.userId = null;
@@ -48,14 +51,21 @@ export class GetSpotSubAccountsSummaryV1Data implements Serializable {
         // @ts-ignore
         this.access = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSpotSubAccountsSummaryV1Data {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSpotSubAccountsSummaryV1Data {
         return plainToClassFromExist(new GetSpotSubAccountsSummaryV1Data(), jsonObject);
     }

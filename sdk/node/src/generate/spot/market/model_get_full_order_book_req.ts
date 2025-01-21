@@ -9,6 +9,9 @@ export class GetFullOrderBookReq implements Serializable {
      */
     symbol?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetFullOrderBookReq` class.
@@ -32,14 +35,21 @@ export class GetFullOrderBookReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetFullOrderBookReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetFullOrderBookReq {
         return plainToClassFromExist(new GetFullOrderBookReq(), jsonObject);
     }
@@ -57,6 +67,9 @@ export class GetFullOrderBookReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetFullOrderBookReq {
         return this.obj;
     }

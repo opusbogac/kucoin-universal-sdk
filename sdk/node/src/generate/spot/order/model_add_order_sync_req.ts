@@ -84,6 +84,9 @@ export class AddOrderSyncReq implements Serializable {
      */
     funds?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.side = null;
@@ -205,14 +208,21 @@ export class AddOrderSyncReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): AddOrderSyncReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): AddOrderSyncReq {
         return plainToClassFromExist(new AddOrderSyncReq(), jsonObject);
     }
@@ -409,6 +419,9 @@ export class AddOrderSyncReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): AddOrderSyncReq {
         return this.obj;
     }

@@ -21,6 +21,9 @@ export class GetIsolatedMarginAccountReq implements Serializable {
     queryType?: GetIsolatedMarginAccountReq.QueryTypeEnum =
         GetIsolatedMarginAccountReq.QueryTypeEnum.ISOLATED;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetIsolatedMarginAccountReq` class.
@@ -62,14 +65,21 @@ export class GetIsolatedMarginAccountReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetIsolatedMarginAccountReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetIsolatedMarginAccountReq {
         return plainToClassFromExist(new GetIsolatedMarginAccountReq(), jsonObject);
     }
@@ -138,6 +148,9 @@ export class GetIsolatedMarginAccountReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetIsolatedMarginAccountReq {
         return this.obj;
     }

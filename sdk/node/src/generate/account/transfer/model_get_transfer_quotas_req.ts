@@ -19,6 +19,9 @@ export class GetTransferQuotasReq implements Serializable {
      */
     tag?: string = 'BTC-USDT';
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetTransferQuotasReq` class.
@@ -56,14 +59,21 @@ export class GetTransferQuotasReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetTransferQuotasReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetTransferQuotasReq {
         return plainToClassFromExist(new GetTransferQuotasReq(), jsonObject);
     }
@@ -122,6 +132,9 @@ export class GetTransferQuotasReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetTransferQuotasReq {
         return this.obj;
     }

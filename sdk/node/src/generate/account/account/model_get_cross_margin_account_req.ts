@@ -16,6 +16,9 @@ export class GetCrossMarginAccountReq implements Serializable {
     queryType?: GetCrossMarginAccountReq.QueryTypeEnum =
         GetCrossMarginAccountReq.QueryTypeEnum.MARGIN;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetCrossMarginAccountReq` class.
@@ -52,14 +55,21 @@ export class GetCrossMarginAccountReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetCrossMarginAccountReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetCrossMarginAccountReq {
         return plainToClassFromExist(new GetCrossMarginAccountReq(), jsonObject);
     }
@@ -118,6 +128,9 @@ export class GetCrossMarginAccountReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetCrossMarginAccountReq {
         return this.obj;
     }

@@ -48,28 +48,42 @@ export class {{classname}} implements Serializable{
 
 {{/vendorExtensions.x-response-model}}
 {{#vendorExtensions.x-original-response}}
+    /**
+    * Convert the object to a JSON string.
+    */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this.data));
     }
-
+    /**
+    * Create an object from a JSON string.
+    */
     static fromJson(input: string): {{classname}} {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+    * Create an object from Js Object.
+    */
     static fromObject(jsonObject: Object): {{classname}} {
         return plainToClassFromExist(new {{classname}}(), {data : jsonObject});
     }
 
 {{/vendorExtensions.x-original-response}}
 {{^vendorExtensions.x-original-response}}
+    /**
+    * Convert the object to a JSON string.
+    */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+    * Create an object from a JSON string.
+    */
     static fromJson(input: string): {{classname}} {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+    * Create an object from Js Object.
+    */
     static fromObject(jsonObject: Object): {{classname}} {
         return plainToClassFromExist(new {{classname}}(), jsonObject);
     }

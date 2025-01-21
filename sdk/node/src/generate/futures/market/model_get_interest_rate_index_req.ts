@@ -39,6 +39,9 @@ export class GetInterestRateIndexReq implements Serializable {
      */
     maxCount?: number = 10;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetInterestRateIndexReq` class.
@@ -104,14 +107,21 @@ export class GetInterestRateIndexReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetInterestRateIndexReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetInterestRateIndexReq {
         return plainToClassFromExist(new GetInterestRateIndexReq(), jsonObject);
     }
@@ -177,6 +187,9 @@ export class GetInterestRateIndexReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetInterestRateIndexReq {
         return this.obj;
     }

@@ -10,6 +10,9 @@ export class GetRebaseResp implements Response<RestResponse> {
      */
     url: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.url = null;
@@ -24,14 +27,21 @@ export class GetRebaseResp implements Response<RestResponse> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetRebaseResp {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetRebaseResp {
         return plainToClassFromExist(new GetRebaseResp(), jsonObject);
     }

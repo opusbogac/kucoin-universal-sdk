@@ -19,6 +19,9 @@ export class GetBrokerInfoReq implements Serializable {
      */
     tradeType?: GetBrokerInfoReq.TradeTypeEnum;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetBrokerInfoReq` class.
@@ -52,14 +55,21 @@ export class GetBrokerInfoReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetBrokerInfoReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetBrokerInfoReq {
         return plainToClassFromExist(new GetBrokerInfoReq(), jsonObject);
     }
@@ -106,6 +116,9 @@ export class GetBrokerInfoReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetBrokerInfoReq {
         return this.obj;
     }

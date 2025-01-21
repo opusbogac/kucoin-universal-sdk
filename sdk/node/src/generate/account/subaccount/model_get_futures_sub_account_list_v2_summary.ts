@@ -44,6 +44,9 @@ export class GetFuturesSubAccountListV2Summary implements Serializable {
      */
     currency: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.accountEquityTotal = null;
@@ -62,14 +65,21 @@ export class GetFuturesSubAccountListV2Summary implements Serializable {
         // @ts-ignore
         this.currency = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetFuturesSubAccountListV2Summary {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetFuturesSubAccountListV2Summary {
         return plainToClassFromExist(new GetFuturesSubAccountListV2Summary(), jsonObject);
     }

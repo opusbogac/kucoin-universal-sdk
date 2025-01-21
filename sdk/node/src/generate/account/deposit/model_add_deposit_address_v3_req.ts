@@ -24,6 +24,9 @@ export class AddDepositAddressV3Req implements Serializable {
      */
     amount?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.currency = null;
@@ -73,14 +76,21 @@ export class AddDepositAddressV3Req implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): AddDepositAddressV3Req {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): AddDepositAddressV3Req {
         return plainToClassFromExist(new AddDepositAddressV3Req(), jsonObject);
     }
@@ -135,6 +145,9 @@ export class AddDepositAddressV3ReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): AddDepositAddressV3Req {
         return this.obj;
     }

@@ -39,6 +39,9 @@ export class GetSpotLedgerReq implements Serializable {
      */
     pageSize?: number = 50;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetSpotLedgerReq` class.
@@ -100,14 +103,21 @@ export class GetSpotLedgerReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSpotLedgerReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSpotLedgerReq {
         return plainToClassFromExist(new GetSpotLedgerReq(), jsonObject);
     }
@@ -186,6 +196,9 @@ export class GetSpotLedgerReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetSpotLedgerReq {
         return this.obj;
     }

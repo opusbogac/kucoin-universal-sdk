@@ -10,6 +10,9 @@ export class GetMarketListResp implements Response<RestResponse> {
      */
     data: Array<string>;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.data = null;
@@ -24,14 +27,21 @@ export class GetMarketListResp implements Response<RestResponse> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this.data));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetMarketListResp {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetMarketListResp {
         return plainToClassFromExist(new GetMarketListResp(), { data: jsonObject });
     }

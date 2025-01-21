@@ -41,6 +41,9 @@ export class SubAccountTransferReq implements Serializable {
      */
     subUserId?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.clientOid = null;
@@ -111,14 +114,21 @@ export class SubAccountTransferReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): SubAccountTransferReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): SubAccountTransferReq {
         return plainToClassFromExist(new SubAccountTransferReq(), jsonObject);
     }
@@ -239,6 +249,9 @@ export class SubAccountTransferReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): SubAccountTransferReq {
         return this.obj;
     }

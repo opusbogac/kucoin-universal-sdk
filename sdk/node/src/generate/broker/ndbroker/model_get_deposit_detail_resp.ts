@@ -75,6 +75,9 @@ export class GetDepositDetailResp implements Response<RestResponse> {
      */
     createdAt: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.chain = null;
@@ -115,14 +118,21 @@ export class GetDepositDetailResp implements Response<RestResponse> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetDepositDetailResp {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetDepositDetailResp {
         return plainToClassFromExist(new GetDepositDetailResp(), jsonObject);
     }

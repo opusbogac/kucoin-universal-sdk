@@ -29,6 +29,9 @@ export class GetPublicTokenInstanceServers implements Serializable {
      */
     pingTimeout: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.endpoint = null;
@@ -41,14 +44,21 @@ export class GetPublicTokenInstanceServers implements Serializable {
         // @ts-ignore
         this.pingTimeout = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetPublicTokenInstanceServers {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetPublicTokenInstanceServers {
         return plainToClassFromExist(new GetPublicTokenInstanceServers(), jsonObject);
     }

@@ -14,6 +14,9 @@ export class GetRecentTradeHistoryOldReq implements Serializable {
      */
     pageSize?: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetRecentTradeHistoryOldReq` class.
@@ -46,14 +49,21 @@ export class GetRecentTradeHistoryOldReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetRecentTradeHistoryOldReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetRecentTradeHistoryOldReq {
         return plainToClassFromExist(new GetRecentTradeHistoryOldReq(), jsonObject);
     }
@@ -79,6 +89,9 @@ export class GetRecentTradeHistoryOldReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetRecentTradeHistoryOldReq {
         return this.obj;
     }

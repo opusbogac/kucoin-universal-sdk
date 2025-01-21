@@ -29,6 +29,9 @@ export class ModifyOrderReq implements Serializable {
      */
     newSize?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.symbol = null;
@@ -75,14 +78,21 @@ export class ModifyOrderReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): ModifyOrderReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): ModifyOrderReq {
         return plainToClassFromExist(new ModifyOrderReq(), jsonObject);
     }
@@ -132,6 +142,9 @@ export class ModifyOrderReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): ModifyOrderReq {
         return this.obj;
     }

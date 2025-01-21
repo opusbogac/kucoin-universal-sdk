@@ -29,6 +29,9 @@ export class RepayReq implements Serializable {
      */
     isHf?: boolean = false;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.currency = null;
@@ -85,14 +88,21 @@ export class RepayReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): RepayReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): RepayReq {
         return plainToClassFromExist(new RepayReq(), jsonObject);
     }
@@ -142,6 +152,9 @@ export class RepayReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): RepayReq {
         return this.obj;
     }

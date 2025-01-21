@@ -15,6 +15,9 @@ export class GetServiceStatusResp implements Response<RestResponse> {
      */
     msg: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.status = null;
@@ -31,14 +34,21 @@ export class GetServiceStatusResp implements Response<RestResponse> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetServiceStatusResp {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetServiceStatusResp {
         return plainToClassFromExist(new GetServiceStatusResp(), jsonObject);
     }

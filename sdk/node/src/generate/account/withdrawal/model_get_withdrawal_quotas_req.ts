@@ -14,6 +14,9 @@ export class GetWithdrawalQuotasReq implements Serializable {
      */
     chain?: string = 'eth';
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetWithdrawalQuotasReq` class.
@@ -46,14 +49,21 @@ export class GetWithdrawalQuotasReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetWithdrawalQuotasReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetWithdrawalQuotasReq {
         return plainToClassFromExist(new GetWithdrawalQuotasReq(), jsonObject);
     }
@@ -79,6 +89,9 @@ export class GetWithdrawalQuotasReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetWithdrawalQuotasReq {
         return this.obj;
     }

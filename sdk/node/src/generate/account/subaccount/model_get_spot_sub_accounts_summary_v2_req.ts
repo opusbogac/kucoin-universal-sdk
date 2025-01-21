@@ -14,6 +14,9 @@ export class GetSpotSubAccountsSummaryV2Req implements Serializable {
      */
     pageSize?: number = 10;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetSpotSubAccountsSummaryV2Req` class.
@@ -46,14 +49,21 @@ export class GetSpotSubAccountsSummaryV2Req implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSpotSubAccountsSummaryV2Req {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSpotSubAccountsSummaryV2Req {
         return plainToClassFromExist(new GetSpotSubAccountsSummaryV2Req(), jsonObject);
     }
@@ -79,6 +89,9 @@ export class GetSpotSubAccountsSummaryV2ReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetSpotSubAccountsSummaryV2Req {
         return this.obj;
     }

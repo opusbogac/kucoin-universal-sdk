@@ -14,6 +14,9 @@ export class GetDepositDetailReq implements Serializable {
      */
     hash?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetDepositDetailReq` class.
@@ -42,14 +45,21 @@ export class GetDepositDetailReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetDepositDetailReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetDepositDetailReq {
         return plainToClassFromExist(new GetDepositDetailReq(), jsonObject);
     }
@@ -75,6 +85,9 @@ export class GetDepositDetailReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetDepositDetailReq {
         return this.obj;
     }

@@ -14,6 +14,9 @@ export class RemoveIsolatedMarginReq implements Serializable {
      */
     withdrawAmount: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.symbol = null;
@@ -47,14 +50,21 @@ export class RemoveIsolatedMarginReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): RemoveIsolatedMarginReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): RemoveIsolatedMarginReq {
         return plainToClassFromExist(new RemoveIsolatedMarginReq(), jsonObject);
     }
@@ -80,6 +90,9 @@ export class RemoveIsolatedMarginReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): RemoveIsolatedMarginReq {
         return this.obj;
     }

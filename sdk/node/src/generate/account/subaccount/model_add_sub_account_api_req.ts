@@ -34,6 +34,9 @@ export class AddSubAccountApiReq implements Serializable {
      */
     subName: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.passphrase = null;
@@ -97,14 +100,21 @@ export class AddSubAccountApiReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): AddSubAccountApiReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): AddSubAccountApiReq {
         return plainToClassFromExist(new AddSubAccountApiReq(), jsonObject);
     }
@@ -187,6 +197,9 @@ export class AddSubAccountApiReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): AddSubAccountApiReq {
         return this.obj;
     }

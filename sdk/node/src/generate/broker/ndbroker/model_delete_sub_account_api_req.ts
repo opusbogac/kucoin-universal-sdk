@@ -14,6 +14,9 @@ export class DeleteSubAccountAPIReq implements Serializable {
      */
     apiKey?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `DeleteSubAccountAPIReq` class.
@@ -42,14 +45,21 @@ export class DeleteSubAccountAPIReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): DeleteSubAccountAPIReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): DeleteSubAccountAPIReq {
         return plainToClassFromExist(new DeleteSubAccountAPIReq(), jsonObject);
     }
@@ -75,6 +85,9 @@ export class DeleteSubAccountAPIReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): DeleteSubAccountAPIReq {
         return this.obj;
     }

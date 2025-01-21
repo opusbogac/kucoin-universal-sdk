@@ -119,6 +119,9 @@ export class GetStakingProductsData implements Serializable {
      */
     newUserOnly: GetStakingProductsData.NewUserOnlyEnum;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.id = null;
@@ -167,14 +170,21 @@ export class GetStakingProductsData implements Serializable {
         // @ts-ignore
         this.newUserOnly = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetStakingProductsData {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetStakingProductsData {
         return plainToClassFromExist(new GetStakingProductsData(), jsonObject);
     }

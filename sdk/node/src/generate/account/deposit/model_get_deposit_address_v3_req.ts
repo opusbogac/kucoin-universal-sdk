@@ -19,6 +19,9 @@ export class GetDepositAddressV3Req implements Serializable {
      */
     chain?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetDepositAddressV3Req` class.
@@ -52,14 +55,21 @@ export class GetDepositAddressV3Req implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetDepositAddressV3Req {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetDepositAddressV3Req {
         return plainToClassFromExist(new GetDepositAddressV3Req(), jsonObject);
     }
@@ -93,6 +103,9 @@ export class GetDepositAddressV3ReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetDepositAddressV3Req {
         return this.obj;
     }

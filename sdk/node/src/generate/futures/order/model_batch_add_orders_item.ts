@@ -120,6 +120,9 @@ export class BatchAddOrdersItem implements Serializable {
      */
     valueQty?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.clientOid = null;
@@ -300,14 +303,21 @@ export class BatchAddOrdersItem implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): BatchAddOrdersItem {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): BatchAddOrdersItem {
         return plainToClassFromExist(new BatchAddOrdersItem(), jsonObject);
     }
@@ -582,6 +592,9 @@ export class BatchAddOrdersItemBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): BatchAddOrdersItem {
         return this.obj;
     }

@@ -19,6 +19,9 @@ export class GetSubAccountReq implements Serializable {
      */
     pageSize?: number = 20;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetSubAccountReq` class.
@@ -60,14 +63,21 @@ export class GetSubAccountReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSubAccountReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSubAccountReq {
         return plainToClassFromExist(new GetSubAccountReq(), jsonObject);
     }
@@ -101,6 +111,9 @@ export class GetSubAccountReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetSubAccountReq {
         return this.obj;
     }

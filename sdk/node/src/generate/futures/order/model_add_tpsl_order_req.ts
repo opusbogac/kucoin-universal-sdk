@@ -120,6 +120,9 @@ export class AddTPSLOrderReq implements Serializable {
      */
     valueQty?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.clientOid = null;
@@ -300,14 +303,21 @@ export class AddTPSLOrderReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): AddTPSLOrderReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): AddTPSLOrderReq {
         return plainToClassFromExist(new AddTPSLOrderReq(), jsonObject);
     }
@@ -572,6 +582,9 @@ export class AddTPSLOrderReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): AddTPSLOrderReq {
         return this.obj;
     }

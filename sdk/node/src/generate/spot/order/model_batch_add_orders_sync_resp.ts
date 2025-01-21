@@ -12,6 +12,9 @@ export class BatchAddOrdersSyncResp implements Response<RestResponse> {
     @Type(() => BatchAddOrdersSyncData)
     data: Array<BatchAddOrdersSyncData>;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.data = null;
@@ -26,14 +29,21 @@ export class BatchAddOrdersSyncResp implements Response<RestResponse> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this.data));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): BatchAddOrdersSyncResp {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): BatchAddOrdersSyncResp {
         return plainToClassFromExist(new BatchAddOrdersSyncResp(), { data: jsonObject });
     }

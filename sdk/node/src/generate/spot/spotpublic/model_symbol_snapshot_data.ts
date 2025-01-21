@@ -214,14 +214,21 @@ export class SymbolSnapshotData implements Serializable {
         // @ts-ignore
         this.volValue = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): SymbolSnapshotData {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): SymbolSnapshotData {
         return plainToClassFromExist(new SymbolSnapshotData(), jsonObject);
     }

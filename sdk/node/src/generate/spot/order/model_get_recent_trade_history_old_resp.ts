@@ -12,6 +12,9 @@ export class GetRecentTradeHistoryOldResp implements Response<RestResponse> {
     @Type(() => GetRecentTradeHistoryOldData)
     data: Array<GetRecentTradeHistoryOldData>;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.data = null;
@@ -26,14 +29,21 @@ export class GetRecentTradeHistoryOldResp implements Response<RestResponse> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this.data));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetRecentTradeHistoryOldResp {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetRecentTradeHistoryOldResp {
         return plainToClassFromExist(new GetRecentTradeHistoryOldResp(), { data: jsonObject });
     }

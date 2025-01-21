@@ -19,6 +19,9 @@ export class BatchCancelStopOrderReq implements Serializable {
      */
     orderIds?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `BatchCancelStopOrderReq` class.
@@ -52,14 +55,21 @@ export class BatchCancelStopOrderReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): BatchCancelStopOrderReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): BatchCancelStopOrderReq {
         return plainToClassFromExist(new BatchCancelStopOrderReq(), jsonObject);
     }
@@ -93,6 +103,9 @@ export class BatchCancelStopOrderReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): BatchCancelStopOrderReq {
         return this.obj;
     }

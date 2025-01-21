@@ -49,14 +49,21 @@ export class SymbolSnapshotDataMarketChange4h implements Serializable {
         // @ts-ignore
         this.volValue = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): SymbolSnapshotDataMarketChange4h {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): SymbolSnapshotDataMarketChange4h {
         return plainToClassFromExist(new SymbolSnapshotDataMarketChange4h(), jsonObject);
     }

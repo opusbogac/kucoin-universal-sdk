@@ -110,6 +110,9 @@ export class GetSymbolResp implements Response<RestResponse> {
      */
     st: boolean;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.symbol = null;
@@ -164,14 +167,21 @@ export class GetSymbolResp implements Response<RestResponse> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSymbolResp {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSymbolResp {
         return plainToClassFromExist(new GetSymbolResp(), jsonObject);
     }

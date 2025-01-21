@@ -16,6 +16,9 @@ export class GetOrderByOrderIdReq implements Serializable {
     @Reflect.metadata('path', 'orderId')
     orderId?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetOrderByOrderIdReq` class.
@@ -44,14 +47,21 @@ export class GetOrderByOrderIdReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetOrderByOrderIdReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetOrderByOrderIdReq {
         return plainToClassFromExist(new GetOrderByOrderIdReq(), jsonObject);
     }
@@ -77,6 +87,9 @@ export class GetOrderByOrderIdReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetOrderByOrderIdReq {
         return this.obj;
     }

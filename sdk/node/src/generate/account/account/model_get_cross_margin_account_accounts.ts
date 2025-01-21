@@ -44,6 +44,9 @@ export class GetCrossMarginAccountAccounts implements Serializable {
      */
     transferInEnabled: boolean;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.currency = null;
@@ -62,14 +65,21 @@ export class GetCrossMarginAccountAccounts implements Serializable {
         // @ts-ignore
         this.transferInEnabled = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetCrossMarginAccountAccounts {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetCrossMarginAccountAccounts {
         return plainToClassFromExist(new GetCrossMarginAccountAccounts(), jsonObject);
     }

@@ -32,6 +32,9 @@ export class GetSpotSubAccountsSummaryV2Resp implements Response<RestResponse> {
     @Type(() => GetSpotSubAccountsSummaryV2Items)
     items: Array<GetSpotSubAccountsSummaryV2Items>;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.currentPage = null;
@@ -54,14 +57,21 @@ export class GetSpotSubAccountsSummaryV2Resp implements Response<RestResponse> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSpotSubAccountsSummaryV2Resp {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSpotSubAccountsSummaryV2Resp {
         return plainToClassFromExist(new GetSpotSubAccountsSummaryV2Resp(), jsonObject);
     }

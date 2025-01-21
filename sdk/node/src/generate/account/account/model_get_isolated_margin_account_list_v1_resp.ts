@@ -22,6 +22,9 @@ export class GetIsolatedMarginAccountListV1Resp implements Response<RestResponse
     @Type(() => GetIsolatedMarginAccountListV1Assets)
     assets: Array<GetIsolatedMarginAccountListV1Assets>;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.totalConversionBalance = null;
@@ -40,14 +43,21 @@ export class GetIsolatedMarginAccountListV1Resp implements Response<RestResponse
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetIsolatedMarginAccountListV1Resp {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetIsolatedMarginAccountListV1Resp {
         return plainToClassFromExist(new GetIsolatedMarginAccountListV1Resp(), jsonObject);
     }

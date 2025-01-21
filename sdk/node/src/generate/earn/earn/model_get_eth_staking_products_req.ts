@@ -9,6 +9,9 @@ export class GetETHStakingProductsReq implements Serializable {
      */
     currency?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetETHStakingProductsReq` class.
@@ -32,14 +35,21 @@ export class GetETHStakingProductsReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetETHStakingProductsReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetETHStakingProductsReq {
         return plainToClassFromExist(new GetETHStakingProductsReq(), jsonObject);
     }
@@ -57,6 +67,9 @@ export class GetETHStakingProductsReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetETHStakingProductsReq {
         return this.obj;
     }

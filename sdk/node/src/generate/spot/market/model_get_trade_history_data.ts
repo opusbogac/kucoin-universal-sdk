@@ -29,6 +29,9 @@ export class GetTradeHistoryData implements Serializable {
      */
     time: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.sequence = null;
@@ -41,14 +44,21 @@ export class GetTradeHistoryData implements Serializable {
         // @ts-ignore
         this.time = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetTradeHistoryData {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetTradeHistoryData {
         return plainToClassFromExist(new GetTradeHistoryData(), jsonObject);
     }

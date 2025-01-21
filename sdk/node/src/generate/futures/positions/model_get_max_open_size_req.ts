@@ -19,6 +19,9 @@ export class GetMaxOpenSizeReq implements Serializable {
      */
     leverage?: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetMaxOpenSizeReq` class.
@@ -52,14 +55,21 @@ export class GetMaxOpenSizeReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetMaxOpenSizeReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetMaxOpenSizeReq {
         return plainToClassFromExist(new GetMaxOpenSizeReq(), jsonObject);
     }
@@ -93,6 +103,9 @@ export class GetMaxOpenSizeReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetMaxOpenSizeReq {
         return this.obj;
     }

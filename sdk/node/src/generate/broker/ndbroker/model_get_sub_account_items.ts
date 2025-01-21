@@ -24,6 +24,9 @@ export class GetSubAccountItems implements Serializable {
      */
     level: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.accountName = null;
@@ -34,14 +37,21 @@ export class GetSubAccountItems implements Serializable {
         // @ts-ignore
         this.level = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSubAccountItems {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSubAccountItems {
         return plainToClassFromExist(new GetSubAccountItems(), jsonObject);
     }

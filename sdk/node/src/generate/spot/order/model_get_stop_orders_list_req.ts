@@ -54,6 +54,9 @@ export class GetStopOrdersListReq implements Serializable {
      */
     stop?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetStopOrdersListReq` class.
@@ -122,14 +125,21 @@ export class GetStopOrdersListReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetStopOrdersListReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetStopOrdersListReq {
         return plainToClassFromExist(new GetStopOrdersListReq(), jsonObject);
     }
@@ -264,6 +274,9 @@ export class GetStopOrdersListReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetStopOrdersListReq {
         return this.obj;
     }

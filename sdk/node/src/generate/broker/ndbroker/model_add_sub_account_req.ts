@@ -9,6 +9,9 @@ export class AddSubAccountReq implements Serializable {
      */
     accountName: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.accountName = null;
@@ -35,14 +38,21 @@ export class AddSubAccountReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): AddSubAccountReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): AddSubAccountReq {
         return plainToClassFromExist(new AddSubAccountReq(), jsonObject);
     }
@@ -60,6 +70,9 @@ export class AddSubAccountReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): AddSubAccountReq {
         return this.obj;
     }

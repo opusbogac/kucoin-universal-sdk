@@ -39,6 +39,9 @@ export class GetOcoOrderDetailByOrderIdOrders implements Serializable {
      */
     status: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.id = null;
@@ -55,14 +58,21 @@ export class GetOcoOrderDetailByOrderIdOrders implements Serializable {
         // @ts-ignore
         this.status = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetOcoOrderDetailByOrderIdOrders {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetOcoOrderDetailByOrderIdOrders {
         return plainToClassFromExist(new GetOcoOrderDetailByOrderIdOrders(), jsonObject);
     }

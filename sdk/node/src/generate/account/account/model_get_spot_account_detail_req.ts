@@ -11,6 +11,9 @@ export class GetSpotAccountDetailReq implements Serializable {
     @Reflect.metadata('path', 'accountId')
     accountId?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetSpotAccountDetailReq` class.
@@ -34,14 +37,21 @@ export class GetSpotAccountDetailReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSpotAccountDetailReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSpotAccountDetailReq {
         return plainToClassFromExist(new GetSpotAccountDetailReq(), jsonObject);
     }
@@ -59,6 +69,9 @@ export class GetSpotAccountDetailReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetSpotAccountDetailReq {
         return this.obj;
     }

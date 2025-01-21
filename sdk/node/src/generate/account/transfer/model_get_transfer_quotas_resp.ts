@@ -30,6 +30,9 @@ export class GetTransferQuotasResp implements Response<RestResponse> {
      */
     transferable: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.currency = null;
@@ -52,14 +55,21 @@ export class GetTransferQuotasResp implements Response<RestResponse> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetTransferQuotasResp {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetTransferQuotasResp {
         return plainToClassFromExist(new GetTransferQuotasResp(), jsonObject);
     }

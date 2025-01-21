@@ -39,6 +39,9 @@ export class GetClosedOrdersReq implements Serializable {
      */
     endAt?: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetClosedOrdersReq` class.
@@ -96,14 +99,21 @@ export class GetClosedOrdersReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetClosedOrdersReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetClosedOrdersReq {
         return plainToClassFromExist(new GetClosedOrdersReq(), jsonObject);
     }
@@ -192,6 +202,9 @@ export class GetClosedOrdersReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetClosedOrdersReq {
         return this.obj;
     }

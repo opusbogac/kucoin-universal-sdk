@@ -9,6 +9,9 @@ export class GetPositionListReq implements Serializable {
      */
     currency?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetPositionListReq` class.
@@ -32,14 +35,21 @@ export class GetPositionListReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetPositionListReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetPositionListReq {
         return plainToClassFromExist(new GetPositionListReq(), jsonObject);
     }
@@ -57,6 +67,9 @@ export class GetPositionListReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetPositionListReq {
         return this.obj;
     }

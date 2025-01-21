@@ -14,6 +14,9 @@ export class SetDCPReq implements Serializable {
      */
     symbols?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.timeout = null;
@@ -45,14 +48,21 @@ export class SetDCPReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): SetDCPReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): SetDCPReq {
         return plainToClassFromExist(new SetDCPReq(), jsonObject);
     }
@@ -78,6 +88,9 @@ export class SetDCPReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): SetDCPReq {
         return this.obj;
     }

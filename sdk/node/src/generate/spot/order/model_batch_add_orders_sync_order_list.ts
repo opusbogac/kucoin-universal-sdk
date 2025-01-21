@@ -85,6 +85,9 @@ export class BatchAddOrdersSyncOrderList implements Serializable {
      */
     funds?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.symbol = null;
@@ -208,14 +211,21 @@ export class BatchAddOrdersSyncOrderList implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): BatchAddOrdersSyncOrderList {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): BatchAddOrdersSyncOrderList {
         return plainToClassFromExist(new BatchAddOrdersSyncOrderList(), jsonObject);
     }
@@ -410,6 +420,9 @@ export class BatchAddOrdersSyncOrderListBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): BatchAddOrdersSyncOrderList {
         return this.obj;
     }

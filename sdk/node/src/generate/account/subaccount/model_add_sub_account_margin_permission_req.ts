@@ -9,6 +9,9 @@ export class AddSubAccountMarginPermissionReq implements Serializable {
      */
     uid: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.uid = null;
@@ -35,14 +38,21 @@ export class AddSubAccountMarginPermissionReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): AddSubAccountMarginPermissionReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): AddSubAccountMarginPermissionReq {
         return plainToClassFromExist(new AddSubAccountMarginPermissionReq(), jsonObject);
     }
@@ -60,6 +70,9 @@ export class AddSubAccountMarginPermissionReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): AddSubAccountMarginPermissionReq {
         return this.obj;
     }

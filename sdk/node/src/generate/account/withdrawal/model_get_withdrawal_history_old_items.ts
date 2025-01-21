@@ -39,15 +39,25 @@ export class GetWithdrawalHistoryOldItems implements Serializable {
      */
     status?: GetWithdrawalHistoryOldItems.StatusEnum;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetWithdrawalHistoryOldItems {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetWithdrawalHistoryOldItems {
         return plainToClassFromExist(new GetWithdrawalHistoryOldItems(), jsonObject);
     }

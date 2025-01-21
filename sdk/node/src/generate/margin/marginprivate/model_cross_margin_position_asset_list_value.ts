@@ -25,14 +25,21 @@ export class CrossMarginPositionAssetListValue implements Serializable {
         // @ts-ignore
         this.hold = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): CrossMarginPositionAssetListValue {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): CrossMarginPositionAssetListValue {
         return plainToClassFromExist(new CrossMarginPositionAssetListValue(), jsonObject);
     }

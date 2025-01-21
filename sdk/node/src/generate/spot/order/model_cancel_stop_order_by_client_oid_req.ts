@@ -14,6 +14,9 @@ export class CancelStopOrderByClientOidReq implements Serializable {
      */
     clientOid?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `CancelStopOrderByClientOidReq` class.
@@ -42,14 +45,21 @@ export class CancelStopOrderByClientOidReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): CancelStopOrderByClientOidReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): CancelStopOrderByClientOidReq {
         return plainToClassFromExist(new CancelStopOrderByClientOidReq(), jsonObject);
     }
@@ -75,6 +85,9 @@ export class CancelStopOrderByClientOidReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): CancelStopOrderByClientOidReq {
         return this.obj;
     }

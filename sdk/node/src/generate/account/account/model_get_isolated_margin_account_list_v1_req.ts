@@ -10,6 +10,9 @@ export class GetIsolatedMarginAccountListV1Req implements Serializable {
     balanceCurrency?: GetIsolatedMarginAccountListV1Req.BalanceCurrencyEnum =
         GetIsolatedMarginAccountListV1Req.BalanceCurrencyEnum.BTC;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetIsolatedMarginAccountListV1Req` class.
@@ -39,14 +42,21 @@ export class GetIsolatedMarginAccountListV1Req implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetIsolatedMarginAccountListV1Req {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetIsolatedMarginAccountListV1Req {
         return plainToClassFromExist(new GetIsolatedMarginAccountListV1Req(), jsonObject);
     }
@@ -83,6 +93,9 @@ export class GetIsolatedMarginAccountListV1ReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetIsolatedMarginAccountListV1Req {
         return this.obj;
     }

@@ -34,6 +34,9 @@ export class GetMarginAccountDetailAccounts implements Serializable {
      */
     maxBorrowSize: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.currency = null;
@@ -48,14 +51,21 @@ export class GetMarginAccountDetailAccounts implements Serializable {
         // @ts-ignore
         this.maxBorrowSize = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetMarginAccountDetailAccounts {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetMarginAccountDetailAccounts {
         return plainToClassFromExist(new GetMarginAccountDetailAccounts(), jsonObject);
     }

@@ -9,6 +9,9 @@ export class AddSubAccountFuturesPermissionReq implements Serializable {
      */
     uid: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.uid = null;
@@ -37,14 +40,21 @@ export class AddSubAccountFuturesPermissionReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): AddSubAccountFuturesPermissionReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): AddSubAccountFuturesPermissionReq {
         return plainToClassFromExist(new AddSubAccountFuturesPermissionReq(), jsonObject);
     }
@@ -62,6 +72,9 @@ export class AddSubAccountFuturesPermissionReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): AddSubAccountFuturesPermissionReq {
         return this.obj;
     }

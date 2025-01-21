@@ -9,6 +9,9 @@ export class GetSymbolsWithOpenOrderReq implements Serializable {
      */
     tradeType?: GetSymbolsWithOpenOrderReq.TradeTypeEnum;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetSymbolsWithOpenOrderReq` class.
@@ -32,14 +35,21 @@ export class GetSymbolsWithOpenOrderReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSymbolsWithOpenOrderReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSymbolsWithOpenOrderReq {
         return plainToClassFromExist(new GetSymbolsWithOpenOrderReq(), jsonObject);
     }
@@ -72,6 +82,9 @@ export class GetSymbolsWithOpenOrderReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetSymbolsWithOpenOrderReq {
         return this.obj;
     }

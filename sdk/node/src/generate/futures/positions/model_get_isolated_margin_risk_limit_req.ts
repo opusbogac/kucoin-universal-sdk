@@ -11,6 +11,9 @@ export class GetIsolatedMarginRiskLimitReq implements Serializable {
     @Reflect.metadata('path', 'symbol')
     symbol?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetIsolatedMarginRiskLimitReq` class.
@@ -34,14 +37,21 @@ export class GetIsolatedMarginRiskLimitReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetIsolatedMarginRiskLimitReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetIsolatedMarginRiskLimitReq {
         return plainToClassFromExist(new GetIsolatedMarginRiskLimitReq(), jsonObject);
     }
@@ -59,6 +69,9 @@ export class GetIsolatedMarginRiskLimitReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetIsolatedMarginRiskLimitReq {
         return this.obj;
     }

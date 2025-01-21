@@ -14,6 +14,9 @@ export class GetSpotAccountListReq implements Serializable {
      */
     type?: GetSpotAccountListReq.TypeEnum;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetSpotAccountListReq` class.
@@ -42,14 +45,21 @@ export class GetSpotAccountListReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSpotAccountListReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSpotAccountListReq {
         return plainToClassFromExist(new GetSpotAccountListReq(), jsonObject);
     }
@@ -88,6 +98,9 @@ export class GetSpotAccountListReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetSpotAccountListReq {
         return this.obj;
     }

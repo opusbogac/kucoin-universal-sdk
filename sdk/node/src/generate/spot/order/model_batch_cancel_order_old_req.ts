@@ -14,6 +14,9 @@ export class BatchCancelOrderOldReq implements Serializable {
      */
     tradeType?: BatchCancelOrderOldReq.TradeTypeEnum = BatchCancelOrderOldReq.TradeTypeEnum.TRADE;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `BatchCancelOrderOldReq` class.
@@ -46,14 +49,21 @@ export class BatchCancelOrderOldReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): BatchCancelOrderOldReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): BatchCancelOrderOldReq {
         return plainToClassFromExist(new BatchCancelOrderOldReq(), jsonObject);
     }
@@ -96,6 +106,9 @@ export class BatchCancelOrderOldReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): BatchCancelOrderOldReq {
         return this.obj;
     }

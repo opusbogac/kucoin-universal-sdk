@@ -14,6 +14,9 @@ export class GetFiatPriceReq implements Serializable {
      */
     currencies?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetFiatPriceReq` class.
@@ -46,14 +49,21 @@ export class GetFiatPriceReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetFiatPriceReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetFiatPriceReq {
         return plainToClassFromExist(new GetFiatPriceReq(), jsonObject);
     }
@@ -79,6 +89,9 @@ export class GetFiatPriceReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetFiatPriceReq {
         return this.obj;
     }

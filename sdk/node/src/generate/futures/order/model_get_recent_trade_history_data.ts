@@ -124,6 +124,9 @@ export class GetRecentTradeHistoryData implements Serializable {
      */
     createdAt: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.symbol = null;
@@ -174,14 +177,21 @@ export class GetRecentTradeHistoryData implements Serializable {
         // @ts-ignore
         this.createdAt = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetRecentTradeHistoryData {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetRecentTradeHistoryData {
         return plainToClassFromExist(new GetRecentTradeHistoryData(), jsonObject);
     }

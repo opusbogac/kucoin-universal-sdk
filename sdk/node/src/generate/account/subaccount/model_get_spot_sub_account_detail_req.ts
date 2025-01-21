@@ -16,6 +16,9 @@ export class GetSpotSubAccountDetailReq implements Serializable {
      */
     includeBaseAmount?: boolean;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetSpotSubAccountDetailReq` class.
@@ -44,14 +47,21 @@ export class GetSpotSubAccountDetailReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetSpotSubAccountDetailReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetSpotSubAccountDetailReq {
         return plainToClassFromExist(new GetSpotSubAccountDetailReq(), jsonObject);
     }
@@ -77,6 +87,9 @@ export class GetSpotSubAccountDetailReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetSpotSubAccountDetailReq {
         return this.obj;
     }

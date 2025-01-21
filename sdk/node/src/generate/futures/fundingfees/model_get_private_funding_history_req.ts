@@ -39,6 +39,9 @@ export class GetPrivateFundingHistoryReq implements Serializable {
      */
     maxCount?: number;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetPrivateFundingHistoryReq` class.
@@ -92,14 +95,21 @@ export class GetPrivateFundingHistoryReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetPrivateFundingHistoryReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetPrivateFundingHistoryReq {
         return plainToClassFromExist(new GetPrivateFundingHistoryReq(), jsonObject);
     }
@@ -165,6 +175,9 @@ export class GetPrivateFundingHistoryReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetPrivateFundingHistoryReq {
         return this.obj;
     }

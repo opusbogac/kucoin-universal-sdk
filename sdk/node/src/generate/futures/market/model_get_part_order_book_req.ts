@@ -16,6 +16,9 @@ export class GetPartOrderBookReq implements Serializable {
     @Reflect.metadata('path', 'size')
     size?: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * Creates a new instance of the `GetPartOrderBookReq` class.
@@ -44,14 +47,21 @@ export class GetPartOrderBookReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetPartOrderBookReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetPartOrderBookReq {
         return plainToClassFromExist(new GetPartOrderBookReq(), jsonObject);
     }
@@ -77,6 +87,9 @@ export class GetPartOrderBookReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): GetPartOrderBookReq {
         return this.obj;
     }

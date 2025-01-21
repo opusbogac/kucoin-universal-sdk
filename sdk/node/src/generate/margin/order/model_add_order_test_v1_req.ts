@@ -89,6 +89,9 @@ export class AddOrderTestV1Req implements Serializable {
      */
     marginModel?: AddOrderTestV1Req.MarginModelEnum = AddOrderTestV1Req.MarginModelEnum.CROSS;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.clientOid = null;
@@ -231,14 +234,21 @@ export class AddOrderTestV1Req implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): AddOrderTestV1Req {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): AddOrderTestV1Req {
         return plainToClassFromExist(new AddOrderTestV1Req(), jsonObject);
     }
@@ -453,6 +463,9 @@ export class AddOrderTestV1ReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): AddOrderTestV1Req {
         return this.obj;
     }

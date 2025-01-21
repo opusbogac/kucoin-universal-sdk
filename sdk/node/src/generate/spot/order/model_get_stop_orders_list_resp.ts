@@ -32,6 +32,9 @@ export class GetStopOrdersListResp implements Response<RestResponse> {
     @Type(() => GetStopOrdersListItems)
     items?: Array<GetStopOrdersListItems>;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {}
     /**
      * common response
@@ -43,14 +46,21 @@ export class GetStopOrdersListResp implements Response<RestResponse> {
         this.commonResponse = response;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetStopOrdersListResp {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetStopOrdersListResp {
         return plainToClassFromExist(new GetStopOrdersListResp(), jsonObject);
     }

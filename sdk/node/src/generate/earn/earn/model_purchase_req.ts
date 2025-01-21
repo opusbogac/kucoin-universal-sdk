@@ -19,6 +19,9 @@ export class PurchaseReq implements Serializable {
      */
     accountType: PurchaseReq.AccountTypeEnum;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.productId = null;
@@ -59,14 +62,21 @@ export class PurchaseReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): PurchaseReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): PurchaseReq {
         return plainToClassFromExist(new PurchaseReq(), jsonObject);
     }
@@ -113,6 +123,9 @@ export class PurchaseReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): PurchaseReq {
         return this.obj;
     }

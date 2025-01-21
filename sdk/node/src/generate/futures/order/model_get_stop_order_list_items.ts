@@ -194,6 +194,9 @@ export class GetStopOrderListItems implements Serializable {
      */
     reduceOnly: boolean;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.id = null;
@@ -272,14 +275,21 @@ export class GetStopOrderListItems implements Serializable {
         // @ts-ignore
         this.reduceOnly = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetStopOrderListItems {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetStopOrderListItems {
         return plainToClassFromExist(new GetStopOrderListItems(), jsonObject);
     }

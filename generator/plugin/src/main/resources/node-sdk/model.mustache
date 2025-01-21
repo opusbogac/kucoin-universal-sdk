@@ -31,6 +31,9 @@ export class {{classname}} implements Serializable{
     {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{#defaultValue}} = {{#isEnum}}{{classname}}.{{/isEnum}}{{{.}}}{{/defaultValue}};
     {{{vendorExtensions.x-default-value}}}
 {{/vars}}
+    /**
+    * Private constructor, please use the corresponding static methods to construct the object.
+    */
     private constructor() {
 {{#vars}}
     {{#required}}
@@ -51,14 +54,21 @@ export class {{classname}} implements Serializable{
     }
 
 {{#vendorExtensions.x-original-response}}
+    /**
+    * Convert the object to a JSON string.
+    */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this.data));
     }
-
+    /**
+    * Create an object from a JSON string.
+    */
     static fromJson(input: string): {{classname}} {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+    * Create an object from Js Object.
+    */
     static fromObject(jsonObject: Object): {{classname}} {
         return plainToClassFromExist(new {{classname}}(), {data : jsonObject});
     }
@@ -107,14 +117,21 @@ export class {{classname}} implements Serializable{
     }
 
 {{#vendorExtensions.x-request-raw-array}}
+    /**
+    * Convert the object to a JSON string.
+    */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this.items));
     }
-
+    /**
+    * Create an object from a JSON string.
+    */
     static fromJson(input: string): {{classname}} {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+    * Create an object from Js Object.
+    */
     static fromObject(jsonObject: Object): {{classname}} {
         return plainToClassFromExist(new {{classname}}(), {items: jsonObject});
     }
@@ -123,14 +140,21 @@ export class {{classname}} implements Serializable{
 {{/vendorExtensions.x-request-model}}
 {{^vendorExtensions.x-original-response}}
 {{^vendorExtensions.x-request-raw-array}}
+    /**
+    * Convert the object to a JSON string.
+    */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+    * Create an object from a JSON string.
+    */
     static fromJson(input: string): {{classname}} {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+    * Create an object from Js Object.
+    */
     static fromObject(jsonObject: Object): {{classname}} {
         return plainToClassFromExist(new {{classname}}(), jsonObject);
     }
@@ -171,6 +195,9 @@ export class {{classname}}Builder {
     }
 
 {{/vars}}
+    /**
+    * Get the final object.
+    */
     build():{{classname}} {
         return this.obj;
     }

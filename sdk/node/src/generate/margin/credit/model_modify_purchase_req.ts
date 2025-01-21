@@ -19,6 +19,9 @@ export class ModifyPurchaseReq implements Serializable {
      */
     purchaseOrderNo: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.currency = null;
@@ -59,14 +62,21 @@ export class ModifyPurchaseReq implements Serializable {
         return obj;
     }
 
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): ModifyPurchaseReq {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): ModifyPurchaseReq {
         return plainToClassFromExist(new ModifyPurchaseReq(), jsonObject);
     }
@@ -100,6 +110,9 @@ export class ModifyPurchaseReqBuilder {
         return this;
     }
 
+    /**
+     * Get the final object.
+     */
     build(): ModifyPurchaseReq {
         return this.obj;
     }

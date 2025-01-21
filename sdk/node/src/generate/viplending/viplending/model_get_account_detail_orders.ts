@@ -24,6 +24,9 @@ export class GetAccountDetailOrders implements Serializable {
      */
     currency: string;
 
+    /**
+     * Private constructor, please use the corresponding static methods to construct the object.
+     */
     private constructor() {
         // @ts-ignore
         this.orderId = null;
@@ -34,14 +37,21 @@ export class GetAccountDetailOrders implements Serializable {
         // @ts-ignore
         this.currency = null;
     }
+    /**
+     * Convert the object to a JSON string.
+     */
     toJson(): string {
         return JSON.stringify(instanceToPlain(this));
     }
-
+    /**
+     * Create an object from a JSON string.
+     */
     static fromJson(input: string): GetAccountDetailOrders {
         return this.fromObject(JSON.parse(input));
     }
-
+    /**
+     * Create an object from Js Object.
+     */
     static fromObject(jsonObject: Object): GetAccountDetailOrders {
         return plainToClassFromExist(new GetAccountDetailOrders(), jsonObject);
     }
