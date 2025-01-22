@@ -5,8 +5,12 @@ import { RestRateLimit, RestResponse } from '@model/common';
 import { DomainType } from '@model/constant';
 import { DEFAULT_TRANSPORT_OPTION, TransportOption } from '@model/transport_option';
 import { KcSigner } from './default_signer';
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios';
-import axios from 'axios';
+import axios, {
+    AxiosInstance,
+    AxiosRequestConfig,
+    AxiosResponse,
+    CreateAxiosDefaults,
+} from 'axios';
 import 'reflect-metadata';
 import axiosRetry from 'axios-retry';
 import { Agent as HttpAgent } from 'http';
@@ -45,20 +49,28 @@ export class DefaultTransport implements Transport {
             },
             httpAgent: trans_option.keepAlive
                 ? new HttpAgent({
-                      maxSockets: trans_option.maxConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxConnsPerHost,
-                      maxFreeSockets: trans_option.maxIdleConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxIdleConnsPerHost,
+                      maxSockets:
+                          trans_option.maxConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxConnsPerHost,
+                      maxFreeSockets:
+                          trans_option.maxIdleConnsPerHost ||
+                          DEFAULT_TRANSPORT_OPTION.maxIdleConnsPerHost,
                       timeout: trans_option.timeout || DEFAULT_TRANSPORT_OPTION.timeout,
                       keepAlive: true,
-                      keepAliveMsecs: trans_option.idleConnTimeout || DEFAULT_TRANSPORT_OPTION.idleConnTimeout,
+                      keepAliveMsecs:
+                          trans_option.idleConnTimeout || DEFAULT_TRANSPORT_OPTION.idleConnTimeout,
                   })
                 : undefined,
             httpsAgent: trans_option.keepAlive
                 ? new HttpsAgent({
-                      maxSockets: trans_option.maxConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxConnsPerHost,
-                      maxFreeSockets: trans_option.maxIdleConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxIdleConnsPerHost,
+                      maxSockets:
+                          trans_option.maxConnsPerHost || DEFAULT_TRANSPORT_OPTION.maxConnsPerHost,
+                      maxFreeSockets:
+                          trans_option.maxIdleConnsPerHost ||
+                          DEFAULT_TRANSPORT_OPTION.maxIdleConnsPerHost,
                       timeout: trans_option.timeout || DEFAULT_TRANSPORT_OPTION.timeout,
                       keepAlive: true,
-                      keepAliveMsecs: trans_option.idleConnTimeout || DEFAULT_TRANSPORT_OPTION.idleConnTimeout,
+                      keepAliveMsecs:
+                          trans_option.idleConnTimeout || DEFAULT_TRANSPORT_OPTION.idleConnTimeout,
                   })
                 : undefined,
         } as CreateAxiosDefaults);
@@ -86,40 +98,17 @@ export class DefaultTransport implements Transport {
             },
         });
 
-        // todo: Use user interceptors, avoid defaults.
-        instance.interceptors.request.use(
-            (config) => {
-                console.log('[REQUEST]', {
-                    method: config.method?.toUpperCase(),
-                    url: config.url,
-                });
-                return config;
-            },
-            (error) => {
-                console.error('[REQUEST ERROR]', error.message);
-                return Promise.reject(error);
-            },
-        );
-
-        instance.interceptors.response.use(
-            (response) => {
-                if (response.status >= 400) {
-                    console.error('[RESPONSE ERROR]', {
-                        status: response.status,
-                        data: response.data,
-                    });
-                }
-                return response;
-            },
-            (error) => {
-                console.error('[RESPONSE ERROR]', {
-                    message: error.message,
-                    status: error.response?.status,
-                    data: error.response?.data,
-                });
-                return Promise.reject(error);
-            },
-        );
+        this.transportOption.interceptors?.forEach((interceptor) => {
+            instance.interceptors.request.use(
+                interceptor.before.onFulfilled,
+                interceptor.before.onRejected,
+                interceptor.before.options,
+            );
+            instance.interceptors.response.use(
+                interceptor.after.onFulfilled,
+                interceptor.after.onRejected,
+            );
+        });
 
         return instance;
     }
@@ -207,7 +196,7 @@ export class DefaultTransport implements Transport {
                 if (requestObj) {
                     // create a new object for query parameters
                     const queryObj: Record<string, any> = { ...requestObj };
-                    
+
                     // check path variables and remove from query
                     const pathVarPattern = /{([^}]+)}/g;
                     let match;
@@ -272,24 +261,16 @@ export class DefaultTransport implements Transport {
         response: AxiosResponse,
         responseCls: StaticDeserializable<T>,
     ): Response<any> {
-        // Initialize response object first
-        let responseObj = responseCls.fromObject({});
-
         const commonResponse = RestResponse.fromJson(JSON.stringify(response.data));
-
         commonResponse.rateLimit = this.processLimit(response.headers);
 
-        if (commonResponse.data === null) {
+        if (commonResponse.data == null) {
+            let responseObj = responseCls.fromObject({});
             responseObj.setCommonResponse(commonResponse);
             return responseObj;
         }
 
-        try{
-            responseObj = responseCls.fromObject(commonResponse.data);
-        }catch(e){
-            throw e;
-        }
-        
+        let responseObj = responseCls.fromObject(commonResponse.data);
         responseObj.setCommonResponse(commonResponse);
 
         return responseObj;
@@ -305,6 +286,7 @@ export class DefaultTransport implements Transport {
         requestJson: boolean,
         args?: any,
     ): Promise<any> {
+        method = method.toUpperCase();
         return Promise.resolve()
             .then((): AxiosRequestConfig<any> => {
                 const endpoint = this.getEndpoint(domain);

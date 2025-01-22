@@ -1,20 +1,41 @@
+import { AxiosInterceptorOptions, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+
 /**
- * Interceptor interface for defining HTTP request interceptors
+ * Describes the structure for Axios request interceptors.
+ * @template T - The type of the request configuration.
+ */
+export interface AxiosRequestInterceptor {
+    onFulfilled?:
+        | ((
+              value: InternalAxiosRequestConfig,
+          ) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>)
+        | null;
+    onRejected?: ((error: any) => any) | null;
+    options?: AxiosInterceptorOptions;
+}
+
+/**
+ * Describes the structure for Axios response interceptors.
+ * @template T - The type of the response.
+ */
+export interface AxiosResponseInterceptor {
+    onFulfilled?: ((value: AxiosResponse) => AxiosResponse | Promise<AxiosResponse>) | null;
+    onRejected?: ((error: any) => any) | null;
+}
+
+/**
+ * Represents HTTP interceptors for requests and responses.
  */
 export interface Interceptor {
     /**
-     * Before the request is sent. Allows modification of the request before sending
+     * Handles modifications to the request before sending.
      */
-    before(req: Request): Promise<Request> | Request;
+    before: AxiosRequestInterceptor;
 
     /**
-     * After the request is completed. Allows processing of the response or error.
+     * Handles processing of the response or errors.
      */
-    after(
-        req: Request,
-        resp: Response | null,
-        err?: Error,
-    ): Promise<Response | null> | Response | null;
+    after: AxiosResponseInterceptor;
 }
 
 /**
