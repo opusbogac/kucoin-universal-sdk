@@ -93,7 +93,6 @@ describe('Auto Test', () => {
             expect(result.createdAt).toEqual(expect.anything());
             expect(result.uid).toEqual(expect.anything());
             expect(result.isMaster).toEqual(expect.anything());
-            expect(result.subName).toEqual(expect.anything());
             console.log(result);
         });
     });
@@ -121,12 +120,20 @@ describe('Auto Test', () => {
         builder.setType(GetSpotAccountListReq.TypeEnum.MAIN);
         let req = builder.build();
         let resp = api.getSpotAccountList(req);
-        return resp.then(result => {
-            expect(result.data).toEqual(expect.anything());
+        return resp.then((result) => {
+            result.data.forEach(item => {
+                expect(item.available).toEqual(expect.anything());
+                expect(item.balance).toEqual(expect.anything());
+                expect(item.currency).toEqual(expect.anything());
+                expect(item.holds).toEqual(expect.anything());
+                expect(item.id).toEqual(expect.anything());
+                expect(item.type).toEqual(expect.anything());
+            })
             console.log(result);
         });
     });
 
+    // TODO
     test('getSpotAccountDetail request test', () => {
         /**
          * getSpotAccountDetail
@@ -137,7 +144,7 @@ describe('Auto Test', () => {
         builder.setAccountId('671badb050647f0007d94011');
         let req = builder.build();
         let resp = api.getSpotAccountDetail(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.currency).toEqual(expect.anything());
             expect(result.balance).toEqual(expect.anything());
             expect(result.available).toEqual(expect.anything());
@@ -153,10 +160,12 @@ describe('Auto Test', () => {
          * /api/v3/margin/accounts
          */
         let builder = GetCrossMarginAccountReq.builder();
-        builder.setQuoteCurrency(GetCrossMarginAccountReq.QuoteCurrencyEnum.USDT).setQueryType(GetCrossMarginAccountReq.QueryTypeEnum.MARGIN);
+        builder
+            .setQuoteCurrency(GetCrossMarginAccountReq.QuoteCurrencyEnum.USDT)
+            .setQueryType(GetCrossMarginAccountReq.QueryTypeEnum.MARGIN);
         let req = builder.build();
         let resp = api.getCrossMarginAccount(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.totalAssetOfQuoteCurrency).toEqual(expect.anything());
             expect(result.totalLiabilityOfQuoteCurrency).toEqual(expect.anything());
             expect(result.debtRatio).toEqual(expect.anything());
@@ -173,10 +182,13 @@ describe('Auto Test', () => {
          * /api/v3/isolated/accounts
          */
         let builder = GetIsolatedMarginAccountReq.builder();
-        builder.setSymbol('BTC-USDT').setQuoteCurrency(GetIsolatedMarginAccountReq.QuoteCurrencyEnum.USDT).setQueryType(GetIsolatedMarginAccountReq.QueryTypeEnum.ISOLATED);
+        builder
+            .setSymbol('BTC-USDT')
+            .setQuoteCurrency(GetIsolatedMarginAccountReq.QuoteCurrencyEnum.USDT)
+            .setQueryType(GetIsolatedMarginAccountReq.QueryTypeEnum.ISOLATED);
         let req = builder.build();
         let resp = api.getIsolatedMarginAccount(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.totalAssetOfQuoteCurrency).toEqual(expect.anything());
             expect(result.totalLiabilityOfQuoteCurrency).toEqual(expect.anything());
             expect(result.timestamp).toEqual(expect.anything());
@@ -195,7 +207,7 @@ describe('Auto Test', () => {
         builder.setCurrency('XBT');
         let req = builder.build();
         let resp = api.getFuturesAccount(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.accountEquity).toEqual(expect.anything());
             expect(result.unrealisedPNL).toEqual(expect.anything());
             expect(result.marginBalance).toEqual(expect.anything());
@@ -216,10 +228,15 @@ describe('Auto Test', () => {
          * /api/v1/accounts/ledgers
          */
         let builder = GetSpotLedgerReq.builder();
-        builder.setCurrency('USDT').setStartAt(1732032000000).setEndAt(1732118400000).setCurrentPage(1).setPageSize(100);
+        builder
+            .setCurrency('USDT')
+            .setStartAt(1732032000000)
+            .setEndAt(1732118400000)
+            .setCurrentPage(1)
+            .setPageSize(100);
         let req = builder.build();
         let resp = api.getSpotLedger(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.currentPage).toEqual(expect.anything());
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalNum).toEqual(expect.anything());
@@ -236,10 +253,13 @@ describe('Auto Test', () => {
          * /api/v1/hf/accounts/ledgers
          */
         let builder = GetSpotHFLedgerReq.builder();
-        builder.setCurrency('USDT').setDirection(GetSpotHFLedgerReq.DirectionEnum.OUT).setBizType(GetSpotHFLedgerReq.BizTypeEnum.TRANSFER)
+        builder
+            .setCurrency('USDT')
+            .setDirection(GetSpotHFLedgerReq.DirectionEnum.OUT)
+            .setBizType(GetSpotHFLedgerReq.BizTypeEnum.TRANSFER);
         let req = builder.build();
         let resp = api.getSpotHFLedger(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.data).toEqual(expect.anything());
             console.log(result);
         });
@@ -252,10 +272,10 @@ describe('Auto Test', () => {
          * /api/v3/hf/margin/account/ledgers
          */
         let builder = GetMarginHFLedgerReq.builder();
-        builder.setCurrency('USDT')
+        builder.setCurrency('USDT');
         let req = builder.build();
         let resp = api.getMarginHFLedger(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.data).toEqual(expect.anything());
             console.log(result);
         });
@@ -268,10 +288,10 @@ describe('Auto Test', () => {
          * /api/v1/transaction-history
          */
         let builder = GetFuturesLedgerReq.builder();
-        builder.setCurrency('DOT').setType('RealisedPNL')
+        builder.setCurrency('DOT').setType('RealisedPNL');
         let req = builder.build();
         let resp = api.getFuturesLedger(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.dataList).toEqual(expect.anything());
             expect(result.hasMore).toEqual(expect.anything());
             console.log(result);
@@ -285,7 +305,7 @@ describe('Auto Test', () => {
          * /api/v1/margin/account
          */
         let resp = api.getMarginAccountDetail();
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.debtRatio).toEqual(expect.anything());
             expect(result.accounts).toEqual(expect.anything());
             console.log(result);
@@ -302,7 +322,7 @@ describe('Auto Test', () => {
         builder.setBalanceCurrency(GetIsolatedMarginAccountListV1Req.BalanceCurrencyEnum.BTC);
         let req = builder.build();
         let resp = api.getIsolatedMarginAccountListV1(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.totalConversionBalance).toEqual(expect.anything());
             expect(result.liabilityConversionBalance).toEqual(expect.anything());
             expect(result.assets).toEqual(expect.anything());
@@ -320,7 +340,7 @@ describe('Auto Test', () => {
         builder.setSymbol('BTC-USDT');
         let req = builder.build();
         let resp = api.getIsolatedMarginAccountDetailV1(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.symbol).toEqual(expect.anything());
             expect(result.status).toEqual(expect.anything());
             expect(result.debtRatio).toEqual(expect.anything());

@@ -37,27 +37,45 @@ export class RestResponse {
     /**
      * Optional response message
      */
-    message?: string;
+    msg?: string;
 
     static fromJson(json: string): RestResponse {
         return plainToInstance(RestResponse, JSON.parse(json));
     }
+
+    checkRestResponseError() {
+        /**
+         * Code for success
+         */
+        const CodeSuccess = '200000';
+        if (this.code === CodeSuccess) {
+            return;
+        }
+        throw new RestError(
+            this,
+            `Server returned error, code: {${this.code}}, message: {${this.msg || 'unknown'}}`,
+        );
+    }
 }
 
-/**
- * Function to check if a RestResponse indicates an error.
- */
-export function checkRestResponseError(resp: RestResponse): Error | null {
-    /**
-     * Code for success
-     */
-    const CodeSuccess = '200000';
-    if (resp.code === CodeSuccess) {
-        return null;
+export class RestError extends Error {
+    constructor(
+        private response: RestResponse | null,
+        private msg?: string,
+    ) {
+        super(msg);
     }
-    return new Error(
-        `Server returned error, code: {${resp.code}}, message: {${resp.message || 'unknown'}}`,
-    );
+
+    toString() {
+        if (this.response) {
+            return `request error, server code: ${this.response.code}, server msg: ${this.response.msg}, context msg: ${this.msg}`;
+        }
+        return `request error, context msg: ${this.msg}`;
+    }
+
+    getCommonResponse() {
+        return this.response;
+    }
 }
 
 /**

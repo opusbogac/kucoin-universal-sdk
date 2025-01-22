@@ -1,7 +1,7 @@
 import { Transport } from '@internal/interfaces/transport';
 import { Response, Serializable, StaticDeserializable } from '@internal/interfaces/serializable';
 import { ClientOption } from '@model/client_option';
-import { RestRateLimit, RestResponse } from '@model/common';
+import { RestError, RestRateLimit, RestResponse } from '@model/common';
 import { DomainType } from '@model/constant';
 import { DEFAULT_TRANSPORT_OPTION, TransportOption } from '@model/transport_option';
 import { KcSigner } from './default_signer';
@@ -261,8 +261,13 @@ export class DefaultTransport implements Transport {
         response: AxiosResponse,
         responseCls: StaticDeserializable<T>,
     ): Response<any> {
+        if (response.status != 200) {
+            throw new Error(`Invalid status code: ${response.status}, msg: ${response.data}`);
+        }
+
         const commonResponse = RestResponse.fromJson(JSON.stringify(response.data));
         commonResponse.rateLimit = this.processLimit(response.headers);
+        commonResponse.checkRestResponseError();
 
         if (commonResponse.data == null) {
             let responseObj = responseCls.fromObject({});
@@ -272,7 +277,6 @@ export class DefaultTransport implements Transport {
 
         let responseObj = responseCls.fromObject(commonResponse.data);
         responseObj.setCommonResponse(commonResponse);
-
         return responseObj;
     }
 
@@ -309,7 +313,11 @@ export class DefaultTransport implements Transport {
                 return this.processResponse(response, responseCls);
             })
             .catch((err: any) => {
-                throw err;
+                if (err instanceof RestError) {
+                    throw err;
+                } else {
+                    throw new RestError(null, err.message);
+                }
             });
     }
 
