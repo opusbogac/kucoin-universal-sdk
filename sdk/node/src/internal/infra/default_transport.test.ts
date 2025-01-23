@@ -1,5 +1,11 @@
 import { DefaultTransport } from '@internal/infra/default_transport';
-import { ClientOptionBuilder, Interceptor, RestResponse, TransportOptionBuilder } from '@src/model';
+import {
+    ClientOptionBuilder,
+    Interceptor,
+    RestError,
+    RestResponse,
+    TransportOptionBuilder,
+} from '@src/model';
 import { AddressInfo } from 'net';
 import * as http from 'node:http';
 import { Exclude, instanceToPlain, plainToClassFromExist } from 'class-transformer';
@@ -54,13 +60,13 @@ describe('Transport Test', () => {
                 res.end(JSON.stringify({}));
             } else if (req.url!.startsWith('/no-obj2')) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ data: null, code: 20000 }));
+                res.end(JSON.stringify({ data: null, code: '200000' }));
             } else if (req.url!.startsWith('/normal-obj')) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ data: { result: req.url }, code: 20000 }));
+                res.end(JSON.stringify({ data: { result: req.url }, code: '200000' }));
             } else if (req.url!.startsWith('/path')) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ data: { result: req.url }, code: 20000 }));
+                res.end(JSON.stringify({ data: { result: req.url }, code: '200000' }));
             } else if (req.url!.startsWith('/post-body')) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 let body = '';
@@ -78,7 +84,7 @@ describe('Transport Test', () => {
                         res.end(
                             JSON.stringify({
                                 data: { result: parsedBody },
-                                code: 20000,
+                                code: '200000',
                             }),
                         );
                     } catch (err) {
@@ -135,16 +141,18 @@ describe('Transport Test', () => {
     test('test response', async () => {
         await transport
             .call('spot', false, 'get', '/no-obj', null, ResponseModel, false)
-            .then((result: ResponseModel) => {});
+            .catch((err) => {
+                expect(err).toBeInstanceOf(RestError);
+            });
         await transport
             .call('spot', false, 'get', '/no-obj2', null, ResponseModel, false)
-            .then((result: ResponseModel) => {
-                expect(result.result).toBeUndefined();
+            .catch((err) => {
+                expect(err).toBeInstanceOf(RestError);
             });
         await transport
             .call('spot', false, 'get', '/normal-obj', null, ResponseModel, false)
-            .then((result: ResponseModel) => {
-                expect(result.result).toEqual('/normal-obj');
+            .catch((err) => {
+                expect(err).toBeInstanceOf(RestError);
             });
     });
 

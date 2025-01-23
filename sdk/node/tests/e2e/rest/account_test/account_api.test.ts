@@ -121,14 +121,14 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getSpotAccountList(req);
         return resp.then((result) => {
-            result.data.forEach(item => {
+            result.data.forEach((item) => {
                 expect(item.available).toEqual(expect.anything());
                 expect(item.balance).toEqual(expect.anything());
                 expect(item.currency).toEqual(expect.anything());
                 expect(item.holds).toEqual(expect.anything());
                 expect(item.id).toEqual(expect.anything());
                 expect(item.type).toEqual(expect.anything());
-            })
+            });
             console.log(result);
         });
     });
@@ -221,6 +221,7 @@ describe('Auto Test', () => {
         });
     });
 
+    // todo empty
     test('getSpotLedger request test', () => {
         /**
          * getSpotLedger
@@ -246,6 +247,7 @@ describe('Auto Test', () => {
         });
     });
 
+    // todo empty
     test('getSpotHFLedger request test', () => {
         /**
          * getSpotHFLedger
@@ -265,6 +267,7 @@ describe('Auto Test', () => {
         });
     });
 
+    // todo empty
     test('getMarginHFLedger request test', () => {
         /**
          * getMarginHFLedger
@@ -281,6 +284,7 @@ describe('Auto Test', () => {
         });
     });
 
+    // todo empyty
     test('getFuturesLedger request test', () => {
         /**
          * getFuturesLedger
