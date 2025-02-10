@@ -5,15 +5,30 @@ import {
     GlobalFuturesApiEndpoint,
     WebSocketClientOptionBuilder,
 } from '@model/index';
-import { AllTickersEvent, SpotPublicWS } from '@src/generate/spot/spotpublic';
+import {
+    AllTickersEvent,
+    SpotPublicWS,
+    TickerEvent,
+    OrderbookIncrementEvent,
+    OrderbookLevel5Event,
+    KlinesEvent,
+    TradeEvent,
+    OrderbookLevel50Event,
+    MarketSnapshotEvent
+} from '@src/generate/spot/spotpublic';
 import { DefaultClient } from '@api/index';
 
 function delay(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-describe('Auto Test', () => {
+// Set longer timeout for WebSocket tests
+jest.setTimeout(30000);
+
+describe('Spot Public WebSocket API Tests', () => {
     let api: SpotPublicWS;
+    const TEST_SYMBOL = 'BTC-USDT';
+    const TEST_DURATION = 5000; // 5 seconds for each test
 
     beforeAll(async () => {
         const key = process.env.API_KEY || '';
@@ -68,4 +83,151 @@ describe('Auto Test', () => {
                 return api.unSubscribe(id);
             });
     });
+
+    test('ticker test', () => {
+        const subid = api.ticker([TEST_SYMBOL], (topic: string, subject: string, data: TickerEvent) => {
+            expect(data).toBeDefined();
+            expect(data.sequence).toEqual(expect.anything());
+            expect(data.price).toEqual(expect.anything());
+            expect(data.size).toEqual(expect.anything());
+            expect(data.bestAsk).toEqual(expect.anything());
+            expect(data.bestAskSize).toEqual(expect.anything());
+            expect(data.bestBid).toEqual(expect.anything());
+            expect(data.bestBidSize).toEqual(expect.anything());
+            console.log(data);
+        });
+
+        return subid
+            .then(async (id) => {
+                await delay(5000);
+                return id;
+            })
+            .then((id) => {
+                return api.unSubscribe(id);
+            });
+    });
+
+    test('orderbook increment subscription test', () => {
+        const subid = api.orderbookIncrement([TEST_SYMBOL], (topic: string, subject: string, data: OrderbookIncrementEvent) => {
+            expect(data).toBeDefined();
+            expect(data.sequenceStart).toEqual(expect.anything());
+            expect(data.sequenceEnd).toEqual(expect.anything());
+            expect(data.changes).toBeDefined();
+            expect(data.time).toEqual(expect.anything());
+            expect(data.symbol).toEqual(expect.anything());
+            console.log(data);
+        });
+
+        return subid
+            .then(async (id) => {
+                await delay(5000);
+                return id;
+            })
+            .then((id) => {
+                return api.unSubscribe(id);
+            });
+    });
+
+    test('orderbook level5 subscription test', () => {
+        const subid = api.orderbookLevel5([TEST_SYMBOL], (topic: string, subject: string, data: OrderbookLevel5Event) => {
+            expect(data).toBeDefined();
+            expect(data.asks).toEqual(expect.anything());
+            expect(data.bids).toEqual(expect.anything());
+            expect(data.timestamp).toEqual(expect.anything());
+            console.log(data);
+        });
+
+        return subid
+            .then(async (id) => {
+                await delay(5000);
+                return id;
+            })
+            .then((id) => {
+                return api.unSubscribe(id);
+            });
+    });
+
+    test('klines subscription test', () => {
+        const subid = api.klines(TEST_SYMBOL, '1min', (topic: string, subject: string, data: KlinesEvent) => {
+            expect(data).toBeDefined();
+            expect(data.candles).toEqual(expect.anything());
+            expect(data.candles).toEqual(expect.anything());
+            expect(data.time).toEqual(expect.anything());
+            console.log(data);
+        });
+
+        return subid
+            .then(async (id) => {
+                await delay(5000);
+                return id;
+            })
+            .then((id) => {
+                return api.unSubscribe(id);
+            });
+    });
+
+    test('trade subscription test', () => {
+        const subid = api.trade([TEST_SYMBOL], (topic: string, subject: string, data: TradeEvent) => {
+            expect(data).toBeDefined();
+            expect(data.makerOrderId).toEqual(expect.anything());
+            expect(data.price).toEqual(expect.anything());
+            expect(data.sequence).toEqual(expect.anything());
+            expect(data.side).toEqual(expect.anything());
+            expect(data.size).toEqual(expect.anything());
+            expect(data.symbol).toEqual(expect.anything());
+            expect(data.takerOrderId).toEqual(expect.anything());
+            expect(data.time).toEqual(expect.anything());
+            expect(data.type).toEqual(expect.anything());
+            console.log(data);
+        });
+
+        return subid
+            .then(async (id) => {
+                await delay(5000);
+                return id;
+            })
+            .then((id) => {
+                return api.unSubscribe(id);
+            });
+    });
+
+    test('orderbook level50 subscription test', () => {
+        const subid = api.orderbookLevel50([TEST_SYMBOL], (topic: string, subject: string, data: OrderbookLevel50Event) => {
+            expect(data).toBeDefined();
+            expect(data.sequenceStart).toEqual(expect.anything());
+            expect(data.sequenceEnd).toEqual(expect.anything());
+            expect(data.changes).toEqual(expect.anything());
+            expect(data.time).toEqual(expect.anything());
+            expect(data.symbol).toEqual(expect.anything());
+            console.log(data);
+        });
+
+        return subid
+            .then(async (id) => {
+                await delay(5000);
+                return id;
+            })
+            .then((id) => {
+                return api.unSubscribe(id);
+            });
+    });
+
+    test('market snapshot subscription test', () => {
+        const subid = api.marketSnapshot(TEST_SYMBOL, (topic: string, subject: string, data: MarketSnapshotEvent) => {
+            expect(data).toBeDefined();
+            expect(data.sequence).toEqual(expect.anything());
+            expect(data.data).toEqual(expect.anything());
+            console.log(data);
+        });
+
+        return subid
+            .then(async (id) => {
+                await delay(5000);
+                return id;
+            })
+            .then((id) => {
+                return api.unSubscribe(id);
+            });
+    });
+
 });
