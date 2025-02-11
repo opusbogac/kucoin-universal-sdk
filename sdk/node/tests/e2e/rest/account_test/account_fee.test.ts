@@ -69,7 +69,11 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getSpotActualFee(req);
         return resp.then(result => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.symbol).toEqual(expect.any(String));
+                expect(item.takerFeeRate).toEqual(expect.any(String));
+                expect(item.makerFeeRate).toEqual(expect.any(String));
+            })
             console.log(result);
         });
     });

@@ -133,7 +133,6 @@ describe('Auto Test', () => {
         });
     });
 
-    // TODO
     test('getSpotAccountDetail request test', () => {
         /**
          * getSpotAccountDetail
@@ -141,7 +140,7 @@ describe('Auto Test', () => {
          * /api/v1/accounts/{accountId}
          */
         let builder = GetSpotAccountDetailReq.builder();
-        builder.setAccountId('671badb050647f0007d94011');
+        builder.setAccountId('6582f6a48c171f000769b867');
         let req = builder.build();
         let resp = api.getSpotAccountDetail(req);
         return resp.then((result) => {
@@ -221,7 +220,6 @@ describe('Auto Test', () => {
         });
     });
 
-    // todo empty
     test('getSpotLedger request test', () => {
         /**
          * getSpotLedger
@@ -231,8 +229,8 @@ describe('Auto Test', () => {
         let builder = GetSpotLedgerReq.builder();
         builder
             .setCurrency('USDT')
-            .setStartAt(1732032000000)
-            .setEndAt(1732118400000)
+            .setStartAt(1707580800000)
+            .setEndAt(1707667200000)
             .setCurrentPage(1)
             .setPageSize(100);
         let req = builder.build();
@@ -247,7 +245,6 @@ describe('Auto Test', () => {
         });
     });
 
-    // todo empty
     test('getSpotHFLedger request test', () => {
         /**
          * getSpotHFLedger
@@ -262,12 +259,23 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getSpotHFLedger(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.id).toEqual(expect.any(String));
+                expect(item.currency).toEqual(expect.any(String));
+                expect(item.amount).toEqual(expect.any(String));
+                expect(item.fee).toEqual(expect.any(String));
+                expect(item.tax).toEqual(expect.any(String));
+                expect(item.balance).toEqual(expect.any(String));
+                expect(item.accountType).toEqual(expect.any(String));
+                expect(item.bizType).toEqual(expect.any(String));
+                expect(item.direction).toEqual(expect.any(String));
+                expect(item.createdAt).toEqual(expect.any(String));
+                expect(item.context).toEqual(expect.any(String));
+            });
             console.log(result);
         });
     });
 
-    // todo empty
     test('getMarginHFLedger request test', () => {
         /**
          * getMarginHFLedger
@@ -279,12 +287,23 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getMarginHFLedger(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.id).toEqual(expect.any(Number));
+                expect(item.currency).toEqual(expect.any(String));
+                expect(item.amount).toEqual(expect.any(String));
+                expect(item.fee).toEqual(expect.any(String));
+                expect(item.balance).toEqual(expect.any(String));
+                expect(item.accountType).toEqual(expect.any(String));
+                expect(item.bizType).toEqual(expect.any(String));
+                expect(item.direction).toEqual(expect.any(String));
+                expect(item.createdAt).toEqual(expect.any(Number));
+                expect(item.context).toEqual(expect.any(String));
+                expect(item.tax).toEqual(expect.any(String));
+            });
             console.log(result);
         });
     });
 
-    // todo empyty
     test('getFuturesLedger request test', () => {
         /**
          * getFuturesLedger
@@ -292,11 +311,21 @@ describe('Auto Test', () => {
          * /api/v1/transaction-history
          */
         let builder = GetFuturesLedgerReq.builder();
-        builder.setCurrency('DOT').setType('RealisedPNL');
+        builder.setCurrency('USDT').setType('Transferin');
         let req = builder.build();
         let resp = api.getFuturesLedger(req);
         return resp.then((result) => {
-            expect(result.dataList).toEqual(expect.anything());
+            result.dataList.forEach((item) => {
+                expect(item.time).toEqual(expect.any(Number));
+                expect(item.type).toEqual(expect.any(String));
+                expect(item.amount).toEqual(expect.any(Number));
+                expect(item.fee).toEqual(expect.any(Number));
+                expect(item.accountEquity).toEqual(expect.any(Number));
+                expect(item.status).toEqual(expect.any(String));
+                expect(item.remark).toEqual(expect.any(String));
+                expect(item.offset).toEqual(expect.any(Number));
+                expect(item.currency).toEqual(expect.any(String));
+            });
             expect(result.hasMore).toEqual(expect.anything());
             console.log(result);
         });

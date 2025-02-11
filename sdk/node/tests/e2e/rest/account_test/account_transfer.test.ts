@@ -58,10 +58,10 @@ describe('Auto Test', () => {
          * /api/v1/accounts/transferable
          */
         let builder = GetTransferQuotasReq.builder();
-        builder.setCurrency('').setType(GetTransferQuotasReq.TypeEnum.MAIN).setTag('');
+        builder.setCurrency('USDT').setType(GetTransferQuotasReq.TypeEnum.MAIN).setTag('');
         let req = builder.build();
         let resp = api.getTransferQuotas(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.currency).toEqual(expect.anything());
             expect(result.balance).toEqual(expect.anything());
             expect(result.available).toEqual(expect.anything());
@@ -78,10 +78,18 @@ describe('Auto Test', () => {
          * /api/v3/accounts/universal-transfer
          */
         let builder = FlexTransferReq.builder();
-        builder.setClientOid(randomUUID().toString()).setCurrency('USDT').setAmount('1').setFromUserId('6744227ce235b300012232d6').setFromAccountType(FlexTransferReq.FromAccountTypeEnum.MAIN).setType(FlexTransferReq.TypeEnum.INTERNAL).setToUserId('6744227ce235b300012232d6').setToAccountType(FlexTransferReq.ToAccountTypeEnum.TRADE);
+        builder
+            .setClientOid(randomUUID().toString())
+            .setCurrency('USDT')
+            .setAmount('1')
+            .setFromUserId('6744227ce235b300012232d6')
+            .setFromAccountType(FlexTransferReq.FromAccountTypeEnum.MAIN)
+            .setType(FlexTransferReq.TypeEnum.INTERNAL)
+            .setToUserId('6744227ce235b300012232d6')
+            .setToAccountType(FlexTransferReq.ToAccountTypeEnum.TRADE);
         let req = builder.build();
         let resp = api.flexTransfer(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.orderId).toEqual(expect.anything());
             console.log(result);
         });
@@ -94,10 +102,17 @@ describe('Auto Test', () => {
          * /api/v2/accounts/sub-transfer
          */
         let builder = SubAccountTransferReq.builder();
-        // builder.setClientOid(?).setCurrency(?).setAmount(?).setDirection(?).setAccountType(?).setSubAccountType(?).setSubUserId(?);
+        builder
+            .setClientOid(randomUUID())
+            .setCurrency('USDT')
+            .setAmount('10')
+            .setDirection(SubAccountTransferReq.DirectionEnum.OUT)
+            .setAccountType(SubAccountTransferReq.AccountTypeEnum.MAIN)
+            .setSubAccountType(SubAccountTransferReq.SubAccountTypeEnum.MAIN)
+            .setSubUserId('6744227ce235b300012232d6');
         let req = builder.build();
         let resp = api.subAccountTransfer(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.orderId).toEqual(expect.anything());
             console.log(result);
         });
@@ -110,10 +125,15 @@ describe('Auto Test', () => {
          * /api/v2/accounts/inner-transfer
          */
         let builder = InnerTransferReq.builder();
-        // builder.setClientOid(?).setCurrency(?).setAmount(?).setTo(?).setFromTag(?).setToTag(?).setFrom(?);
+        builder
+            .setClientOid(randomUUID())
+            .setCurrency('USDT')
+            .setAmount('1')
+            .setTo(InnerTransferReq.ToEnum.MAIN)
+            .setFrom(InnerTransferReq.FromEnum.TRADE);
         let req = builder.build();
         let resp = api.innerTransfer(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.orderId).toEqual(expect.anything());
             console.log(result);
         });
@@ -126,10 +146,13 @@ describe('Auto Test', () => {
          * /api/v3/transfer-out
          */
         let builder = FuturesAccountTransferOutReq.builder();
-        // builder.setCurrency(?).setAmount(?).setRecAccountType(?);
+        builder
+            .setCurrency('USDT')
+            .setAmount(1)
+            .setRecAccountType(FuturesAccountTransferOutReq.RecAccountTypeEnum.MAIN);
         let req = builder.build();
         let resp = api.futuresAccountTransferOut(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.applyId).toEqual(expect.anything());
             expect(result.bizNo).toEqual(expect.anything());
             expect(result.payAccountType).toEqual(expect.anything());
@@ -158,10 +181,13 @@ describe('Auto Test', () => {
          * /api/v1/transfer-in
          */
         let builder = FuturesAccountTransferInReq.builder();
-        // builder.setCurrency(?).setAmount(?).setPayAccountType(?);
+        builder
+            .setCurrency('USDT')
+            .setAmount(1.0)
+            .setPayAccountType(FuturesAccountTransferInReq.PayAccountTypeEnum.MAIN);
         let req = builder.build();
         let resp = api.futuresAccountTransferIn(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.data).toEqual(expect.anything());
             console.log(result);
         });
@@ -174,17 +200,27 @@ describe('Auto Test', () => {
          * /api/v1/transfer-list
          */
         let builder = GetFuturesAccountTransferOutLedgerReq.builder();
-        // builder.setCurrency(?).setType(?).setTag(?).setStartAt(?).setEndAt(?).setCurrentPage(?).setPageSize(?);
+        builder.setCurrency('USDT').setType(GetFuturesAccountTransferOutLedgerReq.TypeEnum.MAIN);
         let req = builder.build();
         let resp = api.getFuturesAccountTransferOutLedger(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.currentPage).toEqual(expect.anything());
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
-            expect(result.items).toEqual(expect.anything());
+            result.items.forEach((item) => {
+                expect(item.applyId).toEqual(expect.any(String));
+                expect(item.currency).toEqual(expect.any(String));
+                expect(item.recRemark).toEqual(expect.any(String));
+                expect(item.recSystem).toEqual(expect.any(String));
+                expect(item.status).toEqual(expect.any(String));
+                expect(item.amount).toEqual(expect.any(String));
+                expect(item.reason).toEqual(expect.any(String));
+                expect(item.offset).toEqual(expect.any(Number));
+                expect(item.createdAt).toEqual(expect.any(Number));
+                expect(item.remark).toEqual(expect.any(String));
+            })
             console.log(result);
         });
     });
-
 });

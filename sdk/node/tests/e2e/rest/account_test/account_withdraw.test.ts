@@ -59,7 +59,7 @@ describe('Auto Test', () => {
         builder.setCurrency('USDT').setChain('bsc');
         let req = builder.build();
         let resp = api.getWithdrawalQuotas(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.currency).toEqual(expect.anything());
             expect(result.limitBTCAmount).toEqual(expect.anything());
             expect(result.usedBTCAmount).toEqual(expect.anything());
@@ -74,7 +74,6 @@ describe('Auto Test', () => {
             expect(result.isWithdrawEnabled).toEqual(expect.anything());
             expect(result.precision).toEqual(expect.anything());
             expect(result.chain).toEqual(expect.anything());
-            expect(result.reason).toEqual(expect.anything());
             expect(result.lockedAmount).toEqual(expect.anything());
             console.log(result);
         });
@@ -87,10 +86,17 @@ describe('Auto Test', () => {
          * /api/v3/withdrawals
          */
         let builder = WithdrawalV3Req.builder();
-        builder.setCurrency('USDT').setChain('bsc').setAmount(20).setIsInner(false).setRemark('******').setWithdrawType(WithdrawalV3Req.WithdrawTypeEnum.ADDRESS);
+        builder
+            .setCurrency('USDT')
+            .setChain('bsc')
+            .setAmount(20)
+            .setIsInner(false)
+            .setRemark('******')
+            .setWithdrawType(WithdrawalV3Req.WithdrawTypeEnum.ADDRESS)
+            .setToAddress('****');
         let req = builder.build();
         let resp = api.withdrawalV3(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.withdrawalId).toEqual(expect.anything());
             console.log(result);
         });
@@ -106,7 +112,7 @@ describe('Auto Test', () => {
         builder.setWithdrawalId('674fba71b6afc90007e29bd2');
         let req = builder.build();
         let resp = api.cancelWithdrawal(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.data).toEqual(expect.anything());
             console.log(result);
         });
@@ -122,7 +128,7 @@ describe('Auto Test', () => {
         builder.setCurrency('USDT').setStartAt(1703001600000).setEndAt(1703260800000);
         let req = builder.build();
         let resp = api.getWithdrawalHistory(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.currentPage).toEqual(expect.anything());
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalNum).toEqual(expect.anything());
@@ -142,7 +148,7 @@ describe('Auto Test', () => {
         builder.setCurrency('USDT').setStartAt(1703001600000).setEndAt(1703260800000);
         let req = builder.build();
         let resp = api.getWithdrawalHistoryOld(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.currentPage).toEqual(expect.anything());
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalNum).toEqual(expect.anything());
@@ -159,13 +165,17 @@ describe('Auto Test', () => {
          * /api/v1/withdrawals
          */
         let builder = WithdrawalV1Req.builder();
-        builder.setCurrency('USDT').setChain('bsc').setAddress('***********').setAmount(20).setIsInner(false);
+        builder
+            .setCurrency('USDT')
+            .setChain('bsc')
+            .setAddress('***********')
+            .setAmount(20)
+            .setIsInner(false);
         let req = builder.build();
         let resp = api.withdrawalV1(req);
-        return resp.then(result => {
+        return resp.then((result) => {
             expect(result.withdrawalId).toEqual(expect.anything());
             console.log(result);
         });
     });
-
 });

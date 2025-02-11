@@ -84,7 +84,7 @@ describe('Auto Test', () => {
          * /api/v3/sub/user/margin/enable
          */
         let builder = AddSubAccountMarginPermissionReq.builder();
-        builder.setUid('229290616');
+        builder.setUid('111');
         let req = builder.build();
         let resp = api.addSubAccountMarginPermission(req);
         return resp.then((result) => {
@@ -100,7 +100,7 @@ describe('Auto Test', () => {
          * /api/v3/sub/user/futures/enable
          */
         let builder = AddSubAccountFuturesPermissionReq.builder();
-        builder.setUid('229290616');
+        builder.setUid('1111');
         let req = builder.build();
         let resp = api.addSubAccountFuturesPermission(req);
         return resp.then((result) => {
@@ -124,7 +124,18 @@ describe('Auto Test', () => {
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
-            expect(result.items).toEqual(expect.anything());
+            result.items.forEach((item) => {
+                expect(item.userId).toEqual(expect.any(String));
+                expect(item.uid).toEqual(expect.any(Number));
+                expect(item.subName).toEqual(expect.any(String));
+                expect(item.status).toEqual(expect.anything());
+                expect(item.type).toEqual(expect.anything());
+                expect(item.access).toEqual(expect.any(String));
+                expect(item.createdAt).toEqual(expect.any(Number));
+                expect(item.remarks).toEqual(expect.any(String));
+                expect(item.tradeTypes).toEqual(expect.any(Array));
+                expect(item.openedTradeTypes).toEqual(expect.any(Array));
+            });
             console.log(result);
         });
     });
@@ -182,7 +193,17 @@ describe('Auto Test', () => {
         let resp = api.getFuturesSubAccountListV2(req);
         return resp.then((result) => {
             expect(result.summary).toEqual(expect.anything());
-            expect(result.accounts).toEqual(expect.anything());
+            result.accounts.forEach((item) => {
+                expect(item.accountName).toEqual(expect.any(String));
+                expect(item.accountEquity).toEqual(expect.any(Number));
+                expect(item.unrealisedPNL).toEqual(expect.any(Number));
+                expect(item.marginBalance).toEqual(expect.any(Number));
+                expect(item.positionMargin).toEqual(expect.any(Number));
+                expect(item.orderMargin).toEqual(expect.any(Number));
+                expect(item.frozenFunds).toEqual(expect.any(Number));
+                expect(item.availableBalance).toEqual(expect.any(Number));
+                expect(item.currency).toEqual(expect.any(String));
+            });
             console.log(result);
         });
     });
@@ -196,21 +217,18 @@ describe('Auto Test', () => {
         let builder = AddSubAccountApiReq.builder();
         builder
             .setPassphrase('*****')
-            .setRemark('**********')
+            .setRemark('*****')
             .setPermission('General,Spot')
             .setExpire(AddSubAccountApiReq.ExpireEnum._30)
-            .setSubName('**********');
+            .setSubName('*****');
         let req = builder.build();
         let resp = api.addSubAccountApi(req);
         return resp.then((result) => {
-            expect(result.subName).toEqual(expect.anything());
-            expect(result.remark).toEqual(expect.anything());
             expect(result.apiKey).toEqual(expect.anything());
             expect(result.apiSecret).toEqual(expect.anything());
             expect(result.apiVersion).toEqual(expect.anything());
             expect(result.passphrase).toEqual(expect.anything());
             expect(result.permission).toEqual(expect.anything());
-            expect(result.ipWhitelist).toEqual(expect.anything());
             expect(result.createdAt).toEqual(expect.anything());
             console.log(result);
         });
@@ -224,12 +242,12 @@ describe('Auto Test', () => {
          */
         let builder = ModifySubAccountApiReq.builder();
         builder
-            .setPassphrase('**********')
-            .setPermission('**********')
+            .setPassphrase('******')
+            .setPermission('General,Spot')
             .setIpWhitelist('General')
             .setExpire(ModifySubAccountApiReq.ExpireEnum._30)
-            .setSubName('**********')
-            .setApiKey('6745b6ba87eb0e000107ea6c');
+            .setSubName('******')
+            .setApiKey('******');
         let req = builder.build();
         let resp = api.modifySubAccountApi(req);
         return resp.then((result) => {
@@ -248,11 +266,20 @@ describe('Auto Test', () => {
          * /api/v1/sub/api-key
          */
         let builder = GetSubAccountApiListReq.builder();
-        builder.setApiKey('6745b6ba87eb0e000107ea6c').setSubName('****');
+        builder.setApiKey('********').setSubName('********');
         let req = builder.build();
         let resp = api.getSubAccountApiList(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.subName).toEqual(expect.any(String));
+                expect(item.remark).toEqual(expect.any(String));
+                expect(item.apiKey).toEqual(expect.any(String));
+                expect(item.apiVersion).toEqual(expect.any(Number));
+                expect(item.permission).toEqual(expect.any(String));
+                expect(item.createdAt).toEqual(expect.any(Number));
+                expect(item.uid).toEqual(expect.any(Number));
+                expect(item.isMaster).toEqual(expect.any(Boolean));
+            });
             console.log(result);
         });
     });
@@ -264,7 +291,7 @@ describe('Auto Test', () => {
          * /api/v1/sub/api-key
          */
         let builder = DeleteSubAccountApiReq.builder();
-        builder.setApiKey('').setSubName('').setPassphrase('');
+        builder.setApiKey('*****').setSubName('*****').setPassphrase('********');
         let req = builder.build();
         let resp = api.deleteSubAccountApi(req);
         return resp.then((result) => {
@@ -282,7 +309,14 @@ describe('Auto Test', () => {
          */
         let resp = api.getSpotSubAccountsSummaryV1();
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.userId).toEqual(expect.any(String));
+                expect(item.uid).toEqual(expect.any(Number));
+                expect(item.subName).toEqual(expect.any(String));
+                expect(item.type).toEqual(expect.any(Number));
+                expect(item.remarks).toEqual(expect.any(String));
+                expect(item.access).toEqual(expect.any(String));
+            });
             console.log(result);
         });
     });

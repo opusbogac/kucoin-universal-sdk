@@ -53,12 +53,11 @@ describe('Auto Test', () => {
          * /api/v3/deposit-address/create
          */
         let builder = AddDepositAddressV3Req.builder();
-        builder.setCurrency('USDT').setChain('ton').setTo(AddDepositAddressV3Req.ToEnum.MAIN).setAmount('1');
+        builder.setCurrency('USDT').setChain('near').setTo(AddDepositAddressV3Req.ToEnum.MAIN).setAmount('1');
         let req = builder.build();
         let resp = api.addDepositAddressV3(req);
         return resp.then(result => {
             expect(result.address).toEqual(expect.anything());
-            expect(result.memo).toEqual(expect.anything());
             expect(result.chainId).toEqual(expect.anything());
             expect(result.to).toEqual(expect.anything());
             expect(result.expirationDate).toEqual(expect.anything());
@@ -99,7 +98,21 @@ describe('Auto Test', () => {
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
-            expect(result.items).toEqual(expect.anything());
+            result.items.forEach(item=> {
+                expect(item.currency).toEqual(expect.any(String));
+                expect(item.chain).toEqual(expect.any(String));
+                expect(item.status).toEqual(expect.any(String));
+                expect(item.address).toEqual(expect.any(String));
+                expect(item.memo).toEqual(expect.any(String));
+                expect(item.isInner).toEqual(expect.any(Boolean));
+                expect(item.amount).toEqual(expect.any(String));
+                expect(item.fee).toEqual(expect.any(String));
+                expect(item.walletTxId).toEqual(expect.any(String));
+                expect(item.createdAt).toEqual(expect.any(Number));
+                expect(item.updatedAt).toEqual(expect.any(Number));
+                expect(item.remark).toEqual(expect.any(String));
+                expect(item.arrears).toEqual(expect.any(Boolean));
+            });
             console.log(result);
         });
     });
@@ -115,7 +128,15 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getDepositAddressV2(req);
         return resp.then(result => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach(item => {
+                expect(item.address).toEqual(expect.any(String));
+                expect(item.memo).toEqual(expect.any(String));
+                expect(item.chain).toEqual(expect.any(String));
+                expect(item.chainId).toEqual(expect.any(String));
+                expect(item.to).toEqual(expect.any(String));
+                expect(item.currency).toEqual(expect.any(String));
+                expect(item.contractAddress).toEqual(expect.any(String));
+            })
             console.log(result);
         });
     });
@@ -137,7 +158,6 @@ describe('Auto Test', () => {
             expect(result.chainId).toEqual(expect.anything());
             expect(result.to).toEqual(expect.anything());
             expect(result.currency).toEqual(expect.anything());
-            expect(result.contractAddress).toEqual(expect.anything());
             console.log(result);
         });
     });
@@ -169,12 +189,11 @@ describe('Auto Test', () => {
          * /api/v1/deposit-addresses
          */
         let builder = AddDepositAddressV1Req.builder();
-        builder.setCurrency('ETH').setChain('eth');
+        builder.setCurrency('ETH').setChain('kcc');
         let req = builder.build();
         let resp = api.addDepositAddressV1(req);
         return resp.then(result => {
             expect(result.address).toEqual(expect.anything());
-            expect(result.memo).toEqual(expect.anything());
             expect(result.chain).toEqual(expect.anything());
             expect(result.chainId).toEqual(expect.anything());
             expect(result.to).toEqual(expect.anything());

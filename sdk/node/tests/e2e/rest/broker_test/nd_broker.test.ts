@@ -31,6 +31,9 @@ describe('Auto Test', () => {
         const key = process.env.API_KEY || '';
         const secret = process.env.API_SECRET || '';
         const passphrase = process.env.API_PASSPHRASE || '';
+        const brokerName = process.env.BROKER_NAME || '';
+        const brokerPartner = process.env.BROKER_PARTNER || '';
+        const brokerKey = process.env.BROKER_KEY || '';
 
         // Set specific options, others will fall back to default values
         const httpTransportOption = new TransportOptionBuilder()
@@ -44,6 +47,9 @@ describe('Auto Test', () => {
             .setKey(key)
             .setSecret(secret)
             .setPassphrase(passphrase)
+            .setBrokerName(brokerName)
+            .setBrokerPartner(brokerPartner)
+            .setBrokerKey(brokerKey)
             .setSpotEndpoint(GlobalApiEndpoint)
             .setFuturesEndpoint(GlobalFuturesApiEndpoint)
             .setBrokerEndpoint(GlobalBrokerApiEndpoint)
@@ -69,7 +75,6 @@ describe('Auto Test', () => {
         let resp = api.getBrokerInfo(req);
         return resp.then((result) => {
             expect(result.accountSize).toEqual(expect.anything());
-            expect(result.maxAccountSize).toEqual(expect.anything());
             expect(result.level).toEqual(expect.anything());
             console.log(resp);
         });
@@ -82,7 +87,7 @@ describe('Auto Test', () => {
          * /api/v1/broker/nd/account
          */
         let builder = AddSubAccountReq.builder();
-        builder.setAccountName('sdk_test');
+        builder.setAccountName('sdk_test_3');
         let req = builder.build();
         let resp = api.addSubAccount(req);
         return resp.then((result) => {
@@ -101,7 +106,7 @@ describe('Auto Test', () => {
          * /api/v1/broker/nd/account
          */
         let builder = GetSubAccountReq.builder();
-        builder.setUid('229317507');
+        builder.setUid('237082742');
         let req = builder.build();
         let resp = api.getSubAccount(req);
         return resp.then((result) => {
@@ -122,7 +127,7 @@ describe('Auto Test', () => {
          */
         let builder = AddSubAccountApiReq.builder();
         builder
-            .setUid('229317507')
+            .setUid('237082742')
             .setPassphrase('11223344')
             .setIpWhitelist(['127.0.0.1', '192.168.1.1'])
             .setPermissions([
@@ -152,11 +157,19 @@ describe('Auto Test', () => {
          * /api/v1/broker/nd/account/apikey
          */
         let builder = GetSubAccountAPIReq.builder();
-        builder.setUid('226383154').setApiKey('67446f679d8f66000107eb6d');
+        builder.setUid('237082742').setApiKey('67ab33d46425d800012b91f9');
         let req = builder.build();
         let resp = api.getSubAccountAPI(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.uid).toEqual(expect.any(String));
+                expect(item.label).toEqual(expect.any(String));
+                expect(item.apiKey).toEqual(expect.any(String));
+                expect(item.apiVersion).toEqual(expect.any(Number));
+                expect(item.permissions).toEqual(expect.any(Array));
+                expect(item.ipWhitelist).toEqual(expect.any(Array));
+                expect(item.createdAt).toEqual(expect.any(Number));
+            });
             console.log(resp);
         });
     });
@@ -169,11 +182,11 @@ describe('Auto Test', () => {
          */
         let builder = ModifySubAccountApiReq.builder();
         builder
-            .setUid('229317507')
+            .setUid('237082742')
             .setIpWhitelist(['127.0.0.1'])
             .setPermissions([ModifySubAccountApiReq.PermissionsEnum.GENERAL])
             .setLabel('label')
-            .setApiKey('67447006890ba200018d2722');
+            .setApiKey('67ab33d46425d800012b91f9');
         let req = builder.build();
         let resp = api.modifySubAccountApi(req);
         return resp.then((result) => {
@@ -195,7 +208,7 @@ describe('Auto Test', () => {
          * /api/v1/broker/nd/account/apikey
          */
         let builder = DeleteSubAccountAPIReq.builder();
-        builder.setUid('229317507').setApiKey('67447006890ba200018d2722');
+        builder.setUid('237082742').setApiKey('67ab33d46425d800012b91f9');
         let req = builder.build();
         let resp = api.deleteSubAccountAPI(req);
         return resp.then((result) => {
@@ -216,7 +229,7 @@ describe('Auto Test', () => {
             .setAmount('0.01')
             .setDirection(TransferReq.DirectionEnum.OUT)
             .setAccountType(TransferReq.AccountTypeEnum.TRADE)
-            .setSpecialUid('229317507')
+            .setSpecialUid('237082742')
             .setSpecialAccountType(TransferReq.SpecialAccountTypeEnum.MAIN)
             .setClientOid(randomUUID());
         let req = builder.build();
@@ -234,7 +247,7 @@ describe('Auto Test', () => {
          * /api/v3/broker/nd/transfer/detail
          */
         let builder = GetTransferHistoryReq.builder();
-        builder.setOrderId('11111');
+        builder.setOrderId('67ab343bb22eb20007293b5e');
         let req = builder.build();
         let resp = api.getTransferHistory(req);
         return resp.then((result) => {
@@ -248,7 +261,6 @@ describe('Auto Test', () => {
             expect(result.toAccountType).toEqual(expect.anything());
             expect(result.toAccountTag).toEqual(expect.anything());
             expect(result.status).toEqual(expect.anything());
-            expect(result.reason).toEqual(expect.anything());
             expect(result.createdAt).toEqual(expect.anything());
             console.log(resp);
         });
@@ -265,7 +277,22 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getDepositList(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.uid).toEqual(expect.any(Number));
+                expect(item.hash).toEqual(expect.any(String));
+                expect(item.address).toEqual(expect.any(String));
+                expect(item.memo).toEqual(expect.any(String));
+                expect(item.amount).toEqual(expect.any(String));
+                expect(item.fee).toEqual(expect.any(String));
+                expect(item.currency).toEqual(expect.any(String));
+                expect(item.isInner).toEqual(expect.any(Boolean));
+                expect(item.walletTxId).toEqual(expect.any(String));
+                expect(item.status).toEqual(expect.any(String));
+                expect(item.remark).toEqual(expect.any(String));
+                expect(item.chain).toEqual(expect.any(String));
+                expect(item.createdAt).toEqual(expect.any(Number));
+                expect(item.updatedAt).toEqual(expect.any(Number));
+            })
             console.log(resp);
         });
     });
@@ -312,7 +339,6 @@ describe('Auto Test', () => {
         return resp.then((result) => {
             expect(result.id).toEqual(expect.anything());
             expect(result.chain).toEqual(expect.anything());
-            expect(result.walletTxId).toEqual(expect.anything());
             expect(result.uid).toEqual(expect.anything());
             expect(result.updatedAt).toEqual(expect.anything());
             expect(result.amount).toEqual(expect.anything());

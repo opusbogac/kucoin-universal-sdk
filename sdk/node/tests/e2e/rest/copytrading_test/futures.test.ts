@@ -149,7 +149,7 @@ describe('Auto Test', () => {
          * /api/v1/copy-trade/futures/orders
          */
         let builder = CancelOrderByIdReq.builder();
-        builder.setOrderId('');
+        builder.setOrderId('278750197184520192');
         let req = builder.build();
         let resp = api.cancelOrderById(req);
         return resp.then((result) => {
@@ -165,7 +165,7 @@ describe('Auto Test', () => {
          * /api/v1/copy-trade/futures/orders/client-order
          */
         let builder = CancelOrderByClientOidReq.builder();
-        builder.setSymbol('').setClientOid('');
+        builder.setSymbol('XBTUSDTM').setClientOid('52d18a28-32d8-4a1d-b183-46fa5cd09780');
         let req = builder.build();
         let resp = api.cancelOrderByClientOid(req);
         return resp.then((result) => {

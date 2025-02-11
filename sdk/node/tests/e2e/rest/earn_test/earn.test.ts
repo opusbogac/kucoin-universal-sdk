@@ -80,7 +80,7 @@ describe('Auto Test', () => {
          */
         let builder = GetRedeemPreviewReq.builder();
         builder
-            .setOrderId('2849600')
+            .setOrderId('2155441')
             .setFromAccountType(GetRedeemPreviewReq.FromAccountTypeEnum.MAIN);
         let req = builder.build();
         let resp = api.getRedeemPreview(req);
@@ -104,8 +104,8 @@ describe('Auto Test', () => {
          */
         let builder = RedeemReq.builder();
         builder
-            .setOrderId('2849600')
-            .setAmount('10.0')
+            .setOrderId('2155441')
+            .setAmount('10.68910651')
             .setFromAccountType(RedeemReq.FromAccountTypeEnum.MAIN)
             .setConfirmPunishRedeem('1');
         let req = builder.build();
@@ -130,7 +130,27 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getSavingsProducts(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.id).toEqual(expect.any(String));
+                expect(item.currency).toEqual(expect.any(String));
+                expect(item.category).toEqual(expect.any(String));
+                expect(item.type).toEqual(expect.any(String));
+                expect(item.precision).toEqual(expect.any(Number));
+                expect(item.productUpperLimit).toEqual(expect.any(String));
+                expect(item.userUpperLimit).toEqual(expect.any(String));
+                expect(item.userLowerLimit).toEqual(expect.any(String));
+                expect(item.redeemPeriod).toEqual(expect.any(Number));
+                expect(item.lockStartTime).toEqual(expect.any(Number));
+                expect(item.applyStartTime).toEqual(expect.any(Number));
+                expect(item.returnRate).toEqual(expect.any(String));
+                expect(item.incomeCurrency).toEqual(expect.any(String));
+                expect(item.productRemainAmount).toEqual(expect.any(String));
+                expect(item.status).toEqual(expect.any(String));
+                expect(item.redeemType).toEqual(expect.any(String));
+                expect(item.incomeReleaseType).toEqual(expect.any(String));
+                expect(item.interestDate).toEqual(expect.any(Number));
+                expect(item.duration).toEqual(expect.any(Number));
+            });
             console.log(resp);
         });
     });
@@ -146,7 +166,27 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getPromotionProducts(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.id).toEqual(expect.any(String));
+                expect(item.currency).toEqual(expect.any(String));
+                expect(item.category).toEqual(expect.any(String));
+                expect(item.type).toEqual(expect.any(String));
+                expect(item.precision).toEqual(expect.any(Number));
+                expect(item.productUpperLimit).toEqual(expect.any(String));
+                expect(item.userUpperLimit).toEqual(expect.any(String));
+                expect(item.userLowerLimit).toEqual(expect.any(String));
+                expect(item.redeemPeriod).toEqual(expect.any(Number));
+                expect(item.lockStartTime).toEqual(expect.any(Number));
+                expect(item.applyStartTime).toEqual(expect.any(Number));
+                expect(item.returnRate).toEqual(expect.any(String));
+                expect(item.incomeCurrency).toEqual(expect.any(String));
+                expect(item.productRemainAmount).toEqual(expect.any(String));
+                expect(item.status).toEqual(expect.any(String));
+                expect(item.redeemType).toEqual(expect.any(String));
+                expect(item.incomeReleaseType).toEqual(expect.any(String));
+                expect(item.interestDate).toEqual(expect.any(Number));
+                expect(item.duration).toEqual(expect.any(Number));
+            });
             console.log(resp);
         });
     });
@@ -166,7 +206,24 @@ describe('Auto Test', () => {
         let resp = api.getAccountHolding(req);
         return resp.then((result) => {
             expect(result.totalNum).toEqual(expect.anything());
-            expect(result.items).toEqual(expect.anything());
+            result.items.forEach((item) => {
+                expect(item.orderId).toEqual(expect.any(String));
+                expect(item.productId).toEqual(expect.any(String));
+                expect(item.productCategory).toEqual(expect.any(String));
+                expect(item.productType).toEqual(expect.any(String));
+                expect(item.currency).toEqual(expect.any(String));
+                expect(item.incomeCurrency).toEqual(expect.any(String));
+                expect(item.returnRate).toEqual(expect.any(String));
+                expect(item.holdAmount).toEqual(expect.any(String));
+                expect(item.redeemedAmount).toEqual(expect.any(String));
+                expect(item.redeemingAmount).toEqual(expect.any(String));
+                expect(item.lockStartTime).toEqual(expect.any(Number));
+                expect(item.lockEndTime).toEqual(expect.any(Number));
+                expect(item.purchaseTime).toEqual(expect.any(Number));
+                expect(item.redeemPeriod).toEqual(expect.any(Number));
+                expect(item.status).toEqual(expect.any(String));
+                expect(item.earlyRedeemSupported).toEqual(expect.any(String));
+            });
             expect(result.currentPage).toEqual(expect.anything());
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
@@ -185,7 +242,27 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getStakingProducts(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.id).toEqual(expect.any(String));
+                expect(item.currency).toEqual(expect.any(String));
+                expect(item.category).toEqual(expect.any(String));
+                expect(item.type).toEqual(expect.any(String));
+                expect(item.precision).toEqual(expect.any(Number));
+                expect(item.productUpperLimit).toEqual(expect.any(String));
+                expect(item.userUpperLimit).toEqual(expect.any(String));
+                expect(item.userLowerLimit).toEqual(expect.any(String));
+                expect(item.redeemPeriod).toEqual(expect.any(Number));
+                expect(item.lockStartTime).toEqual(expect.any(Number));
+                expect(item.applyStartTime).toEqual(expect.any(Number));
+                expect(item.returnRate).toEqual(expect.any(String));
+                expect(item.incomeCurrency).toEqual(expect.any(String));
+                expect(item.productRemainAmount).toEqual(expect.any(String));
+                expect(item.status).toEqual(expect.any(String));
+                expect(item.redeemType).toEqual(expect.any(String));
+                expect(item.incomeReleaseType).toEqual(expect.any(String));
+                expect(item.interestDate).toEqual(expect.any(Number));
+                expect(item.duration).toEqual(expect.any(Number));
+            });
             console.log(resp);
         });
     });
@@ -201,7 +278,27 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getKcsStakingProducts(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.id).toEqual(expect.any(String));
+                expect(item.currency).toEqual(expect.any(String));
+                expect(item.category).toEqual(expect.any(String));
+                expect(item.type).toEqual(expect.any(String));
+                expect(item.precision).toEqual(expect.any(Number));
+                expect(item.productUpperLimit).toEqual(expect.any(String));
+                expect(item.userUpperLimit).toEqual(expect.any(String));
+                expect(item.userLowerLimit).toEqual(expect.any(String));
+                expect(item.redeemPeriod).toEqual(expect.any(Number));
+                expect(item.lockStartTime).toEqual(expect.any(Number));
+                expect(item.applyStartTime).toEqual(expect.any(Number));
+                expect(item.returnRate).toEqual(expect.any(String));
+                expect(item.incomeCurrency).toEqual(expect.any(String));
+                expect(item.productRemainAmount).toEqual(expect.any(String));
+                expect(item.status).toEqual(expect.any(String));
+                expect(item.redeemType).toEqual(expect.any(String));
+                expect(item.incomeReleaseType).toEqual(expect.any(String));
+                expect(item.interestDate).toEqual(expect.any(Number));
+                expect(item.duration).toEqual(expect.any(Number));
+            });
             console.log(resp);
         });
     });
@@ -217,7 +314,27 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getETHStakingProducts(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.id).toEqual(expect.any(String));
+                expect(item.currency).toEqual(expect.any(String));
+                expect(item.category).toEqual(expect.any(String));
+                expect(item.type).toEqual(expect.any(String));
+                expect(item.precision).toEqual(expect.any(Number));
+                expect(item.productUpperLimit).toEqual(expect.any(String));
+                expect(item.userUpperLimit).toEqual(expect.any(String));
+                expect(item.userLowerLimit).toEqual(expect.any(String));
+                expect(item.redeemPeriod).toEqual(expect.any(Number));
+                expect(item.lockStartTime).toEqual(expect.any(Number));
+                expect(item.applyStartTime).toEqual(expect.any(Number));
+                expect(item.returnRate).toEqual(expect.any(String));
+                expect(item.incomeCurrency).toEqual(expect.any(String));
+                expect(item.productRemainAmount).toEqual(expect.any(String));
+                expect(item.status).toEqual(expect.any(String));
+                expect(item.redeemType).toEqual(expect.any(String));
+                expect(item.incomeReleaseType).toEqual(expect.any(String));
+                expect(item.interestDate).toEqual(expect.any(Number));
+                expect(item.duration).toEqual(expect.any(Number));
+            });
             console.log(resp);
         });
     });
