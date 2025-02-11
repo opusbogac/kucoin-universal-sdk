@@ -114,7 +114,7 @@ export class DefaultTransport implements Transport {
     }
 
     private processHeaders(
-        body: string,
+        body: string | null,
         rawUrl: string,
         config: AxiosRequestConfig,
         method: string,
@@ -184,7 +184,7 @@ export class DefaultTransport implements Transport {
     ): AxiosRequestConfig {
         const fullPath = endpoint + path;
         const rawUrl = path;
-        let reqBody = '';
+        let reqBody = null;
         let queryPath = path;
 
         if (requestAsJson) {
@@ -316,7 +316,7 @@ export class DefaultTransport implements Transport {
                 if (err instanceof RestError) {
                     throw err;
                 } else {
-                    throw new RestError(null, err.message);
+                    throw new RestError(null, err);
                 }
             });
     }

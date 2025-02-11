@@ -53,7 +53,7 @@ export class RestResponse {
         }
         throw new RestError(
             this,
-            `Server returned error, code: {${this.code}}, message: {${this.msg || 'unknown'}}`,
+            new Error(`Server returned error, code: {${this.code}}, message: {${this.msg || 'unknown'}}`),
         );
     }
 }
@@ -61,16 +61,16 @@ export class RestResponse {
 export class RestError extends Error {
     constructor(
         private response: RestResponse | null,
-        private msg?: string,
+        private err?: Error,
     ) {
-        super(msg);
+        super(err?.message || 'unknown');
     }
 
     toString() {
         if (this.response) {
-            return `request error, server code: ${this.response.code}, server msg: ${this.response.msg}, context msg: ${this.msg}`;
+            return `request error, server code: ${this.response.code}, server msg: ${this.response.msg}, context msg: ${this.err?.message || 'unknown'}`;
         }
-        return `request error, context msg: ${this.msg}`;
+        return `request error, ${this.err}`;
     }
 
     getCommonResponse() {

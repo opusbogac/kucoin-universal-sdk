@@ -61,7 +61,19 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getLoanMarket(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((element) => {
+                expect(element.currency).toEqual(expect.anything());
+                expect(element.purchaseEnable).toEqual(expect.anything());
+                expect(element.redeemEnable).toEqual(expect.anything());
+                expect(element.increment).toEqual(expect.anything());
+                expect(element.minPurchaseSize).toEqual(expect.anything());
+                expect(element.minInterestRate).toEqual(expect.anything());
+                expect(element.maxInterestRate).toEqual(expect.anything());
+                expect(element.interestIncrement).toEqual(expect.anything());
+                expect(element.maxPurchaseSize).toEqual(expect.anything());
+                expect(element.marketInterestRate).toEqual(expect.anything());
+                expect(element.autoPurchaseEnable).toEqual(expect.anything());
+            })
             console.log(resp);
         });
     });
@@ -77,7 +89,10 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getLoanMarketInterestRate(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((element) => {
+                expect(element.marketInterestRate).toEqual(expect.anything());
+                expect(element.time).toEqual(expect.anything());
+            })
             console.log(resp);
         });
     });
@@ -108,7 +123,7 @@ describe('Auto Test', () => {
         builder
             .setCurrency('DOGE')
             .setInterestRate('0.02')
-            .setPurchaseOrderNo('6745708dad11d500073f083f');
+            .setPurchaseOrderNo('67aabb111a8c110007ba2e5a');
         let req = builder.build();
         let resp = api.modifyPurchase(req);
         return resp.then((result) => {
@@ -124,7 +139,7 @@ describe('Auto Test', () => {
          * /api/v3/purchase/orders
          */
         let builder = GetPurchaseOrdersReq.builder();
-        builder.setCurrency('DOGE').setPurchaseOrderNo('');
+        builder.setCurrency('DOGE').setPurchaseOrderNo('67aabb111a8c110007ba2e5a').setStatus(GetPurchaseOrdersReq.StatusEnum.DONE);
         let req = builder.build();
         let resp = api.getPurchaseOrders(req);
         return resp.then((result) => {
@@ -144,7 +159,7 @@ describe('Auto Test', () => {
          * /api/v3/redeem
          */
         let builder = RedeemReq.builder();
-        builder.setCurrency('DOGE').setSize('10').setPurchaseOrderNo('6745708dad11d500073f083f');
+        builder.setCurrency('DOGE').setSize('10').setPurchaseOrderNo('67aabb111a8c110007ba2e5a');
         let req = builder.build();
         let resp = api.redeem(req);
         return resp.then((result) => {
@@ -168,7 +183,14 @@ describe('Auto Test', () => {
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
-            expect(result.items).toEqual(expect.anything());
+            result.items.forEach((element) => {
+                expect(element.currency).toEqual(expect.anything());
+                expect(element.purchaseOrderNo).toEqual(expect.anything());
+                expect(element.redeemOrderNo).toEqual(expect.anything());
+                expect(element.redeemSize).toEqual(expect.anything());
+                expect(element.receiptSize).toEqual(expect.anything());
+                expect(element.status).toEqual(expect.anything());
+            })
             console.log(resp);
         });
     });

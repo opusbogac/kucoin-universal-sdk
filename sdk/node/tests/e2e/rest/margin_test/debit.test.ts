@@ -88,7 +88,15 @@ describe('Auto Test', () => {
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
-            expect(result.items).toEqual(expect.anything());
+            result.items.forEach((item) => {
+                expect(item.orderNo).toEqual(expect.anything());
+                expect(item.symbol).toEqual(expect.anything());
+                expect(item.currency).toEqual(expect.anything());
+                expect(item.size).toEqual(expect.anything());
+                expect(item.actualSize).toEqual(expect.anything());
+                expect(item.status).toEqual(expect.anything());
+                expect(item.createdTime).toEqual(expect.anything());
+            })
             console.log(resp);
         });
     });
@@ -132,7 +140,16 @@ describe('Auto Test', () => {
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
-            expect(result.items).toEqual(expect.anything());
+            result.items.forEach((item) => {
+                expect(item.orderNo).toEqual(expect.anything());
+                expect(item.symbol).toEqual(expect.anything());
+                expect(item.currency).toEqual(expect.anything());
+                expect(item.size).toEqual(expect.anything());
+                expect(item.principal).toEqual(expect.anything());
+                expect(item.interest).toEqual(expect.anything());
+                expect(item.status).toEqual(expect.anything());
+                expect(item.createdTime).toEqual(expect.anything());
+            })
             console.log(resp);
         });
     });
@@ -153,7 +170,12 @@ describe('Auto Test', () => {
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
-            expect(result.items).toEqual(expect.anything());
+            result.items.forEach((item) => {
+                expect(item.currency).toEqual(expect.anything());
+                expect(item.createdTime).toEqual(expect.anything());
+                expect(item.dayRatio).toEqual(expect.anything());
+                expect(item.interestAmount).toEqual(expect.anything());
+            })
             console.log(resp);
         });
     });
