@@ -224,18 +224,14 @@ export class DefaultTransport implements Transport {
         const config: AxiosRequestConfig = {
             method: method.toLowerCase() as any,
             url: endpoint + queryPath,
-            data: reqBody,
             headers: {
+                'Content-Type': 'application/json',
                 'User-Agent': `Kucoin-Universal-Node-SDK/${this.version}`,
             },
         };
 
-        // Add Content-Type only for POST and PUT requests
-        if (method === 'POST' || method === 'PUT') {
-            config.headers = {
-                ...config.headers,
-                'Content-Type': 'application/json',
-            };
+        if (reqBody != null) {
+            config.data = reqBody;
         }
 
         // Use queryPath instead of rawUrl for signature

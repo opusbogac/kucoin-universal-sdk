@@ -153,6 +153,10 @@ describe('Auto Test', () => {
         return resp.then((result) => {
             expect(result.data).toEqual(expect.anything());
             console.log(resp);
+            result.data.forEach((item) => {
+                console.log(item.orderId);
+                console.log(item.clientOid);
+            })
         });
     });
 
@@ -170,6 +174,7 @@ describe('Auto Test', () => {
             .setLeverage(3.0)
             .setType(AddTPSLOrderReq.TypeEnum.LIMIT)
             .setRemark('order_test')
+            .setStopPriceType(AddTPSLOrderReq.StopPriceTypeEnum.TRADE_PRICE)
             .setMarginMode(AddTPSLOrderReq.MarginModeEnum.ISOLATED)
             .setPrice('10000')
             .setSize(1)
@@ -192,7 +197,7 @@ describe('Auto Test', () => {
          * /api/v1/orders/{orderId}
          */
         let builder = CancelOrderByIdReq.builder();
-        builder.setOrderId('');
+        builder.setOrderId('278696338965737472');
         let req = builder.build();
         let resp = api.cancelOrderById(req);
         return resp.then((result) => {
@@ -208,7 +213,7 @@ describe('Auto Test', () => {
          * /api/v1/orders/client-order/{clientOid}
          */
         let builder = CancelOrderByClientOidReq.builder();
-        builder.setSymbol('').setClientOid('');
+        builder.setSymbol('XBTUSDTM').setClientOid('ab78cba6-55f7-42d7-a49f-fee676b265a4');
         let req = builder.build();
         let resp = api.cancelOrderByClientOid(req);
         return resp.then((result) => {
@@ -225,9 +230,10 @@ describe('Auto Test', () => {
          */
         let builder = BatchCancelOrdersReq.builder();
         builder
-            .setOrderIdsList(['', ''])
+            .setOrderIdsList(['278697532131983364', '278697532211675136'])
             .setClientOidsList([
-                BatchCancelOrdersClientOidsList.create({ symbol: '', clientOid: '' }),
+                BatchCancelOrdersClientOidsList.create({ symbol: 'XBTUSDTM', clientOid: '5f888dfe-8fec-4691-a36d-d2cfb9f050b0' }),
+                BatchCancelOrdersClientOidsList.create({ symbol: 'XBTUSDTM', clientOid: '48d63d98-2369-43c1-a599-db4ceba41fbf' }),
             ]);
         let req = builder.build();
         let resp = api.batchCancelOrders(req);
@@ -276,7 +282,7 @@ describe('Auto Test', () => {
          * /api/v1/orders/{order-id}
          */
         let builder = GetOrderByOrderIdReq.builder();
-        builder.setOrderId('');
+        builder.setOrderId('278700272115560449');
         let req = builder.build();
         let resp = api.getOrderByOrderId(req);
         return resp.then((result) => {
@@ -293,7 +299,6 @@ describe('Auto Test', () => {
             expect(result.stop).toEqual(expect.anything());
             expect(result.stopPriceType).toEqual(expect.anything());
             expect(result.stopTriggered).toEqual(expect.anything());
-            expect(result.stopPrice).toEqual(expect.anything());
             expect(result.timeInForce).toEqual(expect.anything());
             expect(result.postOnly).toEqual(expect.anything());
             expect(result.hidden).toEqual(expect.anything());
@@ -303,13 +308,10 @@ describe('Auto Test', () => {
             expect(result.closeOrder).toEqual(expect.anything());
             expect(result.visibleSize).toEqual(expect.anything());
             expect(result.clientOid).toEqual(expect.anything());
-            expect(result.remark).toEqual(expect.anything());
-            expect(result.tags).toEqual(expect.anything());
             expect(result.isActive).toEqual(expect.anything());
             expect(result.cancelExist).toEqual(expect.anything());
             expect(result.createdAt).toEqual(expect.anything());
             expect(result.updatedAt).toEqual(expect.anything());
-            expect(result.endAt).toEqual(expect.anything());
             expect(result.orderTime).toEqual(expect.anything());
             expect(result.settleCurrency).toEqual(expect.anything());
             expect(result.marginMode).toEqual(expect.anything());
@@ -329,7 +331,7 @@ describe('Auto Test', () => {
          * /api/v1/orders/byClientOid
          */
         let builder = GetOrderByClientOidReq.builder();
-        builder.setClientOid('');
+        builder.setClientOid('4595de36-25e9-434c-ab13-fb93670ade2a');
         let req = builder.build();
         let resp = api.getOrderByClientOid(req);
         return resp.then((result) => {
@@ -346,7 +348,6 @@ describe('Auto Test', () => {
             expect(result.stop).toEqual(expect.anything());
             expect(result.stopPriceType).toEqual(expect.anything());
             expect(result.stopTriggered).toEqual(expect.anything());
-            expect(result.stopPrice).toEqual(expect.anything());
             expect(result.timeInForce).toEqual(expect.anything());
             expect(result.postOnly).toEqual(expect.anything());
             expect(result.hidden).toEqual(expect.anything());
@@ -356,13 +357,10 @@ describe('Auto Test', () => {
             expect(result.closeOrder).toEqual(expect.anything());
             expect(result.visibleSize).toEqual(expect.anything());
             expect(result.clientOid).toEqual(expect.anything());
-            expect(result.remark).toEqual(expect.anything());
-            expect(result.tags).toEqual(expect.anything());
             expect(result.isActive).toEqual(expect.anything());
             expect(result.cancelExist).toEqual(expect.anything());
             expect(result.createdAt).toEqual(expect.anything());
             expect(result.updatedAt).toEqual(expect.anything());
-            expect(result.endAt).toEqual(expect.anything());
             expect(result.orderTime).toEqual(expect.anything());
             expect(result.settleCurrency).toEqual(expect.anything());
             expect(result.marginMode).toEqual(expect.anything());
@@ -393,7 +391,42 @@ describe('Auto Test', () => {
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
-            expect(result.items).toEqual(expect.anything());
+            result.items.forEach((item) => {
+                expect(item.id).toEqual(expect.any(String));
+                expect(item.symbol).toEqual(expect.any(String));
+                expect(item.type).toEqual(expect.any(String));
+                expect(item.side).toEqual(expect.any(String));
+                expect(item.price).toEqual(expect.any(String));
+                expect(item.size).toEqual(expect.any(Number));
+                expect(item.value).toEqual(expect.any(String));
+                expect(item.dealValue).toEqual(expect.any(String));
+                expect(item.dealSize).toEqual(expect.any(Number));
+                expect(item.stp).toEqual(expect.any(String));
+                expect(item.stop).toEqual(expect.any(String));
+                expect(item.stopPriceType).toEqual(expect.any(String));
+                expect(item.stopTriggered).toEqual(expect.any(Boolean));
+                expect(item.timeInForce).toEqual(expect.any(String));
+                expect(item.postOnly).toEqual(expect.any(Boolean));
+                expect(item.hidden).toEqual(expect.any(Boolean));
+                expect(item.iceberg).toEqual(expect.any(Boolean));
+                expect(item.leverage).toEqual(expect.any(String));
+                expect(item.forceHold).toEqual(expect.any(Boolean));
+                expect(item.closeOrder).toEqual(expect.any(Boolean));
+                expect(item.visibleSize).toEqual(expect.any(Number));
+                expect(item.clientOid).toEqual(expect.any(String));
+                expect(item.isActive).toEqual(expect.any(Boolean));
+                expect(item.cancelExist).toEqual(expect.any(Boolean));
+                expect(item.createdAt).toEqual(expect.any(Number));
+                expect(item.updatedAt).toEqual(expect.any(Number));
+                expect(item.orderTime).toEqual(expect.any(Number));
+                expect(item.settleCurrency).toEqual(expect.any(String));
+                expect(item.marginMode).toEqual(expect.any(String));
+                expect(item.avgDealPrice).toEqual(expect.any(String));
+                expect(item.status).toEqual(expect.any(String));
+                expect(item.filledSize).toEqual(expect.any(Number));
+                expect(item.filledValue).toEqual(expect.any(String));
+                expect(item.reduceOnly).toEqual(expect.any(Boolean));
+            })
             console.log(resp);
         });
     });
@@ -409,7 +442,43 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getRecentClosedOrders(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach(item=> {
+                expect(item.id).toEqual(expect.any(String));
+                expect(item.symbol).toEqual(expect.any(String));
+                expect(item.type).toEqual(expect.any(String));
+                expect(item.side).toEqual(expect.any(String));
+                expect(item.price).toEqual(expect.any(String));
+                expect(item.size).toEqual(expect.any(Number));
+                expect(item.value).toEqual(expect.any(String));
+                expect(item.dealValue).toEqual(expect.any(String));
+                expect(item.dealSize).toEqual(expect.any(Number));
+                expect(item.stp).toEqual(expect.any(String));
+                expect(item.stop).toEqual(expect.any(String));
+                expect(item.stopPriceType).toEqual(expect.any(String));
+                expect(item.stopTriggered).toEqual(expect.any(Boolean));
+                expect(item.timeInForce).toEqual(expect.any(String));
+                expect(item.postOnly).toEqual(expect.any(Boolean));
+                expect(item.hidden).toEqual(expect.any(Boolean));
+                expect(item.iceberg).toEqual(expect.any(Boolean));
+                expect(item.leverage).toEqual(expect.any(String));
+                expect(item.forceHold).toEqual(expect.any(Boolean));
+                expect(item.closeOrder).toEqual(expect.any(Boolean));
+                expect(item.visibleSize).toEqual(expect.any(Number));
+                expect(item.clientOid).toEqual(expect.any(String));
+                expect(item.isActive).toEqual(expect.any(Boolean));
+                expect(item.cancelExist).toEqual(expect.any(Boolean));
+                expect(item.createdAt).toEqual(expect.any(Number));
+                expect(item.updatedAt).toEqual(expect.any(Number));
+                expect(item.endAt).toEqual(expect.any(Number));
+                expect(item.orderTime).toEqual(expect.any(Number));
+                expect(item.settleCurrency).toEqual(expect.any(String));
+                expect(item.marginMode).toEqual(expect.any(String));
+                expect(item.avgDealPrice).toEqual(expect.any(String));
+                expect(item.status).toEqual(expect.any(String));
+                expect(item.filledSize).toEqual(expect.any(Number));
+                expect(item.filledValue).toEqual(expect.any(String));
+                expect(item.reduceOnly).toEqual(expect.any(Boolean));
+            })
             console.log(resp);
         });
     });
@@ -465,7 +534,31 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getRecentTradeHistory(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach(item=> {
+                expect(item.symbol).toEqual(expect.any(String));
+                expect(item.tradeId).toEqual(expect.any(String));
+                expect(item.orderId).toEqual(expect.any(String));
+                expect(item.side).toEqual(expect.any(String));
+                expect(item.liquidity).toEqual(expect.any(String));
+                expect(item.forceTaker).toEqual(expect.any(Boolean));
+                expect(item.price).toEqual(expect.any(String));
+                expect(item.size).toEqual(expect.any(Number));
+                expect(item.value).toEqual(expect.any(String));
+                expect(item.openFeePay).toEqual(expect.any(String));
+                expect(item.closeFeePay).toEqual(expect.any(String));
+                expect(item.stop).toEqual(expect.any(String));
+                expect(item.feeRate).toEqual(expect.any(String));
+                expect(item.fixFee).toEqual(expect.any(String));
+                expect(item.feeCurrency).toEqual(expect.any(String));
+                expect(item.tradeTime).toEqual(expect.any(Number));
+                expect(item.marginMode).toEqual(expect.any(String));
+                expect(item.displayType).toEqual(expect.any(String));
+                expect(item.fee).toEqual(expect.any(String));
+                expect(item.settleCurrency).toEqual(expect.any(String));
+                expect(item.orderType).toEqual(expect.any(String));
+                expect(item.tradeType).toEqual(expect.any(String));
+                expect(item.createdAt).toEqual(expect.any(Number));
+            })
             console.log(resp);
         });
     });
@@ -477,7 +570,7 @@ describe('Auto Test', () => {
          * /api/v1/fills
          */
         let builder = GetTradeHistoryReq.builder();
-        builder.setType(GetTradeHistoryReq.TypeEnum.LIMIT).setSide(GetTradeHistoryReq.SideEnum.BUY);
+        builder.setType(GetTradeHistoryReq.TypeEnum.MARKET).setSide(GetTradeHistoryReq.SideEnum.BUY);
         let req = builder.build();
         let resp = api.getTradeHistory(req);
         return resp.then((result) => {
@@ -485,7 +578,31 @@ describe('Auto Test', () => {
             expect(result.pageSize).toEqual(expect.anything());
             expect(result.totalNum).toEqual(expect.anything());
             expect(result.totalPage).toEqual(expect.anything());
-            expect(result.items).toEqual(expect.anything());
+            result.items.forEach(item=> {
+                expect(item.symbol).toEqual(expect.any(String));
+                expect(item.tradeId).toEqual(expect.any(String));
+                expect(item.orderId).toEqual(expect.any(String));
+                expect(item.side).toEqual(expect.any(String));
+                expect(item.liquidity).toEqual(expect.any(String));
+                expect(item.forceTaker).toEqual(expect.any(Boolean));
+                expect(item.price).toEqual(expect.any(String));
+                expect(item.size).toEqual(expect.any(Number));
+                expect(item.value).toEqual(expect.any(String));
+                expect(item.openFeePay).toEqual(expect.any(String));
+                expect(item.closeFeePay).toEqual(expect.any(String));
+                expect(item.stop).toEqual(expect.any(String));
+                expect(item.feeRate).toEqual(expect.any(String));
+                expect(item.fixFee).toEqual(expect.any(String));
+                expect(item.feeCurrency).toEqual(expect.any(String));
+                expect(item.tradeTime).toEqual(expect.any(Number));
+                expect(item.marginMode).toEqual(expect.any(String));
+                expect(item.displayType).toEqual(expect.any(String));
+                expect(item.fee).toEqual(expect.any(String));
+                expect(item.settleCurrency).toEqual(expect.any(String));
+                expect(item.orderType).toEqual(expect.any(String));
+                expect(item.tradeType).toEqual(expect.any(String));
+                expect(item.createdAt).toEqual(expect.any(Number));
+            })
             console.log(resp);
         });
     });

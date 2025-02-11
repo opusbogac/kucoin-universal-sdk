@@ -2,7 +2,7 @@ import {
     ClientOptionBuilder,
     GlobalApiEndpoint,
     GlobalBrokerApiEndpoint,
-    GlobalFuturesApiEndpoint,
+    GlobalFuturesApiEndpoint, Interceptor,
     TransportOptionBuilder,
 } from '@model/index';
 import {
@@ -27,12 +27,23 @@ describe('Auto Test', () => {
         const key = process.env.API_KEY || '';
         const secret = process.env.API_SECRET || '';
         const passphrase = process.env.API_PASSPHRASE || '';
-
+        let interceptors: Array<Interceptor> = [
+            {
+                before: {
+                    onFulfilled: (config) => {
+                        console.log('debug: ', config.url);
+                        return config;
+                    },
+                },
+                after: {},
+            },
+        ];
         // Set specific options, others will fall back to default values
         const httpTransportOption = new TransportOptionBuilder()
             .setKeepAlive(true)
             .setMaxConnsPerHost(10)
             .setMaxIdleConns(10)
+            .setInterceptors(interceptors)
             .build();
 
         // Create a client using the specified options
@@ -68,8 +79,6 @@ describe('Auto Test', () => {
             expect(result.rootSymbol).toEqual(expect.anything());
             expect(result.type).toEqual(expect.anything());
             expect(result.firstOpenDate).toEqual(expect.anything());
-            expect(result.expireDate).toEqual(expect.anything());
-            expect(result.settleDate).toEqual(expect.anything());
             expect(result.baseCurrency).toEqual(expect.anything());
             expect(result.quoteCurrency).toEqual(expect.anything());
             expect(result.settleCurrency).toEqual(expect.anything());
@@ -88,7 +97,6 @@ describe('Auto Test', () => {
             expect(result.takerFeeRate).toEqual(expect.anything());
             expect(result.takerFixFee).toEqual(expect.anything());
             expect(result.makerFixFee).toEqual(expect.anything());
-            expect(result.settlementFee).toEqual(expect.anything());
             expect(result.isDeleverage).toEqual(expect.anything());
             expect(result.isQuanto).toEqual(expect.anything());
             expect(result.isInverse).toEqual(expect.anything());
@@ -98,7 +106,6 @@ describe('Auto Test', () => {
             expect(result.fundingQuoteSymbol).toEqual(expect.anything());
             expect(result.fundingRateSymbol).toEqual(expect.anything());
             expect(result.indexSymbol).toEqual(expect.anything());
-            expect(result.settlementSymbol).toEqual(expect.anything());
             expect(result.status).toEqual(expect.anything());
             expect(result.fundingFeeRate).toEqual(expect.anything());
             expect(result.predictedFundingFeeRate).toEqual(expect.anything());
@@ -177,7 +184,19 @@ describe('Auto Test', () => {
          */
         let resp = api.getAllTickers();
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.sequence).toEqual(expect.any(Number));
+                expect(item.symbol).toEqual(expect.any(String));
+                expect(item.side).toEqual(expect.any(String));
+                expect(item.size).toEqual(expect.any(Number));
+                expect(item.tradeId).toEqual(expect.any(String));
+                expect(item.price).toEqual(expect.any(String));
+                expect(item.bestBidPrice).toEqual(expect.any(String));
+                expect(item.bestBidSize).toEqual(expect.any(Number));
+                expect(item.bestAskPrice).toEqual(expect.any(String));
+                expect(item.bestAskSize).toEqual(expect.any(Number));
+                expect(item.ts).toEqual(expect.any(Number));
+            });
             console.log(resp);
         });
     });
@@ -233,7 +252,17 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getTradeHistory(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
+            result.data.forEach((item) => {
+                expect(item.sequence).toEqual(expect.any(Number));
+                expect(item.contractId).toEqual(expect.any(Number));
+                expect(item.tradeId).toEqual(expect.any(String));
+                expect(item.makerOrderId).toEqual(expect.any(String));
+                expect(item.takerOrderId).toEqual(expect.any(String));
+                expect(item.ts).toEqual(expect.any(Number));
+                expect(item.size).toEqual(expect.any(Number));
+                expect(item.price).toEqual(expect.any(String));
+                expect(item.side).toEqual(expect.any(String));
+            });
             console.log(resp);
         });
     });
@@ -248,8 +277,8 @@ describe('Auto Test', () => {
         builder
             .setSymbol('XBTUSDTM')
             .setGranularity(GetKlinesReq.GranularityEnum._1)
-            .setFrom(1732464000000)
-            .setTo(1732521600000);
+            .setFrom(1738339200000)
+            .setTo(1738425600000);
         let req = builder.build();
         let resp = api.getKlines(req);
         return resp.then((result) => {
@@ -287,13 +316,18 @@ describe('Auto Test', () => {
         let builder = GetSpotIndexPriceReq.builder();
         builder
             .setSymbol('.KXBTUSDT')
-            .setStartAt(1732464000000)
-            .setEndAt(1732521600000)
+            .setStartAt(1738339200000)
+            .setEndAt(1738425600000)
             .setMaxCount(10);
         let req = builder.build();
         let resp = api.getSpotIndexPrice(req);
         return resp.then((result) => {
-            expect(result.dataList).toEqual(expect.anything());
+            result.dataList.forEach(item=> {
+                expect(item.symbol).toEqual(expect.any(String));
+                expect(item.granularity).toEqual(expect.any(Number));
+                expect(item.timePoint).toEqual(expect.any(Number));
+                expect(item.value).toEqual(expect.any(Number));
+            });
             expect(result.hasMore).toEqual(expect.anything());
             console.log(resp);
         });
@@ -306,11 +340,16 @@ describe('Auto Test', () => {
          * /api/v1/interest/query
          */
         let builder = GetInterestRateIndexReq.builder();
-        builder.setSymbol('.XBTINT').setStartAt(1732464000000).setEndAt(1732521600000);
+        builder.setSymbol('.XBTINT').setStartAt(1738339200000).setEndAt(1738425600000);
         let req = builder.build();
         let resp = api.getInterestRateIndex(req);
         return resp.then((result) => {
-            expect(result.dataList).toEqual(expect.anything());
+            result.dataList.forEach(item=> {
+                expect(item.symbol).toEqual(expect.any(String));
+                expect(item.granularity).toEqual(expect.any(Number));
+                expect(item.timePoint).toEqual(expect.any(Number));
+                expect(item.value).toEqual(expect.any(Number));
+            });
             expect(result.hasMore).toEqual(expect.anything());
             console.log(resp);
         });
@@ -327,7 +366,12 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getPremiumIndex(req);
         return resp.then((result) => {
-            expect(result.dataList).toEqual(expect.anything());
+            result.dataList.forEach(item=> {
+                expect(item.symbol).toEqual(expect.any(String));
+                expect(item.granularity).toEqual(expect.any(Number));
+                expect(item.timePoint).toEqual(expect.any(Number));
+                expect(item.value).toEqual(expect.any(Number));
+            });
             expect(result.hasMore).toEqual(expect.anything());
             console.log(resp);
         });

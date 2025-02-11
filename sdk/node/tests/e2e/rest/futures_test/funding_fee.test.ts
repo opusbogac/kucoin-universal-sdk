@@ -79,11 +79,15 @@ describe('Auto Test', () => {
         let req = builder.build();
         let resp = api.getPublicFundingHistory(req);
         return resp.then((result) => {
-            expect(result.data).toEqual(expect.anything());
-            console.log(resp);
+            result.data.forEach((item) => {
+                expect(item.symbol).toEqual(expect.any(String));
+                expect(item.fundingRate).toEqual(expect.any(Number));
+                expect(item.timepoint).toEqual(expect.any(Number));
+            })
         });
     });
 
+    // TODO empty
     test('getPrivateFundingHistory request test', () => {
         /**
          * getPrivateFundingHistory
@@ -93,14 +97,26 @@ describe('Auto Test', () => {
         let builder = GetPrivateFundingHistoryReq.builder();
         builder
             .setSymbol('XBTUSDTM')
-            .setFrom(1700310700000)
-            .setTo(1702310700000)
+            .setFrom(1739203200000)
+            .setTo(1739289600000)
             .setReverse(true)
             .setMaxCount(100);
         let req = builder.build();
         let resp = api.getPrivateFundingHistory(req);
         return resp.then((result) => {
-            expect(result.dataList).toEqual(expect.anything());
+            result.dataList.forEach((item) => {
+                expect(item.id).toEqual(expect.any(Number));
+                expect(item.symbol).toEqual(expect.any(String));
+                expect(item.timePoint).toEqual(expect.any(Number));
+                expect(item.fundingRate).toEqual(expect.any(Number));
+                expect(item.markPrice).toEqual(expect.any(Number));
+                expect(item.positionQty).toEqual(expect.any(Number));
+                expect(item.positionCost).toEqual(expect.any(Number));
+                expect(item.funding).toEqual(expect.any(Number));
+                expect(item.settleCurrency).toEqual(expect.any(String));
+                expect(item.context).toEqual(expect.any(String));
+                expect(item.marginMode).toEqual(expect.any(String));
+            })
             expect(result.hasMore).toEqual(expect.anything());
             console.log(resp);
         });
