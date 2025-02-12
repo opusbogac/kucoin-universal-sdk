@@ -60,10 +60,10 @@ export class DefaultWsService implements WebSocketService {
         this.versionString = versionString;
         this.tokenTransport = new DefaultTransport(option, versionString);
         this.topicManager = new TopicManager();
-        
+
         // init EventEmitter
         this.eventEmitter = new EventEmitter();
-        
+
         // if config eventCallback, register as event listener
         if (this.wsOption.eventCallback) {
             this.eventEmitter.on('ws_event', (event: WebSocketEvent, msg: string, msg2: string) => {
@@ -80,7 +80,6 @@ export class DefaultWsService implements WebSocketService {
             this.wsOption,
             this.eventEmitter
         );
-        
     }
 
     /**
@@ -120,130 +119,68 @@ export class DefaultWsService implements WebSocketService {
     }
 
     /**
-     * MessageTransform handles the transformation of WebSocket messages
-     */
-    private MessageTransform = class extends Transform {
-        constructor(private worker: Worker) {
-            super({
-                objectMode: true, // Enable object mode for handling WsMessage objects
-                highWaterMark: 1024 // Set buffer size to 1024 messages
-            });
-        }
-
-        _transform(message: WsMessage, encoding: string, callback: TransformCallback): void {
-            try {
-                // Post message to worker and handle response asynchronously
-                this.worker.postMessage(message);
-                callback();
-            } catch (error) {
-                callback(error instanceof Error ? error : new Error(String(error)));
-            }
-        }
-    };
-
-    /**
      * Starts the message processing loop using a dedicated Worker Thread
-     * Creates a worker thread for message processing to handle WebSocket messages
      */
     private startMessageLoop(): void {
         try {
-            // Get the worker file path relative to the compiled js file
-            const workerPath = path.join(__dirname, '..', '..', '..', 'dist', 'internal', 'infra', 'message_worker.js');
-            
-            if (!fs.existsSync(workerPath)) {
-                throw new Error(`Worker file not found at path: ${workerPath}. Please ensure the project is built.`);
+            if (!this.client.worker) {
+                throw new Error('Worker not initialized in client');
             }
 
-            // Create a new worker thread
-            this.messageWorker = new Worker(workerPath);
-
-            // Create message transform stream
-            const messageStream = new this.MessageTransform(this.messageWorker);
-
-            // Handle stream errors
-            messageStream.on('error', (error) => {
-                console.error('[Main] Message stream error:', error);
-                this.notifyEvent(WebSocketEvent.EventErrorReceived, String(error));
-            });
-
-            // Handle messages processed by the worker
-            this.messageWorker.on('message', (msg: WsMessage) => {
+            // Handle messages from worker
+            this.client.worker.addListener('message', (msg: any) => {
                 if (this.stopSignal) {
                     return;
                 }
 
-                const callbackManager = this.topicManager.getCallbackManager(msg.topic);
-                if (!callbackManager) {
-                    return;
-                }
-
-                const cb = callbackManager.get(msg.topic);
-                if (!cb) {
+                if (msg.type !== 'message') {
                     return;
                 }
 
                 try {
-                    // Execute callback without checking return value
-                    cb.onMessage(msg);
+                    const wsMessage = JSON.parse(msg.data);
+                    if (!wsMessage || !wsMessage.topic) {
+                        console.warn('[Main] Received message without topic:', wsMessage);
+                        return;
+                    }
+
+                    const callbackManager = this.topicManager.getCallbackManager(wsMessage.topic);
+                    if (!callbackManager) {
+                        return;
+                    }
+
+                    const callback = callbackManager.get(wsMessage.topic);
+                    if (!callback) {
+                        return;
+                    }
+
+                    try {
+                        callback.onMessage(wsMessage);
+                    } catch (err) {
+                        console.error('[Main] Error processing message in main thread:', err);
+                        this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
+                    }
                 } catch (err) {
-                    console.error('[Main] Error processing message in main thread:', err);
+                    console.error('[Main] Error parsing message:', err);
                     this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
                 }
             });
 
             // Handle worker errors
-            this.messageWorker.on('error', (error) => {
+            this.client.worker.addListener('error', (error: Error) => {
                 console.error('[Main] Worker thread error:', error);
                 this.notifyEvent(WebSocketEvent.EventCallbackError, String(error));
             });
 
             // Handle worker exit
-            this.messageWorker.on('exit', (code) => {
+            this.client.worker.addListener('exit', (code: number) => {
                 if (code !== 0 && !this.stopSignal) {
                     console.error('[Main] Worker stopped with non-zero exit code');
                 }
             });
 
-            // Start message reading loop
-            const readMessages = async () => {
-                while (!this.stopSignal) {
-                    try {
-                        const msg = await this.client.read();
-                        if (!msg) {
-                            await new Promise(resolve => setTimeout(resolve, 10));
-                            continue;
-                        }
-
-                        // Write message to stream
-                        if (!messageStream.write(msg)) {
-                            // If buffer is full, wait for drain event
-                            await new Promise(resolve => messageStream.once('drain', resolve));
-                        }
-                    } catch (err) {
-                        if (!this.stopSignal) {
-                            console.error('[Main] Error reading message:', err);
-                            await new Promise(resolve => setTimeout(resolve, 100));
-                        }
-                        continue;
-                    }
-                }
-
-                // Clean up when loop ends
-                if (this.stopSignal) {
-                    messageStream.end();
-                }
-            };
-
-            // Start the message reading loop
-            readMessages().catch(err => {
-                if (!this.stopSignal) {
-                    console.error('[Main] Fatal error in message reading loop:', err);
-                    this.notifyEvent(WebSocketEvent.EventErrorReceived, String(err));
-                }
-            });
-
         } catch (error) {
-            console.error('[Main] Error creating worker:', error);
+            console.error('[Main] Error in message loop:', error);
             throw error;
         }
     }

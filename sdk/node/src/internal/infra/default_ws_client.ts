@@ -1,12 +1,15 @@
 import WebSocket, { Data as WebSocketData } from 'ws';
 import { EventEmitter } from 'events';
 import { Readable, Writable } from 'stream';
+import path from 'path';
 
 import { WsMessage } from '../../model/common';
 import { MessageType } from '../../model/constant';
 import { WebSocketClientOption } from '../../model/websocket_option';
 import { WebSocketEvent } from '../../model/websocket_option';
 import { WsToken, WsTokenProvider } from '../interfaces/websocket';
+import fs from 'fs';
+import { Worker } from 'worker_threads';
 
 /**
  * WriteMsg represents a message to be written to the WebSocket connection
@@ -60,7 +63,7 @@ class MessageQueue extends Readable {
  * MessageWriter implements a message writer using Node.js streams
  */
 class MessageWriter extends Writable {
-    constructor(private client: WebSocket) {
+    constructor(private worker: Worker) {
         super({
             objectMode: true,
             highWaterMark: 256
@@ -69,13 +72,12 @@ class MessageWriter extends Writable {
 
     _write(message: WsMessage, encoding: string, callback: (error?: Error | null) => void): void {
         try {
-            this.client.send(JSON.stringify(message), (error) => {
-                if (error) {
-                    callback(error);
-                } else {
-                    callback();
-                }
+            // Send message through worker
+            this.worker.postMessage({
+                command: 'send',
+                data: message
             });
+            callback();
         } catch (error) {
             callback(error as Error);
         }
@@ -108,6 +110,7 @@ export class WebSocketClient {
     private lastPingTime: number | null;
 
     private messageWriter: MessageWriter | null = null;
+    public worker: Worker | null = null;
 
     constructor(
         tokenProvider: WsTokenProvider, 
@@ -161,37 +164,31 @@ export class WebSocketClient {
 
     // Start the message processing and keep-alive
     private run(): void {
-        //
+        if (!this.worker) {
+            throw new Error('Worker not initialized');
+        }
+
         if (!this.keepAliveInterval) {
             this.keepAliveInterval = setInterval(() => this.keepAlive(), 1000);
         }
 
-        this.messageWriter = new MessageWriter(this.conn as WebSocket);
+        // Initialize message writer
+        this.messageWriter = new MessageWriter(this.worker);
         this.writeMsgQueue.pipe(this.messageWriter);
     }
 
     // Stop the WebSocket client
     stop(): Promise<void> {
-        console.debug('Stopping WebSocket client...');
         this.shutdown = true;
-        this.reconnectClosed = true;
-
-        // Clear intervals and resources first
         this.clearResources();
 
-        return new Promise<void>((resolve) => {
-            // Close WebSocket connection if it exists
-            if (this.conn && this.conn.readyState === WebSocket.OPEN) {
-                this.conn.once('close', () => {
-                    console.debug('WebSocket client stopped');
-                    resolve();
-                });
-                this.conn.close();
-            } else {
-                console.debug('WebSocket client stopped');
-                resolve();
-            }
-        });
+        if (this.worker) {
+            this.worker.postMessage({ command: 'close' });
+            this.worker.terminate();
+            this.worker = null;
+        }
+
+        return Promise.resolve();
     }
 
     // Clear all resources
@@ -219,32 +216,70 @@ export class WebSocketClient {
             .then((tokenInfos) => {
                 this.tokenInfo = this.randomEndpoint(tokenInfos);
 
-                // create WebSocket connection
+                // create WebSocket connection parameters
                 const queryParams = new URLSearchParams({
                     connectId: Date.now().toString(),
                     token: this.tokenInfo.token,
                 });
 
-                // create WebSocket connection
+                // create WebSocket URL
                 const wsUrl = `${this.tokenInfo.endpoint}?${queryParams.toString()}`;
-                this.conn = new WebSocket(wsUrl);
+                
+                // Get the worker file path relative to the compiled js file
+                const workerPath = path.join(__dirname, '..', '..', '..', 'dist', 'internal', 'infra', 'message_worker.js');
+                
+                if (!fs.existsSync(workerPath)) {
+                    throw new Error(`Worker file not found at path: ${workerPath}. Please ensure the project is built.`);
+                }
+
+                // Create a new worker thread
+                this.worker = new Worker(workerPath);
 
                 return new Promise<void>((resolve, reject) => {
-                    if (!this.conn) return reject(new Error('No connection'));
+                    if (!this.worker) {
+                        reject(new Error('Failed to create worker'));
+                        return;
+                    }
 
-                    this.conn.on('open', () => {
-                        this.onOpen();
-                        resolve();
+                    // Handle worker messages
+                    this.worker.addListener('message', (message: any) => {
+                        switch (message.type) {
+                            case 'open':
+                                this.onOpen();
+                                resolve();
+                                break;
+                            case 'message':
+                                this.onMessage(message.data);
+                                break;
+                            case 'error':
+                                this.onError(new Error(message.error));
+                                break;
+                            case 'close':
+                                this.onClose(message.code, message.reason);
+                                break;
+                        }
                     });
 
-                    this.conn.on('message', (data: WebSocketData) =>
-                        this.onMessage(data.toString()),
-                    );
-                    this.conn.on('error', (error: Error) => this.onError(error));
-                    this.conn.on('close', (code: number, reason: string) =>
-                        this.onClose(code, reason.toString()),
-                    );
+                    // Handle worker errors
+                    this.worker.addListener('error', (error: Error) => {
+                        console.error('Worker error:', error);
+                        reject(error);
+                    });
 
+                    // Handle worker exit
+                    this.worker.addListener('exit', (code: number) => {
+                        if (code !== 0) {
+                            console.error(`Worker stopped with exit code ${code}`);
+                        }
+                    });
+
+                    // Send connect command to worker
+                    this.worker.postMessage({ 
+                        command: 'connect',
+                        wsUrl 
+                    });
+
+                    // Set timeout for welcome message
                     setTimeout(() => {
                         if (!this.welcomeReceived) {
                             reject(new Error('Did not receive welcome message'));
@@ -433,6 +468,73 @@ export class WebSocketClient {
         }
     }
 
+    public close(): void {
+        if (this.worker) {
+            this.worker.postMessage({ command: 'close' });
+            this.worker.terminate();
+            this.worker = null;
+        }
+        // Clear intervals
+        if (this.keepAliveInterval) {
+            clearInterval(this.keepAliveInterval);
+            this.keepAliveInterval = null;
+        }
+
+        // Clear message queues
+        this.clearMessageQueues();
+
+        // Reset state
+        this.disconnected = true;
+        this.connected = false;
+        this.welcomeReceived = false;
+        this.lastPingTime = null;
+    }
+
+    // Clear all message queues and cleanup resources
+    private clearMessageQueues(): void {
+        // Clear read message queue
+        this.readMsgQueue.clear();
+
+        // Clear write message queue and reject pending promises
+        this.writeMsgQueue.clear();
+        this.ackEvents.forEach((writeMsg) => {
+            writeMsg.reject(new Error('WebSocket connection closed'));
+        });
+        this.ackEvents.clear();
+    }
+
+    private notifyEvent(event: WebSocketEvent, msg: string, msg2: string = ''): void {
+        try {
+            this.eventEmitter.emit('ws_event', event, msg);
+        } catch (err) {
+            console.error('Exception in notify_event:', err);
+        }
+    }
+
+    private randomEndpoint(tokens: WsToken[]): WsToken {
+        if (!tokens.length) {
+            throw new Error('Tokens list is empty');
+        }
+        return tokens[Math.floor(Math.random() * tokens.length)];
+    }
+
+    private newPingMessage(): WsMessage {
+        const pingMessage = new WsMessage();
+        pingMessage.id = Date.now().toString();
+        pingMessage.type = MessageType.PingMessage;
+        return pingMessage;
+    }
+
+    // Check if the client has been reconnected
+    isReconnected(): boolean {
+        return this.reconnected;
+    }
+
+    // Clear the reconnected flag
+    clearReconnectedFlag(): void {
+        this.reconnected = false;
+    }
+
     private async reconnect(): Promise<void> {
         const reconnectLoop = async () => {
             while (!this.reconnectClosed) {
@@ -491,103 +593,5 @@ export class WebSocketClient {
             console.error('Critical error in reconnect loop:', err);
             this.notifyEvent(WebSocketEvent.EventClientFail, `Critical error: ${err.message}`);
         });
-    }
-
-    // Clear all message queues and cleanup resources
-    private clearMessageQueues(): void {
-        // Clear read message queue
-        this.readMsgQueue.clear();
-
-        // Clear write message queue and reject pending promises
-        this.writeMsgQueue.clear();
-        this.ackEvents.forEach((writeMsg) => {
-            writeMsg.reject(new Error('WebSocket connection closed'));
-        });
-        this.ackEvents.clear();
-    }
-
-    // close the WebSocket connection and clean up resources
-    close(): Promise<void> {
-        return new Promise<void>((resolve) => {
-            // Clear intervals
-            if (this.keepAliveInterval) {
-                clearInterval(this.keepAliveInterval);
-                this.keepAliveInterval = null;
-            }
-
-            // Clear message queues
-            this.clearMessageQueues();
-
-            // Close WebSocket connection
-            if (this.conn) {
-                const closeTimeout = setTimeout(() => {
-                    console.log('WebSocket close timeout, forcing close');
-                    this.conn = null;
-                    this.connected = false;
-                    this.closed = true;
-                    resolve();
-                }, 3000);
-
-                // Listen for close event before closing
-                this.conn.once('close', () => {
-                    clearTimeout(closeTimeout);
-                    this.conn = null;
-                    this.connected = false;
-                    this.closed = true;
-                    resolve();
-                });
-
-                try {
-                    // Close the connection
-                    this.conn.close();
-                } catch (err) {
-                    console.error('Error during WebSocket close:', err);
-                    clearTimeout(closeTimeout);
-                    this.conn = null;
-                    this.connected = false;
-                    this.closed = true;
-                    resolve();
-                }
-            } else {
-                // If no connection exists, resolve immediately
-                this.connected = false;
-                this.closed = true;
-                resolve();
-            }
-        });
-    }
-
-    private notifyEvent(event: WebSocketEvent, msg: string, msg2: string = ''): void {
-        try {
-            this.eventEmitter.emit('ws_event', event, msg);
-        } catch (err) {
-            console.error('Exception in notify_event:', err);
-        }
-    }
-
-    //
-    private randomEndpoint(tokens: WsToken[]): WsToken {
-        if (!tokens.length) {
-            throw new Error('Tokens list is empty');
-        }
-        return tokens[Math.floor(Math.random() * tokens.length)];
-    }
-
-    //
-    private newPingMessage(): WsMessage {
-        const pingMessage = new WsMessage();
-        pingMessage.id = Date.now().toString();
-        pingMessage.type = MessageType.PingMessage;
-        return pingMessage;
-    }
-
-    // Check if the client has been reconnected
-    isReconnected(): boolean {
-        return this.reconnected;
-    }
-
-    // Clear the reconnected flag
-    clearReconnectedFlag(): void {
-        this.reconnected = false;
     }
 }

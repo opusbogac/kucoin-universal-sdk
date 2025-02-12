@@ -1,6 +1,6 @@
 import { parentPort } from 'worker_threads';
 import { WsMessage } from '@model/common';
-import { MessageType } from '@model/constant';
+import WebSocket from 'ws';
 
 // Log worker initialization
 console.log('[Worker] Initializing worker thread');
@@ -10,50 +10,82 @@ if (!parentPort) {
     process.exit(1);
 }
 
-// Handle messages from the main thread
-parentPort.on('message', (message: WsMessage) => {
+let ws: WebSocket | null = null;
 
+// Parse WebSocket message
+function parseMessage(data: WebSocket.Data): any {
     try {
-        // Process all message types
-        switch (message.type) {
-            case MessageType.Message:
-                // message
-                parentPort!.postMessage({
-                    ...message,
-                    processedAt: new Date().toISOString()
-                });
-                break;
-
-            case MessageType.SubscribeMessage:
-            case MessageType.UnsubscribeMessage:
-                // Subscription related messages
-                console.log(`[Worker] Processing ${message.type} message for topic:`, message.topic);
-                parentPort!.postMessage(message);
-                break;
-
-            case MessageType.WelcomeMessage:
-            case MessageType.PingMessage:
-            case MessageType.PongMessage:
-            case MessageType.AckMessage:
-                // System messages
-                console.log(`[Worker] Processing system message type:`, message.type);
-                parentPort!.postMessage(message);
-                break;
-
-            case MessageType.ErrorMessage:
-                // Error messages
-                console.error('[Worker] Received error message:', message);
-                parentPort!.postMessage(message);
-                break;
-
-            default:
-                // Other message types
-                console.log('[Worker] Processing unknown message type:', message.type);
-                parentPort!.postMessage(message);
+        const message = JSON.parse(data.toString());
+        // Add topic field if not present
+        if (!message.topic && message.type) {
+            message.topic = message.type;
         }
-        
+        return message;
     } catch (error) {
-        console.error('[Worker] Error processing message:', error);
+        console.error('[Worker] Error parsing message:', error);
+        return null;
+    }
+}
+
+// Handle messages from the main thread
+parentPort.on('message', (message: any) => {
+    try {
+        if (message.command === 'connect') {
+            // Create WebSocket connection
+            ws = new WebSocket(message.wsUrl);
+
+            // Handle WebSocket events
+            ws.on('open', () => {
+                console.log('[Worker] WebSocket connection opened');
+                parentPort!.postMessage({ type: 'open' });
+            });
+
+            ws.on('message', (data: WebSocket.Data) => {
+                const parsedMessage = parseMessage(data);
+                if (parsedMessage) {
+                    console.log('[Worker] Received message:', parsedMessage);
+                    parentPort!.postMessage({ 
+                        type: 'message',
+                        data: JSON.stringify(parsedMessage)
+                    });
+                }
+            });
+
+            ws.on('error', (error: Error) => {
+                console.error('[Worker] WebSocket error:', error);
+                parentPort!.postMessage({ 
+                    type: 'error',
+                    error: error.message
+                });
+            });
+
+            ws.on('close', (code: number, reason: string) => {
+                console.log('[Worker] WebSocket closed:', code, reason);
+                parentPort!.postMessage({ 
+                    type: 'close',
+                    code,
+                    reason
+                });
+            });
+        } else if (message.command === 'send' && ws) {
+            // Send message through WebSocket
+            const data = message.data;
+            if (typeof data === 'object') {
+                ws.send(JSON.stringify(data));
+            } else {
+                ws.send(data);
+            }
+        } else if (message.command === 'close' && ws) {
+            // Close WebSocket connection
+            ws.close();
+            ws = null;
+        }
+    } catch (error) {
+        console.error('[Worker] Error handling message:', error);
+        parentPort!.postMessage({ 
+            type: 'error',
+            error: error instanceof Error ? error.message : String(error)
+        });
     }
 });
 
@@ -65,16 +97,28 @@ parentPort.on('error', (error) => {
 // Handle close
 parentPort.on('close', () => {
     console.log('[Worker] Close event: Worker is shutting down');
+    if (ws) {
+        ws.close();
+        ws = null;
+    }
 });
 
 // Keep the worker alive
 process.on('exit', () => {
     console.log('[Worker] Process exit event received');
+    if (ws) {
+        ws.close();
+        ws = null;
+    }
 });
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (error) => {
     console.error('[Worker] Uncaught exception:', error);
+    if (ws) {
+        ws.close();
+        ws = null;
+    }
 });
 
 // Handle unhandled rejections
