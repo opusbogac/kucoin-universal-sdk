@@ -73,6 +73,10 @@ export class RestError extends Error {
         return `request error, ${this.err}`;
     }
 
+    getError() {
+        return this.err;
+    }
+
     getCommonResponse() {
         return this.response;
     }

@@ -42,6 +42,8 @@ export class DefaultTransport implements Transport {
     }
 
     private createHttpClient(trans_option: TransportOption): AxiosInstance {
+        const selectedProxy = trans_option.proxy?.https ?? trans_option.proxy?.http;
+
         const instance = axios.create({
             timeout: trans_option.timeout || DEFAULT_TRANSPORT_OPTION.timeout,
             headers: {
@@ -73,6 +75,18 @@ export class DefaultTransport implements Transport {
                           trans_option.idleConnTimeout || DEFAULT_TRANSPORT_OPTION.idleConnTimeout,
                   })
                 : undefined,
+            proxy: selectedProxy
+                ? {
+                      host: selectedProxy.host,
+                      port: selectedProxy.port,
+                      auth: trans_option.proxy?.auth
+                          ? {
+                                username: trans_option.proxy.auth.username,
+                                password: trans_option.proxy.auth.password,
+                            }
+                          : undefined,
+                  }
+                : false,
         } as CreateAxiosDefaults);
 
         // Add retry logic

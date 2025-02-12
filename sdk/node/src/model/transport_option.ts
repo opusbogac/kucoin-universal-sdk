@@ -38,6 +38,12 @@ export interface Interceptor {
     after: AxiosResponseInterceptor;
 }
 
+export interface ProxyOption {
+    http?: { host: string; port: number };
+    https?: { host: string; port: number };
+    auth?: { username: string; password: string };
+}
+
 /**
  * TransportOption interface for storing various HTTP request configurations
  */
@@ -71,9 +77,9 @@ export interface TransportOption {
      */
     idleConnTimeout: number;
     /**
-     * HTTP proxy function
+     * HTTP(s) proxy options
      */
-    proxy?: (req: Request) => Promise<URL | null> | URL | null;
+    proxy?: ProxyOption;
     /**
      * Maximum number of retry attempts
      */
@@ -171,9 +177,9 @@ export class TransportOptionBuilder {
     }
 
     /**
-     * Set the HTTP proxy function
+     * Set the HTTP(s) proxy options
      */
-    setProxy(proxy: (req: Request) => Promise<URL | null> | URL | null): TransportOptionBuilder {
+    setProxy(proxy: ProxyOption): TransportOptionBuilder {
         this.option.proxy = proxy;
         return this;
     }
