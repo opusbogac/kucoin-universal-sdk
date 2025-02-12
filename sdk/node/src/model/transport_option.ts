@@ -69,10 +69,6 @@ export interface TransportOption {
      */
     maxConnsPerHost: number;
     /**
-     * Maximum time to wait for a TLS handshake (in milliseconds)
-     */
-    tlsHandshakeTimeout: number;
-    /**
      * Maximum time an idle connection will remain idle (in milliseconds)
      */
     idleConnTimeout: number;
@@ -103,7 +99,6 @@ export const DEFAULT_TRANSPORT_OPTION: TransportOption = {
     maxIdleConns: 100,
     maxIdleConnsPerHost: 2,
     maxConnsPerHost: 10,
-    tlsHandshakeTimeout: 10000, // 10 seconds
     idleConnTimeout: 90000, // 90 seconds
     maxRetries: 3,
     retryDelay: 2000, // 2 seconds
@@ -165,14 +160,6 @@ export class TransportOptionBuilder {
      */
     setIdleConnTimeout(idleConnTimeout: number): TransportOptionBuilder {
         this.option.idleConnTimeout = idleConnTimeout;
-        return this;
-    }
-
-    /**
-     * Set the maximum time to wait for a TLS handshake (in milliseconds)
-     */
-    setTLSHandshakeTimeout(tlsHandshakeTimeout: number): TransportOptionBuilder {
-        this.option.tlsHandshakeTimeout = tlsHandshakeTimeout;
         return this;
     }
 

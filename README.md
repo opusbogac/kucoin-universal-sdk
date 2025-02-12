@@ -47,6 +47,12 @@ go get github.com/Kucoin/kucoin-universal-sdk/sdk/golang
 go mod tidy
 ```
 
+### Node.js Installation (`0.1.0-alpha`)
+Note: This SDK is currently in the Alpha phase. We are actively iterating and improving its features, stability, and documentation. Feedback and contributions are highly encouraged to help us refine the SDK.
+```bash
+npm install kucoin-universal-sdk
+```
+
 ### Postman Installation  
 Visit the [KuCoin API Collection on Postman](https://www.postman.com/kucoin-api/kucoin-api/overview)
 
@@ -124,6 +130,7 @@ For other languages, refer to the [Examples](#-examples) section.
 - Official Documentation: [KuCoin API Docs](https://www.kucoin.com/docs-new)  
 - **[Python Documentation](sdk/python/README.md)**
 - **[Go Documentation](sdk/golang/README.md)**
+- **[Node.js Documentation](sdk/node/README.md)**
 - **[Postman Documentation](sdk/postman/README.md)**
 
 ## 📂 Examples
@@ -132,7 +139,8 @@ Find usage examples for your desired language by selecting the corresponding lin
 | Language | Example Directory                          |
 |----------|--------------------------------------------|
 | Python   | [sdk/python/examples/](sdk/python/example/)|
-| Go       | [sdk/go/examples/](sdk/golang/example/) |
+| Go       | [sdk/go/examples/](sdk/golang/example/)    |
+| Node.js  | [sdk/node/examples/](sdk/node/example/)    |
 
 ## 📋 Changelog
 
