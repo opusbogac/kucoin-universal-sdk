@@ -18,7 +18,7 @@ function delay(ms: number): Promise<void> {
 
 jest.setTimeout(300000);
 
-describe('Futures Private WebSocket API Tests', () => {
+describe('Margin Private WebSocket API Tests', () => {
     let api: MarginPrivateWS;
 
     beforeAll(async () => {
