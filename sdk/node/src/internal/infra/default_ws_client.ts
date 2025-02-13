@@ -435,12 +435,10 @@ export class WebSocketClient {
     private keepAlive(): void {
 
         if (!this.tokenInfo || this.shutdown || this.closed) {
-            console.debug('[KeepAlive] Skip - basic check failed');
             return;
         }
 
         if (this.disconnected || !this.connected) {
-            console.debug('[KeepAlive] Skip - connection is not active');
             return;
         }
 
@@ -463,8 +461,6 @@ export class WebSocketClient {
                 this.disconnected = true;
             }
             this.lastPingTime = currentTime;
-        } else {
-            console.debug('[KeepAlive] Skip - interval not reached');
         }
     }
 
