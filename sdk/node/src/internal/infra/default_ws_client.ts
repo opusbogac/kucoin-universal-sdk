@@ -226,7 +226,7 @@ export class WebSocketClient {
                 const wsUrl = `${this.tokenInfo.endpoint}?${queryParams.toString()}`;
                 
                 // Get the worker file path relative to the compiled js file
-                const workerPath = path.join(__dirname, '..', '..', '..', 'dist', 'internal', 'infra', 'message_worker.js');
+                const workerPath = path.join(__dirname, 'message_worker.js');
                 
                 if (!fs.existsSync(workerPath)) {
                     throw new Error(`Worker file not found at path: ${workerPath}. Please ensure the project is built.`);

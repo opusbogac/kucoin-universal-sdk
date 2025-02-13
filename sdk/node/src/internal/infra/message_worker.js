@@ -1,6 +1,5 @@
-import { parentPort } from 'worker_threads';
-import { WsMessage } from '@model/common';
-import WebSocket from 'ws';
+const { parentPort } = require('worker_threads');
+const WebSocket = require('ws');
 
 // Log worker initialization
 console.log('[Worker] Initializing worker thread');
@@ -10,10 +9,10 @@ if (!parentPort) {
     process.exit(1);
 }
 
-let ws: WebSocket | null = null;
+let ws = null;
 
 // Parse WebSocket message
-function parseMessage(data: WebSocket.Data): any {
+function parseMessage(data) {
     try {
         const message = JSON.parse(data.toString());
         // Add topic field if not present
@@ -28,7 +27,7 @@ function parseMessage(data: WebSocket.Data): any {
 }
 
 // Handle messages from the main thread
-parentPort.on('message', (message: any) => {
+parentPort.on('message', (message) => {
     try {
         if (message.command === 'connect') {
             // Create WebSocket connection
@@ -37,34 +36,34 @@ parentPort.on('message', (message: any) => {
             // Handle WebSocket events
             ws.on('open', () => {
                 console.log('[Worker] WebSocket connection opened');
-                parentPort!.postMessage({ type: 'open' });
+                parentPort.postMessage({ type: 'open' });
             });
 
-            ws.on('message', (data: WebSocket.Data) => {
+            ws.on('message', (data) => {
                 const parsedMessage = parseMessage(data);
                 if (parsedMessage) {
                     console.log('[Worker] Received message:', parsedMessage);
-                    parentPort!.postMessage({ 
+                    parentPort.postMessage({
                         type: 'message',
-                        data: JSON.stringify(parsedMessage)
+                        data: JSON.stringify(parsedMessage),
                     });
                 }
             });
 
-            ws.on('error', (error: Error) => {
+            ws.on('error', (error) => {
                 console.error('[Worker] WebSocket error:', error);
-                parentPort!.postMessage({ 
+                parentPort.postMessage({
                     type: 'error',
-                    error: error.message
+                    error: error.message,
                 });
             });
 
-            ws.on('close', (code: number, reason: string) => {
+            ws.on('close', (code, reason) => {
                 console.log('[Worker] WebSocket closed:', code, reason);
-                parentPort!.postMessage({ 
+                parentPort.postMessage({
                     type: 'close',
                     code,
-                    reason
+                    reason,
                 });
             });
         } else if (message.command === 'send' && ws) {
@@ -82,9 +81,9 @@ parentPort.on('message', (message: any) => {
         }
     } catch (error) {
         console.error('[Worker] Error handling message:', error);
-        parentPort!.postMessage({ 
+        parentPort.postMessage({
             type: 'error',
-            error: error instanceof Error ? error.message : String(error)
+            error: error instanceof Error ? error.message : String(error),
         });
     }
 });
