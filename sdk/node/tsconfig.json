@@ -13,6 +13,7 @@
     "paths": {
       "@src/*": ["src/*"],
       "@model/*": ["src/model/*"],
+      "@common/*": ["src/common/*"],
       "@internal/*": ["src/internal/*"],
       "@generate/*": ["src/generate/*"],
       "@api/*": ["src/api/*"]

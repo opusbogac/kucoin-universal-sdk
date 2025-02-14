@@ -8,5 +8,6 @@ module.exports = {
     transform: {
         '^.+\\.ts$': 'ts-jest',
     },
+    silent: false,
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
 };

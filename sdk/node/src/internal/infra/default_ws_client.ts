@@ -10,6 +10,7 @@ import { WebSocketEvent } from '../../model/websocket_option';
 import { WsToken, WsTokenProvider } from '../interfaces/websocket';
 import fs from 'fs';
 import { Worker } from 'worker_threads';
+import { logger } from '@src/common';
 
 /**
  * WriteMsg represents a message to be written to the WebSocket connection
@@ -146,7 +147,7 @@ export class WebSocketClient {
     // # Start the WebSocket client
     start(): Promise<void> {
         if (this.connected) {
-            console.warn('WebSocket client is already connected.');
+            logger.warn('WebSocket client is already connected.');
             return Promise.resolve();
         }
 
@@ -157,7 +158,7 @@ export class WebSocketClient {
                 this.run();
             })
             .catch((err) => {
-                console.error('Failed to start WebSocket client:', err);
+                logger.error('Failed to start WebSocket client:', err);
                 throw err;
             });
     }
@@ -262,14 +263,14 @@ export class WebSocketClient {
 
                     // Handle worker errors
                     this.worker.addListener('error', (error: Error) => {
-                        console.error('Worker error:', error);
+                        logger.error('Worker error:', error);
                         reject(error);
                     });
 
                     // Handle worker exit
                     this.worker.addListener('exit', (code: number) => {
                         if (code !== 0) {
-                            console.error(`Worker stopped with exit code ${code}`);
+                            logger.error(`Worker stopped with exit code ${code}`);
                         }
                     });
 
@@ -288,26 +289,26 @@ export class WebSocketClient {
                 });
             })
             .catch((err) => {
-                console.error('Failed to dial WebSocket server:', err);
+                logger.error('Failed to dial WebSocket server:', err);
                 throw err;
             });
     }
 
     // open callback
     private onOpen(): void {
-        console.log('WebSocket connection opened.');
+        logger.info('WebSocket connection opened.');
         this.notifyEvent(WebSocketEvent.EventConnected, 'WebSocket connection opened.');
     }
 
     // error callback
     private onError(error: Error): void {
-        console.error('WebSocket error:', error);
+        logger.error('WebSocket error:', error);
         this.disconnected = true;
     }
 
     // close callback
     private onClose(code: number, reason: string): void {
-        console.debug(`WebSocket closed with code ${code}: ${reason}`);
+        logger.debug(`WebSocket closed with code ${code}: ${reason}`);
         this.disconnected = true;
 
         // Clear resources
@@ -325,7 +326,7 @@ export class WebSocketClient {
     // receive message callback
     private onMessage(message: string): void {
         if (this.shutdown || this.closed) {
-            console.debug('Ignoring message as client is shutting down or closed');
+            logger.debug('Ignoring message as client is shutting down or closed');
             return;
         }
 
@@ -333,14 +334,14 @@ export class WebSocketClient {
         try {
             m = JSON.parse(message);
         } catch (e) {
-            console.error('Failed to parse message:', e);
+            logger.error('Failed to parse message:', e);
             return;
         }
 
         switch (m.type) {
             case MessageType.WelcomeMessage:
                 this.welcomeReceived = true;
-                console.log('Welcome message received.');
+                logger.info('Welcome message received.');
                 break;
 
             case MessageType.Message:
@@ -351,14 +352,14 @@ export class WebSocketClient {
                         this.readMsgQueue._read(1);
                     } else {
                         this.notifyEvent(WebSocketEvent.EventReadBufferFull, '');
-                        console.warn('Read buffer full');
+                        logger.warn('Read buffer full');
                     }
                 }
                 break;
 
             case MessageType.PongMessage:
                 this.notifyEvent(WebSocketEvent.EventPongReceived, '');
-                console.debug('PONG received');
+                logger.debug('PONG received');
                 this.handleAckEvent(m);
                 break;
 
@@ -368,7 +369,7 @@ export class WebSocketClient {
                 break;
 
             default:
-                console.warn('Unknown message type:', m.type);
+                logger.warn('Unknown message type:', m.type);
         }
     }
 
@@ -382,7 +383,7 @@ export class WebSocketClient {
         this.ackEvents.delete(m.id);
 
         if (m.type === MessageType.PongMessage) {
-            console.debug('[HandleAckEvent] Handling pong message');
+            logger.debug('[HandleAckEvent] Handling pong message');
             this.metric.pingSuccess++;
             data.resolve();
             return;
@@ -452,11 +453,11 @@ export class WebSocketClient {
             const pingMsg = this.newPingMessage();
             try {
                 this.write(pingMsg, timeout).catch((e) => {
-                    console.error('[KeepAlive] Heartbeat ping error:', e);
+                    logger.error('[KeepAlive] Heartbeat ping error:', e);
                     this.disconnected = true;
                 });
             } catch (e) {
-                console.error('[KeepAlive] Heartbeat ping error:', e);
+                logger.error('[KeepAlive] Heartbeat ping error:', e);
                 this.metric.pingErr++;
                 this.disconnected = true;
             }
@@ -503,7 +504,7 @@ export class WebSocketClient {
         try {
             this.eventEmitter.emit('ws_event', event, msg);
         } catch (err) {
-            console.error('Exception in notify_event:', err);
+            logger.error('Exception in notify_event:', err);
         }
     }
 
@@ -535,11 +536,11 @@ export class WebSocketClient {
         const reconnectLoop = async () => {
             while (!this.reconnectClosed) {
                 if (this.disconnected && !this.shutdown) {
-                    console.log('Broken WebSocket connection, starting reconnection');
+                    logger.info('Broken WebSocket connection, starting reconnection');
                     try {
                         await this.close();
                     } catch (err) {
-                        console.error('Error closing connection:', err);
+                        logger.error('Error closing connection:', err);
                     }
                     
                     this.notifyEvent(WebSocketEvent.EventTryReconnect, '');
@@ -554,7 +555,7 @@ export class WebSocketClient {
                         (this.options.reconnectAttempts === -1 ||
                             attempt < this.options.reconnectAttempts)
                     ) {
-                        console.log(
+                        logger.info(
                             `Reconnecting in ${this.options.reconnectInterval/1000} seconds... (attempt ${attempt + 1}/${this.options.reconnectAttempts})`,
                         );
                         await new Promise((resolve) =>
@@ -569,16 +570,16 @@ export class WebSocketClient {
                             this.run();
                             reconnected = true;
                             this.reconnected = true;
-                            console.log('Successfully reconnected to WebSocket server');
+                            logger.info('Successfully reconnected to WebSocket server');
                         } catch (err) {
-                            console.error(`Reconnect attempt ${attempt + 1} failed:`, err);
+                            logger.error(`Reconnect attempt ${attempt + 1} failed:`, err);
                             attempt++;
                         }
                     }
 
                     if (!reconnected) {
                         this.notifyEvent(WebSocketEvent.EventClientFail, 'Failed to reconnect after all attempts');
-                        console.error('Failed to reconnect after all attempts.');
+                        logger.error('Failed to reconnect after all attempts.');
                     }
                 }
                 await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -586,7 +587,7 @@ export class WebSocketClient {
         };
 
         reconnectLoop().catch((err) => {
-            console.error('Critical error in reconnect loop:', err);
+            logger.error('Critical error in reconnect loop:', err);
             this.notifyEvent(WebSocketEvent.EventClientFail, `Critical error: ${err.message}`);
         });
     }

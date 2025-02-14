@@ -1,22 +1,19 @@
 import { WebSocketMessageCallback, WebSocketService } from '@internal/interfaces/websocket';
 import { ClientOption } from '@model/client_option';
-import { DomainType } from '@model/constant';
+import { DomainType, MessageType } from '@model/constant';
 
 import { DefaultTransport } from './default_transport';
-import { TopicManager, CallbackManager } from './default_ws_callback';
-import { WebSocketClient, WriteMsg } from './default_ws_client';
+import { CallbackManager, TopicManager } from './default_ws_callback';
+import { WebSocketClient } from './default_ws_client';
 import { DefaultWsTokenProvider } from './default_ws_token_provider';
-import { WebSocketClientOption, WebSocketEvent } from '../../model/websocket_option';
+import { WebSocketClientOption, WebSocketEvent } from '@src/model';
 
 import { SubInfo } from '@internal/util/sub';
 import { WsMessage } from '@model/common';
-import { MessageType } from '@model/constant';
 import { randomUUID } from 'crypto';
 import { EventEmitter } from 'events';
 import { Worker } from 'worker_threads';
-import { Transform, TransformCallback } from 'stream';
-import path from 'path';
-import fs from 'fs';
+import { logger } from '@src/common';
 
 /**
  * DefaultWsService implements the WebSocket service interface for handling real-time data communication.
@@ -70,7 +67,7 @@ export class DefaultWsService implements WebSocketService {
                 try {
                     this.wsOption.eventCallback!(event, msg);
                 } catch (err) {
-                    console.error('Exception in eventCallback:', err);
+                    logger.error('Exception in eventCallback:', err);
                 }
             });
         }
@@ -78,7 +75,7 @@ export class DefaultWsService implements WebSocketService {
         this.client = new WebSocketClient(
             new DefaultWsTokenProvider(this.tokenTransport, domain, privateChannel),
             this.wsOption,
-            this.eventEmitter
+            this.eventEmitter,
         );
     }
 
@@ -93,7 +90,7 @@ export class DefaultWsService implements WebSocketService {
             // use EventEmitter send event
             this.eventEmitter.emit('ws_event', event, msg, msg2);
         } catch (err) {
-            console.error('Exception in notify_event:', err);
+            logger.error('Exception in notify_event:', err);
         }
     }
 
@@ -140,7 +137,7 @@ export class DefaultWsService implements WebSocketService {
                 try {
                     const wsMessage = JSON.parse(msg.data);
                     if (!wsMessage || !wsMessage.topic) {
-                        console.warn('[Main] Received message without topic:', wsMessage);
+                        logger.warn('[Main] Received message without topic:', wsMessage);
                         return;
                     }
 
@@ -157,30 +154,29 @@ export class DefaultWsService implements WebSocketService {
                     try {
                         callback.onMessage(wsMessage);
                     } catch (err) {
-                        console.error('[Main] Error processing message in main thread:', err);
+                        logger.error('[Main] Error processing message in main thread:', err);
                         this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
                     }
                 } catch (err) {
-                    console.error('[Main] Error parsing message:', err);
+                    logger.error('[Main] Error parsing message:', err);
                     this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
                 }
             });
 
             // Handle worker errors
             this.client.worker.addListener('error', (error: Error) => {
-                console.error('[Main] Worker thread error:', error);
+                logger.error('[Main] Worker thread error:', error);
                 this.notifyEvent(WebSocketEvent.EventCallbackError, String(error));
             });
 
             // Handle worker exit
             this.client.worker.addListener('exit', (code: number) => {
                 if (code !== 0 && !this.stopSignal) {
-                    console.error('[Main] Worker stopped with non-zero exit code');
+                    logger.error('[Main] Worker stopped with non-zero exit code');
                 }
             });
-
         } catch (error) {
-            console.error('[Main] Error in message loop:', error);
+            logger.error('[Main] Error in message loop:', error);
             throw error;
         }
     }
@@ -198,7 +194,7 @@ export class DefaultWsService implements WebSocketService {
             }
 
             if (this.client.isReconnected()) {
-                console.info('WebSocket client reconnected, resubscribe...');
+                logger.info('WebSocket client reconnected, resubscribe...');
 
                 const oldTopicManager = this.topicManager;
                 this.topicManager = new TopicManager();
@@ -213,9 +209,9 @@ export class DefaultWsService implements WebSocketService {
                     });
 
                     await Promise.all(resubscribePromises);
-                    console.log('All topics resubscribed successfully');
+                    logger.info('All topics resubscribed successfully');
                 } catch (err) {
-                    console.error('Error during resubscribe:', err);
+                    logger.error('Error during resubscribe:', err);
                     this.notifyEvent(
                         WebSocketEvent.EventReSubscribeError,
                         `Failed to resubscribe: ${err}`,
@@ -242,7 +238,7 @@ export class DefaultWsService implements WebSocketService {
                 this.startRecoveryLoop();
             })
             .catch((err) => {
-                console.error('Failed to start client:', err);
+                logger.error('Failed to start client:', err);
                 throw err;
             });
     }
@@ -251,9 +247,9 @@ export class DefaultWsService implements WebSocketService {
      * Stops the message processing and cleans up resources
      */
     stop(): Promise<void> {
-        console.debug('Stopping WebSocket service...');
+        logger.debug('Stopping WebSocket service...');
         this.stopSignal = true;
-        
+
         return new Promise<void>((resolve) => {
             // Terminate worker and clear intervals
             if (this.messageWorker) {
@@ -271,7 +267,7 @@ export class DefaultWsService implements WebSocketService {
 
             // Stop the WebSocket client
             this.client.stop().then(() => {
-                console.debug('WebSocket service stopped');
+                logger.debug('WebSocket service stopped');
                 resolve();
             });
         });
@@ -296,7 +292,7 @@ export class DefaultWsService implements WebSocketService {
 
         // Check if already subscribed
         if (!created) {
-            console.info(`Already subscribed: ${subId}`);
+            logger.info(`Already subscribed: ${subId}`);
             return Promise.reject(new Error('Already subscribed'));
         }
 
@@ -315,7 +311,7 @@ export class DefaultWsService implements WebSocketService {
                 // Clean up on failure
                 const callbackManager = this.topicManager.getCallbackManager(subInfo.prefix);
                 callbackManager.remove(subId);
-                console.error(`Subscribe error: ${err}`);
+                logger.error(`Subscribe error: ${err}`);
                 throw err;
             });
     }
@@ -340,20 +336,20 @@ export class DefaultWsService implements WebSocketService {
                 subEvent.response = true;
 
                 callbackManager.remove(id);
-                console.log('[DEBUG] callback removed for id:', id);
+                logger.info('[DEBUG] callback removed for id:', id);
 
                 this.client
                     .write(subEvent, this.wsOption.writeTimeout)
                     .then(() => {
-                        console.log('[DEBUG] unsubscribe message sent successfully');
+                        logger.info('[DEBUG] unsubscribe message sent successfully');
                         resolve();
                     })
                     .catch((e) => {
-                        console.error('[DEBUG] Failed to send unsubscribe message:', e);
+                        logger.error('[DEBUG] Failed to send unsubscribe message:', e);
                         reject(e);
                     });
             } catch (e) {
-                console.error('[DEBUG] unsubscribe error:', e);
+                logger.error('[DEBUG] unsubscribe error:', e);
                 reject(e);
             }
         });

@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+import { logger } from '@src/common';
 
 /**
  * KcSigner contains information about `apiKey`, `apiSecret`, `apiPassPhrase`, and `apiKeyVersion`
@@ -31,7 +32,7 @@ export class KcSigner {
         this.brokerKey = brokerKey;
 
         if (!apiKey || !apiSecret || !apiPassphrase) {
-            console.warn(
+            logger.warn(
                 '[AUTH WARNING] API credentials incomplete. Access is restricted to public interfaces only.',
             );
         }
@@ -72,7 +73,7 @@ export class KcSigner {
      */
     public brokerHeaders(plain: string): Record<string, string> {
         if (!this.brokerPartner || !this.brokerName) {
-            console.error('[BROKER ERROR] Missing broker information');
+            logger.error('[BROKER ERROR] Missing broker information');
             throw new Error('Broker information cannot be empty');
         }
 

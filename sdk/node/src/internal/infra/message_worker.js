@@ -1,11 +1,12 @@
 const { parentPort } = require('worker_threads');
 const WebSocket = require('ws');
+const { logger } = require('../../common/logger/logger');
 
 // Log worker initialization
-console.log('[Worker] Initializing worker thread');
+logger.info('[Worker] Initializing worker thread');
 
 if (!parentPort) {
-    console.error('[Worker] parentPort is null - worker must be run as a worker thread');
+    logger.error('[Worker] parentPort is null - worker must be run as a worker thread');
     process.exit(1);
 }
 
@@ -21,7 +22,7 @@ function parseMessage(data) {
         }
         return message;
     } catch (error) {
-        console.error('[Worker] Error parsing message:', error);
+        logger.error('[Worker] Error parsing message:', error);
         return null;
     }
 }
@@ -35,14 +36,14 @@ parentPort.on('message', (message) => {
 
             // Handle WebSocket events
             ws.on('open', () => {
-                console.log('[Worker] WebSocket connection opened');
+                logger.info('[Worker] WebSocket connection opened');
                 parentPort.postMessage({ type: 'open' });
             });
 
             ws.on('message', (data) => {
                 const parsedMessage = parseMessage(data);
                 if (parsedMessage) {
-                    console.log('[Worker] Received message:', parsedMessage);
+                    logger.info('[Worker] Received message:', parsedMessage);
                     parentPort.postMessage({
                         type: 'message',
                         data: JSON.stringify(parsedMessage),
@@ -51,7 +52,7 @@ parentPort.on('message', (message) => {
             });
 
             ws.on('error', (error) => {
-                console.error('[Worker] WebSocket error:', error);
+                logger.error('[Worker] WebSocket error:', error);
                 parentPort.postMessage({
                     type: 'error',
                     error: error.message,
@@ -59,7 +60,7 @@ parentPort.on('message', (message) => {
             });
 
             ws.on('close', (code, reason) => {
-                console.log('[Worker] WebSocket closed:', code, reason);
+                logger.info('[Worker] WebSocket closed:', code, reason);
                 parentPort.postMessage({
                     type: 'close',
                     code,
@@ -80,7 +81,7 @@ parentPort.on('message', (message) => {
             ws = null;
         }
     } catch (error) {
-        console.error('[Worker] Error handling message:', error);
+        logger.error('[Worker] Error handling message:', error);
         parentPort.postMessage({
             type: 'error',
             error: error instanceof Error ? error.message : String(error),
@@ -90,12 +91,12 @@ parentPort.on('message', (message) => {
 
 // Handle errors
 parentPort.on('error', (error) => {
-    console.error('[Worker] Error event:', error);
+    logger.error('[Worker] Error event:', error);
 });
 
 // Handle close
 parentPort.on('close', () => {
-    console.log('[Worker] Close event: Worker is shutting down');
+    logger.info('[Worker] Close event: Worker is shutting down');
     if (ws) {
         ws.close();
         ws = null;
@@ -104,7 +105,7 @@ parentPort.on('close', () => {
 
 // Keep the worker alive
 process.on('exit', () => {
-    console.log('[Worker] Process exit event received');
+    logger.info('[Worker] Process exit event received');
     if (ws) {
         ws.close();
         ws = null;
@@ -113,7 +114,7 @@ process.on('exit', () => {
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (error) => {
-    console.error('[Worker] Uncaught exception:', error);
+    logger.error('[Worker] Uncaught exception:', error);
     if (ws) {
         ws.close();
         ws = null;
@@ -122,8 +123,8 @@ process.on('uncaughtException', (error) => {
 
 // Handle unhandled rejections
 process.on('unhandledRejection', (reason) => {
-    console.error('[Worker] Unhandled rejection:', reason);
+    logger.error('[Worker] Unhandled rejection:', reason);
 });
 
 // Log worker startup
-console.log('[Worker] Started and ready to process messages at:', new Date().toISOString());
+logger.info('[Worker] Started and ready to process messages at:', new Date().toISOString());

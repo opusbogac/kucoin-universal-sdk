@@ -12,6 +12,7 @@ import { SdkVersion } from '@generate/version';
 import { DefaultTransport } from '@internal/infra/default_transport';
 import { DEFAULT_TRANSPORT_OPTION } from '@src/model';
 import { CopyTradingService, CopyTradingServiceImpl } from '@src/generate';
+import { logger } from '@src/common';
 
 export class DefaultKucoinRestAPIImpl implements KucoinRestService {
     private readonly accountService: AccountService;
@@ -33,7 +34,7 @@ export class DefaultKucoinRestAPIImpl implements KucoinRestService {
             options.transportOption = DEFAULT_TRANSPORT_OPTION;
         }
 
-        console.info(`SDK version: ${SdkVersion}`);
+        logger.info(`SDK version: ${SdkVersion}`);
 
         const transport = new DefaultTransport(options, SdkVersion);
 
