@@ -8,3 +8,9 @@ export const Spot = {
     ...SPOTPRIVATE,
     ...SPOTPUBLIC,
 };
+export namespace Spot {
+    export type OrderAPI = ORDER.OrderAPI;
+    export type MarketAPI = MARKET.MarketAPI;
+    export type SpotPrivateWS = SPOTPRIVATE.SpotPrivateWS;
+    export type SpotPublicWS = SPOTPUBLIC.SpotPublicWS;
+}

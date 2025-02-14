@@ -12,3 +12,11 @@ export const Account = {
     ...SUBACCOUNT,
     ...TRANSFER,
 };
+export namespace Account {
+    export type AccountAPI = ACCOUNT.AccountAPI;
+    export type DepositAPI = DEPOSIT.DepositAPI;
+    export type WithdrawalAPI = WITHDRAWAL.WithdrawalAPI;
+    export type FeeAPI = FEE.FeeAPI;
+    export type SubAccountAPI = SUBACCOUNT.SubAccountAPI;
+    export type TransferAPI = TRANSFER.TransferAPI;
+}

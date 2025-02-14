@@ -12,3 +12,11 @@ export const Futures = {
     ...FUTURESPRIVATE,
     ...FUTURESPUBLIC,
 };
+export namespace Futures {
+    export type OrderAPI = ORDER.OrderAPI;
+    export type PositionsAPI = POSITIONS.PositionsAPI;
+    export type FundingFeesAPI = FUNDINGFEES.FundingFeesAPI;
+    export type MarketAPI = MARKET.MarketAPI;
+    export type FuturesPrivateWS = FUTURESPRIVATE.FuturesPrivateWS;
+    export type FuturesPublicWS = FUTURESPUBLIC.FuturesPublicWS;
+}

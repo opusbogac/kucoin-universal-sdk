@@ -16,6 +16,7 @@ import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.servers.Server;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.languages.AbstractTypeScriptClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
@@ -389,11 +390,13 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                 //};
 
                 List<String> serviceAliases = new LinkedList<>();
+                List<Pair<String, String>> typeAliases = new LinkedList<>();
                 operationService.getServiceMeta().forEach((k, v) -> {
                     if (v.getService().equalsIgnoreCase(meta.getService())) {
                         String serviceAlias = v.getSubService().toUpperCase();
                         export.add(String.format("import * as %s from \"./%s\"", serviceAlias, formatPackage(v.getSubService())));
                         serviceAliases.add(serviceAlias);
+                        typeAliases.add(Pair.of(serviceAlias, formatService(v.getSubService() + "_API")));
                     }
                 });
 
@@ -407,6 +410,10 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
                     serviceAliases.add(privateService);
                     serviceAliases.add(publicService);
+
+                    typeAliases.add(Pair.of(privateService, formatService(service + "PrivateWS")));
+                    typeAliases.add(Pair.of(publicService, formatService(service + "PublicWS")));
+
                 }
 
 
@@ -414,6 +421,10 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                 export.add(String.format("export const %s = \n{\n%s\n};", exportService,
                         serviceAliases.stream().map(s -> "    ..." + s).collect(Collectors.joining(",\n"))));
 
+                // export interface...
+                export.add(String.format("export namespace %s {\n%s\n}", exportService,
+                        typeAliases.stream().map(s ->
+                                " export type " + s.getValue() + " = " + s.getKey() + "." + s.getValue()).collect(Collectors.joining(";\n"))));
 
                 break;
             }

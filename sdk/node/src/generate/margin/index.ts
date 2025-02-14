@@ -14,3 +14,12 @@ export const Margin = {
     ...MARGINPRIVATE,
     ...MARGINPUBLIC,
 };
+export namespace Margin {
+    export type OrderAPI = ORDER.OrderAPI;
+    export type DebitAPI = DEBIT.DebitAPI;
+    export type CreditAPI = CREDIT.CreditAPI;
+    export type MarketAPI = MARKET.MarketAPI;
+    export type RiskLimitAPI = RISKLIMIT.RiskLimitAPI;
+    export type MarginPrivateWS = MARGINPRIVATE.MarginPrivateWS;
+    export type MarginPublicWS = MARGINPUBLIC.MarginPublicWS;
+}
