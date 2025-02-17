@@ -1,0 +1,33 @@
+export namespace Positions {
+export type AddIsolatedMarginReq = POSITIONS.AddIsolatedMarginReq;
+export type AddIsolatedMarginResp = POSITIONS.AddIsolatedMarginResp;
+export type GetCrossMarginLeverageReq = POSITIONS.GetCrossMarginLeverageReq;
+export type GetCrossMarginLeverageResp = POSITIONS.GetCrossMarginLeverageResp;
+export type GetIsolatedMarginRiskLimitData = POSITIONS.GetIsolatedMarginRiskLimitData;
+export type GetIsolatedMarginRiskLimitReq = POSITIONS.GetIsolatedMarginRiskLimitReq;
+export type GetIsolatedMarginRiskLimitResp = POSITIONS.GetIsolatedMarginRiskLimitResp;
+export type GetMarginModeReq = POSITIONS.GetMarginModeReq;
+export type GetMarginModeResp = POSITIONS.GetMarginModeResp;
+export type GetMaxOpenSizeReq = POSITIONS.GetMaxOpenSizeReq;
+export type GetMaxOpenSizeResp = POSITIONS.GetMaxOpenSizeResp;
+export type GetMaxWithdrawMarginReq = POSITIONS.GetMaxWithdrawMarginReq;
+export type GetMaxWithdrawMarginResp = POSITIONS.GetMaxWithdrawMarginResp;
+export type GetPositionDetailsReq = POSITIONS.GetPositionDetailsReq;
+export type GetPositionDetailsResp = POSITIONS.GetPositionDetailsResp;
+export type GetPositionListData = POSITIONS.GetPositionListData;
+export type GetPositionListReq = POSITIONS.GetPositionListReq;
+export type GetPositionListResp = POSITIONS.GetPositionListResp;
+export type GetPositionsHistoryItems = POSITIONS.GetPositionsHistoryItems;
+export type GetPositionsHistoryReq = POSITIONS.GetPositionsHistoryReq;
+export type GetPositionsHistoryResp = POSITIONS.GetPositionsHistoryResp;
+export type ModifyAutoDepositStatusReq = POSITIONS.ModifyAutoDepositStatusReq;
+export type ModifyAutoDepositStatusResp = POSITIONS.ModifyAutoDepositStatusResp;
+export type ModifyIsolatedMarginRiskLimtReq = POSITIONS.ModifyIsolatedMarginRiskLimtReq;
+export type ModifyIsolatedMarginRiskLimtResp = POSITIONS.ModifyIsolatedMarginRiskLimtResp;
+export type ModifyMarginLeverageReq = POSITIONS.ModifyMarginLeverageReq;
+export type ModifyMarginLeverageResp = POSITIONS.ModifyMarginLeverageResp;
+export type RemoveIsolatedMarginReq = POSITIONS.RemoveIsolatedMarginReq;
+export type RemoveIsolatedMarginResp = POSITIONS.RemoveIsolatedMarginResp;
+export type SwitchMarginModeReq = POSITIONS.SwitchMarginModeReq;
+export type SwitchMarginModeResp = POSITIONS.SwitchMarginModeResp;
+}

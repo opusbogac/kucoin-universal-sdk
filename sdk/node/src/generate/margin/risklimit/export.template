@@ -1,0 +1,5 @@
+export namespace RiskLimit {
+export type GetMarginRiskLimitData = RISKLIMIT.GetMarginRiskLimitData;
+export type GetMarginRiskLimitReq = RISKLIMIT.GetMarginRiskLimitReq;
+export type GetMarginRiskLimitResp = RISKLIMIT.GetMarginRiskLimitResp;
+}

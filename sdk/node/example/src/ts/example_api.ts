@@ -70,7 +70,7 @@ async function accountServiceExample(accountService: AccountService) {
 
     // Get fee api
     const feeApi = accountService.getFeeApi();
-    const getActualFeeReq = Account.GetSpotActualFeeReq.builder().setSymbols('BTC-USDT,ETH-USDT')
+    const getActualFeeReq = Account.Fee.GetSpotActualFeeReq.builder().setSymbols('BTC-USDT,ETH-USDT')
         .build();
     const getActualFeeResp = feeApi.getSpotActualFee(getActualFeeReq).then((resp) => {
         if (resp.data) {
@@ -94,11 +94,11 @@ async function spotServiceExample(spotService: SpotService) {
     const orderApi = spotService.getOrderApi();
 
     // Add limit order
-    const addOrderReq = Spot.AddOrderSyncReq.builder()
+    const addOrderReq = Spot.Order.AddOrderSyncReq.builder()
         .setClientOid(randomUUID().toString())
-        .setSide(Spot.AddOrderSyncReq.SideEnum.BUY)
+        .setSide(Spot.Order.AddOrderSyncReq.SideEnum.BUY)
         .setSymbol('BTC-USDT')
-        .setType(Spot.AddOrderSyncReq.TypeEnum.LIMIT)
+        .setType(Spot.Order.AddOrderSyncReq.TypeEnum.LIMIT)
         .setRemark('sdk_example')
         .setPrice('10000')
         .setSize('0.001')
@@ -109,7 +109,7 @@ async function spotServiceExample(spotService: SpotService) {
 
     // Query order detail
     const orderId = addOrderResp.orderId;
-    const queryOrderDetailReq = Spot.GetOrderByOrderIdReq.builder()
+    const queryOrderDetailReq = Spot.Order.GetOrderByOrderIdReq.builder()
         .setOrderId(orderId)
         .setSymbol('BTC-USDT')
         .build();
@@ -117,7 +117,7 @@ async function spotServiceExample(spotService: SpotService) {
     console.log(`Order detail: ${orderDetailResp.toJson()}`);
 
     // Cancel order
-    const cancelOrderReq = Spot.CancelOrderByOrderIdSyncReq.builder()
+    const cancelOrderReq = Spot.Order.CancelOrderByOrderIdSyncReq.builder()
         .setOrderId(orderId)
         .setSymbol('BTC-USDT')
         .build();
@@ -135,9 +135,9 @@ async function futuresServiceExample(futuresService: FuturesService) {
         const start = Date.now() - 10 * 60 * 1000;
         const end = Date.now();
 
-        const getKlineReq = Futures.GetKlinesReq.builder()
+        const getKlineReq = Futures.Market.GetKlinesReq.builder()
             .setSymbol(symbol.symbol)
-            .setGranularity(Futures.GetKlinesReq.GranularityEnum._1)
+            .setGranularity(Futures.Market.GetKlinesReq.GranularityEnum._1)
             .setFrom(start)
             .setTo(end)
             .build();

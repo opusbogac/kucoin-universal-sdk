@@ -27,6 +27,8 @@ import org.openapitools.codegen.utils.CamelizeOption;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -65,6 +67,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
     private String service;
     private String subService;
     private Set<String> exports = new LinkedHashSet<>();
+    private Set<String> serviceExportsTemplate = new HashSet<>();
     private static final Set<String> wsServices = Set.of("spot", "futures", "margin");
 
     public CodegenType getTag() {
@@ -96,6 +99,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                 modelTemplateFiles.put("model.mustache", ".ts");
                 apiTemplateFiles.put("api.mustache", ".ts");
                 supportingFiles.add(new SupportingFile("module.mustache", String.format("./%s/%s/index.ts", service, formatPackage(subService))));
+                supportingFiles.add(new SupportingFile("module_exports_template.mustache", String.format("./%s/%s/export.template", service, formatPackage(subService))));
                 break;
             }
             case TEST: {
@@ -369,7 +373,32 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
         }
     }
 
-    private void generateApiExport(Meta meta, Set<String> export) {
+    private static List<File> getSubdirectories(File parentDir) {
+        return Arrays.stream(Objects.requireNonNull(parentDir.listFiles(File::isDirectory)))
+                .collect(Collectors.toList());
+    }
+
+    private static List<String> readExportTemplates(File parentDir) {
+        List<File> subDirs = getSubdirectories(parentDir);
+        List<String> contents = new LinkedList<>();
+
+        for (File subDir : subDirs) {
+            File templateFile = new File(subDir, "export.template");
+            if (templateFile.exists()) {
+                try {
+                    String content = new String(Files.readAllBytes(templateFile.toPath())).trim();
+                    if (!content.isEmpty()) {
+                        contents.add(content + "\n");
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return contents;
+    }
+
+    private void generateValueExport(Meta meta, Set<String> export) {
         switch (modeSwitch.getMode()) {
             case API:
             case WS: {
@@ -389,13 +418,15 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                 //    ...
                 //};
 
-                List<String> serviceAliases = new LinkedList<>();
+                List<Pair<String, String>> serviceAliases = new LinkedList<>();
                 List<Pair<String, String>> typeAliases = new LinkedList<>();
                 operationService.getServiceMeta().forEach((k, v) -> {
                     if (v.getService().equalsIgnoreCase(meta.getService())) {
                         String serviceAlias = v.getSubService().toUpperCase();
+                        String exportService = camelize( v.getSubService(), CamelizeOption.UPPERCASE_FIRST_CHAR);
+
                         export.add(String.format("import * as %s from \"./%s\"", serviceAlias, formatPackage(v.getSubService())));
-                        serviceAliases.add(serviceAlias);
+                        serviceAliases.add(Pair.of(exportService, serviceAlias));
                         typeAliases.add(Pair.of(serviceAlias, formatService(v.getSubService() + "_API")));
                     }
                 });
@@ -408,8 +439,10 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                     export.add(String.format("import * as %s from \"./%s\"", privateService, formatPackage(privateService)));
                     export.add(String.format("import * as %s from \"./%s\"", publicService, formatPackage(publicService)));
 
-                    serviceAliases.add(privateService);
-                    serviceAliases.add(publicService);
+                    String exportService = camelize(service.toLowerCase(), CamelizeOption.UPPERCASE_FIRST_CHAR);
+
+                    serviceAliases.add(Pair.of(exportService + "Private", privateService));
+                    serviceAliases.add(Pair.of(exportService + "Public", publicService));
 
                     typeAliases.add(Pair.of(privateService, formatService(service + "PrivateWS")));
                     typeAliases.add(Pair.of(publicService, formatService(service + "PublicWS")));
@@ -419,12 +452,20 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
                 String exportService = camelize(service.toLowerCase(), CamelizeOption.UPPERCASE_FIRST_CHAR);
                 export.add(String.format("export const %s = \n{\n%s\n};", exportService,
-                        serviceAliases.stream().map(s -> "    ..." + s).collect(Collectors.joining(",\n"))));
+                        serviceAliases.stream().map(s -> s.getKey() + ":" + s.getValue()).collect(Collectors.joining(",\n"))));
+
+
+                List<String> exports = typeAliases.stream().map(s ->
+                        " export type " + s.getValue() + " = " + s.getKey() + "." + s.getValue()).collect(Collectors.toList());
+
+
+                String targetDir = outputFolder() + "/" + formatPackage(meta.getService());
+
+                exports.addAll(readExportTemplates(new File(targetDir)));
 
                 // export interface...
                 export.add(String.format("export namespace %s {\n%s\n}", exportService,
-                        typeAliases.stream().map(s ->
-                                " export type " + s.getValue() + " = " + s.getKey() + "." + s.getValue()).collect(Collectors.joining(";\n"))));
+                        String.join(";\n", exports)));
 
                 break;
             }
@@ -439,6 +480,22 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
         }
     }
 
+
+    private void generateTypeExport(Meta meta, Set<String> export, List<ModelMap> allModels) {
+
+        String service = meta.getService();
+        String subService = meta.getSubService();
+
+        List<String> exportEntry = new LinkedList<>();
+
+        // type aliases(model)
+        allModels.forEach(m -> {
+            String modelName = (String) m.get("importPath");
+            exportEntry.add(String.format("export type %s = %s.%s;", modelName, subService.toUpperCase(), modelName));
+        });
+
+        export.add(String.format("export namespace %s {\n%s\n}", subService, String.join("\n", exportEntry)));
+    }
 
     @Override
     public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> allModels) {
@@ -470,14 +527,14 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                         objs.put("api_entry", apiEntryInfo);
                         entryValue.forEach(m -> {
                             generateApiImport(meta, false, imports);
-                            generateApiExport(meta, exports);
-
+                            generateValueExport(meta, exports);
                         });
                         break;
                     }
 
                     case API:
                     case TEST: {
+                        generateTypeExport(meta, serviceExportsTemplate, allModels);
                         allModels.stream().forEach(m -> {
                             String path = (String) m.get("importPath");
                             path = toModelFilename(path);
@@ -488,8 +545,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                             generateApiImport(meta, true, imports);
                         }
                         generateApiImport(meta, false, imports);
-                        generateApiExport(meta, exports);
-
+                        generateValueExport(meta, exports);
                         break;
                     }
                     case WS:
@@ -500,7 +556,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                             path = toModelFilename(path);
                             exports.add(String.format("export * from \"./%s\"", path));
                         });
-                        generateApiExport(meta, exports);
+                        generateValueExport(meta, exports);
                         break;
                     }
                     case TEST_TEMPLATE: {
@@ -585,6 +641,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
     public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
         Map<String, Object> data = super.postProcessSupportingFileData(objs);
         data.put("exports", exports);
+        data.put("template-exports", serviceExportsTemplate);
 
         String csvPath = (String) additionalProperties.get("CSV_PATH");
         if (csvPath == null) {

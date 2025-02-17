@@ -1,0 +1,20 @@
+export namespace Credit {
+export type GetLoanMarketData = CREDIT.GetLoanMarketData;
+export type GetLoanMarketInterestRateData = CREDIT.GetLoanMarketInterestRateData;
+export type GetLoanMarketInterestRateReq = CREDIT.GetLoanMarketInterestRateReq;
+export type GetLoanMarketInterestRateResp = CREDIT.GetLoanMarketInterestRateResp;
+export type GetLoanMarketReq = CREDIT.GetLoanMarketReq;
+export type GetLoanMarketResp = CREDIT.GetLoanMarketResp;
+export type GetPurchaseOrdersItems = CREDIT.GetPurchaseOrdersItems;
+export type GetPurchaseOrdersReq = CREDIT.GetPurchaseOrdersReq;
+export type GetPurchaseOrdersResp = CREDIT.GetPurchaseOrdersResp;
+export type GetRedeemOrdersItems = CREDIT.GetRedeemOrdersItems;
+export type GetRedeemOrdersReq = CREDIT.GetRedeemOrdersReq;
+export type GetRedeemOrdersResp = CREDIT.GetRedeemOrdersResp;
+export type ModifyPurchaseReq = CREDIT.ModifyPurchaseReq;
+export type ModifyPurchaseResp = CREDIT.ModifyPurchaseResp;
+export type PurchaseReq = CREDIT.PurchaseReq;
+export type PurchaseResp = CREDIT.PurchaseResp;
+export type RedeemReq = CREDIT.RedeemReq;
+export type RedeemResp = CREDIT.RedeemResp;
+}

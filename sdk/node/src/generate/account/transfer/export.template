@@ -1,0 +1,17 @@
+export namespace Transfer {
+export type FlexTransferReq = TRANSFER.FlexTransferReq;
+export type FlexTransferResp = TRANSFER.FlexTransferResp;
+export type FuturesAccountTransferInReq = TRANSFER.FuturesAccountTransferInReq;
+export type FuturesAccountTransferInResp = TRANSFER.FuturesAccountTransferInResp;
+export type FuturesAccountTransferOutReq = TRANSFER.FuturesAccountTransferOutReq;
+export type FuturesAccountTransferOutResp = TRANSFER.FuturesAccountTransferOutResp;
+export type GetFuturesAccountTransferOutLedgerItems = TRANSFER.GetFuturesAccountTransferOutLedgerItems;
+export type GetFuturesAccountTransferOutLedgerReq = TRANSFER.GetFuturesAccountTransferOutLedgerReq;
+export type GetFuturesAccountTransferOutLedgerResp = TRANSFER.GetFuturesAccountTransferOutLedgerResp;
+export type GetTransferQuotasReq = TRANSFER.GetTransferQuotasReq;
+export type GetTransferQuotasResp = TRANSFER.GetTransferQuotasResp;
+export type InnerTransferReq = TRANSFER.InnerTransferReq;
+export type InnerTransferResp = TRANSFER.InnerTransferResp;
+export type SubAccountTransferReq = TRANSFER.SubAccountTransferReq;
+export type SubAccountTransferResp = TRANSFER.SubAccountTransferResp;
+}
