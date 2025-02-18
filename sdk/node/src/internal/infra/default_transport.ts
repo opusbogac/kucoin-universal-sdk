@@ -175,13 +175,24 @@ export class DefaultTransport implements Transport {
         });
     }
 
-    private rawQuery(queryDict: Record<string, any>): string {
+    private encodeQuery(queryDict: Record<string, any>): string {
         return Object.entries(queryDict)
             .map(([key, value]) => {
                 if (Array.isArray(value)) {
                     return value.map((val) => `${key}=${encodeURIComponent(val)}`).join('&');
                 }
                 return `${key}=${encodeURIComponent(value)}`;
+            })
+            .join('&');
+    }
+
+    private rawQuery(queryDict: Record<string, any>): string {
+        return Object.entries(queryDict)
+            .map(([key, value]) => {
+                if (Array.isArray(value)) {
+                    return value.map((val) => `${key}=${val}`).join('&');
+                }
+                return `${key}=${value}`;
             })
             .join('&');
     }
@@ -200,6 +211,7 @@ export class DefaultTransport implements Transport {
         const rawUrl = path;
         let reqBody = null;
         let queryPath = path;
+        let rawPath = path;
 
         if (requestAsJson) {
             if (requestObj) {
@@ -221,9 +233,13 @@ export class DefaultTransport implements Transport {
                         }
                     }
 
-                    const queryParams = this.rawQuery(queryObj);
+                    const queryParams = this.encodeQuery(queryObj);
+                    const rawParams = this.rawQuery(queryObj);
                     if (queryParams) {
                         queryPath = `${path}?${queryParams}`;
+                    }
+                    if (rawParams) {
+                        rawPath = `${path}?${rawParams}`;
                     }
                 }
             } else if (method === 'POST') {
@@ -249,7 +265,7 @@ export class DefaultTransport implements Transport {
         }
 
         // Use queryPath instead of rawUrl for signature
-        this.processHeaders(reqBody, queryPath, config, method, broker);
+        this.processHeaders(reqBody, rawPath, config, method, broker);
         return config;
     }
 

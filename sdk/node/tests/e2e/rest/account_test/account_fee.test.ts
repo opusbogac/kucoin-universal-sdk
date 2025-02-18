@@ -65,7 +65,7 @@ describe('Auto Test', () => {
          * /api/v1/trade-fees
          */
         let builder = GetSpotActualFeeReq.builder();
-        builder.setSymbols('BTC-USDT');
+        builder.setSymbols('BTC-USDT,ETH-USDT');
         let req = builder.build();
         let resp = api.getSpotActualFee(req);
         return resp.then(result => {
