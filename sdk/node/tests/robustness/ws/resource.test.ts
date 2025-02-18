@@ -11,14 +11,27 @@ import { promisify } from 'util';
 import { TickerEvent } from '@generate/spot/spotpublic/model_ticker_event';
 import { TickerV2Event } from '@generate/futures/futurespublic/model_ticker_v2_event';
 import { WebSocketEvent } from '@model/websocket_option';
+import { platform } from 'os';
 
 const execAsync = promisify(exec);
 
-
 async function getProcessTCPConnections(): Promise<number> {
     try {
-        const { stdout } = await execAsync(`ss -tn | grep ESTAB | wc -l`);
-        return parseInt(stdout.trim(), 10);
+        const isWindows = platform() === 'win32';
+        let command = '';
+        
+        if (isWindows) {
+            // Windows
+            command = `cmd.exe /c "chcp 437 > nul && netstat -n"`;
+            const { stdout } = await execAsync(command);
+            // count ESTABLISHED lines
+            return stdout.split('\n').filter(line => line.includes('ESTABLISHED')).length;
+        } else {
+            // Linux use ss command
+            command = `ss -tn | grep ESTAB | wc -l`;
+            const { stdout } = await execAsync(command);
+            return parseInt(stdout.trim(), 10);
+        }
     } catch (error) {
         console.error('Error getting TCP connections:', error);
         return -1;
@@ -34,12 +47,10 @@ function getMemoryUsage(): { heapUsed: number, heapTotal: number, rss: number } 
     };
 }
 
-
 function logMemoryUsage() {
     const usage = getMemoryUsage();
     console.log(`Memory Usage - Heap Used: ${usage.heapUsed}MB, Heap Total: ${usage.heapTotal}MB, RSS: ${usage.rss}MB`);
 }
-
 
 async function verifyResourceCleanup(initialTCP: number, initialMemory: ReturnType<typeof getMemoryUsage>) {
 
@@ -204,7 +215,7 @@ describe('WebSocket Robustness Test', () => {
     });
 
     // Test WebSocket memory leak
-    jest.setTimeout(120000);
+    jest.setTimeout(1200);
     test('test websocket memory leak', async () => {
         let connected = false;
         const wsClients: { ws: any, type: string }[] = [];
@@ -488,4 +499,115 @@ describe('WebSocket Robustness Test', () => {
             await spotPublicWS.stop().catch(console.error);
         }
     });
+
+    // Test duplicate subscriptions should throw error
+    test('test duplicateSubscriptionstest', async () => {
+        let connected = false;
+        let disconnected = false;
+        const CLEANUP_TIMEOUT = 2000;  // Wait 2 seconds for cleanup
+
+        const wsOption = new WebSocketClientOptionBuilder()
+            .withReconnect(false)  // Disable auto-reconnect for this test
+            .withDialTimeout(5000)
+            .withEventCallback((event: WebSocketEvent, msg: string) => {
+                console.log(`WebSocket Event: ${event}, Message: ${msg}`);
+                if (event === WebSocketEvent.EventConnected) {
+                    connected = true;
+                } else if (event === WebSocketEvent.EventDisconnected) {
+                    disconnected = true;
+                }
+            })
+            .build();
+
+        const clientOption = new ClientOptionBuilder()
+            .setKey('')
+            .setSecret('')
+            .setPassphrase('')
+            .setSpotEndpoint(GlobalApiEndpoint)
+            .setFuturesEndpoint(GlobalFuturesApiEndpoint)
+            .setBrokerEndpoint(GlobalBrokerApiEndpoint)
+            .setWebSocketClientOption(wsOption)
+            .build();
+
+        const client = new DefaultClient(clientOption);
+        const wsService = client.wsService();
+        const spotPublicWS = wsService.newSpotPublicWS();
+
+        try {
+            // Start WebSocket client
+            await spotPublicWS.start();
+
+            // Wait for connection to be established
+            await new Promise<void>((resolve, reject) => {
+                const checkConnection = () => {
+                    if (connected) {
+                        clearInterval(interval);
+                        clearTimeout(timeout);
+                        resolve();
+                    }
+                };
+                const interval = setInterval(checkConnection, 100);
+                const timeout = setTimeout(() => {
+                    clearInterval(interval);
+                    reject(new Error('Connection timeout'));
+                }, 5000);
+            });
+
+            // First subscription
+            const subscription1 = await spotPublicWS.ticker(['BTC-USDT'], (topic: string, subject: string, data: TickerEvent) => {
+                console.log('First subscription received message:', data);
+            });
+
+            // Second subscription to the same topic should throw error
+            let error: Error | null = null;
+            try {
+                await spotPublicWS.ticker(['BTC-USDT'], (topic: string, subject: string, data: TickerEvent) => {
+                    console.log('Second subscription received message:', data);
+                });
+            } catch (e) {
+                error = e as Error;
+            }
+            expect(error).not.toBeNull();
+            expect(error?.message).toContain('already subscribed');
+
+            // Clean up
+            console.log('Starting cleanup...');
+            await spotPublicWS.unSubscribe(subscription1);
+            await spotPublicWS.stop();
+
+            // Wait for disconnect event
+            await new Promise<void>((resolve, reject) => {
+                const checkDisconnection = () => {
+                    if (disconnected) {
+                        clearInterval(interval);
+                        clearTimeout(timeout);
+                        resolve();
+                    }
+                };
+                const interval = setInterval(checkDisconnection, 100);
+                const timeout = setTimeout(() => {
+                    clearInterval(interval);
+                    reject(new Error('Disconnect timeout'));
+                }, CLEANUP_TIMEOUT);
+            });
+
+            // Additional wait for system to clean up resources
+            await new Promise(resolve => setTimeout(resolve, CLEANUP_TIMEOUT));
+
+        } catch (error) {
+            console.error('Test error:', error);
+            throw error;
+        } finally {
+            // Force cleanup in case of errors
+            try {
+                if (!disconnected) {
+                    await spotPublicWS.stop();
+                    // Wait for resources to be cleaned up
+                    await new Promise(resolve => setTimeout(resolve, CLEANUP_TIMEOUT));
+                }
+            } catch (error) {
+                console.error('Error in final cleanup:', error);
+            }
+        }
+    }, 30000);  // Set test timeout to 30 seconds
 });
