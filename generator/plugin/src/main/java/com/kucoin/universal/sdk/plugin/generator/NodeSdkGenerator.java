@@ -122,6 +122,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                 apiTemplateFiles.put("api_ws.mustache", ".ts");
                 additionalProperties.put("WS_MODE", "true");
                 supportingFiles.add(new SupportingFile("module.mustache", String.format("./%s/%s/index.ts", service, formatPackage(subService))));
+                supportingFiles.add(new SupportingFile("module_exports_template.mustache", String.format("./%s/%s/export.template", service, formatPackage(subService))));
                 break;
             }
             case WS_TEST: {
@@ -550,6 +551,7 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
                     }
                     case WS:
                     case WS_TEST: {
+                        generateTypeExport(meta, serviceExportsTemplate, allModels);
                         generateApiImport(meta, false, imports);
                         allModels.stream().forEach(m -> {
                             String path = (String) m.get("importPath");

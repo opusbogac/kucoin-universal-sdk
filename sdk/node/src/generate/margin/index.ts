@@ -22,6 +22,14 @@ export namespace Margin {
     export type RiskLimitAPI = RISKLIMIT.RiskLimitAPI;
     export type MarginPrivateWS = MARGINPRIVATE.MarginPrivateWS;
     export type MarginPublicWS = MARGINPUBLIC.MarginPublicWS;
+    export namespace MarginPrivate {
+        export type CrossMarginPositionAssetListValue =
+            MARGINPRIVATE.CrossMarginPositionAssetListValue;
+        export type CrossMarginPositionEvent = MARGINPRIVATE.CrossMarginPositionEvent;
+        export type IsolatedMarginPositionChangeAssetsValue =
+            MARGINPRIVATE.IsolatedMarginPositionChangeAssetsValue;
+        export type IsolatedMarginPositionEvent = MARGINPRIVATE.IsolatedMarginPositionEvent;
+    }
     export namespace Order {
         export type AddOrderReq = ORDER.AddOrderReq;
         export type AddOrderResp = ORDER.AddOrderResp;
@@ -77,6 +85,10 @@ export namespace Margin {
         export type GetMarginRiskLimitData = RISKLIMIT.GetMarginRiskLimitData;
         export type GetMarginRiskLimitReq = RISKLIMIT.GetMarginRiskLimitReq;
         export type GetMarginRiskLimitResp = RISKLIMIT.GetMarginRiskLimitResp;
+    }
+    export namespace MarginPublic {
+        export type IndexPriceEvent = MARGINPUBLIC.IndexPriceEvent;
+        export type MarkPriceEvent = MARGINPUBLIC.MarkPriceEvent;
     }
     export namespace Debit {
         export type BorrowReq = DEBIT.BorrowReq;

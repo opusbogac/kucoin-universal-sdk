@@ -1,0 +1,12 @@
+export namespace FuturesPublic {
+export type AnnouncementEvent = FUTURESPUBLIC.AnnouncementEvent;
+export type ExecutionEvent = FUTURESPUBLIC.ExecutionEvent;
+export type InstrumentEvent = FUTURESPUBLIC.InstrumentEvent;
+export type KlinesEvent = FUTURESPUBLIC.KlinesEvent;
+export type OrderbookIncrementEvent = FUTURESPUBLIC.OrderbookIncrementEvent;
+export type OrderbookLevel50Event = FUTURESPUBLIC.OrderbookLevel50Event;
+export type OrderbookLevel5Event = FUTURESPUBLIC.OrderbookLevel5Event;
+export type SymbolSnapshotEvent = FUTURESPUBLIC.SymbolSnapshotEvent;
+export type TickerV1Event = FUTURESPUBLIC.TickerV1Event;
+export type TickerV2Event = FUTURESPUBLIC.TickerV2Event;
+}

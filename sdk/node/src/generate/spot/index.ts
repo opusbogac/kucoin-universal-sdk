@@ -126,6 +126,12 @@ export namespace Spot {
         export type SetDCPReq = ORDER.SetDCPReq;
         export type SetDCPResp = ORDER.SetDCPResp;
     }
+    export namespace SpotPrivate {
+        export type AccountEvent = SPOTPRIVATE.AccountEvent;
+        export type AccountRelationContext = SPOTPRIVATE.AccountRelationContext;
+        export type OrderV1Event = SPOTPRIVATE.OrderV1Event;
+        export type OrderV2Event = SPOTPRIVATE.OrderV2Event;
+    }
     export namespace Market {
         export type Get24hrStatsReq = MARKET.Get24hrStatsReq;
         export type Get24hrStatsResp = MARKET.Get24hrStatsResp;
@@ -165,5 +171,29 @@ export namespace Spot {
         export type GetTradeHistoryData = MARKET.GetTradeHistoryData;
         export type GetTradeHistoryReq = MARKET.GetTradeHistoryReq;
         export type GetTradeHistoryResp = MARKET.GetTradeHistoryResp;
+    }
+    export namespace SpotPublic {
+        export type AllTickersEvent = SPOTPUBLIC.AllTickersEvent;
+        export type KlinesEvent = SPOTPUBLIC.KlinesEvent;
+        export type MarketSnapshotData = SPOTPUBLIC.MarketSnapshotData;
+        export type MarketSnapshotDataMarketChange1h = SPOTPUBLIC.MarketSnapshotDataMarketChange1h;
+        export type MarketSnapshotDataMarketChange24h =
+            SPOTPUBLIC.MarketSnapshotDataMarketChange24h;
+        export type MarketSnapshotDataMarketChange4h = SPOTPUBLIC.MarketSnapshotDataMarketChange4h;
+        export type MarketSnapshotEvent = SPOTPUBLIC.MarketSnapshotEvent;
+        export type OrderbookIncrementChanges = SPOTPUBLIC.OrderbookIncrementChanges;
+        export type OrderbookIncrementEvent = SPOTPUBLIC.OrderbookIncrementEvent;
+        export type OrderbookLevel1Event = SPOTPUBLIC.OrderbookLevel1Event;
+        export type OrderbookLevel50Changes = SPOTPUBLIC.OrderbookLevel50Changes;
+        export type OrderbookLevel50Event = SPOTPUBLIC.OrderbookLevel50Event;
+        export type OrderbookLevel5Event = SPOTPUBLIC.OrderbookLevel5Event;
+        export type SymbolSnapshotData = SPOTPUBLIC.SymbolSnapshotData;
+        export type SymbolSnapshotDataMarketChange1h = SPOTPUBLIC.SymbolSnapshotDataMarketChange1h;
+        export type SymbolSnapshotDataMarketChange24h =
+            SPOTPUBLIC.SymbolSnapshotDataMarketChange24h;
+        export type SymbolSnapshotDataMarketChange4h = SPOTPUBLIC.SymbolSnapshotDataMarketChange4h;
+        export type SymbolSnapshotEvent = SPOTPUBLIC.SymbolSnapshotEvent;
+        export type TickerEvent = SPOTPUBLIC.TickerEvent;
+        export type TradeEvent = SPOTPUBLIC.TradeEvent;
     }
 }

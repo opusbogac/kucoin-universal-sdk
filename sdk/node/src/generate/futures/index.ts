@@ -66,6 +66,17 @@ export namespace Futures {
         export type GetTradeHistoryReq = ORDER.GetTradeHistoryReq;
         export type GetTradeHistoryResp = ORDER.GetTradeHistoryResp;
     }
+    export namespace FuturesPrivate {
+        export type AllOrderEvent = FUTURESPRIVATE.AllOrderEvent;
+        export type AllPositionEvent = FUTURESPRIVATE.AllPositionEvent;
+        export type BalanceEvent = FUTURESPRIVATE.BalanceEvent;
+        export type CrossLeverageDataValue = FUTURESPRIVATE.CrossLeverageDataValue;
+        export type CrossLeverageEvent = FUTURESPRIVATE.CrossLeverageEvent;
+        export type MarginModeEvent = FUTURESPRIVATE.MarginModeEvent;
+        export type OrderEvent = FUTURESPRIVATE.OrderEvent;
+        export type PositionEvent = FUTURESPRIVATE.PositionEvent;
+        export type StopOrdersEvent = FUTURESPRIVATE.StopOrdersEvent;
+    }
     export namespace FundingFees {
         export type GetCurrentFundingRateReq = FUNDINGFEES.GetCurrentFundingRateReq;
         export type GetCurrentFundingRateResp = FUNDINGFEES.GetCurrentFundingRateResp;
@@ -108,6 +119,18 @@ export namespace Futures {
         export type RemoveIsolatedMarginResp = POSITIONS.RemoveIsolatedMarginResp;
         export type SwitchMarginModeReq = POSITIONS.SwitchMarginModeReq;
         export type SwitchMarginModeResp = POSITIONS.SwitchMarginModeResp;
+    }
+    export namespace FuturesPublic {
+        export type AnnouncementEvent = FUTURESPUBLIC.AnnouncementEvent;
+        export type ExecutionEvent = FUTURESPUBLIC.ExecutionEvent;
+        export type InstrumentEvent = FUTURESPUBLIC.InstrumentEvent;
+        export type KlinesEvent = FUTURESPUBLIC.KlinesEvent;
+        export type OrderbookIncrementEvent = FUTURESPUBLIC.OrderbookIncrementEvent;
+        export type OrderbookLevel50Event = FUTURESPUBLIC.OrderbookLevel50Event;
+        export type OrderbookLevel5Event = FUTURESPUBLIC.OrderbookLevel5Event;
+        export type SymbolSnapshotEvent = FUTURESPUBLIC.SymbolSnapshotEvent;
+        export type TickerV1Event = FUTURESPUBLIC.TickerV1Event;
+        export type TickerV2Event = FUTURESPUBLIC.TickerV2Event;
     }
     export namespace Market {
         export type Get24hrStatsResp = MARKET.Get24hrStatsResp;

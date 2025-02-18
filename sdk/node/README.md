@@ -64,13 +64,13 @@ function example() {
     const spotMarketApi = kucoinRestService.getSpotService().getMarketApi();
 
     // Create request by interface
-    let request = Spot.GetPartOrderBookReq.create({
+    let request = Spot.Market.GetPartOrderBookReq.create({
         'symbol': 'BTC-USDT',
         'size': '20',
     })
 
     // Or create request by builder
-    request = Spot.GetPartOrderBookReq.builder().setSize('20').setSymbol('BTC-USDT').build();
+    request = Spot.Market.GetPartOrderBookReq.builder().setSize('20').setSymbol('BTC-USDT').build();
 
     // Query for part orderbook depth data. (aggregated by price)
     spotMarketApi.getPartOrderBook(request).then((result) => {

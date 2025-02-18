@@ -93,7 +93,7 @@ WS_FILES := $(wildcard ./spec/ws/*.json)
 generate-postman:
 	$(call generate-postman-func)
 
-generate: $(patsubst ./spec/rest/api/%.json,generate-rest-%, $(REST_FILES)) $(patsubst ./spec/rest/entry/%.json,generate-entry-%, $(ENTRY_FILES)) $(patsubst ./spec/ws/%.json,generate-ws-%, $(WS_FILES))
+generate: $(patsubst ./spec/rest/api/%.json,generate-rest-%, $(REST_FILES)) $(patsubst ./spec/ws/%.json,generate-ws-%, $(WS_FILES)) $(patsubst ./spec/rest/entry/%.json,generate-entry-%, $(ENTRY_FILES)) 
 
 generate-rest-%: ./spec/rest/api/%.json | force
 	$(eval service=$*)
