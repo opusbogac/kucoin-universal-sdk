@@ -670,6 +670,11 @@ public class NodeSdkGenerator extends AbstractTypeScriptClientCodegen implements
 
         services.forEach(s -> {
             serviceExports.add(String.format("export * from \"./%s_api\"", s));
+
+            Map<String,String> specialKeywords = Map.of("copytrading", "CopyTrading", "viplending", "VIPLending");
+            String service = formatService(specialKeywords.getOrDefault(s, s));
+
+            serviceExports.add(String.format("export type {%s} from \"./%s_api\"", service+"Service", s));
             generatedExports.add(String.format("export * from \"./%s\"", s));
         });
 

@@ -1,9 +1,18 @@
-export * from './account_api';
-export * from './affiliate_api';
-export * from './broker_api';
-export * from './copytrading_api';
-export * from './earn_api';
-export * from './futures_api';
-export * from './margin_api';
-export * from './spot_api';
-export * from './viplending_api';
+export * from "./account_api"
+export * from "./affiliate_api"
+export * from "./broker_api"
+export * from "./copytrading_api"
+export * from "./earn_api"
+export * from "./futures_api"
+export * from "./margin_api"
+export * from "./spot_api"
+export * from "./viplending_api"
+export type {AccountService} from "./account_api"
+export type {AffiliateService} from "./affiliate_api"
+export type {BrokerService} from "./broker_api"
+export type {CopyTradingService} from "./copytrading_api"
+export type {EarnService} from "./earn_api"
+export type {FuturesService} from "./futures_api"
+export type {MarginService} from "./margin_api"
+export type {SpotService} from "./spot_api"
+export type {VIPLendingService} from "./viplending_api"
