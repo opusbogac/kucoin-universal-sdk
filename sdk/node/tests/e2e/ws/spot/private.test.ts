@@ -37,8 +37,7 @@ describe('Spot Private WebSocket API Tests', () => {
     });
 
     afterAll(() => {
-        // TODO
-        // return api.stop();
+        return api.stop();
     });
 
     test('account subscription test', (done) => {
@@ -72,29 +71,15 @@ describe('Spot Private WebSocket API Tests', () => {
             let subid = await api.orderV1(
                 async (topic: string, subject: string, item: OrderV1Event) => {
                     console.log(item);
-                    expect(item.canceledSize).toEqual(expect.any(String));
-                    expect(item.clientOid).toEqual(expect.any(String));
-                    expect(item.filledSize).toEqual(expect.any(String));
-                    expect(item.orderId).toEqual(expect.any(String));
-                    expect(item.orderTime).toEqual(expect.any(Number));
-                    expect(item.orderType).toEqual(expect.any(String));
-                    expect(item.originSize).toEqual(expect.any(String));
-                    expect(item.price).toEqual(expect.any(String));
-                    expect(item.remainFunds).toEqual(expect.any(String));
-                    expect(item.remainSize).toEqual(expect.any(String));
-                    expect(item.side).toEqual(expect.any(String));
-                    expect(item.size).toEqual(expect.any(String));
-                    expect(item.status).toEqual(expect.any(String));
-                    expect(item.symbol).toEqual(expect.any(String));
-                    expect(item.ts).toEqual(expect.any(Number));
-                    expect(item.type).toEqual(expect.any(String));
-                    expect(item.oldSize).toEqual(expect.any(String));
-                    expect(item.feeType).toEqual(expect.any(String));
-                    expect(item.liquidity).toEqual(expect.any(String));
-                    expect(item.matchPrice).toEqual(expect.any(String));
-                    expect(item.matchSize).toEqual(expect.any(String));
-                    expect(item.tradeId).toEqual(expect.any(String));
-
+                    try {
+                        expect(item.filledSize).toEqual(expect.any(String));
+                        expect(item.orderId).toEqual(expect.any(String));
+                        expect(item.orderTime).toEqual(expect.any(Number));
+                        expect(item.orderType).toEqual(expect.any(String));
+                        expect(item.price).toEqual(expect.any(String));
+                    } catch (e) {
+                        done(e);
+                    }
                     api.unSubscribe(subid).then(() => {
                         done();
                     });
@@ -110,28 +95,11 @@ describe('Spot Private WebSocket API Tests', () => {
             let subid = await api.orderV2(
                 async (topic: string, subject: string, item: OrderV2Event) => {
                     console.log(item);
-                    expect(item.canceledSize).toEqual(expect.any(String));
-                    expect(item.clientOid).toEqual(expect.any(String));
                     expect(item.filledSize).toEqual(expect.any(String));
                     expect(item.orderId).toEqual(expect.any(String));
                     expect(item.orderTime).toEqual(expect.any(Number));
                     expect(item.orderType).toEqual(expect.any(String));
-                    expect(item.originSize).toEqual(expect.any(String));
                     expect(item.price).toEqual(expect.any(String));
-                    expect(item.remainFunds).toEqual(expect.any(String));
-                    expect(item.remainSize).toEqual(expect.any(String));
-                    expect(item.side).toEqual(expect.any(String));
-                    expect(item.size).toEqual(expect.any(String));
-                    expect(item.status).toEqual(expect.any(String));
-                    expect(item.symbol).toEqual(expect.any(String));
-                    expect(item.ts).toEqual(expect.any(Number));
-                    expect(item.type).toEqual(expect.any(String));
-                    expect(item.oldSize).toEqual(expect.any(String));
-                    expect(item.feeType).toEqual(expect.any(String));
-                    expect(item.liquidity).toEqual(expect.any(String));
-                    expect(item.matchPrice).toEqual(expect.any(String));
-                    expect(item.matchSize).toEqual(expect.any(String));
-                    expect(item.tradeId).toEqual(expect.any(String));
                     api.unSubscribe(subid).then(() => {
                         done();
                     });

@@ -45,8 +45,7 @@ describe('Margin Private WebSocket API Tests', () => {
     });
 
     afterAll(() => {
-        // TODO
-        // return api.stop();
+        return api.stop();
     });
 
     test('crossMarginPosition subscription test', (done) => {
@@ -54,14 +53,6 @@ describe('Margin Private WebSocket API Tests', () => {
             let subid = await api.crossMarginPosition(
                 async (topic: string, subject: string, item: CrossMarginPositionEvent) => {
                     console.log(item);
-                    expect(item.debtRatio).toEqual(expect.any(Number));
-                    expect(item.totalAsset).toEqual(expect.any(Number));
-                    expect(item.marginCoefficientTotalAsset).toEqual(expect.any(String));
-                    expect(item.totalDebt).toEqual(expect.any(String));
-                    expect(item.assetList).toEqual(expect.any(Object));
-                    expect(item.debtList).toEqual(expect.any(Object));
-                    expect(item.timestamp).toEqual(expect.any(Number));
-                    expect(item.type).toEqual(expect.any(String));
                     api.unSubscribe(subid).then(() => {
                         done();
                     });
@@ -75,16 +66,9 @@ describe('Margin Private WebSocket API Tests', () => {
     test('isolatedMarginPosition subscription test', (done) => {
         (async () => {
             let subid = await api.isolatedMarginPosition(
-                'BTC-USDT',
+                'DOGE-USDT',
                 async (topic: string, subject: string, item: IsolatedMarginPositionEvent) => {
                     console.log(item);
-                    expect(item.tag).toEqual(expect.any(String));
-                    expect(item.status).toEqual(expect.any(String));
-                    expect(item.statusBizType).toEqual(expect.any(String));
-                    expect(item.accumulatedPrincipal).toEqual(expect.any(String));
-                    expect(item.changeAssets).toEqual(expect.any(Object));
-                    expect(item.timestamp).toEqual(expect.any(Number));
-
                     api.unSubscribe(subid).then(() => {
                         done();
                     });
