@@ -43,7 +43,6 @@ parentPort.on('message', (message) => {
             ws.on('message', (data) => {
                 const parsedMessage = parseMessage(data);
                 if (parsedMessage) {
-                    logger.info('[Worker] Received message:', parsedMessage);
                     parentPort.postMessage({
                         type: 'message',
                         data: JSON.stringify(parsedMessage),

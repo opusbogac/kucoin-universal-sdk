@@ -292,7 +292,7 @@ export class DefaultWsService implements WebSocketService {
 
         // Check if already subscribed
         if (!created) {
-            logger.info(`Already subscribed: ${subId}`);
+            logger.warn(`Already subscribed: ${subId}`);
             return Promise.reject(new Error('Already subscribed'));
         }
 
@@ -336,20 +336,20 @@ export class DefaultWsService implements WebSocketService {
                 subEvent.response = true;
 
                 callbackManager.remove(id);
-                logger.info('[DEBUG] callback removed for id:', id);
+                logger.info('callback removed for id:', id);
 
                 this.client
                     .write(subEvent, this.wsOption.writeTimeout)
                     .then(() => {
-                        logger.info('[DEBUG] unsubscribe message sent successfully');
+                        logger.info('unsubscribe message sent successfully');
                         resolve();
                     })
                     .catch((e) => {
-                        logger.error('[DEBUG] Failed to send unsubscribe message:', e);
+                        logger.error('Failed to send unsubscribe message:', e);
                         reject(e);
                     });
             } catch (e) {
-                logger.error('[DEBUG] unsubscribe error:', e);
+                logger.error('unsubscribe error:', e);
                 reject(e);
             }
         });
