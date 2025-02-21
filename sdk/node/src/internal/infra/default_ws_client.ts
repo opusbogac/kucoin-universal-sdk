@@ -226,10 +226,15 @@ export class WebSocketClient {
 
     // error callback
     private onError(error: Error): void {
-        // TODO ack event memory leak
         logger.error('WebSocket error:', error);
-        // TODO fix
+        
+        // Clear all pending ack events to prevent memory leak
+        this.clearMessageQueues();
+        
+        // Update connection status
         this.disconnected = true;
+        this.connected = false;
+        
     }
 
     // close callback
@@ -319,8 +324,6 @@ export class WebSocketClient {
     // write message
     write(ms: WsMessage, timeout: number): Promise<void> {
         return new Promise((resolve, reject) => {
-
-            // TODO: post to worker directly
             // clean resource if error
             if (!this.connected || !this.worker) {
                 return;
