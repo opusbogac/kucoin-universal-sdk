@@ -192,8 +192,9 @@ export class WebSocketClient {
                     // Handle worker errors
                     this.worker.addListener('error', (error: Error) => {
                         logger.error('Worker error:', error);
-                        // TODO fix reject nothing
-                        reject(error);
+                        this.close();  // Clean up resources
+                        this.disconnected = true;
+                        this.connected = false;
                     });
 
                     // Send connect command to worker
@@ -202,11 +203,12 @@ export class WebSocketClient {
                         wsUrl 
                     });
 
-                    // TODO fix wait welcome message
-                    // if timeout clean resource
                     // Set timeout for welcome message
                     setTimeout(() => {
                         if (!this.welcomeReceived) {
+                            this.close();  // Close the connection
+                            this.disconnected = true;
+                            this.connected = false;
                             reject(new Error('Did not receive welcome message'));
                         }
                     }, 5000);

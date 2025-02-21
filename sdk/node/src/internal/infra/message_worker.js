@@ -46,7 +46,6 @@ parentPort.on('message', (message) => {
                 if (parsedMessage) {
                     parentPort.postMessage({
                         type: 'message',
-                        // TODO fix
                         data: JSON.stringify(parsedMessage),
                     });
                 }
