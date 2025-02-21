@@ -16,15 +16,14 @@ let ws = null;
 function parseMessage(data) {
     try {
         const message = JSON.parse(data.toString());
-        // TODO remove
-        // Add topic field if not present
-        if (!message.topic && message.type) {
-            message.topic = message.type;
-        }
         return message;
     } catch (error) {
-        // TODO notify user
         logger.error('[Worker] Error parsing message:', error);
+        // Notify main thread about parsing error
+        parentPort.postMessage({
+            type: 'error',
+            error:  `Failed to parse WebSocket message: ${error.message}`,
+        });
         return null;
     }
 }
@@ -72,12 +71,7 @@ parentPort.on('message', (message) => {
         } else if (message.command === 'send' && ws) {
             // Send message through WebSocket
             const data = message.data;
-            // TODO remove
-            if (typeof data === 'object') {
-                ws.send(JSON.stringify(data));
-            } else {
-                ws.send(data);
-            }
+            ws.send(JSON.stringify(data));
         } else if (message.command === 'close' && ws) {
             // Close WebSocket connection
             ws.close();

@@ -72,7 +72,7 @@ class MessageWriter extends Writable {
             highWaterMark: 256
         });
     }
-
+ 
     _write(message: WsMessage, encoding: string, callback: (error?: Error | null) => void): void {
         try {
             // Send message through worker
@@ -80,10 +80,20 @@ class MessageWriter extends Writable {
                 command: 'send',
                 data: message
             });
+ 
+            
+            if (this.writableLength >= this.writableHighWaterMark) {
+                logger.warn('Buffer full, write() returning false');
+            }
+ 
             callback();
         } catch (error) {
             callback(error as Error);
         }
+    }
+ 
+    _final(callback: (error?: Error | null) => void): void {
+        callback();
     }
 }
 
@@ -455,18 +465,15 @@ export class WebSocketClient {
         const timeSinceLastPing = currentTime - (this.lastPingTime || 0);
 
 
-        // TODO do not disconnected
         if (timeSinceLastPing >= interval) {
             const pingMsg = this.newPingMessage();
             try {
                 this.write(pingMsg, timeout).catch((e) => {
                     logger.error('[KeepAlive] Heartbeat ping error:', e);
-                    this.disconnected = true;
                 });
             } catch (e) {
                 logger.error('[KeepAlive] Heartbeat ping error:', e);
                 this.metric.pingErr++;
-                this.disconnected = true;
             }
             this.lastPingTime = currentTime;
         }
