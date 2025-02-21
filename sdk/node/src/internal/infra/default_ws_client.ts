@@ -1,8 +1,6 @@
 import WebSocket, { Data as WebSocketData } from 'ws';
 import { EventEmitter } from 'events';
-
 import path from 'path';
-
 import { WsMessage } from '../../model/common';
 import { MessageType } from '../../model/constant';
 import { WebSocketClientOption } from '../../model/websocket_option';
@@ -21,6 +19,39 @@ export interface WriteMsg {
     reject: (reason?: any) => void;
 }
 
+const { Readable } = require('stream');
+ 
+class BoundedReadable extends Readable {
+    private readonly maxSize: number;
+
+    constructor(maxSize: number) {
+        super({
+            objectMode: true,
+            highWaterMark: maxSize
+        });
+        this.maxSize = maxSize;
+    }
+ 
+    addMessage(message: WsMessage): boolean {
+        if (this.readableLength >= this.readableHighWaterMark) {
+            logger.warn(`Dropping: ${JSON.stringify(message)}`);
+            return false;
+        }
+ 
+        this.push(message);
+        return true;
+    }
+ 
+    _read(): void {
+        
+    }
+
+    destroy(): void {
+        this.push(null);
+        super.destroy();
+    }
+}
+
 
 // WebSocketClient class, used to manage WebSocket connection and its related operations
 export class WebSocketClient {
@@ -37,8 +68,6 @@ export class WebSocketClient {
     private closed: boolean;
     private reconnectClosed: boolean;
 
-
-
     private ackEvents: Map<string, WriteMsg>;
     private metric: { pingSuccess: number; pingErr: number };
     private keepAliveInterval: NodeJS.Timeout | null;
@@ -47,6 +76,7 @@ export class WebSocketClient {
     private lastPingTime: number | null;
 
     public worker: Worker | null = null;
+    public messageBuffer: BoundedReadable;
 
     constructor(
         tokenProvider: WsTokenProvider, 
@@ -65,13 +95,13 @@ export class WebSocketClient {
         this.reconnectClosed = false;
         this.welcomeReceived = false;
 
-
         this.ackEvents = new Map();
         this.metric = { pingSuccess: 0, pingErr: 0 };
         this.keepAliveInterval = null;
         this.eventEmitter = externalEventEmitter || new EventEmitter();
 
         this.lastPingTime = null;
+        this.messageBuffer = new BoundedReadable(this.options.readMessageBuffer || 1024);
         this.reconnect();
     }
 
@@ -129,6 +159,11 @@ export class WebSocketClient {
         // Clear message queues
         this.clearMessageQueues();
 
+        if(this.messageBuffer)
+        {
+            this.messageBuffer.destroy();
+        }
+
         // Reset state
         this.disconnected = true;
         this.connected = false;
@@ -168,7 +203,7 @@ export class WebSocketClient {
                         return;
                     }
 
-                    // Handle worker messages
+                    // Handle all worker messages through the message event
                     this.worker.addListener('message', (message: any) => {
                         switch (message.type) {
                             case 'open':
@@ -189,12 +224,24 @@ export class WebSocketClient {
                         }
                     });
 
-                    // Handle worker errors
+                    // Handle worker thread crashes
                     this.worker.addListener('error', (error: Error) => {
-                        logger.error('Worker error:', error);
-                        this.close();  // Clean up resources
+                        logger.error('Worker thread crashed:', error);
+                        this.close();
                         this.disconnected = true;
                         this.connected = false;
+                        reject(new Error(`Worker thread crashed: ${error.message}`));
+                    });
+
+                    // Handle worker thread exit
+                    this.worker.addListener('exit', (code: number) => {
+                        if (code !== 0) {  // Non-zero exit code means abnormal exit
+                            logger.error('Worker thread exited with code:', code);
+                            this.close();
+                            this.disconnected = true;
+                            this.connected = false;
+                            reject(new Error(`Worker thread exited with code: ${code}`));
+                        }
                     });
 
                     // Send connect command to worker
@@ -276,12 +323,14 @@ export class WebSocketClient {
                 this.welcomeReceived = true;
                 logger.info('Welcome message received.');
                 break;
-
             case MessageType.Message:
+                if(!this.messageBuffer.addMessage(m))
+                {
+                    this.notifyEvent(WebSocketEvent.EventReadBufferFull, '');
+                }
                 break;
             case MessageType.PongMessage:
                 this.notifyEvent(WebSocketEvent.EventPongReceived, '');
-                logger.debug('PONG received');
                 this.handleAckEvent(m);
                 break;
 
@@ -321,9 +370,7 @@ export class WebSocketClient {
         }
     }
 
-
-
-    // write message
+    // write message to work thread
     write(ms: WsMessage, timeout: number): Promise<void> {
         return new Promise((resolve, reject) => {
             // clean resource if error
@@ -363,7 +410,9 @@ export class WebSocketClient {
 
 
         if (timeSinceLastPing >= interval) {
-            const pingMsg = this.newPingMessage();
+            const pingMsg = new WsMessage();
+            pingMsg.id = Date.now().toString();
+            pingMsg.type = MessageType.PingMessage;
             try {
                 this.write(pingMsg, timeout).catch((e) => {
                     logger.error('[KeepAlive] Heartbeat ping error:', e);
@@ -401,7 +450,6 @@ export class WebSocketClient {
     // Clear all message queues and cleanup resources
     private clearMessageQueues(): void {
 
-
         // Clear write message queue and reject pending promises
         this.ackEvents.forEach((writeMsg) => {
             writeMsg.reject(new Error('WebSocket connection closed'));
@@ -424,20 +472,13 @@ export class WebSocketClient {
         return tokens[Math.floor(Math.random() * tokens.length)];
     }
 
-    private newPingMessage(): WsMessage {
-        const pingMessage = new WsMessage();
-        pingMessage.id = Date.now().toString();
-        pingMessage.type = MessageType.PingMessage;
-        return pingMessage;
-    }
-
     // Check if the client has been reconnected
-    isReconnected(): boolean {
+    public isReconnected(): boolean {
         return this.reconnected;
     }
 
     // Clear the reconnected flag
-    clearReconnectedFlag(): void {
+    public clearReconnectedFlag(): void {
         this.reconnected = false;
     }
 
@@ -445,7 +486,6 @@ export class WebSocketClient {
         const reconnectLoop = async () => {
             while (!this.reconnectClosed) {
                 if (this.disconnected && !this.shutdown) {
-                    logger.info('Broken WebSocket connection, starting reconnection');
                     try {
                         await this.close();
                     } catch (err) {

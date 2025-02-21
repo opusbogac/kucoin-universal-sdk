@@ -15,38 +15,7 @@ import { EventEmitter } from 'events';
 import { Worker } from 'worker_threads';
 import { logger } from '@src/common';
 
-const { Readable } = require('stream');
- 
-class BoundedReadable extends Readable {
-    private readonly maxSize: number;
 
-    constructor(maxSize: number) {
-        super({
-            objectMode: true,
-            highWaterMark: maxSize
-        });
-        this.maxSize = maxSize;
-    }
- 
-    addMessage(message: WsMessage): boolean {
-        if (this.readableLength >= this.readableHighWaterMark) {
-            logger.warn(`Dropping: ${JSON.stringify(message)}`);
-            return false;
-        }
- 
-        this.push(message);
-        return true;
-    }
- 
-    _read(): void {
-        
-    }
-
-    destroy(): void {
-        this.push(null);
-        super.destroy();
-    }
-}
 
 /**
  * DefaultWsService implements the WebSocket service interface for handling real-time data communication.
@@ -62,11 +31,8 @@ export class DefaultWsService implements WebSocketService {
     private topicManager: TopicManager;
     private client: WebSocketClient;
     private stopSignal: boolean = false;
-    private messageLoop?: NodeJS.Timeout;
     private recoveryLoop?: NodeJS.Timeout;
     private readonly eventEmitter: EventEmitter;
-    private messageWorker?: Worker;
-    private messageBuffer: BoundedReadable;
 
     /**
      * Creates a new instance of DefaultWsService
@@ -112,11 +78,9 @@ export class DefaultWsService implements WebSocketService {
             this.eventEmitter,
         );
 
-        // Initialize message buffer
-        this.messageBuffer = new BoundedReadable(this.wsOption.readMessageBuffer || 1024);
 
         // Handle message consumption
-        this.messageBuffer.on('readable', () => {
+        this.client.messageBuffer.on('readable', () => {
             this.processMessages();
         });
     }
@@ -157,68 +121,14 @@ export class DefaultWsService implements WebSocketService {
         }
     }
 
-    /**
-     * Starts the message processing loop using a dedicated Worker Thread
-     */
-    private startMessageLoop(): void {
-        try {
-            if (!this.client.worker) {
-                throw new Error('Worker not initialized in client');
-            }
 
-            // Handle messages from worker
-            this.client.worker.addListener('message', (msg: any) => {
-                if (this.stopSignal) {
-                    return;
-                }
-
-                if (msg.type !== 'message') {
-                    return;
-                }
-
-                try {
-                    const wsMessage = JSON.parse(msg.data);
-                    if (!wsMessage || !wsMessage.topic) {
-                        logger.warn('[Main] Received message without topic:', wsMessage);
-                        return;
-                    }
-
-                    // Add message to buffer instead of processing directly
-                    if (!this.messageBuffer.addMessage(wsMessage)) {
-                        logger.warn('[Main] Message buffer full, dropping message');
-                        this.notifyEvent(WebSocketEvent.EventReadBufferFull, '');
-                    }
-                } catch (err) {
-                    logger.error('[Main] Error parsing message:', err);
-                    this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
-                }
-            });
-
-            // Handle worker errors
-            this.client.worker.addListener('error', (error: Error) => {
-                logger.error('[Main] Worker thread error:', error);
-                this.notifyEvent(WebSocketEvent.EventCallbackError, String(error));
-            });
-
-            // Handle worker exit
-            this.client.worker.addListener('exit', (code: number) => {
-                if (code !== 0 && !this.stopSignal) {
-                    logger.error('[Main] Worker stopped with non-zero exit code');
-                }
-            });
-        } catch (err) {
-            logger.error('[Main] Error in message loop:', err);
-            this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
-        }
-    }
 
     private async processMessages(): Promise<void> {
         try {
             let message;
             // Read messages from buffer while available
-            while (null !== (message = this.messageBuffer.read())) {
+            while (null !== (message = this.client.messageBuffer.read())) {
                 if (!message || !message.topic) {
-                    logger.warn('[Main] Invalid message format:', message);
                     continue;
                 }
 
@@ -301,7 +211,6 @@ export class DefaultWsService implements WebSocketService {
             .start()
             .then(() => {
                 this.stopSignal = false;
-                this.startMessageLoop();
                 this.startRecoveryLoop();
             })
             .catch((err) => {
@@ -318,15 +227,8 @@ export class DefaultWsService implements WebSocketService {
         this.stopSignal = true;
 
         return new Promise<void>((resolve) => {
-            // Terminate worker and clear intervals
-            if (this.messageWorker) {
-                this.messageWorker.terminate();
-                this.messageWorker = undefined;
-            }
-            if (this.messageLoop) {
-                clearInterval(this.messageLoop);
-                this.messageLoop = undefined;
-            }
+
+
             if (this.recoveryLoop) {
                 clearInterval(this.recoveryLoop);
                 this.recoveryLoop = undefined;
@@ -335,8 +237,8 @@ export class DefaultWsService implements WebSocketService {
             // Stop the WebSocket client
             this.client.stop().then(() => {
                 logger.debug('WebSocket service stopped');
-                if (this.messageBuffer) {
-                    this.messageBuffer.destroy();
+                if (this.client.messageBuffer) {
+                    this.client.messageBuffer.destroy();
                 }
                 resolve();
             });
