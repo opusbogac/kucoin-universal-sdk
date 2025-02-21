@@ -34,6 +34,10 @@ function wsExample() {
     spotWsExample(wsService.newSpotPublicWS());
 }
 
+/** @typedef {import('kucoin-universal-sdk').Spot.SpotPublicWS}  SpotPublicWS*/
+/**
+ * @param {SpotPublicWS} spotPublic 
+ */
 async function spotWsExample(spotPublic) {
     await spotPublic.start();
 

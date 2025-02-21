@@ -23,6 +23,11 @@ const {
 
 const crypto = require("crypto");
 
+/** @typedef {import('kucoin-universal-sdk').AccountService} AccountService */
+/** @typedef {import('kucoin-universal-sdk').SpotService} SpotService */
+/** @typedef {import('kucoin-universal-sdk').FuturesService} FuturesService */
+/** @typedef {import('kucoin-universal-sdk').MarginService} MarginService */
+
 const SPOT_SYMBOL = "DOGE-USDT";
 const FUTURES_SYMBOL = "DOGEUSDTM";
 const BASE_CURRENCY = "USDT";
@@ -39,6 +44,9 @@ const MarketType = {
     FUTURES: "FUTURES"
 };
 
+/**
+ * @param {AccountService} accountService
+ */
 async function checkAvailableBalance(accountService, price, amount, marketType) {
     /**
      * Checks if the available balance is sufficient for the trade.
@@ -75,6 +83,10 @@ async function checkAvailableBalance(accountService, price, amount, marketType) 
     }
 }
 
+/**
+ * @param {SpotService} spotService
+ * @param {FuturesService} futuresService
+ */
 async function getLastTradedPrice(spotService, futuresService) {
     /**
      * Fetches the last traded price for the specified spot and futures symbols.
@@ -92,6 +104,12 @@ async function getLastTradedPrice(spotService, futuresService) {
     return [spotPrice, futuresPrice];
 }
 
+/**
+ * @param {SpotService} spotService
+ * @param {FuturesService} futuresService
+ * @param {MarginService} marginService
+ * @param {AccountService} accountService
+ */
 async function fundingRateArbitrageStrategy(
     futuresService,
     spotService,
@@ -184,6 +202,9 @@ async function fundingRateArbitrageStrategy(
     }
 }
 
+/**
+ * @param {SpotService} spotService
+ */
 async function addSpotOrderWaitFill(spotService, symbol, side, amount, price) {
     /**
      * Places a spot order and waits for it to be filled
@@ -237,6 +258,9 @@ async function addSpotOrderWaitFill(spotService, symbol, side, amount, price) {
     return false;
 }
 
+/**
+ * @param {FuturesService} futuresService
+ */
 async function addFuturesOrderWaitFill(futuresService, symbol, side, amount, price) {
     /**
      * Places a futures order and waits for it to be filled within a specified timeout.
@@ -290,6 +314,9 @@ async function addFuturesOrderWaitFill(futuresService, symbol, side, amount, pri
     return false;
 }
 
+/**
+ * @param {MarginService} marginService
+ */
 async function addMarginOrderWaitFill(marginService, symbol, amount, price) {
     /**
      * Places a margin order and waits for it to be filled within a specified timeout.

@@ -10,7 +10,11 @@ const {
     TransportOptionBuilder,
 } = require('kucoin-universal-sdk');
 
-const { randomUUID } = require('crypto');
+/** @typedef {import('kucoin-universal-sdk').AccountService} AccountService */
+/** @typedef {import('kucoin-universal-sdk').SpotService} SpotService */
+/** @typedef {import('kucoin-universal-sdk').FuturesService} FuturesService */
+
+const {randomUUID} = require('crypto');
 
 async function restExample() {
     console.log('Starting REST example');
@@ -56,10 +60,8 @@ async function restExample() {
     await futuresServiceExample(kucoinRestService.getFuturesService());
 }
 
-/** @typedef {import('kucoin-universal-sdk').AccountService} AccountService */
-
 /**
- * @param {AccountService} accountService 
+ * @param {AccountService} accountService
  */
 async function accountServiceExample(accountService) {
     // Get account api
@@ -90,6 +92,9 @@ async function accountServiceExample(accountService) {
     });
 }
 
+/**
+ * @param {SpotService} spotService
+ */
 async function spotServiceExample(spotService) {
     const orderApi = spotService.getOrderApi();
 
@@ -125,6 +130,10 @@ async function spotServiceExample(spotService) {
     console.log(`Cancel order success, id: ${cancelOrderResp.orderId}`);
 }
 
+
+/**
+ * @param {FuturesService} futuresService
+ */
 async function futuresServiceExample(futuresService) {
     const marketApi = futuresService.getMarketApi();
     const allSymbolResp = await marketApi.getAllSymbols();

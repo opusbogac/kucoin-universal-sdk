@@ -21,6 +21,10 @@ const klineData = {};
 
 const timeInterval = 60;
 
+/** @typedef {import('kucoin-universal-sdk').Spot.SpotPublic.TradeEvent}  TradeEvent*/
+/**
+ * @param {TradeEvent} tradeEvent 
+ */
 function onTradeData(topic, subject, tradeEvent) {
     const symbol = tradeEvent.symbol;
     const price = parseFloat(tradeEvent.price);

@@ -21,12 +21,20 @@ const {
     TransportOptionBuilder,
 } = require("kucoin-universal-sdk");
 
+/** @typedef {import('kucoin-universal-sdk').Spot.MarketAPI} MarketAPI */
+/** @typedef {import('kucoin-universal-sdk').Spot.OrderAPI} OrderApi */
+/** @typedef {import('kucoin-universal-sdk').Account.AccountAPI} AccountApi */
+
+
 const Action = {
     BUY: "buy",
     SELL: "sell",
     SKIP: "skip"
 };
 
+/**
+ * @param {MarketAPI} api 
+ */
 async function simpleMovingAverageStrategy(api, symbol, shortWindow, longWindow, endTime) {
     const startTime = endTime - longWindow * 60;
     console.info(`Querying kline data: Start=${new Date(startTime * 1000)}, End=${new Date(endTime * 1000)}`);
@@ -51,12 +59,19 @@ async function simpleMovingAverageStrategy(api, symbol, shortWindow, longWindow,
     return Action.SKIP;
 }
 
+/**
+ * @param {MarketAPI} marketApi 
+ */
 async function getLastTradePrice(marketApi, symbol) {
     const getStatReq = Spot.Market.Get24hrStatsReq.builder().setSymbol(symbol).build();
     const statResp = await marketApi.get24hrStats(getStatReq);
     return parseFloat(statResp.last);
 }
 
+
+/**
+ * @param {AccountApi} accountApi 
+ */
 async function checkAvailableBalance(accountApi, lastTradePrice, amount, action) {
     const currency = action === Action.BUY ? "USDT" : "DOGE";
     console.info(`Checking balance for ${currency}`);
@@ -73,6 +88,9 @@ async function checkAvailableBalance(accountApi, lastTradePrice, amount, action)
     return action === Action.BUY ? lastTradePrice * amount <= availableBalance : amount <= availableBalance;
 }
 
+/**
+ * @param {OrderApi} orderApi 
+ */
 async function placeOrder(orderApi, symbol, action, lastTradePrice, amount, priceDelta) {
     const openOrderReq = Spot.Order.GetOpenOrdersReq.builder().setSymbol(symbol).build();
     const openOrderResp = await orderApi.getOpenOrders(openOrderReq);
