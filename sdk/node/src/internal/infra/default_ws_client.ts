@@ -1,6 +1,6 @@
 import WebSocket, { Data as WebSocketData } from 'ws';
 import { EventEmitter } from 'events';
-import { Readable, Writable } from 'stream';
+import { Readable } from 'stream';
 import path from 'path';
 
 import { WsMessage } from '../../model/common';
@@ -60,43 +60,6 @@ class MessageQueue extends Readable {
     }
 }
 
-/**
- * MessageWriter implements a message writer using Node.js streams
- * TODO: move to worker
- */
-class MessageWriter extends Writable {
-    constructor(private worker: Worker) {
-        super({
-            objectMode: true,
-            // TODO parameters
-            highWaterMark: 256
-        });
-    }
- 
-    _write(message: WsMessage, encoding: string, callback: (error?: Error | null) => void): void {
-        try {
-            // Send message through worker
-            this.worker.postMessage({
-                command: 'send',
-                data: message
-            });
- 
-            
-            if (this.writableLength >= this.writableHighWaterMark) {
-                logger.warn('Buffer full, write() returning false');
-            }
- 
-            callback();
-        } catch (error) {
-            callback(error as Error);
-        }
-    }
- 
-    _final(callback: (error?: Error | null) => void): void {
-        callback();
-    }
-}
-
 // WebSocketClient class, used to manage WebSocket connection and its related operations
 export class WebSocketClient {
     private options: WebSocketClientOption;
@@ -113,7 +76,6 @@ export class WebSocketClient {
     private reconnectClosed: boolean;
 
     private readMsgQueue: MessageQueue;
-    private writeMsgQueue: MessageQueue;
 
     private ackEvents: Map<string, WriteMsg>;
     private metric: { pingSuccess: number; pingErr: number };
@@ -122,7 +84,6 @@ export class WebSocketClient {
     private eventEmitter: EventEmitter;
     private lastPingTime: number | null;
 
-    private messageWriter: MessageWriter | null = null;
     public worker: Worker | null = null;
 
     constructor(
@@ -144,8 +105,6 @@ export class WebSocketClient {
 
         // Message queues
         this.readMsgQueue = new MessageQueue(options.readMessageBuffer);
-        this.writeMsgQueue = new MessageQueue(options.writeMessageBuffer);
-
 
         this.ackEvents = new Map();
         this.metric = { pingSuccess: 0, pingErr: 0 };
@@ -185,11 +144,6 @@ export class WebSocketClient {
         if (!this.keepAliveInterval) {
             this.keepAliveInterval = setInterval(() => this.keepAlive(), 1000);
         }
-
-        // TODO fix
-        // Initialize message writer
-        this.messageWriter = new MessageWriter(this.worker);
-        this.writeMsgQueue.pipe(this.messageWriter);
     }
 
     // Stop the WebSocket client
@@ -432,18 +386,16 @@ export class WebSocketClient {
                 return;
             }
 
-            const msg: WriteMsg = { msg: ms, resolve, reject };
-            if (!ms.id) {
-                reject(new Error('Message ID is undefined'));
-                return;
-            }
-
-            // write message to queue and check if it reaches the max size
-            if (this.writeMsgQueue.enqueue(ms)) {
-                this.ackEvents.set(ms.id, msg);
-                this.writeMsgQueue._read(1);
-            } else {
-                reject(new Error('Write buffer is full'));
+            try {
+                // Send message to worker directly
+                this.worker.postMessage({
+                    command: 'send',
+                    data: ms
+                });
+                resolve();
+            } catch (error) {
+                logger.error('Failed to send message:', error);
+                reject(error);
             }
         });
     }
@@ -507,7 +459,6 @@ export class WebSocketClient {
         this.readMsgQueue.clear();
 
         // Clear write message queue and reject pending promises
-        this.writeMsgQueue.clear();
         this.ackEvents.forEach((writeMsg) => {
             writeMsg.reject(new Error('WebSocket connection closed'));
         });
