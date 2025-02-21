@@ -85,8 +85,6 @@ export class WebSocketClient {
         return this.dial()
             .then(() => {
                 this.connected = true;
-                // TODO fix duplicated
-                this.notifyEvent(WebSocketEvent.EventConnected, '');
                 this.run();
             })
             .catch((err) => {
@@ -470,7 +468,6 @@ export class WebSocketClient {
 
                         try {
                             await this.dial();
-                            this.notifyEvent(WebSocketEvent.EventConnected, '');
                             this.connected = true;
                             this.closed = false;
                             this.run();
