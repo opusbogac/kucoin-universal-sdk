@@ -1,6 +1,6 @@
 import WebSocket, { Data as WebSocketData } from 'ws';
 import { EventEmitter } from 'events';
-import { Readable } from 'stream';
+
 import path from 'path';
 
 import { WsMessage } from '../../model/common';
@@ -21,44 +21,6 @@ export interface WriteMsg {
     reject: (reason?: any) => void;
 }
 
-/**
- * MessageQueue implements a message queue using Node.js streams
- */
-class MessageQueue extends Readable {
-    private messages: WsMessage[] = [];
-    private maxSize: number;
-
-    constructor(maxSize: number = 1024) {
-        super({
-            objectMode: true,
-            highWaterMark: maxSize
-        });
-        this.maxSize = maxSize;
-    }
-
-    _read(size: number): void {
-        while (this.messages.length > 0 && size > 0) {
-            const message = this.messages.shift();
-            if (!this.push(message)) {
-                break;
-            }
-            size--;
-        }
-    }
-
-    enqueue(message: WsMessage): boolean {
-        if (this.messages.length >= this.maxSize) {
-            return false;
-        }
-        this.messages.push(message);
-        this._read(1);
-        return true;
-    }
-
-    clear(): void {
-        this.messages = [];
-    }
-}
 
 // WebSocketClient class, used to manage WebSocket connection and its related operations
 export class WebSocketClient {
@@ -75,7 +37,7 @@ export class WebSocketClient {
     private closed: boolean;
     private reconnectClosed: boolean;
 
-    private readMsgQueue: MessageQueue;
+
 
     private ackEvents: Map<string, WriteMsg>;
     private metric: { pingSuccess: number; pingErr: number };
@@ -103,8 +65,6 @@ export class WebSocketClient {
         this.reconnectClosed = false;
         this.welcomeReceived = false;
 
-        // Message queues
-        this.readMsgQueue = new MessageQueue(options.readMessageBuffer);
 
         this.ackEvents = new Map();
         this.metric = { pingSuccess: 0, pingErr: 0 };
@@ -313,18 +273,7 @@ export class WebSocketClient {
                 break;
 
             case MessageType.Message:
-                if (!this.shutdown && !this.closed) {
-                    this.notifyEvent(WebSocketEvent.EventMessageReceived, '');
-                    // queue message
-                    if (this.readMsgQueue.enqueue(m)) {
-                        this.readMsgQueue._read(1);
-                    } else {
-                        this.notifyEvent(WebSocketEvent.EventReadBufferFull, '');
-                        logger.warn('Read buffer full');
-                    }
-                }
                 break;
-
             case MessageType.PongMessage:
                 this.notifyEvent(WebSocketEvent.EventPongReceived, '');
                 logger.debug('PONG received');
@@ -367,13 +316,7 @@ export class WebSocketClient {
         }
     }
 
-    /**
-     * Read a single message from the queue and remove it
-     * @returns The first message in the queue, or undefined if queue is empty
-     */
-    read(): WsMessage | undefined {
-        return this.readMsgQueue.read();
-    }
+
 
     // write message
     write(ms: WsMessage, timeout: number): Promise<void> {
@@ -381,8 +324,7 @@ export class WebSocketClient {
 
             // TODO: post to worker directly
             // clean resource if error
-            if (!this.connected) {
-                reject(new Error('Not connected'));
+            if (!this.connected || !this.worker) {
                 return;
             }
 
@@ -455,8 +397,7 @@ export class WebSocketClient {
 
     // Clear all message queues and cleanup resources
     private clearMessageQueues(): void {
-        // Clear read message queue
-        this.readMsgQueue.clear();
+
 
         // Clear write message queue and reject pending promises
         this.ackEvents.forEach((writeMsg) => {

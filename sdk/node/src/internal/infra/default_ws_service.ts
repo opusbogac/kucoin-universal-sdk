@@ -15,6 +15,39 @@ import { EventEmitter } from 'events';
 import { Worker } from 'worker_threads';
 import { logger } from '@src/common';
 
+const { Readable } = require('stream');
+ 
+class BoundedReadable extends Readable {
+    private readonly maxSize: number;
+
+    constructor(maxSize: number) {
+        super({
+            objectMode: true,
+            highWaterMark: maxSize
+        });
+        this.maxSize = maxSize;
+    }
+ 
+    addMessage(message: WsMessage): boolean {
+        if (this.readableLength >= this.readableHighWaterMark) {
+            logger.warn(`Dropping: ${JSON.stringify(message)}`);
+            return false;
+        }
+ 
+        this.push(message);
+        return true;
+    }
+ 
+    _read(): void {
+        
+    }
+
+    destroy(): void {
+        this.push(null);
+        super.destroy();
+    }
+}
+
 /**
  * DefaultWsService implements the WebSocket service interface for handling real-time data communication.
  * It manages WebSocket connections, subscriptions, and message handling with automatic reconnection support.
@@ -33,6 +66,7 @@ export class DefaultWsService implements WebSocketService {
     private recoveryLoop?: NodeJS.Timeout;
     private readonly eventEmitter: EventEmitter;
     private messageWorker?: Worker;
+    private messageBuffer: BoundedReadable;
 
     /**
      * Creates a new instance of DefaultWsService
@@ -77,6 +111,14 @@ export class DefaultWsService implements WebSocketService {
             this.wsOption,
             this.eventEmitter,
         );
+
+        // Initialize message buffer
+        this.messageBuffer = new BoundedReadable(this.wsOption.readMessageBuffer || 1024);
+
+        // Handle message consumption
+        this.messageBuffer.on('readable', () => {
+            this.processMessages();
+        });
     }
 
     /**
@@ -141,21 +183,10 @@ export class DefaultWsService implements WebSocketService {
                         return;
                     }
 
-                    const callbackManager = this.topicManager.getCallbackManager(wsMessage.topic);
-                    if (!callbackManager) {
-                        return;
-                    }
-
-                    const callback = callbackManager.get(wsMessage.topic);
-                    if (!callback) {
-                        return;
-                    }
-
-                    try {
-                        callback.onMessage(wsMessage);
-                    } catch (err) {
-                        logger.error('[Main] Error processing message in main thread:', err);
-                        this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
+                    // Add message to buffer instead of processing directly
+                    if (!this.messageBuffer.addMessage(wsMessage)) {
+                        logger.warn('[Main] Message buffer full, dropping message');
+                        this.notifyEvent(WebSocketEvent.EventReadBufferFull, '');
                     }
                 } catch (err) {
                     logger.error('[Main] Error parsing message:', err);
@@ -175,9 +206,45 @@ export class DefaultWsService implements WebSocketService {
                     logger.error('[Main] Worker stopped with non-zero exit code');
                 }
             });
-        } catch (error) {
-            logger.error('[Main] Error in message loop:', error);
-            throw error;
+        } catch (err) {
+            logger.error('[Main] Error in message loop:', err);
+            this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
+        }
+    }
+
+    private async processMessages(): Promise<void> {
+        try {
+            let message;
+            // Read messages from buffer while available
+            while (null !== (message = this.messageBuffer.read())) {
+                if (!message || !message.topic) {
+                    logger.warn('[Main] Invalid message format:', message);
+                    continue;
+                }
+
+                const callbackManager = this.topicManager.getCallbackManager(message.topic);
+                if (!callbackManager) {
+                    continue;
+                }
+
+                const callback = callbackManager.get(message.topic);
+                if (!callback) {
+                    continue;
+                }
+
+                try {
+                    await callback.onMessage(message);
+                } catch (err) {
+                    logger.error('[Main] Error processing message:', err);
+                    this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
+                }
+
+                // Small delay to prevent blocking
+                await new Promise(resolve => setTimeout(resolve, 0));
+            }
+        } catch (err) {
+            logger.error('[Main] Error in message processing loop:', err);
+            this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
         }
     }
 
@@ -268,6 +335,9 @@ export class DefaultWsService implements WebSocketService {
             // Stop the WebSocket client
             this.client.stop().then(() => {
                 logger.debug('WebSocket service stopped');
+                if (this.messageBuffer) {
+                    this.messageBuffer.destroy();
+                }
                 resolve();
             });
         });
