@@ -62,11 +62,13 @@ class MessageQueue extends Readable {
 
 /**
  * MessageWriter implements a message writer using Node.js streams
+ * TODO: move to worker
  */
 class MessageWriter extends Writable {
     constructor(private worker: Worker) {
         super({
             objectMode: true,
+            // TODO parameters
             highWaterMark: 256
         });
     }
@@ -154,6 +156,7 @@ export class WebSocketClient {
         return this.dial()
             .then(() => {
                 this.connected = true;
+                // TODO fix duplicated
                 this.notifyEvent(WebSocketEvent.EventConnected, '');
                 this.run();
             })
@@ -173,6 +176,7 @@ export class WebSocketClient {
             this.keepAliveInterval = setInterval(() => this.keepAlive(), 1000);
         }
 
+        // TODO fix
         // Initialize message writer
         this.messageWriter = new MessageWriter(this.worker);
         this.writeMsgQueue.pipe(this.messageWriter);
@@ -258,20 +262,16 @@ export class WebSocketClient {
                             case 'close':
                                 this.onClose(message.code, message.reason);
                                 break;
+                            case 'welcome':
+                                break;
                         }
                     });
 
                     // Handle worker errors
                     this.worker.addListener('error', (error: Error) => {
                         logger.error('Worker error:', error);
+                        // TODO fix reject nothing
                         reject(error);
-                    });
-
-                    // Handle worker exit
-                    this.worker.addListener('exit', (code: number) => {
-                        if (code !== 0) {
-                            logger.error(`Worker stopped with exit code ${code}`);
-                        }
                     });
 
                     // Send connect command to worker
@@ -280,6 +280,8 @@ export class WebSocketClient {
                         wsUrl 
                     });
 
+                    // TODO fix wait welcome message
+                    // if timeout clean resource
                     // Set timeout for welcome message
                     setTimeout(() => {
                         if (!this.welcomeReceived) {
@@ -302,7 +304,9 @@ export class WebSocketClient {
 
     // error callback
     private onError(error: Error): void {
+        // TODO ack event memory leak
         logger.error('WebSocket error:', error);
+        // TODO fix
         this.disconnected = true;
     }
 
@@ -411,6 +415,8 @@ export class WebSocketClient {
     write(ms: WsMessage, timeout: number): Promise<void> {
         return new Promise((resolve, reject) => {
 
+            // TODO: post to worker directly
+            // clean resource if error
             if (!this.connected) {
                 reject(new Error('Not connected'));
                 return;
@@ -449,6 +455,7 @@ export class WebSocketClient {
         const timeSinceLastPing = currentTime - (this.lastPingTime || 0);
 
 
+        // TODO do not disconnected
         if (timeSinceLastPing >= interval) {
             const pingMsg = this.newPingMessage();
             try {

@@ -16,12 +16,14 @@ let ws = null;
 function parseMessage(data) {
     try {
         const message = JSON.parse(data.toString());
+        // TODO remove
         // Add topic field if not present
         if (!message.topic && message.type) {
             message.topic = message.type;
         }
         return message;
     } catch (error) {
+        // TODO notify user
         logger.error('[Worker] Error parsing message:', error);
         return null;
     }
@@ -45,6 +47,7 @@ parentPort.on('message', (message) => {
                 if (parsedMessage) {
                     parentPort.postMessage({
                         type: 'message',
+                        // TODO fix
                         data: JSON.stringify(parsedMessage),
                     });
                 }
@@ -69,6 +72,7 @@ parentPort.on('message', (message) => {
         } else if (message.command === 'send' && ws) {
             // Send message through WebSocket
             const data = message.data;
+            // TODO remove
             if (typeof data === 'object') {
                 ws.send(JSON.stringify(data));
             } else {
@@ -88,11 +92,6 @@ parentPort.on('message', (message) => {
     }
 });
 
-// Handle errors
-parentPort.on('error', (error) => {
-    logger.error('[Worker] Error event:', error);
-});
-
 // Handle close
 parentPort.on('close', () => {
     logger.info('[Worker] Close event: Worker is shutting down');
@@ -100,29 +99,6 @@ parentPort.on('close', () => {
         ws.close();
         ws = null;
     }
-});
-
-// Keep the worker alive
-process.on('exit', () => {
-    logger.info('[Worker] Process exit event received');
-    if (ws) {
-        ws.close();
-        ws = null;
-    }
-});
-
-// Handle uncaught exceptions
-process.on('uncaughtException', (error) => {
-    logger.error('[Worker] Uncaught exception:', error);
-    if (ws) {
-        ws.close();
-        ws = null;
-    }
-});
-
-// Handle unhandled rejections
-process.on('unhandledRejection', (reason) => {
-    logger.error('[Worker] Unhandled rejection:', reason);
 });
 
 // Log worker startup

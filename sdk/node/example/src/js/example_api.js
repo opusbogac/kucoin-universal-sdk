@@ -56,6 +56,11 @@ async function restExample() {
     await futuresServiceExample(kucoinRestService.getFuturesService());
 }
 
+/** @typedef {import('kucoin-universal-sdk').AccountService} AccountService */
+
+/**
+ * @param {AccountService} accountService 
+ */
 async function accountServiceExample(accountService) {
     // Get account api
     const accountApi = accountService.getAccountApi();
