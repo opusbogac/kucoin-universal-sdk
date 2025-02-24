@@ -1,10 +1,16 @@
 const { parentPort } = require('worker_threads');
 const WebSocket = require('ws');
 const { logger } = require('../../common/logger/logger');
+const { EventType } = require('./message_data');
 
-// Log worker initialization
+/**
+ * @typedef {Object} Message
+ * @property {string} type
+ * @property {any} data
+ * @property {Error} error
+ */
+
 logger.info('[Worker] Initializing worker thread');
-
 if (!parentPort) {
     logger.error('[Worker] parentPort is null - worker must be run as a worker thread');
     process.exit(1);
@@ -12,87 +18,98 @@ if (!parentPort) {
 
 let ws = null;
 
-// Parse WebSocket message
-function parseMessage(data) {
-    try {
-        const message = JSON.parse(data.toString());
-        return message;
-    } catch (error) {
-        logger.error('[Worker] Error parsing message:', error);
-        // Notify main thread about parsing error
-        parentPort.postMessage({
-            type: 'error',
-            error:  `Failed to parse WebSocket message: ${error.message}`,
-        });
-        return null;
-    }
-}
-
 // Handle messages from the main thread
-parentPort.on('message', (message) => {
-    try {
-        if (message.command === 'connect') {
-            // Create WebSocket connection
-            ws = new WebSocket(message.wsUrl);
+parentPort.on(
+    'message',
+    /** @param {Message} message */ (message) => {
+        try {
+            switch (message.type) {
+                case EventType.INIT: {
+                    ws = new WebSocket(message.data);
 
-            // Handle WebSocket events
-            ws.on('open', () => {
-                logger.info('[Worker] WebSocket connection opened');
-                parentPort.postMessage({ type: 'open' });
-            });
-
-            ws.on('message', (data) => {
-                const parsedMessage = parseMessage(data);
-                if (parsedMessage) {
-                    parentPort.postMessage({
-                        type: 'message',
-                        data: JSON.stringify(parsedMessage),
+                    ws.on('open', () => {
+                        logger.info('[Worker] WebSocket connection opened');
+                        parentPort.postMessage({
+                            type: EventType.INIT_RESULT,
+                            data: null,
+                            error: null,
+                        });
                     });
+
+                    ws.on('error', (err) => {
+                        // TODO Test error
+                        logger.error('[Worker] WebSocket connection error:', err);
+                        parentPort.postMessage({
+                            type: EventType.INIT_RESULT,
+                            data: null,
+                            error: err,
+                        });
+                    });
+
+                    ws.on('message', (data) => {
+                        parentPort.postMessage({
+                            type: EventType.MESSAGE,
+                            data: data,
+                            error: null,
+                        });
+                    });
+
+                    ws.on('close', (code, reason) => {
+                        logger.info('[Worker] WebSocket closed:', code, reason);
+                        parentPort.postMessage({
+                            type: EventType.CLOSED,
+                            data: { code: code, reason: reason },
+                            error: code !== 1000 ? new Error(`WebSocket closed: ${reason}`) : null,
+                        });
+                        ws = null;
+                    });
+                    break;
                 }
-            });
+                case EventType.MESSAGE: {
+                    if (!ws || ws.readyState !== WebSocket.OPEN) {
+                        logger.error(`[Worker] websocket not initialized`);
+                        parentPort.postMessage({
+                            type: EventType.ERROR,
+                            data: message.data,
+                            error: new Error(`Websocket not initialized`),
+                        });
+                        return;
+                    }
 
-            ws.on('error', (error) => {
-                logger.error('[Worker] WebSocket error:', error);
-                parentPort.postMessage({
-                    type: 'error',
-                    error: error.message,
-                });
+                    ws.send(JSON.stringify(message.data), (err) => {
+                        // write fail, notify master
+                        if (err) {
+                            logger.error(`[Worker] Websocket write error:${err}]`);
+                            parentPort.postMessage({
+                                type: EventType.ERROR,
+                                data: message.data,
+                                error: err,
+                            });
+                        }
+                    });
+                    break;
+                }
+                case EventType.CLOSED: {
+                    logger.info('[Worker] Close event: Worker is shutting down');
+                    if (ws) {
+                        ws.close();
+                        ws = null;
+                    }
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+        } catch (error) {
+            logger.error('[Worker] Unexpected error:', error);
+            parentPort.postMessage({
+                type: message.type === EventType.INIT ? EventType.INIT_RESULT : EventType.ERROR,
+                data: message.data,
+                error: error,
             });
-
-            ws.on('close', (code, reason) => {
-                logger.info('[Worker] WebSocket closed:', code, reason);
-                parentPort.postMessage({
-                    type: 'close',
-                    code,
-                    reason,
-                });
-            });
-        } else if (message.command === 'send' && ws) {
-            // Send message through WebSocket
-            const data = message.data;
-            ws.send(JSON.stringify(data));
-        } else if (message.command === 'close' && ws) {
-            // Close WebSocket connection
-            ws.close();
-            ws = null;
         }
-    } catch (error) {
-        logger.error('[Worker] Error handling message:', error);
-        parentPort.postMessage({
-            type: 'error',
-            error: error instanceof Error ? error.message : String(error),
-        });
-    }
-});
-
-// Handle close
-parentPort.on('close', () => {
-    logger.info('[Worker] Close event: Worker is shutting down');
-    if (ws) {
-        ws.close();
-        ws = null;
-    }
-});
-
+    },
+);
 // Log worker startup
 logger.info('[Worker] Started and ready to process messages at:', new Date().toISOString());

@@ -2,17 +2,17 @@ const LOG_LEVELS = ['debug', 'info', 'warn', 'error'];
 
 let options = {
     level: 'info',
-    format: (level, message, meta) => {
+    format: (level, message) => {
         const time = new Date().toISOString();
-        const metaStr = meta && meta.length > 0 ? JSON.stringify(meta) : '';
-        return `${time} [${level.toUpperCase()}] ${message}${metaStr ? ` ${metaStr}` : ''}`;
-    }
+        let metaStr = '';
+        return `${time} [${level.toUpperCase()}] ${message} `;
+    },
 };
 
 const logger = {
     log: (level, message, ...meta) => {
         if (shouldLog(level)) {
-            console.log(options.format(level, message, meta));
+            console.log(options.format(level, message), ...meta);
         }
     },
     info: (message, ...meta) => logger.log('info', message, ...meta),
@@ -22,7 +22,7 @@ const logger = {
     setGlobalLogger: (newLogger, newOptions) => {
         Object.assign(logger, newLogger);
         options = newOptions || options;
-    }
+    },
 };
 
 function shouldLog(level) {

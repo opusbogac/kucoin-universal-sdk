@@ -1,5 +1,6 @@
 // WsToken represents the token and API endpoint for a WebSocket connection
 import { WsMessage } from '@model/common';
+import { WebSocketEvent } from '@src/model';
 
 export interface WsToken {
     token: string;
@@ -67,6 +68,12 @@ export interface WebSocketService {
     unsubscribe(id: string): Promise<void>;
 }
 
+export interface WebsocketTransportEvents {
+    message: (data: WsMessage) => void;
+    event: (event: WebSocketEvent, msg: string) => void;
+    reconnected: () => void;
+}
+
 // WebsocketTransport defines methods required for managing a WebSocket connection.
 export interface WebsocketTransport {
     /**
@@ -83,21 +90,19 @@ export interface WebsocketTransport {
 
     /**
      * Writes a message to the WebSocket connection.
-     * @param context The context for the operation.
      * @param message The message to send.
+     * @param timeout The timeout in milliseconds
      * @returns A channel (promise) that resolves when the message is sent or rejects with an error.
      */
-    write(context: any, message: WsMessage): Promise<void>;
+    write(message: WsMessage, timeout: number): Promise<void>;
 
     /**
-     * Reads messages from the WebSocket connection.
-     * @returns A channel (promise) that resolves to the received message or rejects with an error.
+     * Subscribes to WebSocket events.
+     * @param event The event name.
+     * @param listener The callback function for the event.
      */
-    read(): Promise<WsMessage>;
-
-    /**
-     * A channel that signals when the WebSocket connection is reconnected.
-     * @returns A promise that resolves when the connection is reconnected.
-     */
-    reconnected(): Promise<void>;
+    on<K extends keyof WebsocketTransportEvents>(
+        event: K,
+        listener: WebsocketTransportEvents[K],
+    ): this;
 }

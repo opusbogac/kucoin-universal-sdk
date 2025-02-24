@@ -89,7 +89,7 @@ export class WsMessage {
     /**
      * A unique identifier for the message
      */
-    id?: string;
+    id: string;
     /**
      * The type of the message (e.g., WelcomeMessage)
      */
@@ -120,6 +120,7 @@ export class WsMessage {
     data: any;
 
     constructor() {
+        this.id = ''
         this.topic = '';
         this.subject = '';
     }

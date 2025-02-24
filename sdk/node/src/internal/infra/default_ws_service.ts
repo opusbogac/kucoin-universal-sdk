@@ -3,7 +3,7 @@ import { ClientOption } from '@model/client_option';
 import { DomainType, MessageType } from '@model/constant';
 
 import { DefaultTransport } from './default_transport';
-import { CallbackManager, TopicManager } from './default_ws_callback';
+import { TopicManager } from './default_ws_callback';
 import { WebSocketClient } from './default_ws_client';
 import { DefaultWsTokenProvider } from './default_ws_token_provider';
 import { WebSocketClientOption, WebSocketEvent } from '@src/model';
@@ -12,247 +12,62 @@ import { SubInfo } from '@internal/util/sub';
 import { WsMessage } from '@model/common';
 import { randomUUID } from 'crypto';
 import { EventEmitter } from 'events';
-import { Worker } from 'worker_threads';
 import { logger } from '@src/common';
-
-
 
 /**
  * DefaultWsService implements the WebSocket service interface for handling real-time data communication.
  * It manages WebSocket connections, subscriptions, and message handling with automatic reconnection support.
  */
 export class DefaultWsService implements WebSocketService {
-    private readonly option: ClientOption;
     private readonly wsOption: WebSocketClientOption;
-    private readonly domain: DomainType;
     private readonly privateChannel: boolean;
-    private readonly versionString: string;
     private readonly tokenTransport: DefaultTransport;
     private topicManager: TopicManager;
     private client: WebSocketClient;
-    private stopSignal: boolean = false;
-    private recoveryLoop?: NodeJS.Timeout;
     private readonly eventEmitter: EventEmitter;
 
-    /**
-     * Creates a new instance of DefaultWsService
-     * @param option - Client configuration options including WebSocket settings
-     * @param domain - The domain type for the WebSocket connection
-     * @param privateChannel - Whether this is a private channel connection
-     * @param versionString - SDK version string
-     */
     constructor(
         option: ClientOption,
         domain: DomainType,
         privateChannel: boolean,
         versionString: string,
     ) {
-        this.option = option;
         if (!option.webSocketClientOption) {
             throw new Error('WebSocketClientOption is undefined');
         }
         this.wsOption = option.webSocketClientOption;
-        this.domain = domain;
         this.privateChannel = privateChannel;
-        this.versionString = versionString;
         this.tokenTransport = new DefaultTransport(option, versionString);
         this.topicManager = new TopicManager();
-
-        // init EventEmitter
         this.eventEmitter = new EventEmitter();
-
-        // if config eventCallback, register as event listener
-        if (this.wsOption.eventCallback) {
-            this.eventEmitter.on('ws_event', (event: WebSocketEvent, msg: string, msg2: string) => {
-                try {
-                    this.wsOption.eventCallback!(event, msg);
-                } catch (err) {
-                    logger.error('Exception in eventCallback:', err);
-                }
-            });
-        }
-
+        this.eventEmitter.on('event', (event: WebSocketEvent, msg: string) => {
+            if (this.wsOption.eventCallback) {
+                this.wsOption.eventCallback(event, msg);
+            }
+        });
         this.client = new WebSocketClient(
             new DefaultWsTokenProvider(this.tokenTransport, domain, privateChannel),
             this.wsOption,
-            this.eventEmitter,
         );
-
-
-        // Handle message consumption
-        this.client.messageBuffer.on('readable', () => {
-            this.processMessages();
+        this.client.on('event', (event: WebSocketEvent, msg: string) => {
+            this.eventEmitter.emit('event', event, msg);
+        });
+        this.client.on('message', (message: WsMessage) => {
+            this.processMessages(message);
+        });
+        this.client.on('reconnected', () => {
+            this.recovery();
         });
     }
 
-    /**
-     * Notifies subscribers of WebSocket events through the configured callback
-     * @param event - Event type identifier
-     * @param msg - Primary message content
-     * @param msg2 - Optional secondary message content
-     */
-    private notifyEvent(event: WebSocketEvent, msg: string, msg2: string = ''): void {
-        try {
-            // use EventEmitter send event
-            this.eventEmitter.emit('ws_event', event, msg, msg2);
-        } catch (err) {
-            logger.error('Exception in notify_event:', err);
-        }
-    }
-
-    /**
-     * Resubscribes to topics after a reconnection
-     * @param callbackManager - The callback manager containing subscription information
-     */
-    private async resubscribe(callbackManager: CallbackManager): Promise<void> {
-        const subInfoList = callbackManager.getSubInfo();
-        for (const sub of subInfoList) {
-            try {
-                if (sub.callback) {
-                    const subId = await this.subscribe(sub.prefix, sub.args, sub.callback);
-                    this.notifyEvent(WebSocketEvent.EventReSubscribeOK, subId);
-                }
-            } catch (err) {
-                this.notifyEvent(
-                    WebSocketEvent.EventReSubscribeError,
-                    `id: ${sub.toId()}, err: ${err}`,
-                );
-            }
-        }
-    }
-
-
-
-    private async processMessages(): Promise<void> {
-        try {
-            let message;
-            // Read messages from buffer while available
-            while (null !== (message = this.client.messageBuffer.read())) {
-                if (!message || !message.topic) {
-                    continue;
-                }
-
-                const callbackManager = this.topicManager.getCallbackManager(message.topic);
-                if (!callbackManager) {
-                    continue;
-                }
-
-                const callback = callbackManager.get(message.topic);
-                if (!callback) {
-                    continue;
-                }
-
-                try {
-                    await callback.onMessage(message);
-                } catch (err) {
-                    logger.error('[Main] Error processing message:', err);
-                    this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
-                }
-
-                // Small delay to prevent blocking
-                await new Promise(resolve => setTimeout(resolve, 0));
-            }
-        } catch (err) {
-            logger.error('[Main] Error in message processing loop:', err);
-            this.notifyEvent(WebSocketEvent.EventCallbackError, String(err));
-        }
-    }
-
-    /**
-     * Starts the recovery loop for handling reconnection scenarios
-     * Monitors connection status and triggers resubscription when reconnected
-     * Checks every 1000ms (1 second) for reconnection events
-     */
-    private startRecoveryLoop(): void {
-        this.recoveryLoop = setInterval(async () => {
-            if (this.stopSignal) {
-                if (this.recoveryLoop) clearInterval(this.recoveryLoop);
-                return;
-            }
-
-            if (this.client.isReconnected()) {
-                logger.info('WebSocket client reconnected, resubscribe...');
-
-                const oldTopicManager = this.topicManager;
-                this.topicManager = new TopicManager();
-
-                try {
-                    const resubscribePromises: Promise<void>[] = [];
-                    oldTopicManager.range((key, value) => {
-                        if (!value.isEmpty()) {
-                            resubscribePromises.push(this.resubscribe(value));
-                        }
-                        return true;
-                    });
-
-                    await Promise.all(resubscribePromises);
-                    logger.info('All topics resubscribed successfully');
-                } catch (err) {
-                    logger.error('Error during resubscribe:', err);
-                    this.notifyEvent(
-                        WebSocketEvent.EventReSubscribeError,
-                        `Failed to resubscribe: ${err}`,
-                    );
-                    this.topicManager = oldTopicManager;
-                }
-
-                this.client.clearReconnectedFlag();
-            }
-        }, 1000);
-    }
-
-    /**
-     * Starts the WebSocket service
-     * Initializes the client connection and starts message processing and recovery loops
-     * @throws Error if client initialization fails
-     */
     start(): Promise<void> {
-        return this.client
-            .start()
-            .then(() => {
-                this.stopSignal = false;
-                this.startRecoveryLoop();
-            })
-            .catch((err) => {
-                logger.error('Failed to start client:', err);
-                throw err;
-            });
+        return this.client.start();
     }
 
-    /**
-     * Stops the message processing and cleans up resources
-     */
     stop(): Promise<void> {
-        logger.debug('Stopping WebSocket service...');
-        this.stopSignal = true;
-
-        return new Promise<void>((resolve) => {
-
-
-            if (this.recoveryLoop) {
-                clearInterval(this.recoveryLoop);
-                this.recoveryLoop = undefined;
-            }
-
-            // Stop the WebSocket client
-            this.client.stop().then(() => {
-                logger.debug('WebSocket service stopped');
-                if (this.client.messageBuffer) {
-                    this.client.messageBuffer.destroy();
-                }
-                resolve();
-            });
-        });
+        return this.client.stop();
     }
 
-    /**
-     * Subscribes to a topic with specified arguments
-     * @param prefix - Topic prefix identifier
-     * @param args - Array of subscription arguments
-     * @param callback - Callback function to handle incoming messages for this subscription
-     * @returns Promise resolving to subscription ID
-     * @throws Error if subscription fails or is already subscribed
-     */
     subscribe(prefix: string, args: string[], callback: WebSocketMessageCallback): Promise<string> {
         // Create subscription info with prefix, args, and callback
         const subInfo = new SubInfo(prefix, args || [], callback);
@@ -288,42 +103,79 @@ export class DefaultWsService implements WebSocketService {
             });
     }
 
-    /**
-     * Unsubscribes from a topic using the subscription ID
-     * @param id - Subscription ID to unsubscribe
-     * @throws Error if unsubscribe operation fails
-     */
     unsubscribe(id: string): Promise<void> {
         return new Promise((resolve, reject) => {
-            try {
-                const subInfo = SubInfo.fromId(id);
-                const callbackManager = this.topicManager.getCallbackManager(subInfo.prefix);
+            const subInfo = SubInfo.fromId(id);
+            const callbackManager = this.topicManager.getCallbackManager(subInfo.prefix);
 
-                const subEvent = new WsMessage();
+            const subEvent = new WsMessage();
 
-                subEvent.id = randomUUID().toString();
-                subEvent.type = MessageType.UnsubscribeMessage;
-                subEvent.topic = subInfo.subTopic();
-                subEvent.privateChannel = this.privateChannel;
-                subEvent.response = true;
+            subEvent.id = randomUUID().toString();
+            subEvent.type = MessageType.UnsubscribeMessage;
+            subEvent.topic = subInfo.subTopic();
+            subEvent.privateChannel = this.privateChannel;
+            subEvent.response = true;
 
-                callbackManager.remove(id);
-                logger.info('callback removed for id:', id);
+            this.client
+                .write(subEvent, this.wsOption.writeTimeout)
+                .then(() => {
+                    callbackManager.remove(id);
+                    logger.info('callback removed for id:', id);
+                    resolve();
+                })
+                .catch((e) => {
+                    logger.error('Failed to send unsubscribe message:', e);
+                    reject(e);
+                });
+        });
+    }
 
-                this.client
-                    .write(subEvent, this.wsOption.writeTimeout)
-                    .then(() => {
-                        logger.info('unsubscribe message sent successfully');
-                        resolve();
-                    })
-                    .catch((e) => {
-                        logger.error('Failed to send unsubscribe message:', e);
-                        reject(e);
-                    });
-            } catch (e) {
-                logger.error('unsubscribe error:', e);
-                reject(e);
+    private processMessages(message: WsMessage) {
+        const callbackManager = this.topicManager.getCallbackManager(message.topic);
+        if (!callbackManager) {
+            logger.warn(`Unknown topic: ${message.topic}`);
+            return;
+        }
+
+        const callback = callbackManager.get(message.topic);
+        if (!callback) {
+            logger.warn(`Unknown callback for topic: ${message.topic}`);
+            return;
+        }
+
+        try {
+            callback.onMessage(message);
+        } catch (err) {
+            logger.error('Error processing callback', err);
+            this.eventEmitter.emit('event', WebSocketEvent.EventCallbackError, String(err));
+        }
+    }
+
+    private recovery(): void {
+        logger.info('WebSocket client reconnected, resubscribe...');
+
+        const oldTopicManager = this.topicManager;
+        this.topicManager = new TopicManager();
+
+        oldTopicManager.range((key, value) => {
+            for (const sub of value.getSubInfo()) {
+                if (sub.callback) {
+                    this.subscribe(sub.prefix, sub.args, sub.callback)
+                        .then((id) => {
+                            logger.info(`Resubscribe success, id:${id}`);
+                            this.eventEmitter.emit('event', WebSocketEvent.EventReSubscribeOK, id);
+                        })
+                        .catch((err) => {
+                            logger.info(`Resubscribe error, id:${sub.toId()}, err:${err}`);
+                            this.eventEmitter.emit(
+                                'event',
+                                WebSocketEvent.EventReSubscribeError,
+                                err.toString(),
+                            );
+                        });
+                }
             }
+            return true;
         });
     }
 }
