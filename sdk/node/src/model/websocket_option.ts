@@ -43,17 +43,9 @@ export interface WebSocketClientOption {
      */
     dialTimeout: number;
     /**
-     * I/O buffer size in bytes; default: 2048000
-     */
-    readBufferBytes: number;
-    /**
      * Read buffer for messages; default: 1024
      */
     readMessageBuffer: number;
-    /**
-     * Write buffer for messages; default: 256
-     */
-    writeMessageBuffer: number;
     /**
      * Write timeout (milliseconds); default: 30000
      */
@@ -72,9 +64,7 @@ export const DEFAULT_WEBSOCKET_CLIENT_OPTION: WebSocketClientOption = {
     reconnectAttempts: -1,
     reconnectInterval: 5000, // 5 seconds
     dialTimeout: 10000, // 10 seconds
-    readBufferBytes: 2048000,
     readMessageBuffer: 1024,
-    writeMessageBuffer: 256,
     writeTimeout: 30000, // 30 seconds
 };
 
@@ -121,26 +111,10 @@ export class WebSocketClientOptionBuilder {
     }
 
     /**
-     * Set the I/O buffer size in bytes
-     */
-    withReadBufferBytes(readBufferBytes: number): WebSocketClientOptionBuilder {
-        this.option.readBufferBytes = readBufferBytes;
-        return this;
-    }
-
-    /**
      * Set the read buffer size for messages
      */
     withReadMessageBuffer(readMessageBuffer: number): WebSocketClientOptionBuilder {
         this.option.readMessageBuffer = readMessageBuffer;
-        return this;
-    }
-
-    /**
-     * Set the write buffer size for messages
-     */
-    withWriteMessageBuffer(writeMessageBuffer: number): WebSocketClientOptionBuilder {
-        this.option.writeMessageBuffer = writeMessageBuffer;
         return this;
     }
 

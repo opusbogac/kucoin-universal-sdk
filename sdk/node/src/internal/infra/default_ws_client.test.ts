@@ -143,6 +143,31 @@ export function mockWebSocketHandler2(ws: WebSocket) {
     });
 }
 
+export function mockWebSocketHandlerReadBufferFull(ws: WebSocket) {
+    ws.send(JSON.stringify(createMessage(randomUUID(), MessageType.WelcomeMessage)));
+
+    ws.on('message', (message) => {
+        const m: WsMessage = JSON.parse(message.toString());
+
+        switch (m.type) {
+            case MessageType.PingMessage:
+                ws.send(JSON.stringify(createMessage(m.id, MessageType.PongMessage)));
+                break;
+
+            case MessageType.SubscribeMessage:
+                console.log('[server2] Received subscribe message');
+                ws.send(JSON.stringify(createMessage(m.id, MessageType.AckMessage)));
+                ws.send(JSON.stringify(createMessage(m.id, MessageType.Message)));
+                ws.send(JSON.stringify(createMessage(m.id, MessageType.Message)));
+                break;
+        }
+    });
+
+    ws.on('close', () => {
+        console.log('[server2] Connection closed');
+    });
+}
+
 class mockProvider implements WsTokenProvider {
     constructor(private wsToken: WsToken) {}
 
@@ -338,12 +363,15 @@ describe('WS Transport Test', () => {
                 console.log('[client] Received event', event, mes);
             });
 
-            return client.start().then(() => {
-                let x = createMessage(randomUUID(), MessageType.SubscribeMessage);
-                return client.write(x, 1000);
-            }).then(()=> {
-                return client.stop();
-            });
+            return client
+                .start()
+                .then(() => {
+                    let x = createMessage(randomUUID(), MessageType.SubscribeMessage);
+                    return client.write(x, 1000);
+                })
+                .then(() => {
+                    return client.stop();
+                });
         });
     });
 
@@ -362,14 +390,56 @@ describe('WS Transport Test', () => {
                 console.log('[client] Received event', event, mes);
             });
 
-            return client.start().then(() => {
-                let x = createMessage(randomUUID(), MessageType.SubscribeMessage);
-                return client.write(x, 0);
-            }).then(()=> {
-                return client.stop();
-            }).catch((err) => {
-                expect(err).toBeDefined();
+            return client
+                .start()
+                .then(() => {
+                    let x = createMessage(randomUUID(), MessageType.SubscribeMessage);
+                    return client.write(x, 0);
+                })
+                .then(() => {
+                    return client.stop();
+                })
+                .catch((err) => {
+                    expect(err).toBeDefined();
+                });
+        });
+    });
+
+    test('test read buffer full', () => {
+        return testByMockServer(mockWebSocketHandlerReadBufferFull).then((port) => {
+            let option = DEFAULT_WEBSOCKET_CLIENT_OPTION;
+            option.dialTimeout = 1000;
+            option.reconnect = true;
+            option.reconnectAttempts = 3;
+            option.reconnectInterval = 1000;
+            option.readMessageBuffer = 1;
+
+            let token = DEFAULT_TOKEN_INFO;
+            token.endpoint = `http://127.0.0.1:${port}`;
+            let client = new WebSocketClient(new mockProvider(DEFAULT_TOKEN_INFO), option);
+            client.on('event', function (event, mes) {
+                console.log('[client] Received event', event, mes);
             });
+
+            let count = 0;
+            client.on('message', async function (message) {
+                await new Promise((resolve, reject) => {
+                    setTimeout(resolve, 1000);
+                });
+                console.log('[client] Received message', message, count++, new Date().toString());
+            });
+
+            return client
+                .start()
+                .then(() => {
+                    let x = createMessage(randomUUID(), MessageType.SubscribeMessage);
+                    return client.write(x, 1000);
+                })
+                .then(() => {
+                    return new Promise((resolve, reject) => {
+                        setTimeout(resolve, 4000);
+                    });
+                });
         });
     });
 });
