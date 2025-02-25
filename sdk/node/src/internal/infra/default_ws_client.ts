@@ -17,7 +17,7 @@ import fs from 'fs';
 import { Worker } from 'worker_threads';
 import { logger } from '@src/common';
 import { EventType } from './message_data';
-import { withTimeout } from '@internal/util/util';
+import { TimeoutError, withTimeout } from '@internal/util/util';
 import { Readable } from 'stream';
 
 enum ConnectionState {
@@ -106,7 +106,7 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
             return Promise.reject(new Error('Not connected or shutting down'));
         }
 
-        return withTimeout((resolve, reject) => {
+        return withTimeout<void>((resolve, reject) => {
             try {
                 this.ackEvents.set(ms.id, {
                     msg: ms,
@@ -124,7 +124,13 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
                 this.ackEvents.delete(ms.id);
                 reject(error);
             }
-        }, timeout);
+        }, timeout).catch((err) => {
+            if (err instanceof TimeoutError) {
+                logger.error('Send message timeout, id:', ms.id);
+                this.ackEvents.delete(ms.id);
+                throw err;
+            }
+        });
     }
 
     on<K extends keyof WebsocketTransportEvents>(

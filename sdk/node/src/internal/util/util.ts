@@ -2,6 +2,12 @@ function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+export class TimeoutError extends Error {
+    constructor(private timeoutMs: number) {
+        super(`Timeout after ${timeoutMs}ms`);
+    }
+}
+
 export function withTimeout<T>(
     executor: (resolve: (value: T) => void, reject: (reason?: any) => void) => void,
     timeoutMs: number,
@@ -11,7 +17,7 @@ export function withTimeout<T>(
         const timeout = setTimeout(() => {
             if (!handled) {
                 handled = true;
-                outerReject(new Error(`Timeout after ${timeoutMs}ms`));
+                outerReject(new TimeoutError(timeoutMs));
             }
         }, timeoutMs);
 

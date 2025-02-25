@@ -133,7 +133,7 @@ export function mockWebSocketHandler2(ws: WebSocket) {
 
             case MessageType.SubscribeMessage:
                 console.log('[server2] Received subscribe message');
-                ws.close();
+                ws.send(JSON.stringify(createMessage(m.id, MessageType.AckMessage)));
                 break;
         }
     });
@@ -316,9 +316,59 @@ describe('WS Transport Test', () => {
             return client.start().then(() => {
                 return new Promise((resolve, reject) => {
                     setTimeout(resolve, 4000);
-                }).then(()=> {
+                }).then(() => {
                     return client.stop();
                 });
+            });
+        });
+    });
+
+    test('test read write', () => {
+        return testByMockServer(mockWebSocketHandler2).then((port) => {
+            let option = DEFAULT_WEBSOCKET_CLIENT_OPTION;
+            option.dialTimeout = 1000;
+            option.reconnect = true;
+            option.reconnectAttempts = 3;
+            option.reconnectInterval = 1000;
+
+            let token = DEFAULT_TOKEN_INFO;
+            token.endpoint = `http://127.0.0.1:${port}`;
+            let client = new WebSocketClient(new mockProvider(DEFAULT_TOKEN_INFO), option);
+            client.on('event', function (event, mes) {
+                console.log('[client] Received event', event, mes);
+            });
+
+            return client.start().then(() => {
+                let x = createMessage(randomUUID(), MessageType.SubscribeMessage);
+                return client.write(x, 1000);
+            }).then(()=> {
+                return client.stop();
+            });
+        });
+    });
+
+    test('test write timeout', () => {
+        return testByMockServer(mockWebSocketHandler2).then((port) => {
+            let option = DEFAULT_WEBSOCKET_CLIENT_OPTION;
+            option.dialTimeout = 1000;
+            option.reconnect = true;
+            option.reconnectAttempts = 3;
+            option.reconnectInterval = 1000;
+
+            let token = DEFAULT_TOKEN_INFO;
+            token.endpoint = `http://127.0.0.1:${port}`;
+            let client = new WebSocketClient(new mockProvider(DEFAULT_TOKEN_INFO), option);
+            client.on('event', function (event, mes) {
+                console.log('[client] Received event', event, mes);
+            });
+
+            return client.start().then(() => {
+                let x = createMessage(randomUUID(), MessageType.SubscribeMessage);
+                return client.write(x, 0);
+            }).then(()=> {
+                return client.stop();
+            }).catch((err) => {
+                expect(err).toBeDefined();
             });
         });
     });

@@ -54,11 +54,11 @@ describe('Spot Public WebSocket API Tests', () => {
         // Get the Restful Service
         const wsService = client.wsService();
         api = wsService.newSpotPublicWS();
-        await api.start();
+        return api.start();
     });
 
     afterAll(() => {
-        api.stop();
+        return api.stop();
     });
 
     test('allTickers test', () => {
@@ -71,7 +71,7 @@ describe('Spot Public WebSocket API Tests', () => {
             expect(data.sequence).toEqual(expect.anything());
             expect(data.size).toEqual(expect.anything());
             expect(data.time).toEqual(expect.anything());
-            console.log(data);
+            // console.log(data);
         });
 
         return subid
