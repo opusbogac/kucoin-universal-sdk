@@ -17,7 +17,7 @@ import fs from 'fs';
 import { Worker } from 'worker_threads';
 import { logger } from '@src/common';
 import { EventType } from './message_data';
-import { retryPromise, withTimeout } from '@internal/util/util';
+import { withTimeout } from '@internal/util/util';
 import { Readable } from 'stream';
 
 enum ConnectionState {
@@ -45,6 +45,7 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
     private tokenProvider: WsTokenProvider;
     private keepAliveInterval: any;
     private shutdown: boolean;
+    private reconnecting = false;
 
     private tokenInfo: WsToken | null;
     private ackEvents: Map<string, WriteMsg>;
@@ -84,6 +85,7 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
                     () => this.keepAlive(),
                     this.tokenInfo!.pingInterval * 1000,
                 );
+                this.emit('event', WebSocketEvent.EventConnected, '');
             })
             .catch((err) => {
                 this.state = ConnectionState.DISCONNECTED;
@@ -140,6 +142,8 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
     }
 
     private close(): Promise<void> {
+        logger.info('closing websocket client');
+
         // clear intervals
         if (this.keepAliveInterval) {
             clearInterval(this.keepAliveInterval);
@@ -161,7 +165,13 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
             this.worker.postMessage({ type: EventType.CLOSED });
             let worker = this.worker;
             this.worker = null;
-            return worker.terminate().then();
+            return new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    resolve();
+                }, 1000);
+            }).then(() => {
+                return worker.terminate().then();
+            });
         }
 
         return Promise.resolve();
@@ -193,39 +203,51 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
             // Create a new worker thread
             this.worker = new Worker(workerPath);
 
-            return new Promise<void>((resolve, reject) => {
+            return withTimeout<void>((resolve, reject) => {
                 if (!this.worker) {
                     reject(new Error('Failed to create worker'));
                     return;
                 }
 
-                // Handle all worker messages through the message event
-                this.worker.addListener('message', (message: WorkerMessage) => {
-                    switch (message.type) {
-                        case EventType.INIT_RESULT:
-                            const error = message.error;
-                            if (error) {
-                                logger.error(`init websocket error`, error);
-                                reject(error);
-                            } else {
+                this.worker.once('message', (message: WorkerMessage) => {
+                    if (message.type === EventType.MESSAGE) {
+                        try {
+                            let m = WsMessage.fromJson(message.data);
+                            if (m.type == MessageType.WelcomeMessage) {
+                                logger.info(`receive welcome message, ready to process message`);
+
+                                // Handle all worker messages through the message event
+                                this.worker!.addListener('message', (message: WorkerMessage) => {
+                                    switch (message.type) {
+                                        case EventType.MESSAGE:
+                                        case EventType.ERROR:
+                                            this.onMessage(message);
+                                            break;
+                                        case EventType.CLOSED:
+                                            this.onClose(message.data.code, message.data.reason);
+                                            break;
+                                    }
+                                });
                                 resolve();
-                                this.emit('event', WebSocketEvent.EventConnected, '');
+                                return;
                             }
-                            break;
-                        case EventType.MESSAGE:
-                        case EventType.ERROR:
-                            this.onMessage(message);
-                            break;
-                        case EventType.CLOSED:
-                            this.onClose(message.data.code, message.data.reason);
-                            break;
+                        } catch (e) {
+                            reject(e);
+                            return;
+                        }
                     }
+                    reject(new Error(`Failed to init worker connection, msg:${message.error}`));
                 });
 
                 // Init underlying connection
                 this.worker.postMessage({
                     type: EventType.INIT,
                     data: wsUrl,
+                });
+            }, this.options.dialTimeout).catch((err) => {
+                logger.error(`failed to create worker`, err);
+                return this.close().then(() => {
+                    throw err;
                 });
             });
         });
@@ -298,7 +320,6 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
     // close callback
     private onClose(code: number, reason: string): void {
         logger.warn(`WebSocket closed with code ${code}: ${reason}`);
-        this.emit('event', WebSocketEvent.EventDisconnected, `${code}:${reason}`);
 
         // Handle reconnection if needed
         if (!this.shutdown) {
@@ -323,37 +344,52 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
     }
 
     private reconnect(): Promise<void> {
-        if (!this.shutdown && this.options.reconnect) {
-            this.emit('event', WebSocketEvent.EventTryReconnect, '');
-
-            const maxAttempts =
-                this.options.reconnectAttempts == -1
-                    ? Number.MAX_VALUE
-                    : this.options.reconnectAttempts;
-
-            return this.close()
-                .then(() => {
-                    return retryPromise(
-                        () => {
-                            return this.start();
-                        },
-                        maxAttempts,
-                        this.options.reconnectInterval,
-                    ).then(() => {});
-                })
-                .then(() => {
-                    logger.info('Successfully reconnected to WebSocket server');
-                    this.emit('reconnected');
-                })
-                .catch((e: Error) => {
-                    this.emit(
-                        'event',
-                        WebSocketEvent.EventClientFail,
-                        'Failed to reconnect after all attempts',
-                    );
-                    logger.error('Failed to reconnect after all attempts.');
-                });
+        if (this.reconnecting) {
+            return Promise.resolve();
         }
-        return Promise.reject('Reconnect disabled');
+
+        return Promise.resolve()
+            .then(() => {
+                this.reconnecting = true;
+            })
+            .then(() => {
+                return this.close();
+            })
+            .then(() => {
+                if (!this.shutdown && this.options.reconnect) {
+                    this.emit('event', WebSocketEvent.EventTryReconnect, '');
+
+                    const maxAttempts =
+                        this.options.reconnectAttempts == -1
+                            ? Number.MAX_VALUE
+                            : this.options.reconnectAttempts;
+
+                    return Promise.resolve().then(async () => {
+                        for (let i = 0; i < maxAttempts; i++) {
+                            logger.warn(`reconnecting... ${i}/${maxAttempts}`);
+                            await new Promise((resolve) => {
+                                setTimeout(resolve, this.options.reconnectInterval);
+                            });
+                            try {
+                                await this.start();
+                                logger.info('Successfully reconnected to WebSocket server');
+                                this.emit('reconnected');
+                                return;
+                            } catch (e) {
+                                logger.error(`reconnecting fail:`, e);
+                            }
+                        }
+                        this.emit(
+                            'event',
+                            WebSocketEvent.EventClientFail,
+                            'Failed to reconnect after all attempts',
+                        );
+                        logger.error('Failed to reconnect after all attempts.');
+                    });
+                }
+            })
+            .finally(async () => {
+                this.reconnecting = false;
+            });
     }
 }

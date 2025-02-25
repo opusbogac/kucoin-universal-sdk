@@ -66,6 +66,58 @@ export function mockWebSocketHandlerTimeout(ws: WebSocket) {
     ws.on('close', () => {});
 }
 
+export function mockWebSocketHandlerClose(ws: WebSocket) {
+    ws.send(JSON.stringify(createMessage(randomUUID(), MessageType.WelcomeMessage)));
+
+    setTimeout(() => {
+        console.log('[server] New connection close it');
+        ws.close();
+    }, 1000);
+}
+
+let x = 0;
+
+export function mockWebSocketHandlerReconnect(ws: WebSocket) {
+    ws.send(JSON.stringify(createMessage(randomUUID(), MessageType.WelcomeMessage)));
+
+    if (x == 0) {
+        setTimeout(() => {
+            console.log('[server] New connection close it');
+            ws.close();
+        }, 1000);
+    }
+    x += 1;
+}
+
+export function mockWebSocketHandlerEcho(ws: WebSocket) {
+    ws.send(JSON.stringify(createMessage(randomUUID(), MessageType.WelcomeMessage)));
+
+    ws.on('upgrade', (data) => {
+        console.log(data);
+    });
+
+    ws.on('open', (socket: WebSocket) => {
+        ws.send(JSON.stringify(createMessage(randomUUID(), MessageType.WelcomeMessage)));
+    });
+
+    ws.on('message', (message) => {
+        ws.send(message.toString());
+    });
+
+    ws.on('close', () => {
+        console.log('[server] Connection closed');
+    });
+}
+
+export function mockWebSocketHandlerPingPong(ws: WebSocket) {
+    ws.send(JSON.stringify(createMessage(randomUUID(), MessageType.WelcomeMessage)));
+
+    ws.on('message', (message) => {
+        let x = WsMessage.fromJson(message.toString());
+        ws.send(JSON.stringify(createMessage(x.id, MessageType.PongMessage)));
+    });
+}
+
 export function mockWebSocketHandler2(ws: WebSocket) {
     console.log('[server2] New connection');
 
@@ -143,15 +195,55 @@ describe('WS Transport Test', () => {
             });
     });
 
-    test('test client connect/disconnect', () => {
-        return testByMockServer(mockWebSocketHandlerTimeout).then((port) => {
+    test('test client connect', () => {
+        return testByMockServer(mockWebSocketHandlerEcho).then((port) => {
             let option = DEFAULT_WEBSOCKET_CLIENT_OPTION;
+            option.dialTimeout = 1000;
+
             let token = DEFAULT_TOKEN_INFO;
             token.endpoint = `http://127.0.0.1:${port}`;
-            let client = new WebSocketClient(
-                new mockProvider(DEFAULT_TOKEN_INFO),
-                DEFAULT_WEBSOCKET_CLIENT_OPTION,
-            );
+            let client = new WebSocketClient(new mockProvider(DEFAULT_TOKEN_INFO), option);
+            client.on('event', function (event, mes) {
+                console.log('[client] Received event', event, mes);
+            });
+
+            return client.start().then(() => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(resolve, 1000);
+                });
+            });
+        });
+    });
+
+    test('test client ping/pong', () => {
+        return testByMockServer(mockWebSocketHandlerPingPong).then((port) => {
+            let option = DEFAULT_WEBSOCKET_CLIENT_OPTION;
+            option.dialTimeout = 1000;
+
+            let token = DEFAULT_TOKEN_INFO;
+            token.endpoint = `http://127.0.0.1:${port}`;
+            token.pingInterval = 0.1;
+            let client = new WebSocketClient(new mockProvider(DEFAULT_TOKEN_INFO), option);
+            client.on('event', function (event, mes) {
+                console.log('[client] Received event', event, mes);
+            });
+
+            return client.start().then(() => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(resolve, 4000);
+                });
+            });
+        });
+    });
+
+    test('test client connect/disconnect', () => {
+        return testByMockServer(mockWebSocketHandlerEcho).then((port) => {
+            let option = DEFAULT_WEBSOCKET_CLIENT_OPTION;
+            option.dialTimeout = 1000;
+
+            let token = DEFAULT_TOKEN_INFO;
+            token.endpoint = `http://127.0.0.1:${port}`;
+            let client = new WebSocketClient(new mockProvider(DEFAULT_TOKEN_INFO), option);
             client.on('event', function (event, mes) {
                 console.log('[client] Received event', event, mes);
             });
@@ -165,18 +257,68 @@ describe('WS Transport Test', () => {
     test('test client timeout', () => {
         return testByMockServer(mockWebSocketHandlerTimeout).then((port) => {
             let option = DEFAULT_WEBSOCKET_CLIENT_OPTION;
+            option.dialTimeout = 1000;
+
             let token = DEFAULT_TOKEN_INFO;
             token.endpoint = `http://127.0.0.1:${port}`;
-            let client = new WebSocketClient(
-                new mockProvider(DEFAULT_TOKEN_INFO),
-                DEFAULT_WEBSOCKET_CLIENT_OPTION,
-            );
+            let client = new WebSocketClient(new mockProvider(DEFAULT_TOKEN_INFO), option);
+            client.on('event', function (event, mes) {
+                console.log('[client] Received event', event, mes);
+            });
+
+            return client
+                .start()
+                .then(() => {
+                    return client.stop();
+                })
+                .catch((err) => {
+                    expect(err).toBeDefined();
+                });
+        });
+    });
+
+    test('test remote close', () => {
+        return testByMockServer(mockWebSocketHandlerClose).then((port) => {
+            let option = DEFAULT_WEBSOCKET_CLIENT_OPTION;
+            option.dialTimeout = 1000;
+            option.reconnect = false;
+
+            let token = DEFAULT_TOKEN_INFO;
+            token.endpoint = `http://127.0.0.1:${port}`;
+            let client = new WebSocketClient(new mockProvider(DEFAULT_TOKEN_INFO), option);
             client.on('event', function (event, mes) {
                 console.log('[client] Received event', event, mes);
             });
 
             return client.start().then(() => {
-                return client.stop();
+                return new Promise((resolve, reject) => {
+                    setTimeout(resolve, 4000);
+                });
+            });
+        });
+    });
+
+    test('test reconnect', () => {
+        return testByMockServer(mockWebSocketHandlerReconnect).then((port) => {
+            let option = DEFAULT_WEBSOCKET_CLIENT_OPTION;
+            option.dialTimeout = 1000;
+            option.reconnect = true;
+            option.reconnectAttempts = 3;
+            option.reconnectInterval = 1000;
+
+            let token = DEFAULT_TOKEN_INFO;
+            token.endpoint = `http://127.0.0.1:${port}`;
+            let client = new WebSocketClient(new mockProvider(DEFAULT_TOKEN_INFO), option);
+            client.on('event', function (event, mes) {
+                console.log('[client] Received event', event, mes);
+            });
+
+            return client.start().then(() => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(resolve, 4000);
+                }).then(()=> {
+                    return client.stop();
+                });
             });
         });
     });

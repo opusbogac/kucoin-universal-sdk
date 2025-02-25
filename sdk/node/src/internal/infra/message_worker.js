@@ -29,18 +29,12 @@ parentPort.on(
 
                     ws.on('open', () => {
                         logger.info('[Worker] WebSocket connection opened');
-                        parentPort.postMessage({
-                            type: EventType.INIT_RESULT,
-                            data: null,
-                            error: null,
-                        });
                     });
 
                     ws.on('error', (err) => {
-                        // TODO Test error
                         logger.error('[Worker] WebSocket connection error:', err);
                         parentPort.postMessage({
-                            type: EventType.INIT_RESULT,
+                            type: EventType.ERROR,
                             data: null,
                             error: err,
                         });
@@ -49,7 +43,7 @@ parentPort.on(
                     ws.on('message', (data) => {
                         parentPort.postMessage({
                             type: EventType.MESSAGE,
-                            data: data,
+                            data: data.toString(),
                             error: null,
                         });
                     });
@@ -90,7 +84,7 @@ parentPort.on(
                     break;
                 }
                 case EventType.CLOSED: {
-                    logger.info('[Worker] Close event: Worker is shutting down');
+                    logger.info('[Worker] shutdown the worker');
                     if (ws) {
                         ws.close();
                         ws = null;
@@ -104,7 +98,7 @@ parentPort.on(
         } catch (error) {
             logger.error('[Worker] Unexpected error:', error);
             parentPort.postMessage({
-                type: message.type === EventType.INIT ? EventType.INIT_RESULT : EventType.ERROR,
+                type: EventType.ERROR,
                 data: message.data,
                 error: error,
             });
