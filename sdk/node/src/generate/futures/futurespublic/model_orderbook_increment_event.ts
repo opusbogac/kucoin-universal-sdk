@@ -31,7 +31,7 @@ export class OrderbookIncrementEvent implements Response<WsMessage> {
      * common response
      */
     @Exclude()
-    private commonResponse?: WsMessage;
+    commonResponse?: WsMessage;
 
     setCommonResponse(response: WsMessage): void {
         this.commonResponse = response;

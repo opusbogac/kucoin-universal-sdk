@@ -43,7 +43,7 @@ async function spotWsExample(spotPublic: Spot.SpotPublicWS) {
     await spotPublic.start()
 
     let subid = spotPublic.allTickers((topic: string, subject: string, data: Spot.SpotPublic.AllTickersEvent) => {
-        console.log(data);
+        console.log(topic, subject, data.time, data.bestAsk, data.bestBid);
     });
 
     await subid
@@ -54,7 +54,7 @@ async function spotWsExample(spotPublic: Spot.SpotPublicWS) {
         .then((id) => {
             return spotPublic.unSubscribe(id);
         }).then(() => {
-            return spotPublic.stop
+            return spotPublic.stop()
         });
 }
 
