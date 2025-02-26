@@ -49,7 +49,7 @@ parentPort.on(
                     });
 
                     ws.on('close', (code, reason) => {
-                        logger.info('[Worker] WebSocket closed:', code, reason);
+                        logger.info('[Worker] WebSocket closed', code, reason);
                         parentPort.postMessage({
                             type: EventType.CLOSED,
                             data: { code: code, reason: reason },
@@ -84,7 +84,7 @@ parentPort.on(
                     break;
                 }
                 case EventType.CLOSED: {
-                    logger.info('[Worker] shutdown the worker');
+                    logger.info('[Worker] Shutting down the websocket connection...');
                     if (ws) {
                         ws.close();
                         ws = null;
@@ -106,4 +106,4 @@ parentPort.on(
     },
 );
 // Log worker startup
-logger.info('[Worker] Started and ready to process messages at:', new Date().toISOString());
+logger.info('[Worker] Started and ready to process messages');

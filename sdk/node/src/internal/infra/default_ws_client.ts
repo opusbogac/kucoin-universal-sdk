@@ -96,6 +96,7 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
 
     stop(): Promise<void> {
         this.shutdown = true;
+        logger.info('shutting down websocket client...');
         return this.close().finally(() => {
             this.emit('event', WebSocketEvent.EventClientShutdown, '');
         });
@@ -148,7 +149,7 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
     }
 
     private close(): Promise<void> {
-        logger.info('closing websocket client');
+        logger.info('closing websocket client...');
 
         // clear intervals
         if (this.keepAliveInterval) {
@@ -325,10 +326,8 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
 
     // close callback
     private onClose(code: number, reason: string): void {
-        logger.warn(`WebSocket closed with code ${code}: ${reason}`);
-
-        // Handle reconnection if needed
         if (!this.shutdown) {
+            logger.warn(`WebSocket closed with code ${code}: ${reason}`);
             this.reconnect();
         }
     }
@@ -337,11 +336,13 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
         const pingMsg = new WsMessage();
         pingMsg.id = Date.now().toString();
         pingMsg.type = MessageType.PingMessage;
-        this.write(pingMsg, this.options.writeTimeout).catch((e) => {
-            logger.error('keepalive ping error:', e);
-        }).then(()=> {
-            logger.debug('send ping success');
-        });
+        this.write(pingMsg, this.options.writeTimeout)
+            .catch((e) => {
+                logger.error('keepalive ping error:', e);
+            })
+            .then(() => {
+                logger.debug('send ping success');
+            });
     }
 
     private randomEndpoint(tokens: WsToken[]): WsToken {

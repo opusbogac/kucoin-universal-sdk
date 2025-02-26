@@ -97,12 +97,15 @@ export class DefaultWsService implements WebSocketService {
 
         return this.client
             .write(subEvent, this.wsOption.writeTimeout)
-            .then(() => subId)
+            .then(() => {
+                logger.info(`subscribed id: ${subId}`);
+                return subId;
+            })
             .catch((err) => {
                 // Clean up on failure
                 const callbackManager = this.topicManager.getCallbackManager(subInfo.prefix);
                 callbackManager.remove(subId);
-                logger.error(`Subscribe error: ${err}`);
+                logger.error(`subscribe id: ${subId}, error`, err);
                 throw err;
             });
     }
@@ -124,11 +127,11 @@ export class DefaultWsService implements WebSocketService {
                 .write(subEvent, this.wsOption.writeTimeout)
                 .then(() => {
                     callbackManager.remove(id);
-                    logger.info('callback removed for id:', id);
+                    logger.info(`unsubscribe id: ${id}`);
                     resolve();
                 })
                 .catch((e) => {
-                    logger.error('Failed to send unsubscribe message:', e);
+                    logger.error(`unsubscribe id: ${id}, error`, e);
                     reject(e);
                 });
         });
