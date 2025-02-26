@@ -83,7 +83,7 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
                 this.state = ConnectionState.CONNECTED;
                 this.keepAliveInterval = setInterval(
                     () => this.keepAlive(),
-                    this.tokenInfo!.pingInterval * 1000,
+                    this.tokenInfo!.pingInterval,
                 );
                 this.emit('event', WebSocketEvent.EventConnected, '');
             })
@@ -339,6 +339,8 @@ export class WebSocketClient extends EventEmitter implements WebsocketTransport 
         pingMsg.type = MessageType.PingMessage;
         this.write(pingMsg, this.options.writeTimeout).catch((e) => {
             logger.error('keepalive ping error:', e);
+        }).then(()=> {
+            logger.debug('send ping success');
         });
     }
 

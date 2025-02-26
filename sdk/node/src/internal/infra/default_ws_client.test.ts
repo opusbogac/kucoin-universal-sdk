@@ -247,7 +247,7 @@ describe('WS Transport Test', () => {
 
             let token = DEFAULT_TOKEN_INFO;
             token.endpoint = `http://127.0.0.1:${port}`;
-            token.pingInterval = 0.1;
+            token.pingInterval = 100;
             let client = new WebSocketClient(new mockProvider(DEFAULT_TOKEN_INFO), option);
             client.on('event', function (event, mes) {
                 console.log('[client] Received event', event, mes);

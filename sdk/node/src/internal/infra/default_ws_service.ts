@@ -42,7 +42,11 @@ export class DefaultWsService implements WebSocketService {
         this.eventEmitter = new EventEmitter();
         this.eventEmitter.on('event', (event: WebSocketEvent, msg: string) => {
             if (this.wsOption.eventCallback) {
-                this.wsOption.eventCallback(event, msg);
+                try {
+                    this.wsOption.eventCallback(event, msg);
+                } catch (e) {
+                    logger.error(`call event callback error, event: ${event}`, e);
+                }
             }
         });
         this.client = new WebSocketClient(
@@ -65,7 +69,7 @@ export class DefaultWsService implements WebSocketService {
     }
 
     stop(): Promise<void> {
-        return this.client.stop();
+        return Promise.all([this.tokenTransport.close(), this.client.stop()]).then();
     }
 
     subscribe(prefix: string, args: string[], callback: WebSocketMessageCallback): Promise<string> {
