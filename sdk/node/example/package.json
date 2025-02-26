@@ -1,6 +1,6 @@
 {
   "name": "kucoin-universal-sdk-example",
-  "version": "0.1.0-alpha",
+  "version": "0.1.1-alpha",
   "description": "KuCoin Universal SDK Examples",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -37,5 +37,7 @@
   "engines": {
     "node": ">=14"
   },
-  "dependencies": {}
+  "dependencies": {
+    "kucoin-universal-sdk": "0.1.1-alpha"
+  }
 }

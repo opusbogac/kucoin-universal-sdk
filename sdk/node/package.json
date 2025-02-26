@@ -1,6 +1,6 @@
 {
   "name": "kucoin-universal-sdk",
-  "version": "0.1.0-alpha",
+  "version": "0.1.1-alpha",
   "description": "Official KuCoin Universal SDK.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -47,11 +47,9 @@
     "node": ">=14"
   },
   "dependencies": {
-    "agentkeepalive": "^4.6.0",
     "axios": "^1.7.9",
     "axios-retry": "^4.5.0",
     "class-transformer": "^0.5.1",
-    "queue-typescript": "^1.0.1",
     "reflect-metadata": "^0.2.2",
     "ws": "^8.18.0"
   }
