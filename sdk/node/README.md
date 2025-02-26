@@ -125,10 +125,11 @@ This section provides specific considerations and recommendations for using the 
         - Spot public/private and Futures public/private services require 4 active WebSocket connections.
 
 #### Threading and Callbacks
-- **Simple Thread Model**:
+- **Thread Model**:
     - WebSocket services follow a simple thread model, ensuring callbacks are handled on a single thread.
+    - Although the above callback ensures single-threaded execution (guaranteed by Node.js's single-threaded model), the management of WebSocket connections, as well as message reception and transmission, is handled by a separate worker thread.
 - **Subscription Management**:
-    - Subscriptions are synchronous. A subscription is considered successful only after receiving an acknowledgment (ACK) from the server.
+    - A subscription is considered successful only after receiving an acknowledgment (ACK) from the server.
     - Each subscription has a unique ID, which can be used for unsubscribe.
 
 #### Data and Message Handling
