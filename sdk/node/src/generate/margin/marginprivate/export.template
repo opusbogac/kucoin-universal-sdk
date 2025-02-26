@@ -1,0 +1,6 @@
+export namespace MarginPrivate {
+export type CrossMarginPositionAssetListValue = MARGINPRIVATE.CrossMarginPositionAssetListValue;
+export type CrossMarginPositionEvent = MARGINPRIVATE.CrossMarginPositionEvent;
+export type IsolatedMarginPositionChangeAssetsValue = MARGINPRIVATE.IsolatedMarginPositionChangeAssetsValue;
+export type IsolatedMarginPositionEvent = MARGINPRIVATE.IsolatedMarginPositionEvent;
+}

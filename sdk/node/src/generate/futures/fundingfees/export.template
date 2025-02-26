@@ -1,0 +1,10 @@
+export namespace FundingFees {
+export type GetCurrentFundingRateReq = FUNDINGFEES.GetCurrentFundingRateReq;
+export type GetCurrentFundingRateResp = FUNDINGFEES.GetCurrentFundingRateResp;
+export type GetPrivateFundingHistoryDataList = FUNDINGFEES.GetPrivateFundingHistoryDataList;
+export type GetPrivateFundingHistoryReq = FUNDINGFEES.GetPrivateFundingHistoryReq;
+export type GetPrivateFundingHistoryResp = FUNDINGFEES.GetPrivateFundingHistoryResp;
+export type GetPublicFundingHistoryData = FUNDINGFEES.GetPublicFundingHistoryData;
+export type GetPublicFundingHistoryReq = FUNDINGFEES.GetPublicFundingHistoryReq;
+export type GetPublicFundingHistoryResp = FUNDINGFEES.GetPublicFundingHistoryResp;
+}

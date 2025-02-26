@@ -1,0 +1,50 @@
+name: Upload Nodejs SDK Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish Nodejs SDK to NPM"
+        required: false
+        default: "false"
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+jobs:
+  release-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+          cache-dependency-path: sdk/node/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: sdk/node
+        run: npm ci
+
+      - name: Build Project
+        working-directory: sdk/node
+        run: npm run build 
+
+      - name: Dry Run Package Publishing
+        if: github.event.inputs.publish == 'false'
+        working-directory: sdk/node
+        run: npm publish --dry-run
+
+      - name: Publish Package to npm
+        if: github.event.inputs.publish == 'true'
+        working-directory: sdk/node
+        run: npm publish --provenance --access public --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

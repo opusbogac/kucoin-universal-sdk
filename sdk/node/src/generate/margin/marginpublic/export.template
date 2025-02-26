@@ -1,0 +1,4 @@
+export namespace MarginPublic {
+export type IndexPriceEvent = MARGINPUBLIC.IndexPriceEvent;
+export type MarkPriceEvent = MARGINPUBLIC.MarkPriceEvent;
+}

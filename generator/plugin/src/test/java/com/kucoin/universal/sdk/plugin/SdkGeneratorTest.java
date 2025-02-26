@@ -7,10 +7,12 @@ import org.openapitools.codegen.config.CodegenConfigurator;
 
 public class SdkGeneratorTest {
 
-    private static final String SDK_NAME = "python-sdk";
-    private static final String SPEC_NAME = "../../spec/rest/api/openapi-account-fee.json";
-    private static final String SPEC_ENTRY_NAME = "../../spec/rest/entry/openapi-account.json";
-    private static final String WS_SPEC_NAME = "../../spec/ws/openapi-futures-private.json";
+    private static final String SDK_NAME = "node-sdk";
+    private static final String SPEC_NAME = "../../spec/rest/api/openapi-spot-market.json";
+    private static final String SPEC_ENTRY_NAME = "../../spec/rest/entry/openapi-spot.json";
+    private static final String WS_SPEC_NAME = "../../spec/ws/openapi-spot-public.json";
+    private static final String OUTPUT_DIR = "./out";
+    private static final String CSV_PATH = "../../spec";
 
     @Test
     public void launchCodeGenerator() {
@@ -20,7 +22,7 @@ public class SdkGeneratorTest {
                     .setInputSpec(SPEC_NAME)
                     .setValidateSpec(false)
                     .addAdditionalProperty("GEN_MODE", "API")
-                    .setOutputDir("out");
+                    .setOutputDir(OUTPUT_DIR);
 
             final ClientOptInput clientOptInput = configurator.toClientOptInput();
             DefaultGenerator generator = new DefaultGenerator();
@@ -32,7 +34,8 @@ public class SdkGeneratorTest {
                     .setInputSpec(SPEC_ENTRY_NAME)
                     .setValidateSpec(false)
                     .addAdditionalProperty("GEN_MODE", "ENTRY")
-                    .setOutputDir("out");
+                    .addAdditionalProperty("CSV_PATH", CSV_PATH)
+                    .setOutputDir(OUTPUT_DIR);
 
             final ClientOptInput clientOptInput = configurator.toClientOptInput();
             DefaultGenerator generator = new DefaultGenerator();
@@ -45,7 +48,7 @@ public class SdkGeneratorTest {
                     .setInputSpec(SPEC_NAME)
                     .setValidateSpec(false)
                     .addAdditionalProperty("GEN_MODE", "TEST")
-                    .setOutputDir("out");
+                    .setOutputDir(OUTPUT_DIR);
 
             final ClientOptInput clientOptInput = configurator.toClientOptInput();
             DefaultGenerator generator = new DefaultGenerator();
@@ -61,7 +64,7 @@ public class SdkGeneratorTest {
                     .setInputSpec(WS_SPEC_NAME)
                     .setValidateSpec(false)
                     .addAdditionalProperty("GEN_MODE", "WS")
-                    .setOutputDir("out");
+                    .setOutputDir(OUTPUT_DIR);
 
             final ClientOptInput clientOptInput = configurator.toClientOptInput();
             DefaultGenerator generator = new DefaultGenerator();
@@ -74,7 +77,7 @@ public class SdkGeneratorTest {
                     .setInputSpec(WS_SPEC_NAME)
                     .setValidateSpec(false)
                     .addAdditionalProperty("GEN_MODE", "WS_TEST")
-                    .setOutputDir("out");
+                    .setOutputDir(OUTPUT_DIR);
 
             final ClientOptInput clientOptInput = configurator.toClientOptInput();
             DefaultGenerator generator = new DefaultGenerator();
@@ -90,7 +93,7 @@ public class SdkGeneratorTest {
                     .setInputSpec(SPEC_NAME)
                     .setValidateSpec(false)
                     .addAdditionalProperty("GEN_MODE", "test_template")
-                    .setOutputDir("out");
+                    .setOutputDir(OUTPUT_DIR);
 
             final ClientOptInput clientOptInput = configurator.toClientOptInput();
             DefaultGenerator generator = new DefaultGenerator();

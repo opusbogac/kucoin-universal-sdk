@@ -1,0 +1,11 @@
+export namespace FuturesPrivate {
+export type AllOrderEvent = FUTURESPRIVATE.AllOrderEvent;
+export type AllPositionEvent = FUTURESPRIVATE.AllPositionEvent;
+export type BalanceEvent = FUTURESPRIVATE.BalanceEvent;
+export type CrossLeverageDataValue = FUTURESPRIVATE.CrossLeverageDataValue;
+export type CrossLeverageEvent = FUTURESPRIVATE.CrossLeverageEvent;
+export type MarginModeEvent = FUTURESPRIVATE.MarginModeEvent;
+export type OrderEvent = FUTURESPRIVATE.OrderEvent;
+export type PositionEvent = FUTURESPRIVATE.PositionEvent;
+export type StopOrdersEvent = FUTURESPRIVATE.StopOrdersEvent;
+}

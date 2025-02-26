@@ -1,0 +1,17 @@
+export namespace Debit {
+export type BorrowReq = DEBIT.BorrowReq;
+export type BorrowResp = DEBIT.BorrowResp;
+export type GetBorrowHistoryItems = DEBIT.GetBorrowHistoryItems;
+export type GetBorrowHistoryReq = DEBIT.GetBorrowHistoryReq;
+export type GetBorrowHistoryResp = DEBIT.GetBorrowHistoryResp;
+export type GetInterestHistoryItems = DEBIT.GetInterestHistoryItems;
+export type GetInterestHistoryReq = DEBIT.GetInterestHistoryReq;
+export type GetInterestHistoryResp = DEBIT.GetInterestHistoryResp;
+export type GetRepayHistoryItems = DEBIT.GetRepayHistoryItems;
+export type GetRepayHistoryReq = DEBIT.GetRepayHistoryReq;
+export type GetRepayHistoryResp = DEBIT.GetRepayHistoryResp;
+export type ModifyLeverageReq = DEBIT.ModifyLeverageReq;
+export type ModifyLeverageResp = DEBIT.ModifyLeverageResp;
+export type RepayReq = DEBIT.RepayReq;
+export type RepayResp = DEBIT.RepayResp;
+}

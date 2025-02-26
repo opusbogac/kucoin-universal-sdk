@@ -1,0 +1,9 @@
+export namespace Fee {
+export type GetBasicFeeReq = FEE.GetBasicFeeReq;
+export type GetBasicFeeResp = FEE.GetBasicFeeResp;
+export type GetFuturesActualFeeReq = FEE.GetFuturesActualFeeReq;
+export type GetFuturesActualFeeResp = FEE.GetFuturesActualFeeResp;
+export type GetSpotActualFeeData = FEE.GetSpotActualFeeData;
+export type GetSpotActualFeeReq = FEE.GetSpotActualFeeReq;
+export type GetSpotActualFeeResp = FEE.GetSpotActualFeeResp;
+}

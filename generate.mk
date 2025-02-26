@@ -1,7 +1,10 @@
 IMAGE_NAME=sdk-tools
 IMAGE_TAG=1.0
-VERSION := $(shell cat VERSION)
 DATE := $(shell date +%Y-%m-%d)
+
+FILE_VERSION := $(shell cat VERSION)
+USER_VERSION ?= 
+VERSION := $(if $(USER_VERSION),$(USER_VERSION),$(FILE_VERSION))
 
 RED=\033[0;31m
 GREEN=\033[0;32m
@@ -54,7 +57,7 @@ define generate-entry
 	     -g $(2)-sdk \
 	     -o $(3) \
 		 --skip-validate-spec \
-	     --additional-properties=GEN_MODE=entry,API_VERSION=$(VERSION),API_DATE=$(DATE) > logs/$(service)-$(lang)-entry.log 2>&1 || \
+	     --additional-properties=GEN_MODE=entry,API_VERSION=$(VERSION),API_DATE=$(DATE),CSV_PATH=/local/spec > logs/$(service)-$(lang)-entry.log 2>&1 || \
 		 { echo "$(RED)Entry Task $(service) for $(lang) failed$(NC)"; exit 1; }
 endef
 
@@ -90,7 +93,7 @@ WS_FILES := $(wildcard ./spec/ws/*.json)
 generate-postman:
 	$(call generate-postman-func)
 
-generate: $(patsubst ./spec/rest/api/%.json,generate-rest-%, $(REST_FILES)) $(patsubst ./spec/rest/entry/%.json,generate-entry-%, $(ENTRY_FILES)) $(patsubst ./spec/ws/%.json,generate-ws-%, $(WS_FILES))
+generate: $(patsubst ./spec/rest/api/%.json,generate-rest-%, $(REST_FILES)) $(patsubst ./spec/ws/%.json,generate-ws-%, $(WS_FILES)) $(patsubst ./spec/rest/entry/%.json,generate-entry-%, $(ENTRY_FILES)) 
 
 generate-rest-%: ./spec/rest/api/%.json | force
 	$(eval service=$*)
