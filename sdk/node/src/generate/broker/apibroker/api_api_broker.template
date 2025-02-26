@@ -1,0 +1,24 @@
+
+describe('Auto Test', ()=> {
+    let api: APIBrokerAPI;
+
+    beforeAll(()=> {
+        api = ??
+    });
+    test('getRebase request test', ()=> {
+    /**
+    * getRebase
+    * Get Broker Rebate
+    * /api/v1/broker/api/rebase/download
+    */
+    let builder = GetRebaseReq.builder();
+    builder.setBegin(?).setEnd(?).setTradeType(?);
+    let req = builder.build();
+    let resp = api.getRebase(req);
+    return resp.then(result => {
+        expect(result.url).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+})

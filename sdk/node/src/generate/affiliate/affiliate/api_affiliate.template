@@ -1,0 +1,26 @@
+
+describe('Auto Test', ()=> {
+    let api: AffiliateAPI;
+
+    beforeAll(()=> {
+        api = ??
+    });
+    test('getAccount request test', ()=> {
+    /**
+    * getAccount
+    * Get Account
+    * /api/v2/affiliate/inviter/statistics
+    */
+    let resp = api.getAccount();
+    return resp.then(result => {
+        expect(result.parentUid).toEqual(expect.anything());
+        expect(result.orders).toEqual(expect.anything());
+        expect(result.ltv).toEqual(expect.anything());
+        expect(result.totalMarginAmount).toEqual(expect.anything());
+        expect(result.transferMarginAmount).toEqual(expect.anything());
+        expect(result.margins).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+})

@@ -1,0 +1,20 @@
+export namespace Deposit {
+export type AddDepositAddressV1Req = DEPOSIT.AddDepositAddressV1Req;
+export type AddDepositAddressV1Resp = DEPOSIT.AddDepositAddressV1Resp;
+export type AddDepositAddressV3Req = DEPOSIT.AddDepositAddressV3Req;
+export type AddDepositAddressV3Resp = DEPOSIT.AddDepositAddressV3Resp;
+export type GetDepositAddressV1Req = DEPOSIT.GetDepositAddressV1Req;
+export type GetDepositAddressV1Resp = DEPOSIT.GetDepositAddressV1Resp;
+export type GetDepositAddressV2Data = DEPOSIT.GetDepositAddressV2Data;
+export type GetDepositAddressV2Req = DEPOSIT.GetDepositAddressV2Req;
+export type GetDepositAddressV2Resp = DEPOSIT.GetDepositAddressV2Resp;
+export type GetDepositAddressV3Data = DEPOSIT.GetDepositAddressV3Data;
+export type GetDepositAddressV3Req = DEPOSIT.GetDepositAddressV3Req;
+export type GetDepositAddressV3Resp = DEPOSIT.GetDepositAddressV3Resp;
+export type GetDepositHistoryItems = DEPOSIT.GetDepositHistoryItems;
+export type GetDepositHistoryOldItems = DEPOSIT.GetDepositHistoryOldItems;
+export type GetDepositHistoryOldReq = DEPOSIT.GetDepositHistoryOldReq;
+export type GetDepositHistoryOldResp = DEPOSIT.GetDepositHistoryOldResp;
+export type GetDepositHistoryReq = DEPOSIT.GetDepositHistoryReq;
+export type GetDepositHistoryResp = DEPOSIT.GetDepositHistoryResp;
+}

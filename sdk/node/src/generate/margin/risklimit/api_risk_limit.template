@@ -1,0 +1,24 @@
+
+describe('Auto Test', ()=> {
+    let api: RiskLimitAPI;
+
+    beforeAll(()=> {
+        api = ??
+    });
+    test('getMarginRiskLimit request test', ()=> {
+    /**
+    * getMarginRiskLimit
+    * Get Margin Risk Limit
+    * /api/v3/margin/currencies
+    */
+    let builder = GetMarginRiskLimitReq.builder();
+    builder.setIsIsolated(?).setCurrency(?).setSymbol(?);
+    let req = builder.build();
+    let resp = api.getMarginRiskLimit(req);
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+})

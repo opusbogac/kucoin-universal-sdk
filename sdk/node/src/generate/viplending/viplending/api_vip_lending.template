@@ -1,0 +1,39 @@
+
+describe('Auto Test', ()=> {
+    let api: VIPLendingAPI;
+
+    beforeAll(()=> {
+        api = ??
+    });
+    test('getAccountDetail request test', ()=> {
+    /**
+    * getAccountDetail
+    * Get Account Detail
+    * /api/v1/otc-loan/loan
+    */
+    let resp = api.getAccountDetail();
+    return resp.then(result => {
+        expect(result.parentUid).toEqual(expect.anything());
+        expect(result.orders).toEqual(expect.anything());
+        expect(result.ltv).toEqual(expect.anything());
+        expect(result.totalMarginAmount).toEqual(expect.anything());
+        expect(result.transferMarginAmount).toEqual(expect.anything());
+        expect(result.margins).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+    test('getAccounts request test', ()=> {
+    /**
+    * getAccounts
+    * Get Accounts
+    * /api/v1/otc-loan/accounts
+    */
+    let resp = api.getAccounts();
+    return resp.then(result => {
+        expect(result.data).toEqual(expect.anything());
+        console.log(resp);
+    });
+    })
+
+})

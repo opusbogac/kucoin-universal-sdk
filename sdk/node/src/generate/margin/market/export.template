@@ -1,0 +1,15 @@
+export namespace Market {
+export type GetCrossMarginSymbolsItems = MARKET.GetCrossMarginSymbolsItems;
+export type GetCrossMarginSymbolsReq = MARKET.GetCrossMarginSymbolsReq;
+export type GetCrossMarginSymbolsResp = MARKET.GetCrossMarginSymbolsResp;
+export type GetETFInfoData = MARKET.GetETFInfoData;
+export type GetETFInfoReq = MARKET.GetETFInfoReq;
+export type GetETFInfoResp = MARKET.GetETFInfoResp;
+export type GetIsolatedMarginSymbolsData = MARKET.GetIsolatedMarginSymbolsData;
+export type GetIsolatedMarginSymbolsResp = MARKET.GetIsolatedMarginSymbolsResp;
+export type GetMarginConfigResp = MARKET.GetMarginConfigResp;
+export type GetMarkPriceDetailReq = MARKET.GetMarkPriceDetailReq;
+export type GetMarkPriceDetailResp = MARKET.GetMarkPriceDetailResp;
+export type GetMarkPriceListData = MARKET.GetMarkPriceListData;
+export type GetMarkPriceListResp = MARKET.GetMarkPriceListResp;
+}

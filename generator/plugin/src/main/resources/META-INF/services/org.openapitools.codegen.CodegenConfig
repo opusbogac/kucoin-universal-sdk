@@ -1,2 +1,3 @@
 com.kucoin.universal.sdk.plugin.generator.GolangSdkGenerator
 com.kucoin.universal.sdk.plugin.generator.PythonSdkGenerator
+com.kucoin.universal.sdk.plugin.generator.NodeSdkGenerator

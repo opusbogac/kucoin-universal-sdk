@@ -1,0 +1,16 @@
+export namespace Withdrawal {
+export type CancelWithdrawalReq = WITHDRAWAL.CancelWithdrawalReq;
+export type CancelWithdrawalResp = WITHDRAWAL.CancelWithdrawalResp;
+export type GetWithdrawalHistoryItems = WITHDRAWAL.GetWithdrawalHistoryItems;
+export type GetWithdrawalHistoryOldItems = WITHDRAWAL.GetWithdrawalHistoryOldItems;
+export type GetWithdrawalHistoryOldReq = WITHDRAWAL.GetWithdrawalHistoryOldReq;
+export type GetWithdrawalHistoryOldResp = WITHDRAWAL.GetWithdrawalHistoryOldResp;
+export type GetWithdrawalHistoryReq = WITHDRAWAL.GetWithdrawalHistoryReq;
+export type GetWithdrawalHistoryResp = WITHDRAWAL.GetWithdrawalHistoryResp;
+export type GetWithdrawalQuotasReq = WITHDRAWAL.GetWithdrawalQuotasReq;
+export type GetWithdrawalQuotasResp = WITHDRAWAL.GetWithdrawalQuotasResp;
+export type WithdrawalV1Req = WITHDRAWAL.WithdrawalV1Req;
+export type WithdrawalV1Resp = WITHDRAWAL.WithdrawalV1Resp;
+export type WithdrawalV3Req = WITHDRAWAL.WithdrawalV3Req;
+export type WithdrawalV3Resp = WITHDRAWAL.WithdrawalV3Resp;
+}

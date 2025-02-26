@@ -1,0 +1,4 @@
+export namespace APIBroker {
+export type GetRebaseReq = APIBROKER.GetRebaseReq;
+export type GetRebaseResp = APIBROKER.GetRebaseResp;
+}

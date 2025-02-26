@@ -1,0 +1,31 @@
+export namespace Order {
+export type AddOrderReq = ORDER.AddOrderReq;
+export type AddOrderResp = ORDER.AddOrderResp;
+export type AddOrderTestReq = ORDER.AddOrderTestReq;
+export type AddOrderTestResp = ORDER.AddOrderTestResp;
+export type AddOrderTestV1Req = ORDER.AddOrderTestV1Req;
+export type AddOrderTestV1Resp = ORDER.AddOrderTestV1Resp;
+export type AddOrderV1Req = ORDER.AddOrderV1Req;
+export type AddOrderV1Resp = ORDER.AddOrderV1Resp;
+export type CancelAllOrdersBySymbolReq = ORDER.CancelAllOrdersBySymbolReq;
+export type CancelAllOrdersBySymbolResp = ORDER.CancelAllOrdersBySymbolResp;
+export type CancelOrderByClientOidReq = ORDER.CancelOrderByClientOidReq;
+export type CancelOrderByClientOidResp = ORDER.CancelOrderByClientOidResp;
+export type CancelOrderByOrderIdReq = ORDER.CancelOrderByOrderIdReq;
+export type CancelOrderByOrderIdResp = ORDER.CancelOrderByOrderIdResp;
+export type GetClosedOrdersItems = ORDER.GetClosedOrdersItems;
+export type GetClosedOrdersReq = ORDER.GetClosedOrdersReq;
+export type GetClosedOrdersResp = ORDER.GetClosedOrdersResp;
+export type GetOpenOrdersData = ORDER.GetOpenOrdersData;
+export type GetOpenOrdersReq = ORDER.GetOpenOrdersReq;
+export type GetOpenOrdersResp = ORDER.GetOpenOrdersResp;
+export type GetOrderByClientOidReq = ORDER.GetOrderByClientOidReq;
+export type GetOrderByClientOidResp = ORDER.GetOrderByClientOidResp;
+export type GetOrderByOrderIdReq = ORDER.GetOrderByOrderIdReq;
+export type GetOrderByOrderIdResp = ORDER.GetOrderByOrderIdResp;
+export type GetSymbolsWithOpenOrderReq = ORDER.GetSymbolsWithOpenOrderReq;
+export type GetSymbolsWithOpenOrderResp = ORDER.GetSymbolsWithOpenOrderResp;
+export type GetTradeHistoryItems = ORDER.GetTradeHistoryItems;
+export type GetTradeHistoryReq = ORDER.GetTradeHistoryReq;
+export type GetTradeHistoryResp = ORDER.GetTradeHistoryResp;
+}
