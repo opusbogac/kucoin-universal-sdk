@@ -295,10 +295,22 @@ class WebSocketClient:
                 logging.info("WebSocket connection closed.")
         logging.info("Waiting all threads close...")
         self.token_provider.close()
-        self.write_thread.join()
-        self.keep_alive_thread.join()
-        self.ws_thread.join()
-        self.reconnect_thread.join()
+    
+    
+        current_thread = threading.current_thread()
+    
+        if self.write_thread and self.write_thread.is_alive() and current_thread != self.write_thread:
+         self.write_thread.join()
+    
+        if self.keep_alive_thread and self.keep_alive_thread.is_alive() and current_thread != self.keep_alive_thread:
+         self.keep_alive_thread.join()
+    
+        if self.ws_thread and self.ws_thread.is_alive() and current_thread != self.ws_thread:
+         self.ws_thread.join()
+    
+        if self.reconnect_thread and self.reconnect_thread.is_alive() and current_thread != self.reconnect_thread:
+         self.reconnect_thread.join()
+    
         self.notify_event(WebSocketEvent.EVENT_DISCONNECTED, "")
         logging.info("WebSocket client closed.")
 
